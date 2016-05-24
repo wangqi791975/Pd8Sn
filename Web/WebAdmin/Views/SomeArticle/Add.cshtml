@@ -1,0 +1,30 @@
+﻿@using System.Globalization
+@using Com.Panduo.Service.SiteConfigure
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@section HtmlHead
+{
+    @Html.JsFor("Banner.js", "~/Js/bootstrap-formhelpers.js", fileVersion: "1.00")
+    @Html.CssFor("Banner.css", "~/Css/bootstrap-formhelpers.min.css", fileVersion: "1.0")
+}
+
+        <form class="form-horizontal" id="updateArticleForm" name="updateArticleForm" action="@Url.Content("~/SomeArticle/AddArticle")" method="post" >
+    <div class="control-group">
+        <label class="control-label">*中文标题：</label>
+        <div class="controls">
+            <input type="text" name="article_title" required="required"  id="article_title" />
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">*英文标题：</label>
+        <div class="controls">
+            <input type="text" name="article_english_title" required="required" id="article_english_title"/>
+            (该英文标题用于前台生成URL)
+        </div>
+    </div>
+            <div class="form-actions">
+                <button class="btn btn-primary" type="submit">确定</button>
+            </div>
+</form>

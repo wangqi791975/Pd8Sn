@@ -1,0 +1,65 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Web.Models.Product
+@using Resources
+@{
+    ViewBag.Title = "404";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+    //左侧类别树
+    var categoryTree = new CategoryTreeVo();
+    categoryTree.TreeType = CategoryTreeVo.CategoryTreeType.ProductDatail;
+    categoryTree.CategoryRelatedDatas = CacheHelper.CategoryLanguages;
+    categoryTree.CurrentCategoryId = 0;
+    categoryTree.CurrentParentCategoryId = 0;
+    ViewBag.CategoryTree = categoryTree;
+}
+@section HtmlHead
+{
+    <link href="~/Css/index.css" rel="stylesheet" type="text/css" />
+}
+<div id="main">
+    <!-- 404找不到页面开始 -->
+    <div class="page404">
+        <ins></ins><span class="font16 forange">@Lang.TipPageMove</span>
+    </div>
+    <div class="page404_cont">
+        <ul>
+            <li><span>-</span><p>@Lang.TipCheckInfoFi</p>
+            </li>
+            <li><span>-</span><p>
+                @Lang.TipCheckInfoSe
+            </p>
+            </li>
+            <li><span>-</span><p>
+                @Lang.TipCheckInfoTh
+            </p>
+            </li>
+            <li><span>-</span><p>
+                @Lang.TipCheckInfoFo
+            </p>
+            </li>
+        </ul>
+        <dl>
+            <dt>@Lang.TipMayPerfer</dt>
+            <dd><ins class="arrow"></ins><a href="javascript:void(0)">@Lang.TipBrowseBy</a></dd>
+            <dd><ins class="contact"></ins><a href="javascript:void(0)">@Lang.TipContactUs</a></dd>
+            <dd><ins class="sourcing"></ins><a href="javascript:void(0)">@Lang.TipContinueShopping</a></dd>
+        </dl>
+    </div>
+    <h2 class="font14">@Lang.TipMayPerferHere</h2>
+    <div class="search_error_banner">
+        <a href="@(ServiceFactory.ConfigureService.GetConfig("HomeUrl").Value)">
+            <img src="@ServiceFactory.ConfigureService.GetConfig("HomePath").Value" />
+        </a>
+        <a href="@(ServiceFactory.ConfigureService.GetConfig("NewArrUrl").Value)" class="banner_rt">
+            <img src="@(ServiceFactory.ConfigureService.GetConfig("NewArrPath").Value)" />
+        </a>
+        <a href="@(ServiceFactory.ConfigureService.GetConfig("BestSellUrl").Value)">
+            <img src="@(ServiceFactory.ConfigureService.GetConfig("BestSellPath").Value)" />
+        </a>
+        <a href="@(ServiceFactory.ConfigureService.GetConfig("SaleUrl").Value)" class="banner_rt">
+            <img src="@(ServiceFactory.ConfigureService.GetConfig("SalePath").Value)" />
+        </a>
+    </div>
+    <!-- 404找不到页面结束 -->
+</div>
+<div class="clearfix"></div>

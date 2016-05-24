@@ -1,0 +1,50 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Coupon
+@model PageData<CouponCustomer>
+@{
+    Layout = null;
+    int languageId = ServiceFactory.ConfigureService.EnglishLangId;
+    if (SessionHelper.CurrentCustomer.RegisterLanguageId.HasValue)
+    {
+        languageId = SessionHelper.CurrentCustomer.RegisterLanguageId.Value;
+    }
+}
+<div class="coupon_list_cont" id="divactive">
+    <table cellpadding="0" cellspacing="0">
+        @foreach (CouponCustomer activeCoupons in Model.Data)
+        {
+            <tr>
+                <td class="td_w150">@activeCoupons.CouponCode</td>
+                <td class="td_w115">@if (activeCoupons.AmountCurrencyId != null)
+                                    {
+                    @ServiceFactory.ConfigureService.GetCurrency(activeCoupons.AmountCurrencyId.Value).CurrencyCode
+                                    } @(activeCoupons.Amount.HasValue ? (activeCoupons.AmountCurrencyId.HasValue ? PageHelper.MoneyFormat(activeCoupons.Amount.Value, ServiceFactory.ConfigureService.GetCurrency(activeCoupons.AmountCurrencyId.Value).CurrencyCode) : 0) : 0) </td>
+                <td class="td_w150">@if (activeCoupons.MinAmountCurrencyId != null)
+                                    {
+                    @ServiceFactory.ConfigureService.GetCurrency(activeCoupons.MinAmountCurrencyId.Value).CurrencyCode
+                                    } @(activeCoupons.MinAmount.HasValue ? (activeCoupons.MinAmountCurrencyId.HasValue ? PageHelper.MoneyFormat(activeCoupons.MinAmount.Value, ServiceFactory.ConfigureService.GetCurrency(activeCoupons.MinAmountCurrencyId.Value).CurrencyCode) : 0) : 0)</td>
+                <td class="td_w150">@PageHelper.ToCurrentShortDate(activeCoupons.LimitEndTime)<br />
+                    @activeCoupons.LimitEndTime.ToLongTimeString()</td>
+                @{
+                    var couponDescs = activeCoupons.CouponDescs;
+                    string memo = "";
+                    if (couponDescs.Count != 0)
+                    {
+                        if (couponDescs.ContainsKey(languageId))
+                        {
+                            memo = couponDescs[languageId].Description;
+                        }
+                    }
+                }
+                <td class="td_w220">@memo</td>
+            </tr>
+        }
+    </table>
+    <!-- 底部翻页开始 -->
+    <div class="page">
+        <div class="ajax-pagination" data-target="#divactive" data-mode="replace" data-extra="activeparm">
+            @Html.Partial("Partial/_Ajax_Pager", Model.Pager)
+        </div>
+    </div>
+    <!-- 底部翻页结束 -->
+</div>

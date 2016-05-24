@@ -1,0 +1,153 @@
+﻿@using Com.Panduo.Service.Customer
+@using Resources
+@model Customer
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/Layout/_LoginBody.cshtml";
+}
+@section HtmlHead
+{
+    <style>
+        .login_cont iframe
+        {
+            margin-top: 7px;
+        }
+
+        .login_cont .fb_iframe_widget span
+        {
+            width: 75px !important;
+        }
+    </style>
+    <script>
+        // This is called with the results from from FB.getLoginStatus().
+        function statusChangeCallback(response) {
+            // The response object is returned with a status field that lets the
+            // app know the current login status of the person.
+            // Full docs on the response object can be found in the documentation
+            // for FB.getLoginStatus().
+            if (response.status === 'connected') {
+                // Logged into your app and Facebook.
+                LoginWithFb();
+            } else if (response.status === 'not_authorized') {
+                // The person is logged into Facebook, but not your app.
+                DivOs.showErrorModal('Please log ' + 'into this app.');
+            } else {
+                // The person is not logged into Facebook, so we're not sure if
+                // they are logged into this app or not.
+                DivOs.showErrorModal('Please log ' + 'into Facebook.');
+            }
+        }
+
+        // This function is called when someone finishes with the Login
+        // Button.  See the onlogin handler attached to it in the sample
+        // code below.
+        function checkFbLoginState() {
+            FB.getLoginStatus(function (response) {
+                statusChangeCallback(response);
+            });
+        }
+
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '1569870533270348',
+                xfbml: true,
+                version: 'v2.2',
+                status: true, // check login status
+                cookie: true // enable cookies to allow the server to access the session
+            });
+            /*
+            FB.getLoginStatus(function (response) {
+                statusChangeCallback(response);
+            });
+            */
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        //  Login our site with FB
+        function LoginWithFb() {
+            FB.api('/me', function (response) {
+                $.post("/Account/LoginWithFb", response, function (jsonData) {
+                    window.location.href = jsonData.msg;
+                });
+            });
+        }
+    </script>
+}
+
+@using (Html.BeginForm("Login", "Account"))
+{
+    <input type="hidden" name="redirectUrl" id="redirectUrl" value="@(ViewBag.RedirectUrl ?? "")"/>
+    <div class="wrap">
+        <div class="account_w940">
+            @if (ViewBag.IsShowForgotMsg ?? false)
+            {
+                <div class="warning_wrap error"><span class="fred">@Lang.TipLinkPsdBefore</span></div>
+            }
+            <div class="lf login_cont">
+                <h3 class="font14 font_verdana">@Lang.TipLogin</h3>
+                <table width="472" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th>@Lang.TipEmail</th>
+                        <td>
+                            @Html.TextBox("Email", "", new { @class = "inputw337 input_text_wrap " })
+                            <div class="fred">@Html.Raw(ViewBag.ErrorEmail ?? "")</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>@Lang.TipPassword</th>
+                        <td>
+                            @Html.Password("Password", "", new { @class = "inputw337 input_text_wrap" })
+                            <div class="fred">@(ViewBag.ErrorPassword ?? "")</div>
+                        </td>
+                    </tr>
+                    @if (CookieHelper.LoginErrorCount > 2)
+                    {
+                        <tr>
+                            <th>@Lang.TipVerificationCode</th>
+                            <td>
+                                @Html.TextBox("ValidateCode", "", new { @id = "validatecode", @class = "inputw130 input_text_wrap lf" })
+                                <a href="#" class="lf">
+                                    <img id="valiCode" style="cursor: pointer;" alt="@Lang.TipVerificationCodeNoPun" />
+                                </a><ins id="iconcheck" class="icon_code_error"></ins>
+                                <div class="clearfix"></div>
+                                <div class="fred">@(ViewBag.ErrorValidateCode ?? "")</div>
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <th></th>
+                        <td>
+                            <a rel="nofollow" class="fblue_mid" href="@UrlRewriteHelper.GetForgetPwdUrl()">@Lang.TipForgetPassword</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <input id="loginbtn" type="submit" style="display: none;" />
+                            <a rel="nofollow" class="btn_orange btn_w108" onclick="loginvalid()" href="javascript:void(0)">@Lang.TipLogin</a><i>@Lang.TipOr</i><fb:login-button scope="public_profile,email" data-size="large" onlogin="checkFbLoginState();"></fb:login-button>
+                        </td>
+                    </tr>
+                </table>
+                <div class="to_register">
+                    <strong class="font14">@Lang.TipNewTo8Seasons</strong><a rel="nofollow" href="@UrlRewriteHelper.GetRegisterUrl()" class="btn_p30 btn_grey font13">@Lang.TipRegister</a>
+                </div>
+                <div class="bottom_shadow">&nbsp;</div>
+            </div>
+            <div class="rt service_sidebar">
+                @Html.Partial("~/Views/Account/Partial/_Service_Ease.cshtml")
+                @Html.Partial("~/Views/Account/Partial/_Service_DiscountL.cshtml")
+                @Html.Partial("~/Views/Account/Partial/_Exclusive_Service.cshtml")
+            </div>
+        </div>
+    </div>
+}

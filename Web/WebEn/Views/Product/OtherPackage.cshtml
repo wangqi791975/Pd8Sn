@@ -1,0 +1,47 @@
+﻿@using Com.Panduo.Web.Models.Product
+@using Com.Panduo.Service.Product
+@using Resources
+@model ProductPackVo
+@{
+    Layout = null;
+}
+<div class="close" data-dismiss="modal"><a href="javascript:void(0)"></a></div>
+@if (!Model.ProductInfo.IsNullOrEmpty())
+{ 
+    <div class="popup_package">
+        @if (Model.ProductInfo.Product.IsOtherPack)
+        {
+            foreach (var other in Model.OtherPack)
+            {
+                var discount0 = PageHelper.GetDiscount(other.ProductPrice);
+                <h3 class="font14">@switch (other.Product.OtherPackType)
+                                   {
+                                       case ProductOtherPackType.Big:
+                                           @Html.Raw(Lang.TipProBulkPack);
+                                           break;
+                                       case ProductOtherPackType.Small:
+                                           @Html.Raw(Lang.TipProSmallPack);
+                                           break;
+                                       default:
+                                           @Html.Raw(Lang.TipProRegularPack);
+                                           break;
+                                   }</h3>
+                <div class="lf list_pro_img">
+                    <a href="@UrlRewriteHelper.GetProductDetailUrl(other.Product.ProductId, other.ProductName)">
+                        <img src="@ImageHelper.GetImageUrl(other.Product.MainImage, 130)"/>
+                        @Html.Partial("~/Views/Product/Partial/__Promotion__Icon.cshtml", other)
+                    </a>
+                </div>
+                <div class="lf list_pro_info">
+                    <div class="list_table">
+                        <h5><a href="@UrlRewriteHelper.GetProductDetailUrl(other.Product.ProductId, other.ProductName)" title="">@other.ProductName (@other.Product.ProductCode)</a></h5>
+                        @Html.Partial("~/Views/Product/Partial/_Price_Small.cshtml", @other)
+                    </div>
+                    <p class="lf">@Lang.TipGrossWeight @(other.Product.Weight)g</p>
+                </div>
+                @Html.Partial("~/Views/Product/Partial/_Product_Icon.cshtml", @other)
+                <div class="clearfix"></div>
+            }
+        }
+    </div>
+}

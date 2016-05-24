@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/MailMessage/_layout/_Email_Customer_Layout.cshtml";
+    ViewBag.Title = "OEM & Sourcing Information";
+}
+<!--<tilte>OEM & Sourcing Information</tilte>-->
+
+Dear <!--[$fullname$]-->/Customer:
+
+This email is given to you because you have left an OEM & Sourcing Information on our website. Following is a copy of that information.
+
+Product Name/Link：
+@ViewBag.Title
+
+Details:
+@ViewBag.Content
+
+Email: 
+@ViewBag.Email
+
+Name: 
+@ViewBag.Name
+
+Best regards
+8Seasons Team

@@ -1,0 +1,290 @@
+﻿@using System.Text
+@using Com.Panduo.Service
+@using Com.Panduo.Service.Product
+@using Com.Panduo.Service.Product.Property
+@using Com.Panduo.Service.SiteConfigure
+@{
+    ViewBag.Title = "编辑产品";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<div class="ajax_detail">
+    <div class="ajax_info">
+        <form target="_self" class="form-horizontal" name="multiForm" id="multiForm" action="@Url.Content("~/Product/Submit")" enctype="multipart/form-data" method="post" novalidate="novalidate">
+            <input type="hidden" name="id" value="@ViewBag.Id" />
+            <input type="hidden" name="stock_id" value="@ViewBag.ProductStock.StockId" />
+            <input type="hidden" name="page" value="@ViewBag.Page" />
+            <div style="margin-bottom: 9px;" class="tabbable">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-target="#tab_base_info" href="javascript:void(0)" data-toggle="tab">基本信息</a></li>
+                    <li class=""><a data-target="#tab_product_attribute" href="javascript:void(0)" data-toggle="tab">图片信息</a></li>
+                    <li class=""><a data-target="#tab_attribute_price" href="javascript:void(0)" data-toggle="tab">属性</a></li>
+                </ul>
+            </div>
+            <div class="well tab-content">
+                <div class="tab-pane active" id="tab_base_info">
+                    <h4>基本信息</h4>
+                    <div class="control-group">
+                        <label class="control-label">产品编号：</label>
+                        <div class="controls">
+                            <p class="help-block"><span class="badge badge-warning">@ViewBag.Product.ProductCode</span></p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">产品名称：</label>
+
+
+                        <div class="controls">
+                            <table>
+                                @{
+                                    String languageIds = ((IList<Language>)ViewBag.Languages).Select(x => x.LanguageId).Join(",");
+                                }
+                                @for (int i = 0; i < ViewBag.Languages.Count; i++)
+                                {
+                                    IList<ProductLanguage> productLanguages = ((IList<ProductLanguage>)ViewBag.ProductLanguages).Where(x => x.LanguageId == ViewBag.Languages[i].LanguageId).ToList();
+                                    if (!productLanguages.IsNullOrEmpty())
+                                    {
+                                        <tr height="38">
+                                            <td>@Html.Raw(ViewBag.Languages[i].ChineseName)：</td>
+                                            <td><input type="text" id="product_name_@ViewBag.Languages[i].LanguageId" name="product_name_@ViewBag.Languages[i].LanguageId" class="input-xlarge" value="@productLanguages[0].ProductName"></td>
+                                            <td width="50"></td>
+                                            <td>营销标题：</td>
+                                            <td><input type="text" id="marketing_title_@ViewBag.Languages[i].LanguageId" name="marketing_title_@ViewBag.Languages[i].LanguageId" class="input-xlarge" value="@productLanguages[0].MarketingTitle"></td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        <tr height="38">
+                                            <td>@Html.Raw(ViewBag.Languages[i].ChineseName)：</td>
+                                            <td><input type="text" id="product_name_@ViewBag.Languages[i].LanguageId" name="product_name_@ViewBag.Languages[i].LanguageId" class="input-xlarge" value=""></td>
+                                            <td width="50"></td>
+                                            <td>营销标题：</td>
+                                            <td><input type="text" id="marketing_title_@ViewBag.Languages[i].LanguageId" name="marketing_title_@ViewBag.Languages[i].LanguageId" class="input-xlarge" value=""></td>
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">产品净重：</label>
+                        <div class="controls"><input type="text" required="required" id="weight" name="weight" value="@ViewBag.Product.Weight" class="input-mini" datatype="f1"></div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">产品体积重量：</label>
+                        <div class="controls"><input type="text" required="required" id="volume_weight" name="volume_weight" value="@ViewBag.Product.VolumeWeight" class="input-mini" datatype="f0"></div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">每组数量：</label>
+                        <div class="controls"><input type="text" required="required" id="group_quantity" name="group_quantity" value="@ViewBag.Product.GroupQuantity" class="input-mini" datatype="i1"></div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">单位：</label>
+                        <div class="controls">
+                            <select id="unit_id" name="unit_id" class="input-small" required="required">
+                                <option value="">--请选择--</option>
+                                @foreach (var productUnit in ViewBag.ProductUnits)
+                                {
+                                    string unitSelected = string.Empty;
+                                    if (ViewBag.Product.UnitId == productUnit.UnitId)
+                                    {
+                                        unitSelected = " selected=selected";
+                                    }
+                                    else
+                                    {
+                                        unitSelected = string.Empty;
+                                    }
+                                    <option @unitSelected value="@productUnit.UnitId">@productUnit.ChineseName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group input-append">
+                        <label class="control-label">成本价：</label>
+                        <div class="controls"><input type="text" required="required" id="cost_price_rmb" name="cost_price_rmb" value="@ViewBag.Product.CostPriceRmb" class="input-mini" datatype="f1"><span class="add-on">RMB</span> <span class="badge badge-important">这里不是最高售价，和旧版不同</span></div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">组数及利润系数：</label>
+                        <div class="controls">
+                            <table class="table" style="width:200px;">
+                                <tr>
+                                    <th>组数段</th>
+                                    <th>利润系数</th>
+                                </tr>
+                                @{
+                                    int quantity = 0;
+                                    string productStepPriceIds = ((IList<ProductStepPrice>)ViewBag.ProductStepPrices).Select(x => x.Quantity).Join(",");
+                                    var quantityStr = string.Empty;
+                                }
+                                @for (int i = 0; i < ViewBag.ProductStepPrices.Count; i++)
+                                {
+                                    if (ViewBag.ProductStepPrices.Count > i + 1)
+                                    {
+                                        quantity = ViewBag.ProductStepPrices[i + 1].Quantity - 1;
+                                        quantityStr = " - " + quantity;
+                                    }
+                                    else
+                                    {
+                                        quantityStr = "+";
+                                    }
+                                    <tr>
+                                        <td>@(ViewBag.ProductStepPrices[i].Quantity)@quantityStr</td>
+                                        <td><input type="text" required="required" name="profit_coefficient_@ViewBag.ProductStepPrices[i].Quantity" value="@ViewBag.ProductStepPrices[i].ProfitCoefficient" class="input-mini" datatype="f1"></td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                    <div class="control-group input-append">
+                        <label class="control-label">上浮比例：</label>
+                        <div class="controls">
+                            <select id="increase_proportion" name="increase_proportion" class="input-mini" required="required">
+                                <option value="0.0">0</option>
+                                @foreach (var productPrice in ViewBag.ProductPriceRises)
+                                {
+                                    var riseSelected = string.Empty;
+                                    if (productPrice.RiseValue == ViewBag.Product.IncreaseProportion)
+                                    {
+                                        riseSelected = " selected=selected";
+                                    }
+                                    <option value="@productPrice.RiseValue"@riseSelected>@productPrice.DisplayRiseValue</option>
+                                }
+                            </select><span class="add-on">%</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">产品状态：</label>
+                        <div class="controls">
+                            @{
+                                string offLine = string.Empty;
+                                string onSale = string.Empty;
+                                string backOrder = string.Empty;
+                                string delete = string.Empty;
+                                if ((int)ViewBag.Product.Status == 0)
+                                {
+                                    offLine = "checked=checked";
+                                }
+                                if ((int)ViewBag.Product.Status == 1)
+                                {
+                                    onSale = "checked=checked";
+                                }
+                                if ((int)ViewBag.Product.Status == 2)
+                                {
+                                    backOrder = "checked=checked";
+                                }
+                                if ((int)ViewBag.Product.Status == 3)
+                                {
+                                    delete = "checked=checked";
+                                }
+                            }
+                            <input type="radio" name="status" value="0" class="input-mini" @offLine>下货
+                            <input type="radio" name="status" value="1" class="input-mini" @onSale>正常销售
+                            <input type="radio" name="status" value="2" class="input-mini" @backOrder>预订
+                            <input type="radio" name="status" value="3" class="input-mini" @delete>删除
+                        </div>
+                    </div>
+                    <div class="control-group stock_container">
+                        <label class="control-label">库存数量：</label>
+                        <div class="controls"><input type="text" required="required" id="stock_number" name="stock_number" value="@ViewBag.ProductStock.StockNumber" class="input-mini" datatype="i1"></div>
+                    </div>
+                    <div class="control-group stock_container">
+                        <label class="control-label">是否绑定库存：</label>
+                        <div class="controls">
+                            @{
+                                string notBind = string.Empty;
+                                string bind = string.Empty;
+                                string bindNotLimit = string.Empty;
+                                if ((int)ViewBag.ProductStock.BindStockType == 0)
+                                {
+                                    notBind = "checked=checked";
+                                }
+                                if ((int)ViewBag.ProductStock.BindStockType == 1)
+                                {
+                                    bind = "checked=checked";
+                                }
+                                if ((int)ViewBag.ProductStock.BindStockType == 2)
+                                {
+                                    bindNotLimit = "checked=checked";
+                                }
+                            }
+                            <input type="radio" value="0" name="bind_stock_type" @notBind /> 不绑定
+                            <input type="radio" value="1" name="bind_stock_type" @bind /> 绑定、售完后下货
+                            <input type="radio" value="2" name="bind_stock_type" @bindNotLimit /> 绑定、预订、不限制购买
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">匹配产品编号：</label>
+                        <div class="controls"><input type="text" id="product_models" name="product_models" value="" class="input-xlarge"></div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab_product_attribute" style="height: 100px; margin-top: 56px;">
+                    <input type="button" value="点击更新所有图片信息" /> <span class="badge badge-important">点击后刷新当前产品所有图片</span>
+                </div>
+
+                <div class="tab-pane" id="tab_attribute_price">
+                    <h4>属性值选择</h4>
+                    <div style="padding-top: 10px;" class="tab-content">
+                        <div class="control-group">
+                            @{
+                                string propertyIds = string.Empty;
+                            }
+                            @if (ViewBag.Properties != null)
+                            {
+                                propertyIds = ((IList<Property>)ViewBag.Properties).Select(x => x.PropertyId).Join(",");
+                                <table class="table" style="width: 400px;">
+                                    @foreach (var property in @ViewBag.Properties)
+                                    {
+                                        IList<PropertyValue> propertyValues = ServiceFactory.PropertyService.GetAllPropertyValuesOfProperty(property.PropertyId);
+                                        <tr>
+                                            <td>@property.PropertyName：</td>
+                                            <td>
+                                                <select required="required" id="property_value_id_@property.PropertyId" name="property_value_id_@property.PropertyId" class="input-medium">
+                                                    <option value="">--请选择一项--</option>
+                                                    @foreach (var propertyValue in propertyValues)
+                                                    {
+                                                        <option value="@propertyValue.PropertyValueId">@propertyValue.PropertyValueName</option>
+                                                    }
+                                                </select>
+
+                                            </td>
+                                        </tr>
+                                    }
+                                </table>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="well form-actions">
+                <input type="hidden" name="language_ids" value="@languageIds" />
+                <input type="hidden" name="property_ids" value="@propertyIds" />
+                <input type="hidden" name="product_step_price_ids" value="@productStepPriceIds" />
+                <input type="submit" class="btn btn-primary ajax_update" value="提交">
+                <span>
+                    <a class="btn" href="@Url.Content("~/Product/Index/" + ViewBag.Page)">取消</a>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+<script language="javascript">
+    $(document).ready(function () {
+        @foreach (var property in ViewBag.ProductPropertyValues)
+        {
+            @Html.Raw("    $('#property_value_id_" + property.PropertyId + "').val(" + property.PropertyValueId + ");\n")
+            ;
+        }
+        $("input[name='status']").live("click", function () {
+            var status = $(this).val();
+            if (status == "1") {
+                $(".stock_container").show();
+            } else {
+                $(".stock_container").hide();
+            }
+        });
+        $("input[name='status']:checked").trigger("click");
+    });
+</script>

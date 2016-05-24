@@ -1,0 +1,17 @@
+﻿@using Com.Panduo.Service.Marketing
+@{
+    ViewBag.Title = "下单活动";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<div class="pull-right">
+    <form method="post" action="@Url.Content("~/Marketing/PlaceOrderList")" id="searchForm" name="searchForm" class="form-search">
+        活动名称：<input type="text" onkeyup=" $(this).val($(this).val().replace(/\//g, '')); " placeholder="活动名称" name="keyword" />
+        <button class="btn" type="submit">搜索</button>
+    </form>
+</div>
+<a class="btn" href="@Url.Content("~/Marketing/PlaceOrderEdit/0")"><i class="icon-plus"></i>新建下单活动</a>
+<code>说明：时间为北京时间</code>
+<div class="clearboth"></div>
+
+<div id="main" class="ajax-list" data-url="@Url.Content("~/Marketing/PlaceOrderList")"></div>

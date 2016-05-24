@@ -1,0 +1,71 @@
+﻿@using NPOI.SS.Formula.Functions
+@{
+    ViewBag.Title = "Club黑名单管理";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<form id="clublackform" method="POST" action="/Club/ClubBlackList" onsubmit="return false;">
+    <div class="well tab-content">
+        <div id="tab_base_info">
+            <div class="control-group">
+                <label class="control-label">请在下方输入客户邮箱，多个客户邮箱之间用英文状态的逗号间隔</label>
+                <div class="controls">
+                    <textarea name="blacklists" rows="8" style="width: 800px;"></textarea>
+                    <div class="fred"></div>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"></label>
+                <div class="controls">
+                    <input id="clublackbtn" type="submit" class="btn_add" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">已提交的黑名单客户</label>
+                <div class="controls" id="clublacklist">
+                    @{ string[] clubBlackArr = ((string)ViewBag.ClubBlackList).Split(',');}
+                    @for (int i = 0; i < clubBlackArr.Length; i++)
+                    {
+
+                        @(i != clubBlackArr.Length - 1 ? Html.Raw(clubBlackArr[i] + ",") : Html.Raw(clubBlackArr[i]))
+                        if ((i + 1) % 5 == 0)
+                        {
+                        @Html.Raw("<br/>");
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $("#clublackbtn").click(function () {
+        $("[name='blacklists']").next('.fred').html("");
+        if ($.trim($("[name='blacklists']").val()) == "") {
+            $("[name='blacklists']").next('.fred').html("客户邮箱不允许为空");
+            return false;
+        }
+        $("#clublackform").ajaxSubmit({
+            success: function (responseText) {
+                $("#clublackform").prev('div.alert').remove();
+                var msg;
+                if (responseText.error != true) {
+                    msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作成功!' : responseText.msg;
+                    $("#clublackform").before('<div class="alert alert-success"><a class="close" data-dismiss="alert">&times;</a>' + msg + '</div>');
+                } else {
+                    msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作失败!' : responseText.msg;
+                    $("#clublackform").before('<div class="alert alert-error"><a class="close" data-dismiss="alert">&times;</a>' + msg + '</div>');
+                }
+                var clublackarr = responseText.blacklist.split(",");
+                var newclublackarr = "";
+                for (var i = 0; i < clublackarr.length; i++) {
+                    newclublackarr = newclublackarr + (i != clublackarr.length - 1 ? clublackarr[i] + "," : clublackarr[i]);
+                    if ((i + 1) % 5 == 0) {
+                        newclublackarr = newclublackarr + "<br/>";
+                    }
+                }
+                $("#clublacklist").html(newclublackarr);
+            }
+        });
+    });
+</script>

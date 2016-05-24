@@ -1,0 +1,204 @@
+﻿@using Com.Panduo.Common
+@using Com.Panduo.Service
+@using Com.Panduo.Service.Coupon
+@using Com.Panduo.Service.SiteConfigure
+@{
+    int count = 0;
+}
+@model Coupon
+<h4>使用限制</h4>
+<div class="control-group">
+    <label class="control-label"><i class="fred">*</i>金额对象：</label>
+    <div class="controls">
+        @Html.DropDownListFor(m => m.AmountType, ViewBag.CouponAmountType as SelectList, new { @class = "input-xlarge", datatype = "i1" })
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label"><i class="fred">*</i>最低消费金额：</label>
+    <div class="controls">
+        @Html.TextBoxFor(m => m.MinAmount, new { @class = "input-xlarge", required = "required", datatype = "i0" })
+        @Html.DropDownListFor(m => m.MinAmountCurrencyId, ViewBag.AllCurrency as SelectList, new { @class = "input-small" })
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label"><i class="fred">*</i>语种：</label>
+    <div class="controls">
+        <label class="checkbox inline">
+            <input type="checkbox" data-toggle="checkthis" id="languageall" value="All" @(Model.IsNullOrEmpty() ? "" : (Model.LanguageIds == "All" ? "checked" : ""))/>所有
+        </label>
+        @foreach (var language in (List<Language>)ViewBag.AllLanguage)
+        {
+            <label class="checkbox inline">
+                <input type="checkbox" data-toggle="checkthis" name="language" id=@("languageall_" + language.LanguageId) value="@language.LanguageId" @(Model.IsNullOrEmpty() ? "" : (("," + Model.LanguageIds + ",").Contains("," + language.LanguageId + ",") ? "checked" : ""))/>@language.LanguageName
+            </label>
+        }
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label"><i class="fred">*</i>国家：</label>
+    <div class="controls show_section">
+        <label class="checkbox">
+            <input type="checkbox" data-toggle="checkthis" id="countryall" value="All" @(Model.IsNullOrEmpty() ? "" : (Model.CountryIds == "All" ? "checked" : "")) />所有
+        </label>
+        @foreach (var continent in (List<Continent>)ViewBag.AllContinent)
+        {
+            count = 0;
+            <label class="checkbox">
+                <input type="checkbox" data-toggle="checkthis" id=@("countryall_" + continent.ContinentId) name="continent" value="@continent.ContinentId" class="continentcountry" />@continent.ContinentName<br />
+            </label>
+            <div style="padding-left: 8px; margin-bottom: 5px;">
+                @foreach (var continentcountry in ServiceFactory.ConfigureService.GetAllCountryByContinent(continent.ContinentId))
+                {
+                    if (count % 10 == 0 && count != 0)
+                    {
+                    <br />
+                    }
+                    <label class="checkbox inline" style="margin-left: 10px;">
+                        <input data-toggle="checkthis" type="checkbox" id=@("countryall_" + continent.ContinentId + "_" + @continentcountry.CountryId) name="country" value="@continentcountry.CountryId" @(Model.IsNullOrEmpty() ? "" : (Model.CountryIds.Split(',').Contains(continentcountry.CountryId.ToString()) ? "checked" : ""))/>@continentcountry.CountryName
+                    </label>
+                    count = count + 1;
+                }
+            </div>
+        }
+    </div>
+    <a href="javascript:void(0)" class="btnshow" title="展开"><i class="icon-chevron-down"></i></a>
+</div>
+<div class="control-group">
+    <label class="control-label"><i class="fred">*</i>有效期：</label>
+    <div class="controls">
+        <table width="100%">
+            <tr>
+                <td>
+                    @Html.RadioButtonFor(m => m.LimitType, LimitType.BeginEnd, new { style = "float:left", @checked = "checked" })<br />
+                    <div>
+                        @{
+                            var limitBeginDate = Model.IsNullOrEmpty() ? "" : Model.LimitBeginTime.ToString().Split(' ').First();
+                            var limitBeginTime = Model.IsNullOrEmpty() ? "" : Model.LimitBeginTime.ToString().Split(' ').LastOrDefault();
+                            var limitEndDate = Model.IsNullOrEmpty() ? "" : Model.LimitEndTime.ToString().Split(' ').First();
+                            var limitEndTime = Model.IsNullOrEmpty() ? "" : Model.LimitEndTime.ToString().Split(' ').LastOrDefault();
+                        }
+                        <label class="control-label">开始时间：</label>
+                        <div class="controls">
+                            <div class="bfh-datepicker" data-format="y-m-d" data-date="@(limitBeginDate ?? string.Empty)" data-icon="icon-calendar" data-name="limitBeginDate" data-placeholder="开始时间"></div>
+                            <div class="bfh-timepicker" data-icon="icon-time" data-name="limitBeginTime" data-time="@(limitBeginTime.IsNullOrEmpty() ? "16:00" : limitBeginTime)"></div>
+                            <code>（北京时间）</code>
+                        </div>
+                        <label class="control-label">结束时间：</label>
+                        <div class="controls">
+                            <div class="bfh-datepicker" data-format="y-m-d" data-date="@(limitEndDate ?? string.Empty)" data-icon="icon-calendar" data-name="limitEndDate" data-placeholder="结束时间"></div>
+                            <div class="bfh-timepicker" data-icon="icon-time" data-name="limitEndTime" data-time="@(limitEndTime.IsNullOrEmpty() ? "15:59" : limitEndTime)"></div>
+                            <code>（北京时间）</code>
+                            <label>（*不填写表示无结束日期）</label>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.RadioButtonFor(m => m.LimitType, LimitType.Day, new { style = "float:left" })<br />
+                    <div class="control-group">
+                        <label class="control-label">领取后：</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.LimitDay, new { @class = "input-small", datatype = "i1" })天
+                        </div>
+                    </div>
+                    <div class="control-group" id="pickdiv" style="display: none;">
+                        <label class="control-label">领取周期：</label>
+                        <div class="controls">
+                            <div>
+                                @{
+                                    var pickBeginDate = Model.IsNullOrEmpty() ? "" : Model.PickBeginTime.ToString().Split(' ').First();
+                                    var pickBeginTime = Model.IsNullOrEmpty() ? "" : Model.PickBeginTime.ToString().Split(' ').LastOrDefault();
+                                    var pickEndDate = Model.IsNullOrEmpty() ? "" : Model.PickEndTime.ToString().Split(' ').First();
+                                    var pickEndTime = Model.IsNullOrEmpty() ? "" : Model.PickEndTime.ToString().Split(' ').LastOrDefault();
+                                }
+                                <label class="control-label">开始时间：</label>
+                                <div class="controls">
+                                    <div class="bfh-datepicker" data-format="y-m-d" data-date="@(pickBeginDate ?? string.Empty)" data-icon="icon-calendar" data-name="pickBeginDate" data-placeholder="开始时间"></div>
+                                    <div class="bfh-timepicker" data-icon="icon-time" data-name="pickBeginTime" data-time="@(pickBeginTime.IsNullOrEmpty() ? "16:00" : pickBeginTime)"></div>
+                                    <code>（北京时间）</code>
+                                </div>
+                                <label class="control-label">结束时间：</label>
+                                <div class="controls">
+                                    <div class="bfh-datepicker" data-format="y-m-d" data-date="@(pickEndDate ?? string.Empty)" data-icon="icon-calendar" data-name="pickEndDate" data-placeholder="结束时间"></div>
+                                    <div class="bfh-timepicker" data-icon="icon-time" data-name="pickEndTime" data-time="@(pickEndTime.IsNullOrEmpty() ? "15:59" : pickEndTime)"></div>
+                                    <code>（北京时间）</code>
+                                    <label>（*不填写表示无结束日期）</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+@{
+    IDictionary<int, CouponDesc> couponDescs = ServiceFactory.CouponService.GetCouponDesc(Model.IsNullOrEmpty() ? 0 : Model.CouponId);
+}
+<div class="control-group">
+    <label class="control-label">备注：</label>
+    <div class="controls">
+        <div class="tab-content">
+            <ul class="nav nav-tabs">
+                @for (int i = 0; i < ViewBag.AllLanguage.Count; i++)
+                {
+                    var classActive = " class=";
+                    if (i == 0)
+                    {
+                        classActive = " class=active";
+                    }
+                    <li @classActive><a data-toggle="tab" href="javascript:void(0)" data-target="#tab_category_language_description_@ViewBag.AllLanguage[i].LanguageId">@ViewBag.AllLanguage[i].ChineseName</a></li>
+                }
+            </ul>
+
+            @for (int i = 0; i < ViewBag.AllLanguage.Count; i++)
+            {
+                var classActive = " class=tab-pane";
+                if (i == 0)
+                {
+                    classActive = " class='tab-pane active'";
+                }
+                if (couponDescs.ContainsKey(ViewBag.AllLanguage[i].LanguageId))
+                {
+                @Html.Raw("<div" + classActive + " id=tab_category_language_description_" + ViewBag.AllLanguage[i].LanguageId + "><textarea name=category_language_description_" + ViewBag.AllLanguage[i].LanguageId + " rows='8' name='subject' id='" + ViewBag.AllLanguage[i].LanguageId + "' style='width:800px;'>" + couponDescs[(int)ViewBag.AllLanguage[i].LanguageId].Description + "</textarea></div>");
+                }
+                else
+                {
+                @Html.Raw("<div" + classActive + " id=tab_category_language_description_" + ViewBag.AllLanguage[i].LanguageId + "><textarea name=category_language_description_" + ViewBag.AllLanguage[i].LanguageId + " rows='8' name='subject' id='" + ViewBag.AllLanguage[i].LanguageId + "' style='width:800px;'></textarea></div>");
+                }
+            }
+        </div>
+        (该备注显示在前台Coupon的Memo列)
+    </div>
+</div>
+
+<style type="text/css">
+    .btnshow
+    {
+        float: right;
+        margin-top: -5px;
+        margin-right: 3px;
+    }
+
+    .show_section
+    {
+        height: 100px;
+        overflow: hidden;
+    }
+</style>
+<script type="text/javascript">
+    $(function () {
+        $(".control-group .btnshow").click(function () {
+            $(this).parent().find(".controls").toggleClass("show_section");
+            if ($(this).find("i").hasClass("icon-chevron-up")) {
+                $(this).attr("title", "展开");
+                $(this).find("i").removeClass("icon-chevron-up").addClass("icon-chevron-down");
+            } else {
+                $(this).attr("title", "收起");
+                $(this).find("i").removeClass("icon-chevron-down").addClass("icon-chevron-up");
+            }
+        });
+    });
+</script>

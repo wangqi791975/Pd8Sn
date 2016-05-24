@@ -1,0 +1,239 @@
+﻿@using Com.Panduo.Service.Customer
+@using Resources
+@model Com.Panduo.Service.Customer.FacebookInfo
+@{
+    ViewBag.Title = "Bind your 8seasons Account";
+    Layout = "~/Views/Shared/Layout/_LoginBody.cshtml";
+}
+
+@section HtmlHead
+{
+    <script type="text/javascript">
+        $(function () {
+            //  登陆按钮
+            $("#btnBindLogin").on("click", function () {
+                var showErrMsg = function (obj, msg) {
+                    $(obj).next().html(msg);
+                };
+                showErrMsg("input[name=FD_Email]", "");
+                showErrMsg("input[name=FD_Password]", "");
+                var email = $.trim($("input[name=FD_Email]").val());
+                var password = $.trim($("input[name=FD_Password]").val());
+                if (email === "") {
+                    showErrMsg("input[name=FD_Email]", Message.ErrorEmailEmpty);
+                    return false;
+                }
+                if (!DataType.isEmail(email)) {
+                    showErrMsg("input[name=FD_Email]", Message.ErrorEmailFormat);
+                    return false;
+                }
+                if (password === "") {
+                    showErrMsg("input[name=FD_Password]", Message.ErrorPasswordEmpty);
+                    return false;
+                }
+
+                $("#bindLoginForm").ajaxSubmit({
+                    url: "/Account/LoginBindFb",
+                    success: function (jsonData) {
+                        if (typeof (jsonData.err) != "undefined" && jsonData.err) {
+                            if (jsonData.errEmail) {
+                                showErrMsg("input[name=FD_Email]", jsonData.errEmail);
+                            }
+                            if (jsonData.errPassword) {
+                                showErrMsg("input[name=FD_Password]", jsonData.errPassword);
+                            }
+                            if (jsonData.redirectUrl) {
+                                window.location.href = jsonData.redirectUrl;
+                            }
+                        } else {
+                            DivOs.showErrorModal(Message.MsgLoginSuccessAuto);
+                            window.location.href = jsonData.redirectUrl;
+                        }
+                    }
+                });
+                return false;
+            });
+
+            //  注册按钮
+            $("#btnBindRegister").on("click", function () {
+                var showErrMsg = function (obj, msg) {
+                    $(obj).next().html(msg);
+                };
+                showErrMsg("input[name=FD_EmailReg]", "");
+                showErrMsg("input[name=FD_PasswordReg]", "");
+                showErrMsg("input[name=FD_ConfPassword]", "");
+                var email = $.trim($("input[name=FD_EmailReg]").val());
+                var password = $.trim($("input[name=FD_PasswordReg]").val());
+                var confword = $.trim($("input[name=FD_ConfPassword]").val());
+                if (email === "") {
+                    showErrMsg("input[name=FD_EmailReg]", Message.ErrorEmailEmpty);
+                    return false;
+                }
+                if (!DataType.isEmail(email)) {
+                    showErrMsg("input[name=FD_EmailReg]", Message.ErrorEmailFormat);
+                    return false;
+                }
+                if (password === "") {
+                    showErrMsg("input[name=FD_PasswordReg]", Message.ErrorPasswordEmpty);
+                    return false;
+                }
+                if (password.length < 5) {
+                    showErrMsg("input[name=FD_PasswordReg]", Message.ErrorShortPassword);
+                    return false;
+                }
+                if (password.length > 32) {
+                    showErrMsg("input[name=FD_PasswordReg]", Message.ErrorLongPassword);
+                    return false;
+                }
+                if (confword === "") {
+                    showErrMsg("input[name=FD_ConfPassword]", Message.ErrorConfPasswordEmpty);
+                    return false;
+                }
+                if (password !== confword) {
+                    showErrMsg("input[name=FD_ConfPassword]", Message.ErrorPasswordNotMatch);
+                    return false;
+                }
+
+                $("#bindRegisterForm").ajaxSubmit({
+                    url: "/Account/RegisterBindFb",
+                    success: function (jsonData) {
+                        if (typeof (jsonData.err) != "undefined" && jsonData.err) {
+                            if (jsonData.errEmail) {
+                                showErrMsg("input[name=FD_EmailReg]", jsonData.errEmail);
+                            }
+                            if (jsonData.errPassword) {
+                                showErrMsg("input[name=FD_PasswordReg]", jsonData.errPassword);
+                            }
+                            if (jsonData.errConfword) {
+                                showErrMsg("input[name=FD_ConfPassword]", jsonData.errConfword);
+                            }
+                            if (jsonData.redirectUrl) {
+                                window.location.href = jsonData.redirectUrl;
+                            }
+                        } else {
+                            DivOs.showErrorModal(Message.MsgRegisterSuccessAuto);
+                            window.location.href = jsonData.redirectUrl;
+                        }
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+}
+<div class="wrap">
+    @{
+        if (ViewBag.Sitemaps == null)
+        {
+            ViewBag.Sitemaps = "";
+        }
+        @Html.Raw(ViewBag.Sitemaps)
+    }
+    <h2 class="font14 font_verdana margin20">@Lang.TipBandYourAccount</h2>
+    <div class="account_w982">
+        <div class="lf binding_wrap">
+            <form id="bindLoginForm" name="bindLoginForm" method="POST" onsubmit="return false;">
+                <h3 class="font_verdana">@Lang.TipBadnExistingAccount</h3>
+                <input type="hidden" name="HID_RedirectUrl" value="@(ViewBag.RedirectUrl ?? "")"/>
+                <table width="418" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th>@Lang.TipEmail</th>
+                        <td>
+                            <input class="inputw310 input_text_wrap" type="text" name="FD_Email" />
+                            <div class="fred"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>@Lang.TipPassword</th>
+                        <td>
+                            <input class="inputw310 input_text_wrap" type="password" name="FD_Password" />
+                            <div class="fred"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <td>
+                            <a class="btn_orange btn_w108" id="btnBindLogin" href="javascript:void(0)">@Lang.TipLogin</a><a class="fblue_mid" href="@UrlRewriteHelper.GetForgetPwdUrl()">@Lang.TipForgetPassword</a>
+                        </td>
+                    </tr>
+                </table>
+                <div class="bottom_shadow">&nbsp;</div>
+            </form>
+        </div>
+        <div class="rt fb_creat_account">
+            <form id="bindRegisterForm" name="bindRegisterForm" method="POST" onsubmit="return false;">
+                <h3 class="font_verdana">@Html.Raw(Lang.TipCapJoinCoupon)</h3>
+                <input type="hidden" name="HID_RedirectUrl" value="@(ViewBag.RedirectUrl ?? "")"/>
+                <div class="creat_wrap">
+                    <h3 class="font_verdana">@Lang.TipCreateAccountFacebook</h3>
+                    <table cellpadding="0" cellspacing="0" width="448">
+                        <tr>
+                            <th><i>&nbsp;</i><em>@Lang.TipName</em></th>
+                            <td>
+                                <input class="inputw270 input_text_wrap" type="text" name="FD_FullName" value="@Model.FaceBookName"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><i class="fred">*</i><em>@Lang.TipEmail</em></th>
+                            <td>
+                                <input class="inputw270 input_text_wrap" type="text" name="FD_EmailReg" value="@Model.FaceBookEmail"/>
+                                <div class="fred"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><i class="fred">*</i><em>@Lang.TipPassword</em>
+                            </th>
+                            <td>
+                                <input class="inputw270 input_text_wrap" name="FD_PasswordReg" type="password"/>
+                                <div class="fred"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><i class="fred">*</i><em>@Lang.TipConfPassword</em></th>
+                            <td>
+                                <input class="inputw270 input_text_wrap" name="FD_ConfPassword" type="password"/>
+                                <div class="fred"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><i class="fred">*</i><em>@Lang.TipDescribeYou</em></th>
+                            <td class="input_radio">
+                                <label>
+                                    <input type="radio" name="FD_CustomerType" checked="checked" value="@CustomerType.Wholesaler"/>
+                                    <span>@Lang.TipWholesaler</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="FD_CustomerType" value="@CustomerType.Retailer"/>
+                                    <span>@Lang.TipRetailer</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="FD_CustomerType" value="@CustomerType.JewelryDiyFan"/>
+                                    <span>@Lang.TipDIYFan</span>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <td class="notice_checkbox">
+                                <label>
+                                    <input type="checkbox" name="FD_ReceiveNewsletters" /><span>@Lang.TipReceiveNewsletters</span>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <td>
+                                <a class="btn_orange btn_p30" id="btnBindRegister" href="javascript:void(0)">@Lang.TipRegister</a>
+                            </td>
+                        </tr>
+                    </table>
+                    <p>
+                        @Html.Raw(Lang.TipAgree8Seasons)
+                    </p>
+                    <div class="bottom_shadow">&nbsp;</div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

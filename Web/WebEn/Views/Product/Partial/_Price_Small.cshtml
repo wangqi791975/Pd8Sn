@@ -1,0 +1,43 @@
+﻿@using Com.Panduo.Web.Models.Product
+@using Resources
+@model Com.Panduo.Service.Product.ProductInfo
+@{
+    var logininfo = SessionHelper.CurrentCustomer;
+    var vip_remark = "pro_sale";
+    var display = PageHelper.GetCurrentCurrency().Format() + "/Pack";
+    var discount = PageHelper.GetDiscount(Model.ProductPrice);
+    if (discount>0&&discount < 1)
+    {
+        <table cellpadding="0" cellspacing="0" width="385">
+            <tr>
+                <th colspan="7">@Lang.TipPromotionPrice (<span class="fred">@display</span>) :<ins class="@vip_remark"></ins></th>
+            </tr>
+            @Html.Partial("~/Views/Product/Partial/__Product__Price.cshtml", new ProductPriceVo() {ProductPrice = Model.ProductPrice, Discount =discount,IsDispalyOriginalPrice = true})
+        </table>
+    }
+    else
+    {
+        if (!logininfo.IsNullOrEmpty()&&logininfo.IsVip)
+        {
+
+            vip_remark = "pro_vip";
+            discount = logininfo.VipDiscount;
+            
+                 <table cellpadding="0" cellspacing="0" width="385">
+                    <tr>
+                        <th colspan="7">@Lang.TipVipPrice (<span class="fred">@display</span>) :<ins class="@vip_remark"></ins></th>
+                    </tr>
+                      @Html.Partial("~/Views/Product/Partial/__Product__Price.cshtml", new ProductPriceVo() {ProductPrice=Model.ProductPrice,Discount=discount,IsDispalyOriginalPrice = logininfo.IsVip })
+                </table>
+        }
+        else
+        {       
+              <table cellpadding="0" cellspacing="0" width="385">
+                <tr>
+                    <th colspan="7">@(Lang.TipYourPrice)(<span class="fred">@display</span>) :</th>
+                </tr>
+                  @Html.Partial("~/Views/Product/Partial/__Product__Price.cshtml", new ProductPriceVo() {ProductPrice=Model.ProductPrice,Discount=discount,IsDispalyOriginalPrice = false })
+               </table>
+        }
+    }
+}

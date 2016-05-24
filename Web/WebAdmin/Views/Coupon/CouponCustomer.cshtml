@@ -1,0 +1,113 @@
+﻿@using Com.Panduo.Service.Coupon
+@{
+    ViewBag.Title = "Coupon使用管理";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@section HtmlHead
+{
+    @Html.JsFor("CouponCustomer.js", "~/Js/bootstrap-formhelpers.js,~/Js/Marketing/Marketing.js", fileVersion: "1.25")
+    @Html.CssFor("CouponCustomer.css", "~/Css/bootstrap-formhelpers.min.css", fileVersion: "1.0")
+}
+<div class="pull-left">
+    <form method="post" onsubmit="return false;" action="/Coupon/SendCoupon" id="sendcouponForm" name="sendcouponForm">
+        <table>
+            <tr>
+                <td>客户邮箱：</td>
+                <td>
+                    <input type="text" onkeyup=" $(this).val($(this).val().replace(/\//g, '')); " name="customerEmail"></td>
+            </tr>
+            <tr>
+                <td>Coupon Code：</td>
+                <td>
+                    <input type="text" onkeyup=" $(this).val($(this).val().replace(/\//g, '')); " name="coupunCode">
+                    <button class="btn" id="sendcouponbtn" type="submit">发送Coupon</button></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="pull-right">
+    <form method="post" action="/Coupon/CouponCustomerList" id="searchForm" name="searchForm" class="form-search">
+        <table>
+            <tr>
+                <td>Coupon名称：</td>
+                <td>
+                    <input type="text" onkeyup=" $(this).val($(this).val().replace(/\//g, '')); " name="couponName"></td>
+            </tr>
+            <tr>
+                <td>客户邮箱/ID：</td>
+                <td>
+                    <input type="text" onkeyup=" $(this).val($(this).val().replace(/\//g, '')); " name="emailId"></td>
+            </tr>
+            <tr>
+                <td>订单号：</td>
+                <td>
+                    <input type="text" onkeyup=" $(this).val($(this).val().replace(/\//g, '')); " name="orderCode"></td>
+            </tr>
+            <tr>
+                <td>状态：</td>
+                <td>
+                    <select name="status">
+                        <option value="0">所有</option>
+                        <option value="@((int)CouponStatus.Close)">关闭</option>
+                        <option value="@((int)CouponStatus.PassDue)">已过期</option>
+                        <option value="@((int)CouponStatus.MarketingUsed)">销售使用</option>
+                        <option value="@((int)CouponStatus.Used)">已使用</option>
+                        <option value="@((int)CouponStatus.NotUsed)">未使用</option>
+                    </select></td>
+            </tr>
+            <tr>
+                <td>剩余天数：</td>
+                <td>
+                    <select name="leftDay">
+                        <option value="1">由少到多</option>
+                        <option value="0">由多到少</option>
+                    </select>
+                    <button class="btn" type="submit">搜索</button></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="clearboth"></div>
+<div id="main" class="ajax-list" data-url="/Coupon/CouponCustomerList">
+</div>
+
+    <div class="modal hide fade ajax_detail" data-url="/Coupon/CouponCustomerEClose">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">&times;</a>
+            <h3>关闭Coupon</h3>
+        </div>
+        <div class="modal-body ajax_info">
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:void(0)" class="btn btn-primary ajax_update">保存</a>
+            <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+        </div>
+    </div>
+
+    <div class="modal hide fade ajax_detail_1" data-url="/Coupon/CouponCustomerEStart">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">&times;</a>
+            <h3>重新启用Coupon</h3>
+        </div>
+        <div class="modal-body ajax_info">
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:void(0)" class="btn btn-primary ajax_update_1">保存</a>
+            <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+        </div>
+    </div>
+
+    <div class="modal hide fade ajax_detail_2" data-url="/Coupon/CouponCustomerEUse">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">&times;</a>
+            <h3>使用Coupon</h3>
+        </div>
+        <div class="modal-body ajax_info">
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:void(0)" class="btn btn-primary ajax_update_2">保存</a>
+            <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+        </div>
+    </div>
+
+

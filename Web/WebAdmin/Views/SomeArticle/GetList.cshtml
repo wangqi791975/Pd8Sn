@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "GetList";
+}
+@using Com.Panduo.Service
+@model  Com.Panduo.Service.PageData<Com.Panduo.Service.Article.SomeArticle>
+@{
+    Layout = null;
+}
+
+@if (@Model.Pager.TotalRowCount > 0)
+{    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th width="5%">ID</th>
+                <th width="15%">中文标题</th>
+                <th width="20%">英文标题</th>
+                <th width="20%">涉及语种</th>
+                <th width="15%">创建时间</th>
+                <th width="15%">创建人</th>
+                <th width="10%">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var article in Model.Data)
+        {
+           
+                var list=  ServiceFactory.ArticleService.GetSomeArticleLanguage(article.ArticleId);
+                var arr = list.Select(x => x.LanguageId).ToArray();
+                var langlist = ServiceFactory.ConfigureService.GetAllValidLanguage();
+                string name = "";
+                if (!arr.IsNullOrEmpty() && !langlist.IsNullOrEmpty())
+                {
+                    string j=string.Empty;
+                    foreach (var a in arr)
+                    {
+                        j=  langlist.Where(x => x.LanguageId == a).Select(y => y.ChineseName).FirstOrDefault();
+                        if (!j.IsNullOrEmpty())
+                        {
+                            name += "," + j;
+                        }
+                    }
+                    if (name.Length > 0)
+                    {
+                       name= name.Substring(1);
+                    }
+                }
+   
+            <tr>
+                <td>@article.ArticleId</td>
+                <td>@article.ChineseTitle</td>
+                <td>@article.EnglishTitle</td>
+                <td>@name</td>
+                <td>@article.CreateTime</td>
+                <td>@article.Creater</td>
+                <td>
+                    <div>
+                    <a class="btn btn-mini btn-info" href="/SomeArticle/Edit?ArticleId=@article.ArticleId">编辑</a>
+                    </div>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    @Html.Partial("~/Views/Shared/Partial/_Page_Bottom.cshtml", @Model.Pager) 
+}
+

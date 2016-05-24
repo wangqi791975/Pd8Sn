@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "8Seasons(Beads, Jewelry Making Supplies & Crafts Wholesaler) - Password Reset";
+    Layout = "~/Views/MailMessage/_layout/_Email_Customer_Layout.cshtml";
+}
+<!--<tilte>8Seasons(Beads, Jewelry Making Supplies & Crafts Wholesaler) - Password Reset</tilte>-->
+Dear @ViewBag.CustomerName/Customer:
+
+Welcome to 8Seasons!
+
+If you forgot your password, please visit the following web page to reset your password ( link valid for 72 hours):
+@ViewBag.ResetUrl
+
+If you do not apply retrieve your password, please click the following link to cancel:
+@ViewBag.CancelUrl  
+
+Any question or problem, please feel free to <a href="mailto:'@Html.Raw("notification@8seasons.com")'">contact us</a>, we are happy to assist.  
+
+Best regards
+8Seasons Team
+

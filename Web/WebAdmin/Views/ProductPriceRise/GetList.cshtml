@@ -1,0 +1,26 @@
+﻿@model IList<Com.Panduo.Service.Product.ProductPriceRise>
+@{
+    Layout = null;
+}
+
+<table class="table table-striped table-bordered" data-delaction="@Url.Content("~/ProductPriceRise/Delete")">
+    <thead>
+        <tr>
+            <th width="30%">上浮比例</th>
+            <th width="40%">添加时间</th>
+            <th width="30%">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var rise in @Model)
+        {
+            <tr>
+                <td>@rise.DisplayRiseValue%</td>
+                <td>@rise.DateCreated</td>
+                <td>
+                    <a class="btn btn-mini btn-danger btn-ajax-delete" data-id="@rise.Id"><i class="icon-trash icon-white"></i>删除</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

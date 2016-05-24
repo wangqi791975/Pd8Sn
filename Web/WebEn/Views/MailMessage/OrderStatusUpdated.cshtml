@@ -1,0 +1,75 @@
+﻿@{
+    Layout = null;
+    string customerFullName = ViewBag.CustomerFullName;
+    var order = ViewBag.Order;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Order #@order.OrderNo Updated to @order.OrderStatus</title>
+</head>
+
+<body>
+    <table align="0" border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto; background: #FFF;" width="670">
+        <tr>
+            <td valign="top">
+                <table align="0" border="0" cellpadding="0" cellspacing="0" style="border: 1px solid #ccc;" width="670">
+                    <tr>
+                        <td>
+                            <table width="670" border="0" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td width="5"></td>
+                                    <td align="left" style="border-bottom: 1px solid #ccc; padding: 10px 0 5px 0;">
+                                        <a href="javascript:void(0)">
+                                            <img src="@Url.Content("~/Images/mail/news_logo.png")" border="0" alt=""/></a>
+                                    </td>
+                                    <td width="5"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="padding: 5px 0;">
+                            <a href="@ViewBag.BannerLink" target="_blank">
+                                <img src="@(ViewBag.BannerUrl)" alt="" border="0" /></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" style="font-size: 12px; color: #333; font-family: Verdana,Arial; font-weight: normal; padding: 0 5px 0 8px; line-height: 18px;"><strong>Dear @(customerFullName.IsNullOrEmpty() ? "Customer" : ViewBag.CustomerFullName):</strong>
+                            <p>
+                                Order Number: #@order.OrderNo
+                            </p>
+                            <p>Date Ordered: @PageHelper.ToCurrentShortDate(order.OrderTime)</p>
+                            <p>Your order has been updated to New Status: @order.OrderStatus</p>
+                            <p>Date Updated: @PageHelper.ToCurrentShortDate(order.OrderTime)</p>
+                            @if (order.OrderRemark != null && order.OrderRemark != "")
+                            {
+                                <p>The comments for your order are:<br />@order.OrderRemark @*读取后台填写的备注，如果没有则整句话隐藏，包括The comments…这句描述*@</p>
+                            }
+                            <p>
+                                <a href="javascript:void(0)">Detailed Invoice</a>
+                                Please reply to this email if you have any questions.
+                            </p>
+                            <p>
+                                Best regards
+                                <br />
+                                8Seasons Team
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td height="10"></td>
+        </tr>
+        <tr>
+            <td width="670" style="text-align: center; font-size: 12px; color: #999; font-family: Verdana,Arial; font-weight: normal; padding: 10px; line-height: 20px; border: 1px solid #ccc;">&copy;2002-2015 Hangzhou Panduo Information technology Co., Ltd. China Wholesale Beads.<br />
+                All rights reserved </td>
+        </tr>
+    </table>
+    @* Todo:这里邮件主题别忘掉了 *@
+    <!--<tilte>Welcome to 8Seasons ( Beads, Jewelry Making Supplies & Crafts Wholesaler )</tilte>-->
+</body>
+</html>

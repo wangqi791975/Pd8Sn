@@ -1,0 +1,56 @@
+﻿@using Resources
+@model Com.Panduo.Web.Models.Product.ProductDetailVo
+<div class="pro_description">
+    <h2 class="font14">@Lang.TipDescription</h2>
+    <a rel="nofollow"  class="forange_mid convert" href="javascript:void(0)"><ins class="btn_calculator"></ins>@Lang.TipToMetricUnits</a>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        @for (int i = 0; i < Model.ProductPropertyAndPropertyValue.Count; i++)
+        {
+            <tr>
+                <th scope="row">@(Model.ProductPropertyAndPropertyValue[i].Key): </th>
+                <td>@Model.ProductPropertyAndPropertyValue[i].Value </td>
+                @if (i == 0)
+                { 
+                    <td class="pro_sevices" rowspan="@(Model.ProductPropertyAndPropertyValue.Count + 5)" width="170" align="right">
+                        <a  rel="nofollow" href="@UrlRewriteHelper.GetClubJoinUrl()">
+                            <img src="@Url.Content("~/Images/pro_description_img1.jpg")" /></a>
+                        <a href="javascript:void(0)">
+                            <img src="@Url.Content("~/Images/pro_description_img2.jpg")" /></a>
+                        <a href="javascript:void(0)">
+                            <img src="@Url.Content("~/Images/pro_description_img3.jpg")" /></a>
+                    </td>
+                }
+            </tr>
+        }
+        <tr>
+            <th scope="row">@Lang.TipQuantity </th>
+            <td>@(Model.ProductInfo.Product.GroupQuantity) @(Model.ProductInfo.UnitName) @Lang.TiperPack</td>
+        </tr>
+        <tr>
+            <th scope="row">@Lang.TipPartNo </th>
+            <td>@Model.ProductInfo.Product.ProductCode</td>
+        </tr>
+       @if (Model.ProductInfo.Product.Weight > 0)
+       {
+           <tr>
+               <th scope="row">@Lang.TipGrossWeight </th>
+               <td>@(Model.ProductInfo.Product.Weight)g</td>
+           </tr>
+       }
+        @if (Model.ProductInfo.Product.VolumeWeight > 0)
+        {
+            <tr>
+                <th scope="row">@Lang.TipVolumeWeight </th>
+                <td>@(Model.ProductInfo.Product.VolumeWeight)g</td>
+            </tr>
+        }
+        @if (!Model.ProductInfo.ProductDesName.IsNullOrEmpty())
+        {
+            <tr>
+                <th scope="row">@Lang.TipNote </th>
+                <td>@Model.ProductInfo.ProductDesName
+                </td>
+            </tr>
+        }
+    </table>
+</div>

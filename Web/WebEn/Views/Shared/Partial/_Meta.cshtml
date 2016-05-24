@@ -1,0 +1,75 @@
+﻿@using Com.Panduo.Common
+@using Com.Panduo.Service
+@using Com.Panduo.Service.ServiceConst
+@using Com.Panduo.Service.SEO
+@model Com.Panduo.Web.Models.SEO.MetaInfoVo
+@{
+    string title = null;
+    string keywords = null;
+    string description = null;
+    var currentController = ViewContext.RouteData.Values["controller"].ToString().ToLower();
+    var currentAction = ViewContext.RouteData.Values["action"].ToString().ToLower();
+
+    /*
+    MetaHome m = null;
+    if (currentController == "home" && currentAction == "index")
+    {
+        m = ServiceFactory.MetaService.GetMetaHomeByType(MetaHomePageType.Home, ServiceFactory.ConfigureService.SiteLanguageId);
+    }
+    else if (currentController == "product" && currentAction == "mewarrivals")
+    {
+        m = ServiceFactory.MetaService.GetMetaHomeByType(MetaHomePageType.NewIndex, ServiceFactory.ConfigureService.SiteLanguageId);
+    }
+    else if (currentController == "product" && currentAction == "mixproduct")
+    {
+        m = ServiceFactory.MetaService.GetMetaHomeByType(MetaHomePageType.MixIndex, ServiceFactory.ConfigureService.SiteLanguageId);
+    }
+    else if (currentController == "product" && currentAction == "promotion")
+    {
+        m = ServiceFactory.MetaService.GetMetaHomeByType(MetaHomePageType.PromotionIndex, ServiceFactory.ConfigureService.SiteLanguageId);
+    }
+    else if (currentController == "product" && currentAction == "detail")
+    {
+        m = ServiceFactory.MetaService.GetMetaHomeByType(MetaHomePageType.ProductDetail, ServiceFactory.ConfigureService.SiteLanguageId);
+    }
+
+    if (!m.IsNullOrEmpty())
+    {
+        if (!m.Title.IsNullOrEmpty())
+        {
+            title = m.Title;
+        }
+        if (!m.Keywords.IsNullOrEmpty())
+        {
+            keywords = m.Keywords;
+        }
+        if (!m.Description.IsNullOrEmpty())
+        {
+            description = m.Description;
+        }
+    }
+    */
+
+    if (Model != null)
+    {
+        if (!Model.Title.IsNullOrEmpty())
+        {
+            title = Model.Title;
+        }
+        if (!Model.Keywords.IsNullOrEmpty())
+        {
+            keywords = Model.Keywords;
+        }
+        if (!Model.Description.IsNullOrEmpty())
+        {
+            description = Model.Description;
+        }
+    }
+
+    title = title ?? "8seasons " + ViewBag.Title;
+    keywords = keywords ?? "keywords test";
+    description = description ?? "description test";
+}
+<title>@title</title>
+<meta content="@keywords" name="keywords">
+<meta content="@description" name="description">

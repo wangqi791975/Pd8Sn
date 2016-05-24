@@ -1,0 +1,175 @@
+﻿@using System.Collections
+@using Com.Panduo.Common
+@using Com.Panduo.Service
+@using Com.Panduo.Service.Customer.Product
+@using Com.Panduo.Service.Product
+@using Com.Panduo.Web.Models.Customer
+@using Resources
+@model PageData<WishListProductInfoVo> 
+@{
+    Layout = null;
+    IDictionary<int, int> dic =new Dictionary<int, int>();
+    if (!CommonHelper.IsNullOrEmpty(ViewBag.ShoppingCartProductQuantity))
+    {
+        dic = ViewBag.ShoppingCartProductQuantity as IDictionary<int, int>;
+    }
+
+}
+@if (Model.Data.Count > 0)
+{
+    <p class="text_rt">@string.Format(Lang.TipDisplayTof,Model.Pager.StartRowNumber,Model.Pager.EndRowNumber,Model.Pager.TotalRowCount)</p>
+    <div class="title">
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th class="td_w15"></th>
+                <th class="td_w130"></th>
+                <th class="td_w220">@Lang.TipItem</th>
+                <th class="td_w140">@Lang.TipPrice</th>
+                <th class="td_w140">@Lang.TipDateAdded</th>
+                <th class="td_w140"></th>
+            </tr>
+        </table>
+    </div>
+    <div class="wishlist_list_cont">
+        <form onsubmit=" return false; " method="post" action="" name="WishListForm" id="WishListForm" data-target="#wl_recently_list">
+            <table cellpadding="0" cellspacing="0" class="action bd_bottom">
+                <tr>
+                    <td class="td_w15">
+                        <input name="ck_wishlist_all" type="checkbox" value="" /></td>
+                    <td colspan="5" class="td_action">
+                        <a class="btn_orange btn_p10" href="javascript:void(0)" id="TopWishListConfirm">@Lang.TipConfirmClass</a>
+                        <a class="btn_orange btn_p10" href="javascript:void(0)" id="TopWishListToCart">@Lang.TipAddSelToCart</a>
+                        <a class="btn_grey btn_p10" href="javascript:void(0)" id="TopWishListRemove">@Lang.TipRemoveSel</a>
+                    </td>
+                </tr>
+            </table>
+            @foreach (var m in Model.Data)
+            {
+                var ifhot = m.ProductInfo.IsHot;
+                var ifnew = !ifhot && (DateTime.Now.Subtract(m.ProductInfo.Product.CreateTime).TotalDays <= 30); //NEW标签
+                var ifstocklimit = m.ProductInfo.ProductStock.JudgeStocklimit();
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="td_w15">
+                            <input name="ckb" type="checkbox" value="@m.ProductInfo.Product.ProductId"/></td>
+                        <td class="td_w130"><a href="@UrlRewriteHelper.GetProductDetailUrl(m.ProductInfo.Product.ProductId, m.ProductInfo.ProductEnName)">
+                            <div class="list_pro_img">
+                                <img class="scrollLoading" data-url="@ImageHelper.GetImageUrl(m.ProductInfo.Product.MainImage, 130)" src="@ImageHelper.GetImageUrl(m.ProductInfo.Product.MainImage, 130)"/>
+                                @Html.Partial("~/Views/Product/Partial/__Promotion__Icon.cshtml", @m.ProductInfo)
+                            </div>
+                        </a></td>
+                        <td class="td_w220">
+                            <h5><a href="@UrlRewriteHelper.GetProductDetailUrl(m.ProductInfo.Product.ProductId, m.ProductInfo.ProductEnName)">@m.ProductInfo.ProductName</a></h5>
+                            <p class="fgrey">@Lang.TipPartNo@m.ProductInfo.Product.ProductCode</p>
+                            <p class="fred">
+                                @if (dic.ContainsKey(m.ProductInfo.Product.ProductId))
+                                            {
+                                    @Html.Raw("Quantity in cart: " + dic[m.ProductInfo.Product.ProductId])
+                                            }
+                            </p>
+                        </td>
+                        <td class="td_w140">@Lang.TipAsLowAsNoPun<br />
+                            @{ var stepPrice = m.ProductInfo.ProductPrice.StepPrice; }
+                            @if (stepPrice.Count > 0)
+                            {
+                                var discount = PageHelper.GetDiscount(m.ProductInfo.ProductPrice);
+                                if (discount > 0 && discount < 1)
+                                {
+                                <del class="fgrey">@PageHelper.GetCurrentCurrency().Format(PageHelper.ExchangeMoneyByUsd(stepPrice[stepPrice.Count - 1].OriginalPrice))</del>
+                                <br />
+                                }
+                                @PageHelper.GetCurrentCurrency().Format(PageHelper.ExchangeMoneyByUsd(stepPrice[stepPrice.Count - 1].GetDiscountPrice(discount)))
+                                <p>
+                                    <ins class="@PageHelper.GetProductTipClass(m.ProductInfo.ProductPrice)"></ins>
+                                </p>
+                            }
+                        </td>
+                        <td class="td_w140">@PageHelper.ToCurrentShortDate(m.WishListInfo.AddDateTime)</td>
+                        <td class="td_w140">
+                      @if (m.ProductInfo.Product.Status == ProductStatus.BackOrder)
+                      {
+                          int days = m.ProductInfo.ProductStock.GetProductStockDay();
+                          <a rel="nofollow" class="fblue_mid" href="javascript:void(0)" data-productid="@m.ProductInfo.Product.ProductId" data-restocktime="@days" onclick=" fnBackorderAddToCart(this) ">@Lang.TipBackorder</a>
+                          <br/>
+                      }
+                      else
+                      {
+                                <input type="text" class="input_text_wrap inputw80" name="input_qty_@m.ProductInfo.Product.ProductId" value="@m.WishListInfo.Count">
+                                <br />
+                                <a rel="nofollow" href="javascript:void(0)" class="fblue_mid cart_btn_add" data-productid="@m.ProductInfo.Product.ProductId" data-pagesource="productwishlist">@Lang.TipAddCart</a>
+                                <br>
+                      }
+                            <a rel="nofollow" href="javascript:void(0)" data-productid="@m.ProductInfo.Product.ProductId" class="fblue_mid hm">@Lang.TipRemove</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_w15"></td>
+                        @if (ViewBag.WishListType != null)
+                        {
+                            <td colspan="5" class="td_action">
+                                @foreach (var t in ViewBag.WishListType)
+                                {
+                                    if (t.Id!=4)
+                                    {
+  
+                                   
+                                    if ((int) m.WishListInfo.WishListType == t.Id)
+                                    {
+                                    <label>
+                                        <input name="a_@(m.ProductInfo.Product.ProductId)" type="radio" value="@t.Id" checked/>@t.ItemName</label>
+                                    }
+                                    else
+                                    {
+                                    <label>
+                                        <input name="a_@(m.ProductInfo.Product.ProductId)" type="radio" value="@t.Id"/>@t.ItemName</label>
+                                    }
+                                } 
+                                }
+                            </td>
+                        }
+                    </tr>
+                </table>
+            }
+            <table cellpadding="0" cellspacing="0" class="action bd_top">
+                <tr>
+                    <td class="td_w15">
+                        <input name="ck_wishlist_all" type="checkbox" value="" /></td>
+                    <td colspan="5" class="td_action">
+                        <a class="btn_orange btn_p10" href="javascript:void(0)" id="BottomWishListConfirm">@Lang.TipConfirmClass</a>
+                        <a class="btn_orange btn_p10" href="javascript:void(0)" id="BottomWishListToCart">@Lang.TipAddSelToCart</a>
+                        <a class="btn_grey btn_p10" href="javascript:void(0)" id="BottomWishListRemove">@Lang.TipRemoveSel</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+@*底部翻页开始*@
+    <div class="ajax-pagination" data-target="#wl_recently_list" data-mode="replace" data-extra="recentlyparm">
+        @Html.Partial("~/Views/Shared/Partial/_Ajax_Pager.cshtml", @Model.Pager)
+    </div>
+    <div class="clearfix"></div>
+@*底部翻页结束*@
+}
+else
+{
+    <div class="title">
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th class="td_w15"></th>
+                <th class="td_w130"></th>
+                <th class="td_w220">@Lang.TipItem</th>
+                <th class="td_w140">@Lang.TipPrice</th>
+                <th class="td_w140">@Lang.TipDateAdded</th>
+                <th class="td_w140"></th>
+            </tr>
+        </table>
+    </div>
+    <div class="wishlist_list_cont">
+        <p class="none_search">@Lang.TipNoItemFound</p>
+    </div>
+}
+<script type="text/javascript">
+    $(function() {
+        $("body,html").animate({ scrollTop: 0 }, 500);
+    });
+</script>

@@ -1,0 +1,8 @@
+﻿@if (!CommonHelper.IsNullOrEmpty(ViewBag.CurrentUser))
+{
+    <text>Hi <b>@ViewBag.CurrentUser</b>!
+    [ @Html.ActionLink("Log Off", "LogOff", "Account") ]</text>
+}
+else {
+    @:[ @Html.ActionLink("Log On", "LogOn", "Account") ]
+}

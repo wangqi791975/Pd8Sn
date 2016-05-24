@@ -1,0 +1,143 @@
+﻿@using System.Globalization
+@using Com.Panduo.Service.SiteConfigure
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@model Com.Panduo.Web.Models.Article.SomeArticleVo
+@section HtmlHead
+{
+    @Html.JsFor("Banner.js", "~/Js/bootstrap-formhelpers.js", fileVersion: "1.00")
+    @Html.CssFor("Banner.css", "~/Css/bootstrap-formhelpers.min.css", fileVersion: "1.0")
+}
+<div class="ajax_detail">
+    <div class="ajax_info">
+        <form class="form-horizontal" id="updateArticleForm" name="updateArticleForm" action="@Url.Content("~/SomeArticle/SetArticle")" method="post" onsubmit=" return false; ">
+@if (!Model.SomeArticle.IsNullOrEmpty())
+{
+    <div class="control-group">
+        <label class="control-label">*中文标题：</label>
+        <div class="controls">
+            <input type="hidden" name="HID_ArticleId" id="HID_ArticleId" value="@Model.SomeArticle.ArticleId"/>
+            <input type="text" name="article_title" id="article_title" value="@Model.SomeArticle.ChineseTitle"/>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">*英文标题：</label>
+        <div class="controls">
+            <input type="text" name="article_english_title" id="article_english_title" value="@Model.SomeArticle.EnglishTitle"/>
+               (该英文标题用于前台生成URL)
+        </div>
+    </div>
+    <div class="form-actions">
+            <a class="btn btn-primary ajax_update" href="javascript:void(0)" id="fixde">确定</a>
+    </div>
+}
+</form>
+</div>
+</div>
+ <div class="ajax_detail">
+    <div class="ajax_info">
+        <form class="form-horizontal" id="updateArticleLanguageForm" name="updateArticleLanguageForm" action="@Url.Content("~/SomeArticle/SetArticleLanguage")" method="post" onsubmit=" return false; ">
+            @if (!Model.SomeArticle.IsNullOrEmpty())
+            {
+                <input type="hidden" name="ArticleId" id="ArticleId" value="@Model.SomeArticle.ArticleId"/>
+            }
+               <div class="tabbable">
+                <ul class="nav nav-tabs">
+                    @{
+                        var loop = 0;
+                    }
+                    @foreach (Language lang in ViewBag.Languages)
+                    {
+                        <li class="@(loop++ == 0 ? "active" : "")"><a data-target="#tab-@lang.LanguageId" href="javascript:void(0)" data-toggle="tab">@lang.ChineseName</a></li>
+                    }
+                </ul>
+                <div class="tab-content">
+                    @{
+                        loop = 0;
+                    }
+                    @foreach (Language lang in ViewBag.Languages)
+                    {
+                        if (!Model.SomeArticleLanguage.IsNullOrEmpty() && Model.SomeArticleLanguage.Any(x => x.LanguageId == lang.LanguageId))
+                        {
+                            var banner = Model.SomeArticleLanguage.First(x => x.LanguageId == lang.LanguageId);
+                            <div class="ajax_detail tab-pane @(loop++ == 0 ? "active" : "")" id="tab-@lang.LanguageId">
+                               <div class="control-group">
+                                    <label class="control-label">标题：</label>
+                                   <div class="controls">
+                                       <input type="hidden" name="HID_languageId" value="@lang.LanguageId"/>
+                                       <input type="text" name="article_language_title_@lang.LanguageId" value="@banner.Title"/>
+                                   </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">内容：</label>
+                                    <div class="controls">
+                                        <textarea name="article_language_content_@lang.LanguageId" rows='8'  id="article_language_content_@lang.LanguageId" style='width: 800px;'>@banner.Content</textarea>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">状态：</label>
+                                    <div class="controls">
+                                        @if (banner.Status)
+                                        {
+                                            <label class="radio inline">
+                                                <input id="IsValid_@lang.LanguageId" name="IsValid_@lang.LanguageId"  checked type="radio" value="True">显示
+                                           </label>
+                                            <label class="radio inline">
+                                              <input id="IsValid_@lang.LanguageId" name="IsValid_@lang.LanguageId"  type="radio" value="false">隐藏
+                                            </label>
+                                        }
+                                        else
+                                        {
+                                           <label class="radio inline">
+                                               <input id="IsValid_@lang.LanguageId" name="IsValid_@lang.LanguageId"  type="radio" value="True">显示
+                                          </label>
+                                            <label class="radio inline">
+                                              <input id="IsValid_@lang.LanguageId" name="IsValid_@lang.LanguageId" checked type="radio" value="false">隐藏
+                                            </label>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="ajax_detail tab-pane @(loop++ == 0 ? "active" : "")" id="tab-@lang.LanguageId">
+                                   <div class="control-group">
+                                    <label class="control-label">标题：</label>
+                                   <div class="controls">
+                                       <input type="hidden" name="HID_languageId" value="@lang.LanguageId"/>
+                                       <input type="text" name="article_language_title_@lang.LanguageId" />
+                                   </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">内容：</label>
+                                    <div class="controls">
+                                        <textarea name="article_language_content_@lang.LanguageId" rows="8" id="article_language_content_@lang.LanguageId" style="width: 800px;"></textarea>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">状态：</label>
+                                    <div class="controls">
+                                        <label class="radio inline">
+                                            <input id="IsValid_@lang.LanguageId" name="IsValid_@lang.LanguageId" type="radio" checked value="true">显示
+                                        </label>
+                                        <label class="radio inline">
+                                            <input id="IsValid_@lang.LanguageId" name="IsValid_@lang.LanguageId" type="radio" value="false">隐藏
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <div class="form-actions">
+                    <a class="btn btn-primary ajax_update" href="javascript:void(0)" id="jj">保存修改</a>
+                    <a class="btn" href="@Url.Content("~/SomeArticle/Index")">取消</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

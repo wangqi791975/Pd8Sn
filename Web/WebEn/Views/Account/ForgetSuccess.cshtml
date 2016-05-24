@@ -1,0 +1,22 @@
+﻿@using Resources
+@{
+    ViewBag.Title = "forgetsuccess";
+    Layout = "~/Views/Shared/Layout/_LoginBody.cshtml";
+}
+<div class="wrap">
+    @{
+        //面包屑导航
+        if (ViewBag.Sitemaps == null)
+        {
+            ViewBag.Sitemaps = "";
+        }
+        @Html.Raw(ViewBag.Sitemaps)
+    }
+    <div class="account_w820 pwd_success">
+        <h2 class="font_verdana font16">
+            <ins></ins>
+            <p>@Html.Raw(string.Format(Lang.TipWeResetPassword, ViewBag.CustomerEmail))</p>
+            <div class="clearfix"></div>
+        </h2>
+    </div>
+</div>

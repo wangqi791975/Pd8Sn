@@ -1,0 +1,33 @@
+﻿@using Resources
+@{
+    Layout = "~/Views/Shared/Layout/_Layout_NoLeft.cshtml";
+}
+@section HtmlHead
+{
+    @Html.JsFor("Preference.js", "~/Js/jquery.pstrength.js,~/Js/Account/MyAccount.js,~/Js/Upload/uploadify-v2.1.4/jquery.uploadify.v2.1.4.min.js", fileVersion: "1.2")
+    @Html.JsFor("Order.js", "~/Js/jquery-ui-1.10.4.custom.min.js", fileVersion: "1.9")
+}
+
+@Html.Partial("Partial/_Account_Siderbar_Menu")
+<!-- 左侧结束 -->
+<form onsubmit="return false;" method="post" action="/Account/NewsLetter" id="newsletterform">
+    <div id="main" class="account_wrap">
+        <h2 class="font14 account_title">@Lang.TipNewsletterSubscription
+        </h2>
+        <div class="warning_wrap">
+            <ins class="btn_success_cart"></ins>
+            <p><strong class="fgreen">@Lang.MsgNewsletterSuccess</strong></p>
+        </div>
+        <div class="newsletter_cont">
+            <div class="newsletter_setting">
+                <h4>@Lang.TipGeneralNewsletter</h4>
+                <p>
+                    <label>
+                        <input type="checkbox" @(ViewBag.IsUnNewsletter != null ? (ViewBag.IsUnNewsletter ? "" : "checked") : "")/><span>@Lang.TipNewsletterNews</span></label>
+                </p>
+                <a href="javascript:void(0)" id="newsletterbtn" class="btn_orange btn_p30">@Lang.TipSave</a>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="clearfix"></div>

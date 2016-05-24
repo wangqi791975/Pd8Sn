@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "用户权限设置";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@using Com.Panduo.Service.AdminUser
+@model List<AdminMenu>
+<form class="form-horizontal" id="adminauthform" name="adminauthform" method="post" action="/AdminUser/AdminUserAuth" onsubmit="return false;">
+    <div class="well tab-content">
+        <div id="tab_base_info">
+            <input type="hidden" name="adminId" value="@(ViewBag.AdminUser.AdminId)"/>
+            <div class="control-group">
+                <label class="control-label">用户姓名：</label>
+                <div class="controls">
+                    @(ViewBag.AdminUser.Name)
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">用户邮箱：</label>
+                <div class="controls">
+                    @(ViewBag.AdminUser.AccountEmail)
+                </div>
+            </div>
+            @foreach (var adminMenu in Model)
+            {
+                <div class="control-group">
+                    <label class="control-label">@adminMenu.Name：</label>
+                    <div class="controls">
+                        <label class="checkbox inline">
+                            <input type="checkbox" data-toggle="checkall" id="FD_@(adminMenu.Code)">所有
+                        </label>
+                        @foreach (var adminModule in adminMenu.AdminModules)
+                        {
+                            <label class="checkbox inline">
+                                <input type="checkbox" name="module" id="FD_@(adminMenu.Code)_@(adminModule.ModuleCode)" @(((List<string>)ViewBag.AdminUserModuleCodes).Contains(adminModule.ModuleCode) ? "checked" : "") value="@adminModule.ModuleCode">@adminModule.Name
+                            </label>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="form-actions">
+        <input type="submit" value="保存" id="adminauthbtn" class="btn btn-primary ajax_update">
+        <a href="/AdminUser/AdminSetting?page=@(ViewBag.Page)" class="btn">取消</a>
+    </div>
+</form>
+@section HtmlFooter
+{
+    <script>
+        $(function () {
+            $("#adminauthbtn").click(function () {
+                $("#adminauthform").ajaxSubmit({
+                    url: "/AdminUser/AdminUserAuth",
+                    dataType: 'json',
+                    success: function (responseText) {
+                        $(".alert").remove();
+                        if (responseText.error != true) {
+                            var msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作成功!' : responseText.msg;
+                            $("#adminauthform").before('<div class="alert alert-success"><a class="close" data-dismiss="alert">×</a>' + msg + '</div>');
+                        } else {
+                            var msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作失败!' : responseText.msg;
+                            $("#adminauthform").before('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a>' + msg + '</div>');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

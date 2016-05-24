@@ -1,0 +1,28 @@
+﻿@using System.Globalization
+@model Com.Panduo.Service.Coupon.CouponCustomerView
+<tr>
+    <td style="width: 20%">ID：</td>
+    <td>
+        @Model.Id</td>
+</tr>
+<tr>
+    <td style="width: 20%">Coupon Code：</td>
+    <td>
+        @Model.CouponCode</td>
+</tr>
+<tr>
+    <td style="width: 20%">客户邮箱：</td>
+    <td>
+        @Model.CustomerEmail</td>
+</tr>
+<tr>
+    <td style="width: 20%">面额：</td>
+    <td>
+        @(Model.Amount.HasValue?decimal.Round(Model.Amount.Value,2).ToString(CultureInfo.InvariantCulture):"")</td>
+</tr>
+<tr>
+    <td style="width: 20%">有效期：</td>
+    <td>
+        @(Model.LimitBeginTime.ToShortDateString()) - @(Model.LimitEndTime.ToShortDateString())
+    </td>
+</tr>

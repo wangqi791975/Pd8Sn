@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "零散文章管理";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<h2>零散文章管理</h2>
+<a class="btn" href="/SomeArticle/Add"><i class="icon-edit"></i> 新建</a>
+<div class="pull-right">
+    <form method="post" action="@Url.Content("~/SomeArticle/GetList")" id="searchForm" name="searchForm" class="form-search">
+        关键词：<input type="text" placeholder="关键词" name="keyword">
+         <button type="submit" class="btn"><i class="icon-search"></i>搜索</button>
+    </form>
+</div>
+<div id="main" class="ajax-list" data-url="@Url.Content("~/SomeArticle/GetList?page=" + ViewBag.Page)"></div>
+<a class="btn" href="/SomeArticle/Add"><i class="icon-edit"></i> 新建</a>

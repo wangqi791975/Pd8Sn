@@ -1,0 +1,116 @@
+﻿@{
+    Layout = null;
+    string customerFullName = ViewBag.CustomerFullName;
+    Com.Panduo.Web.Models.Order.OrderInvoiceVo orderInvoice = ViewBag.OrderInvoice;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Your order @orderInvoice.Order.OrderNo has been shipped out -- 8seasons Team</title>
+</head>
+
+<body>
+    <table align="0" border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto; background: #FFF;" width="670">
+        <tr>
+            <td valign="top">
+                <table align="0" border="0" cellpadding="0" cellspacing="0" style="border: 1px solid #ccc;" width="670">
+                    <tr>
+                        <td>
+                            <table width="670" border="0" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td width="5"></td>
+                                    <td align="left" style="border-bottom: 1px solid #ccc; padding: 10px 0 5px 0;">
+                                        <a href="javascript:void(0)">
+                                            <img src="@Url.Content("~/Images/mail/news_logo.png")" border="0" alt=""/></a>
+                                    </td>
+                                    <td width="5"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="padding: 5px 0;">
+                            <a href="@ViewBag.BannerLink" target="_blank">
+                                <img src="@(ViewBag.BannerUrl)" alt="" border="0" /></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" style="font-size: 12px; color: #333; font-family: Verdana,Arial; font-weight: normal; padding: 0 5px 0 8px; line-height: 18px;"><strong>Dear @(customerFullName.IsNullOrEmpty() ? "Customer" : ViewBag.CustomerFullName):</strong>
+
+                            <p>
+                                Thanks for your kind business!<br />
+                                We are glad to keep you informed that your order #@orderInvoice.Order.OrderNo has been shipped out.
+                            </p>
+                            <p>
+                                <strong>Shipping Details:</strong>
+                            </p>
+                            <table width="98%" border="0" cellspacing="0" cellpadding="0" style="border: 1px solid #e1e1e1; margin-left: 25px; line-height: 20px; margin: 0 auto;">
+                                <tr>
+                                    <td align="right" style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;"><strong>Shipping Date
+                                    </strong></td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">@PageHelper.ToCurrentShortDate(orderInvoice.Order.OrderTime)</td>
+                                    <td align="right" style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;"><strong>Parcel Quantity</strong></td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; padding: 5px;">1 box</td>
+                                </tr>
+                                <tr>
+                                    <td align="right" style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;"><strong>Shipped Method
+                                    </strong></td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">@Html.Raw(orderInvoice.ShippingName)</td>
+                                    <td align="right" style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;"><strong>Parcel Value Marked</strong></td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; padding: 5px;">USD15.00</td>
+                                </tr>
+                                <tr>
+                                    <td align="right" style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;"><strong>Est. Delivery Time</strong></td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">3-5 days</td>
+                                    <td rowspan="3" valign="top" align="right" style="border-right: #e1e1e1 1px solid; padding: 5px;"><strong>Delivery Address</strong></td>
+                                    <td rowspan="3" valign="top" style="padding: 5px;">
+                                        @if (orderInvoice.OrderShippingAddress != null)
+                                        {
+                                            <span>
+                                                @orderInvoice.OrderShippingAddress.FullName
+                                                <br />
+                                                @if (orderInvoice.OrderShippingAddress.Street2 != null)
+                                                {
+                                                    <span>@orderInvoice.OrderShippingAddress.Street2,&nbsp;</span>
+                                                }
+                                                @orderInvoice.OrderShippingAddress.Street1<br />
+                                                @orderInvoice.OrderShippingAddress.City<br />
+                                                @orderInvoice.OrderShippingAddress.Province @orderInvoice.OrderShippingAddress.ZipCode<br />
+                                                @orderInvoice.OrderShippingAddress.CountryName<br />
+                                                @orderInvoice.OrderShippingAddress.Telphone
+                                            </span>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;"><strong>Tracking No.</strong></td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">666666666</td>
+                                </tr>
+                                <tr>
+                                    <td align="right" style="border-right: #e1e1e1 1px solid; padding: 5px;"><strong>Tracking Site</strong></td>
+                                    <td style="border-right: #e1e1e1 1px solid; padding: 5px;"><a href="http://8seasons.com/" style="color: #0066cc;">http://8seasons.com/</a></td>
+                                </tr>
+                            </table>
+                            <p>NOTE: Please be kindly noticed that parcels may be returned to us if there is no one at home to pick up. So if you are planning a vacation or business trip, please kindly change shipping address or provide us with your mobile phone number to smooth the parcel delivery. </p>
+                            <p>If you have any question, please feel free to contact us.</p>
+                            <p>
+                                Best regards
+                                <br />
+                            8Seasons Team</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td height="10"></td>
+        </tr>
+        <tr>
+            <td width="670" style="text-align: center; font-size: 12px; color: #999; font-family: Verdana,Arial; font-weight: normal; padding: 10px; line-height: 20px; border: 1px solid #ccc;">&copy;2002-2015 Hangzhou Panduo Information technology Co., Ltd. China Wholesale Beads.<br />
+                All rights reserved </td>
+        </tr>
+    </table>
+    @* Todo:这里邮件主题别忘掉了 *@
+    <!--<tilte>Welcome to 8Seasons ( Beads, Jewelry Making Supplies & Crafts Wholesaler )</tilte>-->
+</body>
+</html>

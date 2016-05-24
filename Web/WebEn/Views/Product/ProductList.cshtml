@@ -1,0 +1,53 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Product.Category
+@using Com.Panduo.Common
+@using Resources
+@model Com.Panduo.Web.Models.Product.ProductVo
+@{
+    ViewBag.Title = Lang.TipProduct;
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@section HtmlHead
+{
+    @Html.JsFor("scrollloading.js", "~/Js/jquery.scrollLoading.min.js,~/Js/Product/Index.js", fileVersion: "1.9")
+}
+<div id="main">
+    @Html.Partial("~/Views/Category/Partial/_CategoryAd.cshtml", @Model.CategoryAdvertisement ?? new CategoryAdvertisement())
+
+    @if (!@Model.IsRoot)
+    {
+        @Html.Partial("~/Views/Category/Partial/_PopularSearch.cshtml", @Model.Category.CategoryId)
+    }
+
+    @if (!@Model.IsLeaf)
+    {
+@* 分类图片容器开始*@
+        @Html.Partial("~/Views/Product/Partial/_Product_Sub_Categories.cshtml", @Model.Category.CategoryId)
+@* 分类图片容器结束*@
+    }
+      
+@* 判断一级列表 *@
+    @if (@Model.IsRoot)
+    {
+@*推荐产品容器开始*@
+        @Html.Partial("~/Views/Product/Partial/_Product_Hot_Items.cshtml", @Model.HotItems)
+@*推荐产品容器结束*@
+    }
+    else
+    {
+        @Html.Partial("~/Views/Product/Partial/_Product_Refine_By.cshtml")
+        @Html.Partial("~/Views/Product/Partial/_Product_List_One.cshtml", @Model.ProductInfo)
+    }
+
+    @Html.Partial("~/Views/Category/Partial/_CategoryDescription.cshtml", @Model.CategoryLanguage)
+</div>
+<div class="clearfix"></div>
+
+@section HtmlFooter
+{
+    @*特殊包装开始*@
+    <div class="popup_wrap popup_w860 modal fade" id="otherpack">
+        <div class="modal-body"></div>
+    </div>
+    @*特殊包装结束*@
+}

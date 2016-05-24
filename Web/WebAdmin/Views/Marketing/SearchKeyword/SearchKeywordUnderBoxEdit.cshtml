@@ -1,0 +1,39 @@
+﻿@{
+    Layout = null;
+}
+@using Com.Panduo.Service.SiteConfigure
+@model SearchKeyword
+
+<div class="modal-body ajax_info">
+    <form class="form-horizontal" name="updateForm" action="/Marketing/SearchKeywordUnderBoxEdit/@Model.Id" method="post" onsubmit="return false;">
+        <div class="control-group">
+            <label class="control-label">关键词：</label>
+            <div class="controls">
+                <div class="tab-content">
+                    <input name="keywordname" type="text" value="@Model.KeywordName" />
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">链接：</label>
+            <div class="controls">
+                <div class="tab-content">
+                    <input name="link" type="text" value="@Model.KeywordUrl" />
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">语言：</label>
+            <div class="controls">
+                <div class="tab-content">
+                    <select name="language">
+                        @foreach (var language in (List<Language>)ViewBag.AllLanguage)
+                        {
+                            <option value="@language.LanguageId" @(Model.LanguageId == language.LanguageId ? "checked" : "")>@language.ChineseName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

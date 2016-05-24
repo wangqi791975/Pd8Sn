@@ -1,0 +1,84 @@
+﻿@font-face {
+    font-family: 'ds-digitalnormal';
+    src: url('dailydeal_en/font/ds-digi-webfont.eot');
+    src: url('dailydeal_en/font/ds-digi-webfont.eot?#iefix') format('embedded-opentype'),
+         url('dailydeal_en/font/ds-digi-webfont.woff') format('woff'),
+         url('dailydeal_en/font/ds-digi-webfont.ttf') format('truetype'),
+         url('dailydeal_en/font/ds-digi-webfont.svg#ds-digitalnormal') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.dailydeal20140730{width:1000px;margin:0 auto;font-family:Arial;font-size:12px;}
+body,h2,h3,table,tr,td,th,ul,li,p{padding:0;margin:0;}
+img{border:0;}
+.dailydeal20140730 .clearfix{ clear:both; height:0; font-size: 1px; line-height:0px; overflow:hidden;}
+.dailydeal20140730 h2{text-indent:-9999px;width:1000px;height:140px;background:url(dailydeal_en/images/dailydealbanner.jpg) no-repeat 0 0;}
+.dailydeal20140730 a{text-decoration:none;}
+.dailydeal20140730  table{border-collapse: collapse;}
+.dailydeal20140730  td{ vertical-align:top;}
+.dailydeal20140730 .spcialitem{height:418px;width:998px;margin:10px auto;box-shadow:0 2px 2px 1px #ccc;-webkit-box-shadow:0 2px 2px 1px #ccc;-moz-box-shadow:0 2px 2px 1px #ccc;border:1px solid #ccc\0;}
+*+html .dailydeal20140730 .spcialitem{border:1px solid #ccc;}
+.dailydeal20140730 .spcialitem{position:relative;}
+.dailydeal20140730 .spcialitem .floatprice{position:absolute;left:35px;top:-2px;width:105px;height:66px;background:url(dailydeal_en/images/floatprice.png) no-repeat 0 0;}
+.dailydeal20140730 .spcialitem .floatprice span{display:block;width:52px;height:42px;position:absolute;font-size:45px;font-weight:bold;color:#fff;left:28px;top:7px; line-height:45px;}
+.dailydeal20140730 .spcialitem .floattip{background:#FFE1E1;width:461px;position:absolute;right:0;bottom:61px;padding:0.2em;}
+.dailydeal20140730 .floattip2{background:#FFE1E1;width:477px;position:absolute;right:0;bottom:0;padding:0.2em;}
+.dailydeal20140730 .spcialitem .speicalitem_product img{width:410px;height:328px;margin:33px 0 0 31px;}
+.dailydeal20140730 .spcialitem .spcialitem_right{ float:right; width:465px; background:#f7f7f7;position:relative; height:418px; position:relative;}
+.dailydeal20140730 .spcialitem .spcialitem_right .speicalitem_right_content td{ text-align:center;}
+.dailydeal20140730 .spcialitem .spcialitem_right .speicalitem_right_content th{font-size:24px;font-weight:bold;color:#ff6138; text-align:left;padding:32px 30px 0 27px;line-height:24px;}
+.dailydeal20140730 .spcialitem .spcialitem_right .speicalitem_right_content .pro_name { padding-bottom:10px; border-bottom:#787878 1px dashed;}
+.dailydeal20140730 .spcialitem .spcialitem_right .speicalitem_right_content .pro_name a{color:#787878;padding:5px 0 10px 27px; text-align:left;line-height:18px;height:30px; display:block;overflow:hidden;}
+.dailydeal20140730 .spcialitem .spcialitem_right .speicalitem_right_content .pro_name a:hover{text-decoration:underline;}
+.dailydeal20140730 .spcialitem .spcialitem_right .speicalitem_right_content .valu_title td{ color:#787878; line-height:40px; font-size:16px;}
+.dailydeal20140730 .spcialitem .spcialitem_right .speicalitem_right_content .price_grey td{ color:#535353; font-size:36px; line-height:36px;}
+.dailydeal20140730 .spcialitem .spcialitem_right .speicalitem_right_price{position:absolute;width:479px;height:111px;background:url(dailydeal_en/images/speicalitem_right_price.jpg) no-repeat 0 0;bottom:65px;left:-25px;}
+.dailydeal20140730 .spcialitem .spcialitem_right .speicalitem_right_price div{height:87px;}
+.dailydeal20140730 .spcialitem .spcialitem_right .speicalitem_right_price div td{padding-left:25px;color:#fff;}
+.dailydeal20140730 .spcialitem .spcialitem_right .speicalitem_right_price div td.textonly{font-size:14px;padding-top:9px;height:20px;}
+.dailydeal20140730 .spcialitem .spcialitem_right .speicalitem_right_price div td.textadd{font-size:16px;padding-top:9px;height:20px;}
+.dailydeal20140730 .spcialitem .spcialitem_right .speicalitem_right_price div td.textadd input{width:90px; background:#fff; border:#ccc 1px solid; padding-left:5px;}
+.dailydeal20140730 .spcialitem .spcialitem_right .speicalitem_right_price div td.textusd{font-size:48px;font-weight:bold;color:#ededed; line-height:50px;}
+.dailydeal20140730 .spcialitem .spcialitem_right .speicalitem_right_price div td.textsubmit{padding-top:10px;}
+.dailydeal20140730 .spcialitem .spcialitem_right .speicalitem_right_price div td.textsubmit a{display:block;text-align:center;width:130px;height:32px;line-height:32px;background:url(dailydeal_en/images/textsubmit.png) no-repeat 0 0; cursor:pointer;border:0;font-size:17px;font-weight:bold;color:#623537;}
+.dailydeal20140730 .spcialitem .spcialitem_right .spcialitem_right_time{position:absolute;bottom:27px;left:72px;}
+.dailydeal20140730 .spcialitem .spcialitem_right .spcialitem_right_time td{background:url(dailydeal_en/images/spcialitem_right_time_bg.jpg) no-repeat 0 center;padding-left:37px;vertical-align:bottom;}
+.dailydeal20140730 .spcialitem .spcialitem_right .spcialitem_right_time td span{font-family:ds-digitalnormal;font-size:40px; position:relative; top:7px;}
+.dailydeal20140730 .normalitemleft{margin-top:10px;float:left;position:relative;width:482px;height:290px;margin-bottom:17px;box-shadow:0 2px 2px 1px #ccc;-webkit-box-shadow:0 2px 2px 1px #ccc;-moz-box-shadow:0 2px 2px 1px #ccc;border:1px solid #ccc\0;}
+*+html .dailydeal20140730 .normalitemleft{border:1px solid #ccc;}
+.dailydeal20140730 .normalitem_product img{width:177px;height:213px;margin:63px 12px 0 13px;}
+.dailydeal20140730 .normalitemleft .normalitemleft_title th{font-size:16px;font-weight:bold;color:#ff6138;text-align:left;padding-top:21px;line-height:18px;}
+.dailydeal20140730 .normalitemleft .normalitemleft_title a{line-height:16px;color:#787878;display:block;height:50px;overflow:hidden;}
+.dailydeal20140730 .normalitemleft .normalitemleft_title a:hover{text-decoration:underline;}
+.dailydeal20140730 .normalitemleft .normalitemleft_price{width:277px;height:42px;position:absolute;top:108px;right:-12px;background:url(dailydeal_en/images/normalitem_pricebg.png) no-repeat 0 0;color:#fff;font-size:14px;padding-left:13px;padding-top:2px;}
+.dailydeal20140730 .normalitemleft .normalitemleft_price span{font-size:24px;font-weight:bold;margin-left:5px; line-height:28px;}
+.dailydeal20140730 .normalitemleft .normalitemleft_detail{position:absolute;bottom:90px;border:1px solid #ededed;}
+.dailydeal20140730 .normalitemleft .normalitemleft_detail td{border:1px solid #ededed;text-align:center;}
+.dailydeal20140730 .normalitemleft .normalitemleft_detail .normalitemleft_detail_valu td{font-size:14px;color:#9a9a9a;}
+.dailydeal20140730 .normalitemleft .normalitemleft_detail .normalitemleft_detail_grey td{font-size:28px;color:#535353; line-height:30px;}
+.dailydeal20140730 .normalitemleft .normalitemleft_btn{position:absolute;bottom:55px;}
+.dailydeal20140730 .normalitemleft .normalitemleft_btn input{width:57px;border:1px solid #a9a9a9;height:18px;float:left;}
+.dailydeal20140730 .normalitemleft .normalitemleft_btn a{display:block;text-align:center;width:87px;height:22px;line-height:22px;margin-left:5px;background:url(dailydeal_en/images/addcartbtn.png) no-repeat 0 0;border:0;font-weight:bold;color:#623500;float:left;}
+.dailydeal20140730 .normalitemleft .normalitemleft_btn a.soldoutbtn{background:url(dailydeal_en/images/addcartbtn_soldout.png) no-repeat 0 0;color:#000;}
+.dailydeal20140730 .normalitemleft .normalitemleft_btn a.backorderbtn{background:url(dailydeal_en/images/addcartbtn_backorder.png) no-repeat 0 0;color:#fff;}
+.dailydeal20140730 .normalitemleft .normalitemleft_time{position:absolute;bottom:20px;}
+.dailydeal20140730 .normalitemleft .normalitemleft_time td{background:url(dailydeal_en/images/normalitem_time_bg.jpg) no-repeat 0 center;padding-left:24px;height:22px;vertical-align:bottom;}
+.dailydeal20140730 .normalitemleft .normalitemleft_time td span{font-family:ds-digitalnormal;font-size:28px;margin-right:5px; line-height:22px; position:relative; top:3px;}
+.dailydeal20140730 .normalitemright{margin-left:24px;}
+.dailydeal20140730 .normalitemleft .normalitemfloatprice{position:absolute;left:35px;top:-2px;width:105px;height:66px;background:url(dailydeal_en/images/normalitemfloatprice.png) no-repeat 0 0;}
+.dailydeal20140730 .normalitemleft .normalitemfloatprice span{display:block;width:40px;height:36px;position:absolute;font-size:34px;font-weight:bold;color:#fff;left:20px;top:7px; line-height:34px;}
+.dailydeal20140730 .dailydeal_discount .dailydeal_discount_left{float:left;width:271px;height:368px;border:1px solid #cfcfcf;}
+.dailydeal20140730 .dailydeal_discount .dailydeal_discount_middle{float:left;width:271px;height:368px;margin-left:8px;}
+.dailydeal20140730 .dailydeal_discount .dailydeal_discount_middle img{width:381px;height:178px;border:1px solid #cfcfcf;}
+.dailydeal20140730 .dailydeal_discount .dailydeal_discount_middle img.imagtop{margin-bottom:10px;}
+.dailydeal20140730 .dailydeal_discount .dailydeal_discount_right{float:right;width:327px;height:368px;border:1px solid #cfcfcf;}
+.dailydeal20140730 .dailydeal_hotseller{margin-top:10px;}
+.dailydeal20140730 .dailydeal_hotseller h3{color:#fff;font-size:24px;height:49px;line-height:49px;text-align:center;font-weight:bold;background:#000;}
+.dailydeal20140730 .dailydeal_hotseller ul{list-style:none;width:1000px;height:260px;margin-top:10px;}
+.dailydeal20140730 .dailydeal_hotseller ul li{float:left;width:191px;height:266px;margin-right:10px;}
+.dailydeal20140730 .dailydeal_hotseller ul li.nomargin{margin-right:0;}
+.dailydeal20140730 .dailydeal_hotseller ul li a{display:block;border:1px solid #fff;width:193px;text-align:center;text-decoration:none;}
+.dailydeal20140730 .dailydeal_hotseller ul li a img{border:1px solid #3e3e3e;}
+.dailydeal20140730 .dailydeal_hotseller ul li a p{color:#e43c39;font-weight:bold;}
+.dailydeal20140730 .dailydeal_hotseller ul li a p span{display:block;height:28px;color:#222;overflow:hidden;margin-top:10px;}
+.dailydeal20140730 .dailydeal_hotseller ul li a:hover{border:1px solid #f00;}

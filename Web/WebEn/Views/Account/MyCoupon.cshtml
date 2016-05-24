@@ -1,0 +1,114 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Coupon
+@using Resources
+@{
+    Layout = "~/Views/Shared/Layout/_Layout_NoLeft.cshtml";
+}
+@section HtmlFooter
+{
+    <script>
+        $("#activecont").click(function () {
+            $("#activecont").attr("class", "current");
+            $("#inactivecont").attr("class", "nostock");
+            $(".active_coupon_cont").show();
+            $(".inactive_coupon_cont").hide();
+        });
+
+        $("#inactivecont").click(function () {
+            $("#activecont").attr("class", "nostock");
+            $("#inactivecont").attr("class", "current");
+            $(".active_coupon_cont").hide();
+            $(".inactive_coupon_cont").show();
+        });
+
+        $("#addcoupon").click(function () {
+            $("#idvmsg").html("");
+            $("#addcouponform").ajaxSubmit({
+                success: function (result) {
+                    if (result.error) {
+                        $("#idvmsg").html(result.msg);
+                    } else {
+                        location.reload();
+                    }
+                }
+            });
+        });
+        function ajaxtab() {
+            return { ajaxtab: "active" };
+        }
+
+        function inactiveparm() {
+            return { ajaxtab: "inactive" };
+        }
+
+    </script>
+}
+
+@Html.Partial("Partial/_Account_Siderbar_Menu")
+<div id="main" class="account_wrap">
+    <h2 class="font14 account_title">@Lang.TipMyCoupon</h2>
+    <div class="coupon_action">
+        <a class="fblue" href="#">@Lang.TipCouponTerCon</a>
+        <div class="add_coupon">
+            <form onsubmit="return false;" method="post" action="/Account/AddCoupon" name="changepro" id="addcouponform">
+                <input type="text" name="couponcode" class="input_text_wrap inputw185 lf" placeholder="@Lang.TipEnterCouponCode" /><a href="javascript:void(0)" id="addcoupon" class="btn_orange btn_w158 lf">@Lang.TipAddCoupon</a>
+                <div class="clearfix"></div>
+                <div id="idvmsg" class="fred"></div>
+            </form>
+            <!-- 报错信息，默认时隐藏 -->
+        </div>
+    </div>
+    <div class="accout_tab">
+        <h3 id="activecont" class="current" >@Lang.TipActiveCoupon</h3>
+        <h3 id="inactivecont" class="nostock">@Lang.TipInactiveCoupon</h3>
+    </div>
+    <!-- Active Coupon 开始 -->
+    <div class="active_coupon_cont" style="display: block">
+        @if (ViewBag.ActiveCoupons.Data.Count == 0)
+        {
+            <p class="fgrey"><strong>@Lang.TipNoRecord</strong></p>
+        }
+        else
+        {
+            <!-- 当列表为空时，出现该行 -->
+            <div class="coupon_title">
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th class="td_w150">@Lang.TipCouponCode</th>
+                        <th class="td_w115">@Lang.TipParValue</th>
+                        <th class="td_w150">@Lang.TipMontantMinimun</th>
+                        <th class="td_w150">@Lang.TipDeadline</th>
+                        <th class="td_w220">@Lang.TipMemo</th>
+                    </tr>
+                </table>
+            </div>
+            @Html.Partial("MyCouponActive", (PageData<CouponCustomer>)ViewBag.ActiveCoupons)
+        }
+    </div>
+    <!-- Active Coupon 结束 -->
+    <!-- Inactive Coupon 开始 -->
+    <div class="inactive_coupon_cont">
+        @if (ViewBag.InactiveCoupons.Data.Count == 0)
+        {
+            <p class="fgrey"><strong>@Lang.TipNoRecord</strong></p>
+        }
+        else
+        {
+            <!-- 当列表为空时，出现该行 -->
+            <div class="coupon_title">
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th class="td_w150">@Lang.TipCouponCode</th>
+                        <th class="td_w115">@Lang.TipParValue</th>
+                        <th class="td_w150">@Lang.TipStatus</th>
+                        <th class="td_w150">@Lang.TipOrderNo</th>
+                        <th class="td_w220">@Lang.TipMemo</th>
+                    </tr>
+                </table>
+            </div>
+            @Html.Partial("MyCouponInActive", (PageData<CouponCustomer>)ViewBag.InactiveCoupons)
+        }
+    </div>
+    <!-- Inactive Coupon 结束 -->
+</div>
+<div class="clearfix"></div>

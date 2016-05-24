@@ -1,0 +1,154 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Order
+@using Com.Panduo.Service.Product
+@using Resources
+@model Com.Panduo.Web.Models.Order.OrderDetailVo
+@{
+    ViewBag.Title = "Checkout Succeed";
+    Layout = "~/Views/Shared/Layout/_Layout_ShoppingCart.cshtml";
+    var order = Model.Order;
+    var productInfoList = ViewBag.ProductInfoList as List<ProductInfo>;
+}
+
+@Html.Partial("~/Views/ShoppingCart/Partial/_Header.cshtml", 4)
+
+<div class="order_confirmed">
+    <ins></ins>
+    <div class="text">
+        <h4 class="font14">@(order.OrderStatus == OrderStatusType.Pending ? "Thank you for shopping with us. Now you can make the payment off-line through " + Model.PaymentName + "." : "Thank you for shopping with us. Your payment has been made successfully.")</h4>
+
+        <p>@Lang.TipOrderNumber<a class="fblue_mid" href="@UrlRewriteHelper.GetOrderDetail(order.OrderNo)">@order.OrderNo</a>@PageHelper.ToCurrentShortDate(order.OrderTime)</p>
+
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+<div class="order_show_cont">
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <th><span class="font14">@Lang.TipPaymentDetailsUp</span></th>
+            <th><span class="font14">@Lang.TipShippingComments</span></th>
+        </tr>
+        <tr>
+            <td>
+                <div class="pay_info">
+                    <table cellpadding="0" cellspacing="0">
+                        <tr>
+                            <th>@Lang.TipPaymentMethodPun</th>
+                            <td><strong>@Model.PaymentName</strong></td>
+                        </tr>
+                        @if (!order.OrderCost.IsNullOrEmpty())
+                        {
+                            <tr>
+                                <th>@Lang.TipDiscountedItem</th>
+                                <td><span>(+)<i>@order.Currency</i>@PageHelper.MoneyFormat(order.OrderCost.OriginalProductAmount * order.ExchangeRate, order.Currency)</span></td>
+                            </tr>
+                            <tr>
+                                <th>@Lang.TipProductDiscount</th>
+                                <td><span>(-)<i>@order.Currency</i>@PageHelper.MoneyFormat(order.OrderCost.DiscountProductAmount * order.ExchangeRate, order.Currency)</span></td>
+                            </tr>
+                            <tr>
+                                <th>@Lang.TipRegularPriceItem</th>
+                                <td><span>(+)<i>@order.Currency</i>@PageHelper.MoneyFormat(order.OrderCost.NoDiscountProductAmount * order.ExchangeRate, order.Currency)</span></td>
+                            </tr>
+                            <tr>
+                                <th>@Lang.TipVipDiscountRcd</th>
+                                <td><span>(-)<i>@order.Currency</i>@PageHelper.MoneyFormat(order.OrderCost.VipLessAmount * order.ExchangeRate, order.Currency)</span></td>
+                            </tr>
+                            <tr>
+                                <th>@Lang.TipOrdDisAmount</th>
+                                <td><span>(-)<i>@order.Currency</i>@PageHelper.MoneyFormat(order.OrderCost.OrderDiscountLessAmount * order.ExchangeRate, order.Currency)<br />
+                                    <em>(@(order.OrderCost.OrderDiscount * 100)% off)</em></span></td>
+                            </tr>
+                            <tr>
+                                <th>@Lang.TipHandlingFee</th>
+                                <td><span>(+)<i>@order.Currency</i>@PageHelper.MoneyFormat(order.OrderCost.FreeShippingFee > 0 ? order.OrderCost.FreeShippingFee * order.ExchangeRate : order.OrderCost.ClubFee * order.ExchangeRate, order.Currency)</span></td>
+                            </tr>
+                            <tr>
+                                <th>@Lang.TipEstShippingCost</th>
+                                <td><span>(+)<i>@order.Currency</i>@PageHelper.MoneyFormat(order.OrderCost.TotalShippingCost * order.ExchangeRate, order.Currency)</span></td>
+                            </tr>
+                            <tr>
+                                <th>@Lang.TipCoupon</th>
+                                <td><span>(-)<i>@order.Currency</i>@PageHelper.MoneyFormat(order.OrderCost.CouponAmt * order.ExchangeRate, order.Currency)</span></td>
+                            </tr>
+                            <tr>
+                                <th><strong>@Lang.TipGrandTotal</strong></th>
+                                <td><span><strong class="fred">(+)<i>@order.Currency</i>@PageHelper.MoneyFormat(order.OrderCost.TotalOrderAmt * order.ExchangeRate, order.Currency)</strong></span></td>
+                            </tr>
+                            <tr>
+                                <th><strong>@Lang.TipBalance</strong></th>
+                                <td><span><strong class="fred">(-)<i>@order.Currency</i>@PageHelper.MoneyFormat(order.OrderCost.CashAmt * order.ExchangeRate, order.Currency)</strong></span></td>
+                            </tr>
+                            <tr>
+                                <th><strong>@Lang.TipNeedToPay</strong></th>
+                                <td><span><strong class="fred"><i>@order.Currency</i>@PageHelper.MoneyFormat(order.OrderCost.NeedToPayAmt * order.ExchangeRate, order.Currency)</strong></span></td>
+                            </tr>
+                            <tr>
+                                <th><a href="@UrlRewriteHelper.GetOrderDetail(order.OrderNo)" class="fblue_mid"><strong>Order Details</strong></a></th>
+                                <td><span><strong>@(order.OrderStatus == OrderStatusType.Pending ? "Unpaid" : "Paid")</strong></span></td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </td>
+            <td>
+                <div class="shipping_info">
+                    <table cellpadding="0" cellspacing="0">
+                        <tr>
+                            <th>@Lang.TipShippingAddressPun</th>
+                            <td>
+                                @if (!Model.OrderShippingAddress.IsNullOrEmpty())
+                                {
+                                    <strong>@Model.OrderShippingAddress.FullName</strong>
+                                    <p>@Model.OrderShippingAddress.Street1</p>
+                                    if (!Model.OrderShippingAddress.Street2.IsNullOrEmpty())
+                                    {
+                                    <p>@Model.OrderShippingAddress.Street2</p>
+                                    }
+                                    <p>@(Model.OrderShippingAddress.City),@Model.OrderShippingAddress.Province @Model.OrderShippingAddress.ZipCode</p>
+                                    <p>@Model.OrderShippingAddress.CountryName</p>
+                                    <p>Phone:@Model.OrderShippingAddress.Telphone</p>
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>@Lang.TipShippingMethodsPun</th>
+                            <td>@Html.Raw(Model.ShippingName) </td>
+                        </tr>
+                        <tr>
+                            <th>@Lang.TipEstShippingTimePun</th>
+                            <td>
+                                @if (!Model.ShippingDay.IsNullOrEmpty())
+                                {
+                                    @Html.Raw(Model.ShippingDay.DayLow + "-" + Model.ShippingDay.DayHigh + "  workdays")
+                                }
+                            </td>
+                        </tr>
+                    </table>
+                    <table cellpadding="0" cellspacing="0" class="border">
+                        <tr>
+                            <th>@Lang.TipOrderComments</th>
+                            <td>@(Model.Order.OrderRemark.IsNullOrEmpty() ? "/" : Model.Order.OrderRemark)</td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+@if (!productInfoList.IsNullOrEmpty() && productInfoList.Count > 0)
+{
+    <div class="recommend_cont full_width">
+        <h2 class="font14">@Lang.TipProductsForCon</h2>
+        <ul>
+            @foreach (ProductInfo productInfo in productInfoList)
+            {
+                @Html.Partial("~/Views/Product/Partial/__Product__Item__Grid__View.cshtml", productInfo)
+            }
+            <div class="clearfix"></div>
+        </ul>
+    </div>
+}
+<div class="clearfix"></div>

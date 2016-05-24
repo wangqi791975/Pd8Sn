@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Layout/_Layout_Home.cshtml";
+}
+@model Com.Panduo.Web.Models.Home.HomeVo
+@section HtmlHead
+{
+    <script>
+        $(document).ready(function() {
+            LoadReg();
+        });
+    </script>
+}
+@*右侧开始*@
+<div id="rt_banner">
+    @if (Model.RightHtml.Length > 0)
+    {
+       @Html.Raw(Model.RightHtml)
+    }
+</div>
+@*右侧结束*@
+<div class="clearfix"></div>
+@*促销开始*@
+<div class="promotion">
+    @if (Model.BottomHtml.Length > 0)
+    {
+       @Html.Raw(Model.BottomHtml)
+    }
+</div>
+@*促销结束*@

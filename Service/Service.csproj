@@ -1,0 +1,324 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{84D49F07-70F0-4A56-9CE1-491C0691AF44}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Com.Panduo.Service</RootNamespace>
+    <AssemblyName>Service</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MailServer">
+      <HintPath>..\RefDLL\Panduo\MailServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Panduo.Com.Email.SaveXml">
+      <HintPath>..\RefDLL\Panduo\Panduo.Com.Email.SaveXml.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminUser\AdminMenu.cs" />
+    <Compile Include="AdminUser\AdminModule.cs" />
+    <Compile Include="AdminUser\AdminPasswordUsed.cs" />
+    <Compile Include="AdminUser\AdminUser.cs" />
+    <Compile Include="AdminUser\AdminUserModule.cs" />
+    <Compile Include="AdminUser\IAdminUserService.cs" />
+    <Compile Include="AdminUser\AdminRole.cs" />
+    <Compile Include="Article\IArticleService.cs" />
+    <Compile Include="Article\SomeArticle.cs" />
+    <Compile Include="Article\SomeArticleLanguage.cs" />
+    <Compile Include="BussinessException.cs" />
+    <Compile Include="Cash\CashAccount.cs" />
+    <Compile Include="Cash\CashSection.cs" />
+    <Compile Include="Cash\CashItem.cs" />
+    <Compile Include="Cash\ICashService.cs" />
+    <Compile Include="Coupon\Coupon.cs" />
+    <Compile Include="Coupon\CouponCustomer.cs" />
+    <Compile Include="Coupon\CouponDesc.cs" />
+    <Compile Include="Coupon\ICouponService.cs" />
+    <Compile Include="Coupon\CouponCustomerView.cs" />
+    <Compile Include="Customer\Address.cs" />
+    <Compile Include="Customer\CustomerHighRisk.cs" />
+    <Compile Include="Customer\Channel.cs" />
+    <Compile Include="Customer\Club\ClubBlackList.cs" />
+    <Compile Include="Help\VHelpArticle.cs" />
+    <Compile Include="Help\VHelpCategory.cs" />
+    <Compile Include="Product\ClubProduct\ClubProductView.cs" />
+    <Compile Include="Customer\Club\ClubShippingFee.cs" />
+    <Compile Include="Customer\Club\ClubCustomerView.cs" />
+    <Compile Include="Customer\CustomerAvatar.cs" />
+    <Compile Include="Customer\CustomerRemark.cs" />
+    <Compile Include="Customer\IChannelService.cs" />
+    <Compile Include="Customer\Club\ClubCustomer.cs" />
+    <Compile Include="Customer\Club\ClubLog.cs" />
+    <Compile Include="Customer\Club\IClubService.cs" />
+    <Compile Include="Customer\ForgotPassword.cs" />
+    <Compile Include="Customer\INewsletterService.cs" />
+    <Compile Include="Customer\Product\CustomerProductView.cs" />
+    <Compile Include="Customer\Product\CustomerWishListProduct.cs" />
+    <Compile Include="Customer\RegisterInfo.cs" />
+    <Compile Include="Marketing\Gift\GiftMarketing.cs" />
+    <Compile Include="DataExport\AverageOrderAmountInfo.cs" />
+    <Compile Include="DataExport\SaleInfo.cs" />
+    <Compile Include="DataExport\ClubCustomer.cs" />
+    <Compile Include="DataExport\ProductUpload.cs" />
+    <Compile Include="DataExport\ProductStatusLog.cs" />
+    <Compile Include="DataExport\OrderInfo.cs" />
+    <Compile Include="DataExport\RegisterCustomer.cs" />
+    <Compile Include="DataExport\IDataExportService.cs" />
+    <Compile Include="Marketing\Gift\VMarketingGift.cs" />
+    <Compile Include="Order\OrderPaymentAmountLog.cs" />
+    <Compile Include="Order\OrderRemark.cs" />
+    <Compile Include="Payment\GlobalCollectDisabledCountry.cs" />
+    <Compile Include="Payment\PaymentEnabledCustomer.cs" />
+    <Compile Include="Product\DailyDeal\DailyDealLabel.cs" />
+    <Compile Include="Product\OemSourcing.cs" />
+    <Compile Include="Product\UploadProduct.cs" />
+    <Compile Include="SiteConfigure\CountryHighRisk.cs" />
+    <Compile Include="SystemMail\IMailService.cs" />
+    <Compile Include="SystemMail\MailConfig.cs" />
+    <Compile Include="SystemMail\MailLogo.cs" />
+    <Compile Include="Marketing\Banner\BannerInfo.cs" />
+    <Compile Include="Marketing\Banner\HomeAreaSetting.cs" />
+    <Compile Include="Marketing\IBannerService.cs" />
+    <Compile Include="Help\HelpArticleDescription.cs" />
+    <Compile Include="Help\HelpArticle.cs" />
+    <Compile Include="Help\HelpCategoryDescription.cs" />
+    <Compile Include="Help\HelpCategory.cs" />
+    <Compile Include="Help\IHelpService.cs" />
+    <Compile Include="Order\ShippingOption\RemoteCity.cs" />
+    <Compile Include="Order\ShippingOption\RemoteZip.cs" />
+    <Compile Include="Order\ShippingOption\ShippingBaseInfo.cs" />
+    <Compile Include="Order\SpecialOrder.cs" />
+    <Compile Include="Product\ClubProduct\ClubProduct.cs" />
+    <Compile Include="Customer\Customer.cs" />
+    <Compile Include="Customer\CustomerGroup.cs" />
+    <Compile Include="Customer\CustomerGroupDesc.cs" />
+    <Compile Include="Customer\Product\CustomerProduct.cs" />
+    <Compile Include="Customer\CustomerManager.cs" />
+    <Compile Include="Customer\Preference.cs" />
+    <Compile Include="Customer\FacebookInfo.cs" />
+    <Compile Include="Customer\ICustomerService.cs" />
+    <Compile Include="Customer\Product\ICustomerProductService.cs" />
+    <Compile Include="Customer\Product\IWishListService.cs" />
+    <Compile Include="Customer\Newsletter.cs" />
+    <Compile Include="Customer\Product\WishListProduct.cs" />
+    <Compile Include="Customer\Product\WishListTypeDesc.cs" />
+    <Compile Include="Marketing\Coupon\CouponMarketing.cs" />
+    <Compile Include="Marketing\Coupon\VMarketingCoupon.cs" />
+    <Compile Include="Marketing\Criteria\CouponCriteria.cs" />
+    <Compile Include="Marketing\Criteria\PlaceOrderCriteria.cs" />
+    <Compile Include="Marketing\Criteria\OrderDiscountCriteria.cs" />
+    <Compile Include="Marketing\Criteria\PiecingOrderCriteria.cs" />
+    <Compile Include="Marketing\IMarketingService.cs" />
+    <Compile Include="Marketing\Marketing.cs" />
+    <Compile Include="Marketing\MarketingReward.cs" />
+    <Compile Include="Marketing\PlaceOrder\PlaceOrderMarketing.cs" />
+    <Compile Include="Marketing\PlaceOrder\PlaceOrderResult.cs" />
+    <Compile Include="Marketing\ShippingMarketing\ShippingMarketing.cs" />
+    <Compile Include="Marketing\PlaceOrder\PlaceOrderDetail.cs" />
+    <Compile Include="Marketing\OrderAmountDiscount.cs" />
+    <Compile Include="Marketing\ShippingMarketing\FreeShipping.cs" />
+    <Compile Include="Marketing\ShippingMarketing\ShippingDiscount.cs" />
+    <Compile Include="Marketing\ShippingMarketing\ShippingUpgrade.cs" />
+    <Compile Include="Marketing\OrderDiscountMarketing.cs" />
+    <Compile Include="Marketing\Criteria\MarketingCriteria.cs" />
+    <Compile Include="Marketing\PiecingOrderResult.cs" />
+    <Compile Include="Message\LetterReply.cs" />
+    <Compile Include="Message\LetterStation.cs" />
+    <Compile Include="Message\IMessageService.cs" />
+    <Compile Include="Message\ReplyAttachment.cs" />
+    <Compile Include="Order\CheckoutDraft.cs" />
+    <Compile Include="Order\IOrderService.cs" />
+    <Compile Include="Order\Order.cs" />
+    <Compile Include="Order\OrderBillingAddress.cs" />
+    <Compile Include="Order\OrderCost.cs" />
+    <Compile Include="Order\OrderDetail.cs" />
+    <Compile Include="Order\OrderImpression.cs" />
+    <Compile Include="Order\OrderPaidStatus.cs" />
+    <Compile Include="Order\OrderShippingAddress.cs" />
+    <Compile Include="Order\OrderStatus.cs" />
+    <Compile Include="Order\OrderStatusHistory.cs" />
+    <Compile Include="Order\Package.cs" />
+    <Compile Include="Order\PackageDetail.cs" />
+    <Compile Include="Order\ShippingOption\CustomsNo.cs" />
+    <Compile Include="Order\ShippingOption\IShippingService.cs" />
+    <Compile Include="Order\ShippingOption\Shipping.cs" />
+    <Compile Include="Order\ShippingOption\ShippingAmount.cs" />
+    <Compile Include="Order\ShippingOption\ShippingDay.cs" />
+    <Compile Include="Order\ShippingOption\ShippingDisabledCity.cs" />
+    <Compile Include="Order\ShippingOption\ShippingDisabledCountry.cs" />
+    <Compile Include="Order\ShippingOption\ShippingDisabledPostCode.cs" />
+    <Compile Include="Order\ShippingOption\ShippingLanguage.cs" />
+    <Compile Include="Order\ShippingOption\ShippingOption.cs" />
+    <Compile Include="Order\ShippingOption\ShipppingCriteria.cs" />
+    <Compile Include="Order\ShoppingCart\IShoppingCartService.cs" />
+    <Compile Include="Order\ShoppingCart\ShoppingCartSummary.cs" />
+    <Compile Include="Order\ShoppingCart\ShoppingCartItem.cs" />
+    <Compile Include="Order\ShoppingCart\VShoppingCartItem.cs" />
+    <Compile Include="PageData.cs" />
+    <Compile Include="Pager.cs" />
+    <Compile Include="Payment\IPaymentService.cs" />
+    <Compile Include="Payment\PayConfig\BankOfChinaConfig.cs" />
+    <Compile Include="Payment\PayConfig\GlobalCollectConfig.cs" />
+    <Compile Include="Payment\PayConfig\HsbcConfig.cs" />
+    <Compile Include="Payment\PayConfig\MoneyGramConfig.cs" />
+    <Compile Include="Payment\PayConfig\OceanPaymentConfig.cs" />
+    <Compile Include="Payment\PayConfig\PaypalConfig.cs" />
+    <Compile Include="Payment\PayConfig\PaypalExpressConfig.cs" />
+    <Compile Include="Payment\PayConfig\WesternUnionConfig.cs" />
+    <Compile Include="Payment\PayInfo\BankOfChinaInfo.cs" />
+    <Compile Include="Payment\PayInfo\BasePayInfo.cs" />
+    <Compile Include="Payment\PayInfo\GlobalCollectInfo.cs" />
+    <Compile Include="Payment\PayInfo\HsbcInfo.cs" />
+    <Compile Include="Payment\PayInfo\MoneyGramInfo.cs" />
+    <Compile Include="Payment\PayInfo\OceanPaymentInfo.cs" />
+    <Compile Include="Payment\PayInfo\PaypalInfo.cs" />
+    <Compile Include="Payment\PayInfo\WesternUnionInfo.cs" />
+    <Compile Include="Payment\PaymentType.cs" />
+    <Compile Include="Product\ClubProduct\IClubProductService.cs" />
+    <Compile Include="Product\DailyDeal\DailyDealTitle.cs" />
+    <Compile Include="Product\DailyDeal\DailyDealDesc.cs" />
+    <Compile Include="Product\ProductExcelRow.cs" />
+    <Compile Include="Product\ProductInfo.cs" />
+    <Compile Include="Product\ProductPriceRise.cs" />
+    <Compile Include="Product\ProductUnitLanguage.cs" />
+    <Compile Include="Product\ProductUnit.cs" />
+    <Compile Include="Product\IProductImageService.cs" />
+    <Compile Include="Product\ProductArea\IProductAreaService.cs" />
+    <Compile Include="Product\DailyDeal\IProductDailyDealService.cs" />
+    <Compile Include="Product\ProductArea\ProductAreaLanguage.cs" />
+    <Compile Include="Product\ProductSearchLog.cs" />
+    <Compile Include="Product\Promotion\PromotionArea.cs" />
+    <Compile Include="Product\Promotion\PromotionDesc.cs" />
+    <Compile Include="Product\Property\PropertyValueGroupLanguage.cs" />
+    <Compile Include="Review\IReviewService.cs" />
+    <Compile Include="Review\NotReviewProductView.cs" />
+    <Compile Include="Review\ProductReview.cs" />
+    <Compile Include="Review\ReviewProductCustomerView.cs" />
+    <Compile Include="Review\ReviewWebsiteCustomerView.cs" />
+    <Compile Include="Review\WebSiteReview.cs" />
+    <Compile Include="Product\Category\Category.cs" />
+    <Compile Include="Product\Category\CategoryProperty.cs" />
+    <Compile Include="Product\Category\CategoryLanguage.cs" />
+    <Compile Include="Product\Category\CategoryKeyword.cs" />
+    <Compile Include="Product\Category\CategoryAdvertisement.cs" />
+    <Compile Include="Product\Category\ICategoryService.cs" />
+    <Compile Include="Product\Category\SearchProductCategory.cs" />
+    <Compile Include="Product\DailyDeal\ProductDailyDeal.cs" />
+    <Compile Include="Product\IProductService.cs" />
+    <Compile Include="Product\Promotion\IPromotionService.cs" />
+    <Compile Include="Product\ProductArea\ProductArea.cs" />
+    <Compile Include="Product\ProductArea\ProductAreaRelative.cs" />
+    <Compile Include="Product\Product.cs" />
+    <Compile Include="Product\ProductLanguage.cs" />
+    <Compile Include="Product\Promotion\ProductPromotion.cs" />
+    <Compile Include="Product\Property\IPropertyService.cs" />
+    <Compile Include="Product\Property\SearchProductProperty.cs" />
+    <Compile Include="Product\Property\SearchProductPropertyGroup.cs" />
+    <Compile Include="Product\SearchProductData.cs" />
+    <Compile Include="Product\ProductStock.cs" />
+    <Compile Include="Product\ProductPropertyValue.cs" />
+    <Compile Include="Product\ProductImages.cs" />
+    <Compile Include="Product\ProductStepPrice.cs" />
+    <Compile Include="Product\ProductPrice.cs" />
+    <Compile Include="Product\Property\PropertyValueGroup.cs" />
+    <Compile Include="Product\Property\PropertyValueLanguage.cs" />
+    <Compile Include="Product\Property\PropertyValue.cs" />
+    <Compile Include="Product\Property\PropertyLanguage.cs" />
+    <Compile Include="Product\Property\Property.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RelatedData.cs" />
+    <Compile Include="SEO\ISitemap.cs" />
+    <Compile Include="SEO\ITopKeywordService.cs" />
+    <Compile Include="SEO\MetaHome.cs" />
+    <Compile Include="SEO\MetaList.cs" />
+    <Compile Include="SEO\TopKeyword.cs" />
+    <Compile Include="SEO\TopKeywordSubject.cs" />
+    <Compile Include="SEO\IMetaService.cs" />
+    <Compile Include="SEO\MetaArea.cs" />
+    <Compile Include="ServiceConst\MemcachedConst.cs" />
+    <Compile Include="ServiceConst\ServiceConfig.cs" />
+    <Compile Include="ServiceFactory.cs" />
+    <Compile Include="SiteConfigure\City.cs" />
+    <Compile Include="SiteConfigure\Config.cs" />
+    <Compile Include="SiteConfigure\ISystemService.cs" />
+    <Compile Include="SiteConfigure\Payment\AlipayConfig.cs" />
+    <Compile Include="SiteConfigure\SearchKeyword.cs" />
+    <Compile Include="SiteConfigure\Language.cs" />
+    <Compile Include="SiteConfigure\ExchangeRateLog.cs" />
+    <Compile Include="SiteConfigure\Currency.cs" />
+    <Compile Include="SiteConfigure\Payment\GlobalCollectConfig.cs" />
+    <Compile Include="SiteConfigure\Payment\PayPalConfig.cs" />
+    <Compile Include="SiteConfigure\Payment\QiwiConfig.cs" />
+    <Compile Include="SiteConfigure\BlackList.cs" />
+    <Compile Include="SiteConfigure\Continent.cs" />
+    <Compile Include="SiteConfigure\Country.cs" />
+    <Compile Include="SiteConfigure\Area.cs" />
+    <Compile Include="SiteConfigure\IConfigureService.cs" />
+    <Compile Include="SiteConfigure\AreaLanguage.cs" />
+    <Compile Include="SiteConfigure\CountryLanguage.cs" />
+    <Compile Include="SiteConfigure\Province.cs" />
+    <Compile Include="SiteConfigure\ProvinceLanguage.cs" />
+    <Compile Include="SiteConfigure\CityLanguage.cs" />
+    <Compile Include="SiteConfigure\SiteContact.cs" />
+    <Compile Include="SiteConfigure\WhiteList.cs" />
+    <Compile Include="Sorter.cs" />
+    <Compile Include="Suggestion\ISuggestionService.cs" />
+    <Compile Include="Suggestion\SuggestionItem.cs" />
+    <Compile Include="Suggestion\SuggestionObject.cs" />
+    <Compile Include="Suggestion\SuggestionContent.cs" />
+    <Compile Include="Suggestion\SuggestionAttachment.cs" />
+    <Compile Include="Suggestion\SuggestionDetail.cs" />
+    <Compile Include="SystemMail\EmailProduceLog.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{08276825-378A-4CC2-AE5F-8296472BF96F}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

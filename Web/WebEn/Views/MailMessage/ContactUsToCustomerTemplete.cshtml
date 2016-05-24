@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "You have submitted successfully a message to 8seasons Team";
+    Layout = "~/Views/MailMessage/_layout/_Email_Customer_Layout.cshtml";
+}
+<!--<tilte>You have submitted successfully a message to 8seasons Team</tilte>-->
+
+Dear @ViewBag.CustomerName/Customer:
+
+This email is given to you because you have left a message on our website. It is a copy of your message.
+
+From:@ViewBag.CustomerName
+
+Email:@ViewBag.Email
+
+Message:@ViewBag.Message
+
+Best regards
+8Seasons Team
+

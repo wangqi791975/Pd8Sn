@@ -1,0 +1,41 @@
+﻿@model Com.Panduo.Service.Marketing.Marketing
+
+<hr />
+<div class="control-group">
+    <label class="control-label" for="FD_Name" style="cursor: pointer;">活动名称：</label>
+    <div class="controls">
+        <input id="FD_Name" class="input-xlarge" type="text" value="@(Model.Name ?? string.Empty)" name="FD_Name">
+        <span class="help-inline">填入中文即可，只在后台显示</span>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label">开始时间：</label>
+    <div class="controls">
+        @{
+            var effectiveBeginDate = Model.EffectiveBegin.ToString().Split(' ').First();
+            var effectiveBeginTime = Model.EffectiveBegin.ToString().Split(' ').LastOrDefault();
+            var effectiveEndDate = Model.EffectiveEnd.ToString().Split(' ').First();
+            var effectiveEndTime = Model.EffectiveEnd.ToString().Split(' ').LastOrDefault();
+        }
+        <div class="bfh-datepicker" data-format="y-m-d" data-date="@(effectiveBeginDate ?? string.Empty)" data-icon="icon-calendar" data-name="FD_EffectiveBegin_Date" data-placeholder="开始时间"></div>
+        <div class="bfh-timepicker" data-icon="icon-time" data-name="FD_EffectiveBegin_Time" data-time="@(effectiveBeginTime ?? string.Empty)"></div><code>（北京时间）</code>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label">结束时间：</label>
+    <div class="controls">
+        <div class="bfh-datepicker" data-format="y-m-d" data-date="@(effectiveEndDate ?? string.Empty)" data-icon="icon-calendar" data-name="FD_EffectiveEnd_Date" data-placeholder="结束时间"></div>
+        <div class="bfh-timepicker" data-icon="icon-time" data-name="FD_EffectiveEnd_Time" data-time="@(effectiveEndTime ?? string.Empty)"></div><code>（北京时间）</code>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label">启用/禁用：</label>
+    <div class="controls">
+        <label class="radio inline">
+            <input type="radio" name="FD_Status" value="1" @(Model.Status ? "checked=checked" : "" ) />启用
+        </label>
+        <label class="radio inline">
+            <input type="radio" name="FD_Status" value="0" @(!Model.Status ? "checked=checked" : "" ) />禁用
+        </label>
+    </div>
+</div>

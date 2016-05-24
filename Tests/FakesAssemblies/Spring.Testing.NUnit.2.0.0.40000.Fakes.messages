@@ -1,0 +1,2 @@
+D:\workflow\8seasonsWebTFS\Panduo.8Seasons\Tests\Fakes\Spring.Testing.NUnit.fakes : warning : 无法为 Spring.Testing.Ado.IPlatformTransaction 生成填充码: 类型是一个接口。
+D:\workflow\8seasonsWebTFS\Panduo.8Seasons\Tests\Fakes\Spring.Testing.NUnit.fakes : warning : 无法为 Spring.Testing.Ado.SimpleAdoTestUtils+PlatformTransactionHolder 生成填充码: 类型对 exported or assembly(Spring.Testing.NUnit.2.0.0.40000.Fakes) 不可见。

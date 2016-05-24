@@ -1,0 +1,41 @@
+﻿@using Com.Panduo.Service
+@{
+    ViewBag.Title = "_Banner";
+}
+@{
+    var banner = ServiceFactory.BannerService.GetBanner(ServiceFactory.ConfigureService.SiteLanguageId);
+    if (!banner.IsNullOrEmpty())
+    {
+
+        if (banner.IsShowHome && banner.IsValid && banner.BannerStartTime <= DateTime.Now && banner.BannerEndTime >= DateTime.Now)
+        {
+    <div class="small_banner">
+        @Html.Raw(banner.Content)
+        @if (banner.IsCountdown)
+        {
+            <div id="divshowtime" class="time"></div>
+            <input type="hidden" id="bannerTime" value="@banner.BannerEndTime">
+            <script type="text/javascript">
+                var interval = 1000;
+                function ShowCountDown(strTime, divname) {
+                    var now = new Date();
+                    var endDate = new Date(Date.parse(strTime.replace(/-/g, "/")));
+                    var leftTime = endDate.getTime() - now.getTime();
+                    var leftsecond = parseInt(leftTime / 1000);
+                    var day1 = Math.floor(leftsecond / (60 * 60 * 24));
+                    var hour = Math.floor((leftsecond - day1 * 24 * 60 * 60) / 3600);
+                    var minute = Math.floor((leftsecond - day1 * 24 * 60 * 60 - hour * 3600) / 60);
+                    var second = Math.floor(leftsecond - day1 * 24 * 60 * 60 - hour * 3600 - minute * 60);
+                    var cc = document.getElementById(divname);
+
+                    cc.innerHTML = "<em class=\"day\">" + day1 + "</em><span>Days</span><em>" + hour + "</em><i>:</i><em>" + minute + "</em><i>:</i><em>" + second + "</em><span>" + Message.TipLeft + "</span>";
+                }
+                $(document).ready(function () {
+                    window.setInterval(function () { ShowCountDown($("#bannerTime").val(), 'divshowtime'); }, interval);
+                });
+            </script>
+        }
+    </div>
+        }
+    }
+}

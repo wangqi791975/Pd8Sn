@@ -1,0 +1,30 @@
+﻿@using Com.Panduo.Service.Product.Category
+@model Com.Panduo.Web.Common.MyTreeViewItem<Category>
+<ul>
+    <li>
+        @if (null != Model.Items)
+        {
+            <span><i class="icon-plus-sign"></i></span>
+        }
+        @if (null == Model.Parent)
+        {
+            Model.HtmlDomName = "TreeView1_checkedNodes[" + Model.Index + "]";
+        }
+        else
+        {
+            Model.HtmlDomName = Model.Parent.HtmlDomName + ".Items[" + Model.Index + "]";
+        }
+        <input  name='@(Model.HtmlDomName + ".Text")' type="hidden" value="@Model.Node.CategoryId" />
+        <input  name='@(Model.HtmlDomName + ".Index")' type="hidden" value="@Model.Index" />
+        <a class="btn btn-mini btn-info btn-info-view-div" id="data-@Model.Node.CategoryId" data-id="@Model.Node.CategoryId" data-loading-text="<i class='icon-edit icon-white'></i>@Model.Node.CategoryName 加载"><i class="icon-edit icon-white"></i>@Model.Node.CategoryName 编辑</a>
+        <input  name='@(Model.HtmlDomName + ".Value")' type="hidden"
+                value="@Model.Node.CategoryId" />
+        @if (null != Model.Items)
+        {
+            foreach (MyTreeViewItem<Category> t in Model.Items)
+            {
+            @Html.Partial("NodeItem", t)
+            }
+        }
+    </li>
+</ul>

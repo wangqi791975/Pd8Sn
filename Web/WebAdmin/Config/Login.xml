@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Login>
+  <Controller Name="AdminUser">
+    <Include>*</Include>
+    <Exclude>Login</Exclude>
+  </Controller>
+  <Controller Name="Banner">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Base">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Cache">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Category">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Channel">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Club">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Coupon">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Customer">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Dailydeal">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Home">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Marketing">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Meta">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Order">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="GlobalCollectDisabledCountry">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="ProductArea">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Product">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Promotion">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Property">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="PropertyValue">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="ProductPriceRise">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Review">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="TopKeyword">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="WishList">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Cash">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Currency">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="IpWhiteBlack">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="CountryHighRisk">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="CustomerHighRisk">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="ShoppingCart">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="HelpCenter">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+</Login>

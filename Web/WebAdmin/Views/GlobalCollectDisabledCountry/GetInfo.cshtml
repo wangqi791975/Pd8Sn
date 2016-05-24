@@ -1,0 +1,21 @@
+﻿@model IList<Com.Panduo.Service.SiteConfigure.Country>
+@{
+    Layout = null;
+}
+<form name="updateForm" action="@Url.Content("~/GlobalCollectDisabledCountry/Submit")" method="post" onsubmit="return false;">
+    <input type="hidden" id="current_url" name="current_url" value="@Url.Content("~/GlobalCollectDisabledCountry/GetList")" />
+    <table class="table table-striped">
+        <tr>
+            <td>国家：</td>
+            <td>
+                <select name="country_id" required="required">
+                    <option value="">请选择</option>
+                    @foreach (var country in @Model)
+                    {
+                        <option value="@country.CountryId">@country.CountryName</option>
+                    }
+                </select>
+            </td>
+        </tr>
+    </table>
+</form>

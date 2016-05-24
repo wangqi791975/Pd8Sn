@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Ssl>
+  <Controller Name="AdminUser">
+    <Add>*</Add>
+    <Remove></Remove>
+  </Controller>
+  <Controller Name="Home">
+    <Add>*</Add>
+    <Remove>Index</Remove>
+  </Controller>
+</Ssl>

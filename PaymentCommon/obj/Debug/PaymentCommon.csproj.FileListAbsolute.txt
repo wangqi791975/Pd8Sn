@@ -1,0 +1,16 @@
+D:\workflow\8seasonsWebTFS\Panduo.8Seasons\PaymentCommon\bin\PaymentCommon.dll
+D:\workflow\8seasonsWebTFS\Panduo.8Seasons\PaymentCommon\bin\PaymentCommon.pdb
+D:\workflow\8seasonsWebTFS\Panduo.8Seasons\PaymentCommon\bin\log4net.dll
+D:\workflow\8seasonsWebTFS\Panduo.8Seasons\PaymentCommon\bin\Newtonsoft.Json.dll
+D:\workflow\8seasonsWebTFS\Panduo.8Seasons\PaymentCommon\bin\paypal_base.dll
+D:\workflow\8seasonsWebTFS\Panduo.8Seasons\PaymentCommon\obj\Debug\PaymentCommon.dll
+D:\workflow\8seasonsWebTFS\Panduo.8Seasons\PaymentCommon\obj\Debug\PaymentCommon.pdb
+D:\workflow\8seasonsWebTFS\Panduo.8Seasons\PaymentCommon\obj\Debug\PaymentCommon.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\Panduo.8Seasons\PaymentCommon\bin\PaymentCommon.dll
+C:\Users\Administrator\Desktop\Panduo.8Seasons\PaymentCommon\bin\PaymentCommon.pdb
+C:\Users\Administrator\Desktop\Panduo.8Seasons\PaymentCommon\bin\log4net.dll
+C:\Users\Administrator\Desktop\Panduo.8Seasons\PaymentCommon\bin\Newtonsoft.Json.dll
+C:\Users\Administrator\Desktop\Panduo.8Seasons\PaymentCommon\bin\paypal_base.dll
+C:\Users\Administrator\Desktop\Panduo.8Seasons\PaymentCommon\obj\Debug\PaymentCommon.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\Panduo.8Seasons\PaymentCommon\obj\Debug\PaymentCommon.dll
+C:\Users\Administrator\Desktop\Panduo.8Seasons\PaymentCommon\obj\Debug\PaymentCommon.pdb

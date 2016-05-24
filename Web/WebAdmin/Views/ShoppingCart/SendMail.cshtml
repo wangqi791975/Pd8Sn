@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "发送邮件";
+    Layout = null;
+}
+@model Com.Panduo.Web.Models.ShoppingCart.MailVo
+<div class="ajax_detail">
+<div class="ajax_info">
+    <form class="form-horizontal" id="createSendMailForm" name="createSendMailForm" action="@Url.Content("~/ShoppingCart/CreateSendMail")" method="post" onsubmit=" return false; ">
+        <table class="table">
+            <tr>
+                <td width="20%">From：</td>
+                <td>
+                    <input type="hidden" name="languageid" id="languageid" value="@ViewBag.languageId"/>
+                    <input type="text" name="mailfrom" id="mailfrom" data-info="@Model.From" required="required" value="@Model.From"/>
+                </td>
+            </tr>
+            <tr>
+                <td width="20%">To：</td>
+                <td>
+                    <input type="text" name="mailto" id="mailto" required="required" data-info="@Model.To" value="@Model.To"/>
+                </td>
+            </tr>
+            <tr>
+                <td width="20%">主题：</td>
+                <td>
+                    <input type="text" name="mailtitle" id="mailtitle" required="required" data-info="@Model.Title" value="@Model.Title"/>
+                </td>
+            </tr>
+            <tr>
+                <td width="20%">邮件内容：</td>
+                <td>
+                    <textarea name="mailcontent" rows="8" id='mailcontent' style='width: 480px;' data-info="@Model.MailContent" required="required">@Model.MailContent</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                        <a class="btn btn-primary ajax_update" href="javascript:void(0)" id="sub">提交</a>
+                        <a class="btn" id="btncancel" href="javascript:void(0)">取消</a>
+               </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</div>

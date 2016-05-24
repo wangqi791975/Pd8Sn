@@ -1,0 +1,79 @@
+﻿@using Com.Panduo.Service.SEO
+@using Com.Panduo.Service.SiteConfigure
+@model Dictionary<int, List<MetaHome>>
+@{
+    Layout = null;
+}
+
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        @{
+            var loop = 0;
+        }
+        @foreach (Language lang in ViewBag.Languages)
+        {
+            <li class="@(loop++ == 0 ? "active" : "")"><a data-target="#tab-@lang.LanguageId" href="javascript:void(0)" data-toggle="tab">@lang.ChineseName</a></li>
+        }
+    </ul>
+    <div class="tab-content">
+        @{
+            loop = 0;
+            var metaHomeTypes = new Dictionary<MetaHomePageType, string>
+            {
+                {MetaHomePageType.Home, "网站首页"},
+                {MetaHomePageType.NewIndex, "New Arrivals首页"},
+                {MetaHomePageType.MixIndex, "Mix首页"},
+                {MetaHomePageType.PromotionIndex, "Promotion首页"}
+            };
+        }
+        @foreach (Language lang in ViewBag.Languages)
+        {
+            var metaHomes = Model.TryGetValue(lang.LanguageId);
+            <div class="ajax_detail tab-pane @(loop++ == 0 ? "active" : "")" id="tab-@lang.LanguageId">
+                <form class="form-horizontal" name="updateForm" action="@Url.Content("~/Meta/SetMetaHome")" method="post" onsubmit="return false;">
+                    <input type="hidden" name="HID_languageId" value="@lang.LanguageId"/>
+                    @foreach (var metaHomeType in metaHomeTypes)
+                    {
+                        var v = metaHomeType.Value;
+                        var k = metaHomeType.Key;
+                        var metaHome = metaHomes.IsNullOrEmpty() ? new MetaHome() : metaHomes.Where(x => x.PageType == k).ToList().FirstOrDefault();
+                        metaHome = metaHome ?? new MetaHome();
+                        <fieldset>
+                            <legend>@v</legend>
+                            <input type="hidden" name="HID_metaHomeType" value="@k" />
+                            <div class="control-group">
+                                <label class="control-label">面包屑title：</label>
+                                <div class="controls">
+                                    <input type="text" class="span8" name="FD_Breadcrumb_@k" id="FD_Breadcrumb_@k" value="@metaHome.Breadcrumb">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Title：</label>
+                                <div class="controls">
+                                    <input type="text" class="span8" name="FD_Title_@k" id="FD_Title_@k" value="@metaHome.Title">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Keywords：</label>
+                                <div class="controls">
+                                    <input type="text" class="span8" name="FD_Keywords_@k" id="FD_Keywords_@k" value="@metaHome.Keywords">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Description：</label>
+                                <div class="controls">
+                                    <textarea class="span8" name="FD_Description_@k" id="FD_Description_@k">@metaHome.Description</textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <hr />
+                    }
+                    <div class="form-actions">
+                        <a class="btn btn-primary ajax_update" href="javascript:void(0)">保存修改</a>
+                        <a class="btn" href="@Url.Content("~/Meta/Index")">取消</a>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</div>

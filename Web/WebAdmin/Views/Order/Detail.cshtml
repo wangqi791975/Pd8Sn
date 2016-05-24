@@ -1,0 +1,610 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Order
+@model Com.Panduo.Web.Models.Order.OrderDetailVo
+@{
+    ViewBag.Title = "订单#" + @Model.Order.OrderNo;
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@{
+    var customer = ServiceFactory.CustomerService.GetCustomerById(Model.Order.CustomerId);
+    var countNum = 0;
+}
+<div class="pull-right">
+    <!-- search bar -->
+    <div class="pull-right">
+        <form method="post" action="@Url.Content("~/Order/GetList")" id="searchForm" name="searchForm" class="form-search">
+            订单号：<input type="text" placeholder="订单号" name="orderno">
+            客户姓名或邮箱：<input type="text" placeholder="客户姓名或邮箱" name="customer">
+            语言：<select id="languagecode" name="languagecode">
+                <option value="-1">所有</option>
+                @foreach (var lang in Model.OrderSearchVo.Languages)
+                {
+                    <option value="@lang.LanguageCode">@lang.ChineseName</option>
+                }
+            </select>
+            来源：<select id="orderSource" name="orderSource">
+                <option value="-1">所有</option>
+                <option value="0">网站</option>
+                <option value="1">手机</option>
+            </select>
+            状态：<select id="orderStatus" name="orderStatus">
+                <option value="-1">所有</option>
+                @foreach (var orderStatus in Model.OrderSearchVo.OrderStatus)
+                {
+                    <option value="@orderStatus.Value">@orderStatus.Name</option>
+                }
+            </select>
+            支付方式：<select id="paymentId" name="paymentId">
+                <option value="-1">所有</option>
+                @foreach (var payment in Model.OrderSearchVo.Payments)
+                {
+                    <option value="@payment.Key">@payment.Value</option>
+                }
+            </select>
+            运输方式：<select id="shippingId" name="shippingId">
+                <option value="-1">所有</option>
+                @foreach (var shipping in Model.OrderSearchVo.Shippings)
+                {
+                    <option value="@shipping.ShippingId">@shipping.ShippingCode</option>
+                }
+            </select>
+
+            <button type="submit" class="btn"><i class="icon-search"></i>搜索</button>
+            <a href="/Order/Search" class="btn"><i class="icon-search"></i>返回</a>
+            <a href="/Order/Search?customer=@Model.Order.CustomerId" class="btn"><i class="icon-search"></i>当前客户的所有订单</a>
+
+        </form>
+    </div>
+</div>
+<div class="clearboth"></div>
+
+<div id="main" class="ajax-list">
+    <div class="form-horizontal">
+        <div class="row">
+            <div class="span3">
+                <div class="control-group">
+                    <label class="control-label">客户账户默认地址：</label>
+                    <div class="controls">
+                        <p>@Model.DefaultShippingAddress.FullName</p>
+                        <p>@Model.DefaultShippingAddress.Street1</p>
+                        <p>@Model.DefaultShippingAddress.Street2</p>
+                        <p>@(Model.DefaultShippingAddress.City),@Model.DefaultShippingAddress.Province @Model.DefaultShippingAddress.ZipCode</p>
+                        <p>@Model.DefaultShippingAddress.Country</p>
+                        <p>@Model.DefaultShippingAddress.Telphone</p>
+                    </div>
+                </div>
+            </div>
+            <div class="span3">
+                <div class="control-group">
+                    <label class="control-label">订单货运地址：</label>
+                    <div class="controls">
+                        <p>@Model.OrderShippingAddress.FullName</p>
+                        <p>@Model.OrderShippingAddress.Street1</p>
+                        <p>@Model.OrderShippingAddress.Street2</p>
+                        <p>@(Model.OrderShippingAddress.City),@Model.OrderShippingAddress.Province @Model.OrderShippingAddress.ZipCode</p>
+                        <p>@Model.OrderShippingAddress.CountryName</p>
+                        <p>Phone:@Model.OrderShippingAddress.Telphone</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label">邮箱：</label>
+            <div class="controls">
+                @if (!customer.IsNullOrEmpty())
+                {
+                    <a href="mailto:@customer.Email">@customer.Email</a> 
+                }
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">订单号：</label>
+            <div class="controls">
+                @Model.Order.OrderNo
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">单日期：</label>
+            <div class="controls">
+                @Model.Order.OrderTime
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">付款方式：</label>
+            <div class="controls">
+                @Model.PaymentName
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">海关申报：</label>
+            <div class="controls">
+                @Html.Raw("Goods' Value:")@if (Model.Order.ReportMoney > 0)
+                                          {@Model.Order.ReportCurrencyCode @Model.Order.ReportMoney}
+                                          else
+                                          {@Html.Raw("/")}@Html.Raw("Shipping Cost:") @if (Model.Order.ReportShippingMoney > 0)
+                                                                                  {@Model.Order.ReportShippingMoney}
+                                                                                  else
+                                                                                  {@Html.Raw("/")}
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">关税号：</label>
+            <div class="controls">
+                @Model.Order.CustomerTaxNumber
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">IP地址：</label>
+            <div class="controls">
+                @Model.Order.OrderIpAddress
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">下单时VIP：</label>
+            <div class="controls">
+                @if (!Model.Order.OrderCost.IsNullOrEmpty())
+                {
+                    @Model.Order.OrderCost.VipDiscount
+                }
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">当前VIP：</label>
+            <div class="controls">
+                @if (!customer.IsNullOrEmpty())
+                {
+                    @customer.VipDiscount
+                }
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">销售备注：</label>
+            <div class="controls">
+                @{
+                    var sMemo = Model.OrderRemarkList.Where(x => x.RemarkType == OrderRemarkType.SellerMemo).ToList();
+                    if (!sMemo.IsNullOrEmpty())
+                    {
+                    @sMemo[0].RemarkContent
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped" data-delaction="/Order/Delete">
+        <thead>
+            <tr>
+                <th width="15%">商品名称</th>
+                <th width="10%">商品图片</th>
+                <th width="8%">商品编号</th>
+                <th width="5%">材质</th>
+                <th width="10%">商品重量</th>
+                <th width="10%">原价</th>
+                <th width="5%">折扣</th>
+                <th width="5%">折后价</th>
+                <th width="5%">购买组数</th>
+                <th width="15%">小计</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var orderDetail in Model.OrderDetailList)
+            {
+                countNum += orderDetail.OrderDetail.Quantity;
+                <tr>
+                    <td>
+                        @* <a href="@UrlRewriteHelper.GetProductDetailUrl(orderDetail.ProductInfo.Product.ProductId, orderDetail.ProductInfo.ProductEnName)">*@
+                        @orderDetail.ProductInfo.ProductEnName
+                        @* </a>*@
+                    </td>
+                    <td>
+                        <img src="@ImageHelper.GetImageUrl(orderDetail.ProductInfo.Product.MainImage, 80)" />
+                    </td>
+                    <td>
+                        @orderDetail.ProductInfo.Product.ProductCode
+                    </td>
+                    <td>@{
+                var ls = orderDetail.ProductInfo.ProductProperties.OrderBy(c => c.Key.DisplayOrder).ThenBy(c => c.Key.PropertyName).Select(c => new KeyValuePair<string, string>(c.Key.PropertyName, c.Value.PropertyValueName)).ToList();
+
+                foreach (var d in ls)
+                {
+                    if (d.Key.StartsWith("Material"))
+                    {
+                        @d.Value
+                        break;
+                    }
+
+                }
+                        
+                    }
+                    </td>
+                    <td>
+                        @orderDetail.OrderDetail.Weight
+                        @if (orderDetail.OrderDetail.VolumeWeight > 0)
+                        {
+                            @Html.Raw("体积重量:")@orderDetail.OrderDetail.VolumeWeight
+                        }
+                    </td>
+                    <td>
+                        @Model.Order.Currency @PageHelper.MoneyFormat(orderDetail.OrderDetail.OriginalPrice * Model.Order.ExchangeRate, ServiceFactory.ConfigureService.GetCurrencyByCode(Model.Order.Currency))
+                    </td>
+                    <td>
+                        @orderDetail.OrderDetail.DiscountValue
+                    </td>
+                    <td>
+                        @Model.Order.Currency @PageHelper.MoneyFormat(orderDetail.OrderDetail.Price * Model.Order.ExchangeRate, ServiceFactory.ConfigureService.GetCurrencyByCode(Model.Order.Currency))
+                    </td>
+                    <td>
+                        @orderDetail.OrderDetail.Quantity
+                    </td>
+                    <td>
+                        @Model.Order.Currency @(orderDetail.OrderDetail.Quantity * PageHelper.MoneyFormat(orderDetail.OrderDetail.Price * Model.Order.ExchangeRate, ServiceFactory.ConfigureService.GetCurrencyByCode(Model.Order.Currency)))
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (!Model.Order.OrderCost.IsNullOrEmpty())
+    {
+        <div class="row">
+            <div class="span3">
+                <table>
+                    <tr>
+                        <th>Discounted item:</th>
+
+                        <td><span>(+)<i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.OriginalProductAmount * Model.Order.ExchangeRate, ServiceFactory.ConfigureService.GetCurrencyByCode(Model.Order.Currency))</span></td>
+                    </tr>
+                    @if (Model.Order.OrderCost.DiscountProductAmount > 0)
+                    {
+                        <tr>
+                            <th>Product Discount:</th>
+                            <td><span>(-)<i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.DiscountProductAmount * Model.Order.ExchangeRate, ServiceFactory.ConfigureService.GetCurrencyByCode(Model.Order.Currency))</span></td>
+                        </tr>
+                    }
+                    <tr>
+                        <th>Regular-priced item:</th>
+                        <td><span>(+)<i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.NoDiscountProductAmount * Model.Order.ExchangeRate, ServiceFactory.ConfigureService.GetCurrencyByCode(Model.Order.Currency))</span></td>
+                    </tr>
+                    @if (Model.Order.OrderCost.VipLessAmount > 0)
+                    {
+                        <tr>
+                            <th>VIP Discount/VIP&RCD:</th>
+                            <td><span>(-)<i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.VipLessAmount * Model.Order.ExchangeRate, ServiceFactory.ConfigureService.GetCurrencyByCode(Model.Order.Currency))</span></td>
+                        </tr>
+                    }
+
+                    @if (Model.Order.OrderCost.OrderDiscountLessAmount > 0)
+                    {
+                        <tr>
+                            <th>Order Discount Amount:</th>
+                            <td><span>(-)<i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.OrderDiscountLessAmount * Model.Order.ExchangeRate, ServiceFactory.ConfigureService.GetCurrencyByCode(Model.Order.Currency))<br />
+                                <em>(@(Model.Order.OrderCost.OrderDiscount * 100)% off)</em></span></td>
+                        </tr>
+                    }
+                    @if (Model.Order.OrderCost.FreeShippingFee > 0 || Model.Order.OrderCost.ClubFee > 0)
+                    {
+                        <tr>
+
+                            <th>Handling Fee:</th>
+                            <td><span>(+)<i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.FreeShippingFee > 0 ? Model.Order.OrderCost.FreeShippingFee * Model.Order.ExchangeRate : Model.Order.OrderCost.ClubFee * Model.Order.ExchangeRate, ServiceFactory.ConfigureService.GetCurrencyByCode(Model.Order.Currency))</span></td>
+                        </tr>
+                    }
+                    @if (Model.Order.OrderCost.TotalShippingCost > 0)
+                    {
+                        <tr>
+                            <th>Est. Shipping Cost:</th>
+                            <td><span>(+)<i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.TotalShippingCost * Model.Order.ExchangeRate, ServiceFactory.ConfigureService.GetCurrencyByCode(Model.Order.Currency))</span></td>
+                        </tr>
+                    }
+                    @if (Model.Order.OrderCost.CouponAmt > 0)
+                    {
+                        <tr>
+                            <th>Coupon:</th>
+                            <td><span>(-)<i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.CouponAmt * Model.Order.ExchangeRate, ServiceFactory.ConfigureService.GetCurrencyByCode(Model.Order.Currency))</span></td>
+                        </tr>
+                    }
+                    <tr>
+                        <th><strong>Grand Total:</strong></th>
+                        <td><span><strong class="fred">(+)<i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.TotalOrderAmt * Model.Order.ExchangeRate, ServiceFactory.ConfigureService.GetCurrencyByCode(Model.Order.Currency))</strong></span></td>
+                    </tr>
+                    @if (Model.Order.OrderCost.CashAmt > 0)
+                    {
+                        <tr>
+                            <th><strong>Balance:</strong></th>
+                            <td><span><strong class="fred">(-)<i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.CashAmt * Model.Order.ExchangeRate, ServiceFactory.ConfigureService.GetCurrencyByCode(Model.Order.Currency))</strong></span></td>
+                        </tr>
+                    }
+                    <tr>
+                        <th><strong>Need to Pay:</strong></th>
+                        <td><span><strong class="fred"><i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.NeedToPayAmt * Model.Order.ExchangeRate, ServiceFactory.ConfigureService.GetCurrencyByCode(Model.Order.Currency))</strong></span></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="span3">
+                <table border="0" cellspacing="0" cellpadding="0">
+
+                    <tr>
+                        <th scope="row">Total Gross Weight:</th>
+                        <td>@PageHelper.GetRoundValue(Model.Order.Weight, 2)g</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Package Box Weight:</th>
+                        <td>@PageHelper.GetRoundValue(Model.Order.Weight, 2)g</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Shipping Weight:</th>
+                        <td>@PageHelper.GetRoundValue(Model.Order.ShippingWeight, 2)g</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><strong>Item-Count:</strong></th>
+                        <td><strong>@Model.OrderDetailList.Count</strong></td>@*明细个数*@
+                    </tr>
+                    <tr>
+                        <th scope="row"><strong>物品总组数:</strong></th>
+                        <td><strong>@countNum</strong></td>@*明细个数*@
+                    </tr>
+                </table>
+            </div>
+            <div class="span3">
+                <div class="ajax_detail">
+                    <div class="ajax_info">
+                        <form class="form-horizontal" id="updateDiscountAmountForm" name="updateDiscountAmountForm" action="@Url.Content("~/Order/UpdateBusinessDiscount")" method="post" onsubmit=" return false; ">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th width="40%">优惠金额：
+                                        </th>
+                                        <td>
+                                            @if (!Model.OrderRemarkList.IsNullOrEmpty())
+                                            {
+                                                <input type="hidden" name="HID_orderNo" value="@Model.Order.OrderNo"/>
+                                                var businessDiscount = Model.OrderRemarkList.Where(x => x.RemarkType == OrderRemarkType.BusinessDiscount).ToList();
+                                                if (!businessDiscount.IsNullOrEmpty())
+                                                {
+                                                @Model.Order.Currency<input type="text" name="discountamount" id="discountamount" required="required" value="@Model.Order.OrderCost.BusinessDerateAmount"/>
+                                                }
+                                                else
+                                                {
+                                                @Model.Order.Currency<input type="text" name="discountamount" id="discountamount" required="required" />
+  
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <input type="hidden" name="HID_orderNo" value="@Model.Order.OrderNo"/>
+                                                @Model.Order.Currency<input type="text" name="discountamount" id="discountamount" required="required" />
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>备注</td>
+                                        <td>
+                                            @if (!Model.OrderRemarkList.IsNullOrEmpty())
+                                            {
+                                                var businessDiscount = Model.OrderRemarkList.Where(x => x.RemarkType == OrderRemarkType.BusinessDiscount).ToList();
+                                                if (!businessDiscount.IsNullOrEmpty())
+                                                {
+                                                <textarea name="discount_remark" rows='8' id='discount_remark' style='width: 200px;' required="required">@businessDiscount[0].RemarkContent</textarea>
+                                                }
+                                                else
+                                                {
+                                                <textarea name="discount_remark" rows='8' id='discount_remark' style='width: 200px;' required="required"></textarea>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <textarea name="discount_remark" rows='8' id='discount_remark' style='width: 200px;' required="required"></textarea>
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <button type="submit" class="btn btn-primary ajax_update" href="javascript:void(0)"><i class="icon-search"></i>提交</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="span3">
+                <div class="ajax_detail">
+                    <div class="ajax_info">
+                        <form class="form-horizontal" id="updateSurchargeAmountForm" name="updateSurchargeAmountForm" action="@Url.Content("~/Order/UpdateBusinessSurcharge")" method="post" onsubmit=" return false; ">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th width="40%">附加费：</th>
+                                        <td>
+                                            @if (!Model.OrderRemarkList.IsNullOrEmpty())
+                                            {
+                                                <input type="hidden" name="HID_orderNo" value="@Model.Order.OrderNo"/>
+                                                var businessSurcharge = Model.OrderRemarkList.Where(x => x.RemarkType == OrderRemarkType.BusinessSurcharge).ToList();
+                                                if (!businessSurcharge.IsNullOrEmpty())
+                                                {
+                                                @Model.Order.Currency<input type="text" name="surchargeamount" id="surchargeamount" required="required" value="@Model.Order.OrderCost.BusinessSurcharge"/>
+                                                }
+                                                else
+                                                {
+                                                @Model.Order.Currency<input type="text" name="surchargeamount" id="surchargeamount" required="required" />
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <input type="hidden" name="HID_orderNo" value="@Model.Order.OrderNo"/>
+                                                @Model.Order.Currency<input type="text" name="surchargeamount" id="surchargeamount" required="required" />
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>备注</td>
+                                        <td>
+                                            @if (!Model.OrderRemarkList.IsNullOrEmpty())
+                                            {
+                                                var businessSurcharge = Model.OrderRemarkList.Where(x => x.RemarkType == OrderRemarkType.BusinessSurcharge).ToList();
+                                                if (!businessSurcharge.IsNullOrEmpty())
+                                                {
+                                                <textarea name="surcharge_remark" rows='8' id='surcharge_remark' style='width: 200px;' required="required">@businessSurcharge[0].RemarkContent</textarea>
+                                                }
+                                                else
+                                                {                                     
+                                                <textarea name="surcharge_remark" rows='8' id='surcharge_remark' style='width: 200px;' required="required"></textarea>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <textarea name="surcharge_remark" rows='8' id='surcharge_remark' style='width: 200px;' required="required"></textarea>
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <button type="submit" class="btn btn-primary ajax_update" href="javascript:void(0)"><i class="icon-search"></i>提交</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    }
+    <div class="form-horizontal">
+        <div class="ajax_detail">
+            <div class="ajax_info">
+                <form id="updatePaymentAmountForm" name="updatePaymentAmountForm" action="@Url.Content("~/Order/UpdatePaymentAmount")" method="post" onsubmit=" return false; ">
+
+                    <div class="control-group">
+                        <label class="control-label">客户已支付：</label>
+                        <div class="controls">
+                            <input type="hidden" name="HID_orderNo" value="@Model.Order.OrderNo"/>
+                            @if (!Model.Order.OrderCost.IsNullOrEmpty())
+                            {
+                                @Model.Order.Currency<input type="text" name="OrderpaymentAmount" id="OrderpaymentAmount" required="required" value="@Model.Order.OrderCost.PaymentAmount"/>
+                            }
+                            <button type="submit" class="btn btn-primary ajax_update" href="javascript:void(0)">保存</button>
+                            <a class="btn btn-mini btn-info-view-1" data-id="@Model.Order.OrderId"><i class="icon-trash icon-white"></i>查询修改记录</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">付款状态：</label>
+            <div class="controls">
+                @Model.Order.PaidStatus
+                <a class="btn btn-mini btn-info-view-2" data-id="@Model.Order.OrderId"><i class="icon-trash icon-white"></i>查看详情</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="ajax_detail">
+        <div class="ajax_info">
+            <form class="form-horizontal" id="updateChangeForm" name="updateChangeForm" action="@Url.Content("~/Order/Change")" method="post" onsubmit=" return false; ">
+                <div class="control-group">
+                    <label class="control-label">订单状态：</label>
+                    <div class="controls">
+                        <input type="hidden" name="HID_orderNo" value="@Model.Order.OrderNo"/>
+                        <select name="FD_OrderStatus">
+                            @if (ViewBag.OrderStatus != null)
+                            {
+                                foreach (var status in ViewBag.OrderStatus)
+                                {
+                                <option value="@status.Value" @if (status.Value == (int)Model.Order.OrderStatus)
+                                                              {
+                                                                       @Html.Raw("selected")
+                                                              }>@status.Name@Html.Raw("[")@status.Value@Html.Raw("]")</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date Added</th>
+                                <th>邮件通知客户</th>
+                                <th>订单状态</th>
+                                <th>Comments</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (!Model.OrderStatusHistoryList.IsNullOrEmpty())
+                            {
+                                foreach (var orderStatus in Model.OrderStatusHistoryList)
+                                {
+                                <tr>
+                                    <td>@orderStatus.ChangeDate</td>
+                                    <td>@orderStatus.NotifyCustomer</td>
+                                    <td>@orderStatus.StatusName</td>
+                                    <td>@orderStatus.Comments</td>
+                                </tr>
+                                }
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Comments：</label>
+                    <div class="controls">
+                        <textarea name="order_comment" rows='8' id="order_comment" style="width: 500px;"></textarea>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="checkbox inline">
+                        <input type="checkbox" value="1" name="FD_NotifyCustomer" checked="checked">邮件通知客户
+                    </label>
+                    <label class="checkbox inline">
+                        <input type="checkbox" value="1" name="FD_NotifyEmailWithComments" checked="checked">邮件中附上comments
+                    </label>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Seller Memo：</label>
+                    <div class="controls">
+                        @{
+                            var sellerMemo = Model.OrderRemarkList.Where(x => x.RemarkType == OrderRemarkType.SellerMemo).ToList();
+                            if (!sellerMemo.IsNullOrEmpty())
+                            {
+                            <textarea name="seller_memo" rows='8' id="seller_memo" style="width: 500px;">@sellerMemo[0].RemarkContent</textarea>
+                            }
+                            else
+                            {
+                            <textarea name="seller_memo" rows='8' id="seller_memo" style="width: 500px;"></textarea>
+                            }
+                        }
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary ajax_update" href="javascript:void(0)"><i class="icon-search"></i>保存</button>
+                <a href="/Order/OrderInvoice?orderno=@Model.Order.OrderNo" class="btn"><i class="icon-search"></i>账单</a>
+                <a href="/Order/Search" class="btn"><i class="icon-search"></i>返回</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal hide fade ajax_detail_1" data-url="@Url.Content("/Order/PaymentAmountLog")">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>客户已支付金额历史修改记录</h3>
+    </div>
+    <div class="modal-body ajax_info">
+    </div>
+</div>
+<div class="modal hide fade ajax_detail_2" data-url="@Url.Content("/Order/ViewInfo")">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+    </div>
+    <div class="modal-body ajax_info">
+    </div>
+</div>

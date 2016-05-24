@@ -1,0 +1,72 @@
+﻿@{
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@using Com.Panduo.Service
+@model Com.Panduo.Service.Suggestion.SuggestionContent
+<div class="ajax_detail">
+    <div class="ajax_info">
+        <form method="POST" onsubmit="return false;" action="/Review/SuggestionSendEmail" class="form-horizontal">
+            <div class="well tab-content locationopt">
+                <input type="hidden" name="detailId" value="@Model.Id"/>
+                <div id="tab_base_info">
+                    @{
+                        var items = ServiceFactory.SuggestionService.GetAllSuggestionItems(Model.LanguageId);
+                    }
+                    @foreach (var item in items)
+                    {
+                        <div class="control-group">
+                            <label class="control-label">@item.Name.：</label>
+                            @foreach (var obj in item.SuggestionObjects)
+                            {
+                                <div class="controls">
+                                    @obj.Name    @((!Model.Details.Find(m => m.ObjectId == obj.Id).IsNullOrEmpty()) ? Model.Details.Find(m => m.ObjectId == obj.Id).Score.ToString() : "")
+                                </div>
+                            }
+                        </div>
+                    }
+                    <div class="control-group">
+                        <label class="control-label">Name：</label>
+                        <div class="controls">
+                            @Model.FullName
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Email Address：</label>
+                        <div class="controls">
+                            @Model.Email
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Suggestions & Wishes：</label>
+                        <div class="controls">
+                            @Model.Content
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Attachment：</label>
+                        <div class="controls">
+                            @foreach (var attachment in Model.AttachmentList)
+                            {
+                                <a href="@(attachment.Path + "\\" + attachment.Name)">@attachment.Name</a>
+                            }
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">答复：</label>
+                        <div class="controls">
+                            <textarea name="replyContent" style="width: 80%; height: 150px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="well form-actions">
+                <span>
+                    <a class="btn" href="/Review/Suggestion/page=@(ViewBag.Page)">返回</a>
+                </span>
+                <span>
+                    <input class="btn btn-primary ajax_update" type="submit" value="发送邮件" />
+                </span>
+            </div>
+        </form>
+    </div>
+</div>

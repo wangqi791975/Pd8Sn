@@ -1,0 +1,195 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Web.Models.Customer
+@using Resources
+@model PageData<WishListProductInfoVo>
+@{
+    ViewBag.Title = "MyWishlist";
+    Layout = "~/Views/Shared/Layout/_Layout_NoLeft.cshtml";
+}
+@section HtmlHead{
+    @Html.JsFor("wishlist.js", "~/Js/jquery.scrollLoading.min.js,~/Js/Product/Index.js,~/Js/WishList/WishList.js", fileVersion: "1.4")
+    @Html.CssFor("WishList.css", new[] { "~/Css/avatar.css" }, fileVersion: "1.0")
+}
+
+@Html.Partial("~/Views/Account/Partial/_Account_Siderbar_Menu.cshtml")
+<div id="main" class="account_wrap">
+    <h2 class="font14 account_title">@Lang.TipMyWishlist</h2>
+    @if (Model.Pager.TotalRowCount < 1 && ServiceFactory.WishListService.GetWishListCountByCustomerId(SessionHelper.CurrentCustomer.CustomerId)<1)
+    {
+        <h4>@Lang.TipNothingInList<br />
+            <a href="/" class="forange font_underline">@Lang.TipTimeForShop</a></h4>
+    }
+    else
+    { 
+
+        <div class="accout_tab nav-tabs">
+            <h3 class="current tab-click current" data-toggle="tab" data-target="#wl_recently" data-targetload="#wl_recently_list" data-url="/Wishlist/MyWishList" data-loaded="true">@Lang.TipAddWithinYear</h3>
+            <h3 class="nostock tab-click" data-toggle="tab" data-target="#wl_history" data-targetload="#wl_history_list" data-url="/Wishlist/MyWishHistoryList" data-loaded="false">@Lang.TipAddYearAge</h3>
+            <h3 class="nostock tab-click" data-toggle="tab" data-target="#wl_removed" data-url="/Wishlist/MyWishListRemoved" data-loaded="false">@Lang.TipRemovedProducts</h3>
+        </div>		
+@* Recently Added 开始*@
+        <div class="wishlist_cont tab-pane current" id="wl_recently">
+            @if (Model.Pager.TotalRowCount < 1)
+            {
+                <a href="/" class="forange font_underline">@Lang.TipTimeForShop</a>
+            }else{
+            <h4>@Lang.TipNoFavFile<br/>
+                <a href="javascript:void(0)" class="forange font_underline">@Lang.TipTimeToShop</a></h4>
+            <form onsubmit=" return false; " method="post" action="/WishList/MyWishList" name="WishListSearchForm" id="WishListSearchForm" data-target="#wl_recently_list">
+                <table cellpadding="0" cellspacing="0" class="wishlist_search_cont">
+                    <tr>
+                        <th>@Lang.TipCategory</th>
+                        <td>
+                            <div class="select_cont select_w248" style="z-index: 100">
+                                <span class="select_cont_span">@Lang.TipAllCategories</span>
+                                <div class="pop_select_cont">
+                                    <ul>
+                                        <li class="list_item" data-value="-1">@Lang.TipAllCategories</li>
+                                        @if (ViewBag.ProductCategory != null)
+                                        {
+                                            foreach (var cat in ViewBag.ProductCategory)
+                                            {
+
+                                                <li class="list_item" data-value="@cat.Key">@cat.Value</li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                                <input type="hidden" id="wishlist_category" name="wishlist_category" value="-1"/>
+                            </div>
+                        </td>
+                        <th>@Lang.TipClassification</th>
+                        <td>
+                            @if (ViewBag.WishListType != null)
+                            {
+                                <div class="select_cont select_w248">
+                                    <span class="select_cont_span">@Lang.TipAll</span>
+                                    <div class="pop_select_cont">
+                                        <ul>
+                                            <li class="list_item" data-value="-1">@Lang.TipAll</li>
+                                            @foreach (var t in ViewBag.WishListType)
+                                            {
+                                                <li class="list_item" data-value="@t.Id">@t.ItemName</li>
+                                            }
+                                        </ul>
+                                    </div>
+                                    <input type="hidden" id="wishlist_type" name="wishlist_type" value="-1"/>
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>@Lang.TipSortBy</th>
+                        <td>
+                            <div class="select_cont select_w248">
+                                <span class="select_cont_span">@Lang.TipDateNewToOld</span>
+                                <div class="pop_select_cont">
+                                    <ul>
+                                        <li class="list_item" data-value="0">@Lang.TipDateNewToOld</li>
+                                        <li class="list_item" data-value="1">@Lang.TipDateOldToNew</li>
+                                    </ul>
+                                </div>
+                                <input type="hidden" id="wishlist_sort" name="wishlist_sort" value="0"/>
+                            </div>
+                        </td>
+                        <th></th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td rowspan="3"><a href="javascript:void(0)" class="btn_orange btn_p30" id="OrderFilterBtn">@Lang.TipFilter</a></td>
+                    </tr>
+                </table>
+            </form>
+            <div id="wl_recently_list">
+                @Html.Partial("~/Views/Wishlist/WishListPageList.cshtml", Model)
+            </div>}
+        </div>
+@*  Recently Added 结束*@
+@* Wishlist History 开始*@
+        <div class="wishlist_his_cont tab-pane" id="wl_history">
+            <h4>@Lang.TipNoFavFile<br />
+                <a href="#" class="forange font_underline">@Lang.TipTimeToShop</a></h4>
+            <form onsubmit="return false;" method="post" action="/WishList/MyWishHistoryList" name="HisWishListSearchForm" id="HisWishListSearchForm" data-target="#wl_history_list">
+                <table cellpadding="0" cellspacing="0" class="wishlist_search_cont">
+                    <tr>
+                        <th>@Lang.TipCategory</th>
+                        <td>
+                            <div class="select_cont select_w248" style="z-index: 100">
+                                @Lang.TipAllCategories
+	                         <div class="pop_select_cont">
+                                 <ul>
+                                     <li class="list_item" data-value="-1">@Lang.TipAllCategories</li>
+                                     @if (ViewBag.ProductCategory != null)
+                                     {
+                                         foreach (var cat in ViewBag.ProductCategory)
+                                         {
+                                         <li class="list_item" data-value="@cat.Key">@cat.Value</li>
+                                         }
+                                     }
+                                 </ul>
+                             </div>
+                                <input type="hidden" id="his_wishlist_category" name="his_wishlist_category" value="-1" />
+                            </div>
+                        </td>
+                        <th>@Lang.TipClassification</th>
+                        <td>
+                            @if (ViewBag.WishListType != null)
+                            {
+                                <div class="select_cont select_w248">
+                                    <span class="select_cont_span">@Lang.TipAll</span>
+                                    <div class="pop_select_cont">
+                                        <ul>
+                                            <li class="list_item" data-value="-1">@Lang.TipAll</li>
+                                            @foreach (var t in ViewBag.WishListType)
+                                            {
+                                                <li class="list_item" data-value="@t.Id">@t.ItemName</li>
+                                            }
+                                        </ul>
+                                    </div>
+                                    <input type="hidden" id="his_wishlist_type" name="his_wishlist_type" value="-1" />
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>@Lang.TipSortBy</th>
+                        <td>
+                            <div class="select_cont select_w248">
+                                <span class="select_cont_span">@Lang.TipDateNewToOld</span>
+                                <div class="pop_select_cont">
+                                    <ul>
+                                        <li class="list_item" data-value="0">@Lang.TipDateNewToOld</li>
+                                        <li class="list_item" data-value="1">@Lang.TipDateOldToNew</li>
+                                    </ul>
+                                </div>
+                                <input type="hidden" id="his_wishlist_sort" name="his_wishlist_sort" value="0" />
+                            </div>
+                        </td>
+                        <th></th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td rowspan="3"><a href="javascript:void(0)" class="btn_orange btn_p30" id="OrderFilterBtn">@Lang.TipFilter</a></td>
+                    </tr>
+                </table>
+            </form>
+            <div id="wl_history_list">
+                <img class="loading" src="@Url.Content("~/Images/loading.gif")" />
+            </div>
+        </div>
+@*  Wishlist History 结束*@
+@* Removed Products 开始*@
+        <div class="wishlist_removed_cont tab-pane" id="wl_removed">
+            <img class="loading" src="@Url.Content("~/Images/loading.gif")" />
+        </div>
+@* Removed Products 结束*@
+    }
+</div>
+<div class="clearfix"></div>
+
+<div class="popup_wrap popup_w650 avatar_success" id="wishlistsuccess">
+    <ins></ins>
+    <h4 class="font14 fgreen">@Lang.MsgClassConSuccess</h4>
+</div>

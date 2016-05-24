@@ -1,0 +1,311 @@
+﻿@{
+    ViewBag.Title = "CustomerManageDetail";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@using System.Diagnostics
+@using Com.Panduo.Service
+@using Com.Panduo.Service.Customer
+@using Com.Panduo.Service.SiteConfigure
+@using Address = Com.Panduo.Service.Customer.Address
+@model Customer
+@{
+    var defaultAddress = (Address)ViewBag.CustomerDefaultAddress;
+    var addresses = (List<Address>)ViewBag.CustomerAddress;
+    var preference = ((Preference)ViewBag.CustomerPreference);
+}
+<form class="form-horizontal">
+    <div class="well tab-content">
+        <div id="tab_base_info">
+            <div class="control-group">
+                <h4 style="float: left">基础账户信息：</h4>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Email Address：</label>
+                <div class="controls">
+                    @Model.Email
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">VIP Level：</label>
+                <div class="controls">
+                    @(Model.CustomerGroupId.HasValue ? Convert.ToInt16((1 - (ServiceFactory.CustomerService.GetCustomerGroupById(Model.CustomerGroupId.Value).IsNullOrEmpty() ? 1 : ServiceFactory.CustomerService.GetCustomerGroupById(Model.CustomerGroupId.Value).Discount)) * 100) + "%" : "0")
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Gender：</label>
+                <div class="controls">
+                    @{
+                        Debug.Assert(Model.Gender != null, "Model.Gender != null");
+                    }
+                    @(Enum.GetName(typeof(Gender), Model.Gender.Value))
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Full Name：</label>
+                <div class="controls">
+                    @Model.FullName
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Date of Birth：</label>
+                <div class="controls">
+                    @Model.Birthday
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Phone Number：</label>
+                <div class="controls">
+                    @Model.Telphone
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Cell Phone：</label>
+                <div class="controls">
+                    @Model.Cellphone
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Country：</label>
+                <div class="controls">
+                    @{
+                        Debug.Assert(Model.Country != null, "Model.Country != null");
+                    }
+                    @ServiceFactory.ConfigureService.GetCountryById(Model.Country.Value).CountryName
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">客户类型：</label>
+                <div class="controls">
+                    @{
+                        Debug.Assert(Model.CustomerType != null, "Model.CustomerType != null");
+                    }
+                    @(Enum.GetName(typeof(CustomerType), Model.CustomerType.Value))
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">是否为club会员？：</label>
+                <div class="controls">
+                    @{
+                        var clubCustomer = ServiceFactory.ClubService.GetClubByCustomerId(Model.CustomerId);
+                    }
+                    @if (!clubCustomer.IsNullOrEmpty())
+                    {
+                        @("是，C" + (int)clubCustomer.ClubType)
+                    }
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Skype：</label>
+                <div class="controls">
+                    @Model.Skype
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Fax Number：</label>
+                <div class="controls">
+                    @Model.FaxNumber
+                </div>
+            </div>
+            <hr />
+            <div class="control-group">
+                <h4 style="float: left">运输地址信息：</h4>
+            </div>
+            <div class="row">
+                <label class="control-label">默认地址：</label>
+                <div class="span3">
+                    <div class="control-group">
+                        <div class="controls">
+                            @(defaultAddress.FullName)
+                        </div>
+                        <div class="controls">
+                            @(defaultAddress.Street1)
+                        </div>
+                        <div class="controls">
+                            @(defaultAddress.Street2)
+                        </div>
+                        <div class="controls">
+                            @(defaultAddress.City + "," + defaultAddress.Province)
+                        </div>
+                        <div class="controls">
+                            @(defaultAddress.ZipCode)
+                        </div>
+                        <div class="controls">
+                            @(ServiceFactory.ConfigureService.GetCountryById(defaultAddress.Country).CountryName)
+                        </div>
+                        <div class="controls">
+                            Phone:@(defaultAddress.Telphone)
+                        </div>
+                    </div>
+                </div>
+                <label class="control-label">其他地址：</label>
+                @for (int i = 0; i < (addresses.Count > 4 ? 4 : addresses.Count); i++)
+                {
+                    <div class="span3">
+                        <div class="controls">
+                            @(addresses[i].FullName)
+                        </div>
+                        <div class="controls">
+                            @(addresses[i].Street1)
+                        </div>
+                        <div class="controls">
+                            @(addresses[i].Street2)
+                        </div>
+                        <div class="controls">
+                            @(addresses[i].City + "," + addresses[i].Province)
+                        </div>
+                        <div class="controls">
+                            @(addresses[i].ZipCode)
+                        </div>
+                        <div class="controls">
+                            @(ServiceFactory.ConfigureService.GetCountryById(addresses[i].Country).CountryName)
+                        </div>
+                        <div class="controls">
+                            Phone:@(addresses[i].Telphone)
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <hr />
+            <h4>客户偏好：</h4>
+            <div class="control-group">
+                <label class="control-label">Language：</label>
+                <div class="controls">
+                    @{
+                        Language first = ServiceFactory.ConfigureService.GetAllValidLanguage().FirstOrDefault(m => m.LanguageId == preference.LanguageId);
+                    }
+                    @(first.IsNullOrEmpty() ? "" : first.LanguageName)
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Currency：</label>
+                <div class="controls">
+                    @(preference.CurrencyId.HasValue ? (ServiceFactory.ConfigureService.GetCurrency(preference.CurrencyId.Value).CurrencyCode) : "")
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Linear Measure：</label>
+                <div class="controls">
+                    @(preference.SizeUnit.HasValue ? (preference.SizeUnit.Value == Unit.Metric ? "Metric Units (such as mm\\cm\\m)" : "Imperial Units (such as inch\\foot)") : "")
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Weight：</label>
+                <div class="controls">
+                    @(preference.WeightUnit.HasValue ? (preference.WeightUnit.Value == Unit.Metric ? "Metric Units (such as kg\\g)" : "Imperial Units (ounce\\dram)") : "")
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">View Page as：</label>
+                <div class="controls">
+                    @(preference.ListShowType.HasValue ? (Enum.GetName(typeof(ListShowType), preference.ListShowType.Value)) : "")
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">View Products per page：</label>
+                <div class="controls">
+                    @(preference.ListShowCount.HasValue ? ((int)preference.ListShowCount) : 20)
+                </div>
+            </div>
+            <h4>其他信息：</h4>
+            <div class="row">
+                <div class="span4">
+                    <div class="control-group">
+                        <label class="control-label">Newsletter订阅情况：</label>
+                        <div class="controls">
+                            @(ViewBag.CustomerNewsletter == null ? "未订阅" : "已订阅")
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">来源：</label>
+                        <div class="controls">
+                            @(Enum.GetName(typeof(SourceType), Model.RegisterInfo.SourceType))
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">注册日期：</label>
+                        <div class="controls">
+                            @Model.RegisterInfo.DateCreated
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">最近登录日期：</label>
+                        <div class="controls">
+                            @Model.LastLoginDateTime
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">注册语言站点：</label>
+                        <div class="controls">
+                            @{
+                                Language first1 = ServiceFactory.ConfigureService.GetAllValidLanguage().FirstOrDefault(m => m.LanguageId == Model.RegisterLanguageId);
+                            }
+                            @(first1.IsNullOrEmpty() ? "" : first1.LanguageCode)
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">浏览器语言：</label>
+                        <div class="controls">
+                            @Model.RegisterInfo.UserLanguage
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">IP地址：</label>
+                        <div class="controls">
+                            @Model.RegisterInfo.RegisterIp
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="control-group">
+                        <label class="control-label">总登录次数：</label>
+                        <div class="controls">
+                            @Model.TotalLoginCount
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">总订单个数：</label>
+                        <div class="controls">
+                            @ViewBag.CustomerOdersCount
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">历史消费总金额：</label>
+                        <div class="controls">
+                            @Model.HistoryAmount
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">最近下单日期：</label>
+                        <div class="controls">
+                            @Model.DateLastPlaceOrder
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">最近订单的总金额：</label>
+                        <div class="controls">
+                            @ViewBag.CustomerLastOrder
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">总评论条数：</label>
+                        <div class="controls">
+                            @ViewBag.CustomerReviewsCount
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">状态：</label>
+                        <div class="controls">
+                            @(Model.Status ? "启用" : "禁用")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well form-actions">
+        <span>
+            <a class="btn" href="/Customer/CustomerManage?page=@(ViewBag.Page)">返回</a>
+        </span>
+    </div>
+</form>

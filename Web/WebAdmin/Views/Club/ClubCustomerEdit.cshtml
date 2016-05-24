@@ -1,0 +1,40 @@
+﻿@{
+    Layout = null;
+}
+@using Com.Panduo.Service
+@model Com.Panduo.Service.Customer.ClubCustomerView
+<form name="updateForm" action="/Club/ClubCustomerEdit" method="post" onsubmit="return false;">
+    <input type="hidden" name="id" value ="@Model.ClubId"/>
+    <table class="table table-striped">
+        <tr>
+            <td style="width: 21%">会员ID：</td>
+            <td>
+                @Model.ClubId
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 21%">客户ID</td>
+            <td>
+                @Model.CustomerId
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 21%">邮箱</td>
+            <td>
+                @Model.CustomerEmail
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 21%">客服经理</td>
+            <td>
+                <select id="clubManager" name="customerManagerId">
+                    <option value="0"></option>
+                    @foreach (var clubCustomer in ServiceFactory.CustomerService.FindAllManager(1, 1000, null, null).Data)
+                    {
+                        <option value="@clubCustomer.CustomerManagerId" @(Model.CustomerManagerId == clubCustomer.CustomerManagerId ? "selected" : "")>@clubCustomer.ChineseName</option>
+                    }
+                </select>
+            </td>
+        </tr>
+    </table>
+</form>

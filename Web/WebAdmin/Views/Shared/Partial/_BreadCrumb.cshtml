@@ -1,0 +1,18 @@
+﻿<ul class="breadcrumb">
+    <li><a href="/">首页</a> <span class="divider">/</span></li>
+    @if (ViewBag.Breadcrumbs != null)
+    {
+        foreach (var breadcrumb in ViewBag.Breadcrumbs)
+        {
+            if (breadcrumb.Value != "")
+            {
+                @Html.Raw("<li><a href=" + breadcrumb.Value + ">" + breadcrumb.Key + "</a> <span class='divider'>/</span> </li>");
+            }
+            else
+            {
+                @Html.Raw("<li>" + breadcrumb.Key + " <span class='divider'>/</span>  </li>");
+            }
+        }
+    }
+    <li class="active">@ViewBag.Title</li>
+</ul>

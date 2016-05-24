@@ -1,0 +1,35 @@
+﻿@{
+    Layout = null;
+}
+@model IList<Com.Panduo.Service.SiteConfigure.Currency>
+<form name="updateForm" action="/Order/Add" method="post" onsubmit="return false;">
+    <table class="table">
+        <tr>
+            <td width="20%">*客户邮箱：</td>
+            <td><input type="text" id="txtCustomerEmail" required="required" name="txtCustomerEmail" value=""/></td>
+        </tr>
+        <tr>
+            <td width="20%">*增加金额：</td>
+            <td><input type="text" id="txtPrice" required="required" name="txtPrice" value=""/></td>
+        </tr>
+        <tr>
+            <td width="20%">币种：</td>
+            <td>
+                <select id="txtCurrencyCode" name="txtCurrencyCode" required="required">
+                    @foreach (var currency in Model)
+                    {
+                        <option value="@currency.CurrencyCode">@currency.CurrencyCode</option>
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td width="20%">备注：</td>
+            <td><input type="text" id="txtRemark" required="required" name="txtRemark" value=""/></td>
+        </tr>
+         <tr>
+            <td width="20%"></td>
+            <td><input type="checkbox" value="1" name="if_notify_customer" checked="true" id="if_notify_customer">通知客户</td>
+        </tr>
+    </table>
+</form>

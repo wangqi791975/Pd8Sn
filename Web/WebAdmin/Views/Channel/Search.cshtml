@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "渠道商";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+<div id="main" class="ajax-list" data-url="@Url.Content("~/Channel/ChannelList")">
+</div>
+<div class="modal hide fade ajax_show_add" data-url="@Url.Content("/Channel/AddChannel")">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>新建</h3>
+    </div>
+    <div class="modal-body ajax_info">
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn btn-primary ajax_add">保存</a>
+        <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+    </div>
+</div>
+
+<a class="btn" href="javascript:void(0)" data-toggle="modal" data-target=".ajax_show_add" data-backdrop="true"><i class="icon-edit"></i> 新建</a>

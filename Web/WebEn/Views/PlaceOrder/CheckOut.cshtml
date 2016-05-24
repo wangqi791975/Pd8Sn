@@ -1,0 +1,856 @@
+﻿@using System.Web.Services.Description
+@using Com.Panduo.Service
+@using Com.Panduo.Service.Order.ShippingOption
+@using Com.Panduo.Service.Payment.PayConfig
+@using Com.Panduo.Service.ServiceConst
+@using Resources
+@model Com.Panduo.Web.Models.ShoppingCart.ShoppingAddress
+@{
+    ViewBag.Title = Lang.TipCheckout;
+    Layout = "~/Views/Shared/Layout/_Layout_ShoppingCart.cshtml";
+
+    var reportTypeCheckked0 = " checked=checked";
+    var reportTypeCheckked1 = string.Empty;
+    if (ViewBag.ReportType == 1)
+    {
+        reportTypeCheckked0 = string.Empty;
+        reportTypeCheckked1 = " checked=checked";
+    }
+
+    var reportCurrency = SessionHelper.CurrentCurrency.CurrencyCode;
+    if (ViewBag.ReportCurrencyCode != string.Empty)
+    {
+        reportCurrency = ViewBag.ReportCurrencyCode;
+    }
+}
+@section HtmlHead
+{
+    @Html.JsFor("validate.js", "~/Js/jquery.validate.js,~/Js/jquery.metadata.2.1.js", fileVersion: "1.14")
+}
+@Html.Partial("~/Views/ShoppingCart/Partial/_Header.cshtml", 2)
+
+<!-- 填写订单开始 -->
+<div class="order_cont">
+    <h3>@Lang.TipShippingAddress</h3>
+    <!-- 有地址初始状态开始 -->
+    <div class="address_cont">
+        @if (ViewBag.Modify == 0)
+        {
+            for (int index = 0; index < ViewBag.ShippingAddresses.Count; index++)
+            {
+                if (ViewBag.ShippingAddresses[index].AddressId == ViewBag.AddressId)
+                {
+                    var countryLanguage = ServiceFactory.ConfigureService.GetCountryLanguage(ViewBag.ShippingAddresses[index].Country, ServiceFactory.ConfigureService.SiteLanguageId);
+                    <div class="address_info">
+                        <strong>@ViewBag.ShippingAddresses[index].FullName </strong>
+                        <p>@ViewBag.ShippingAddresses[index].Street1 @ViewBag.ShippingAddresses[index].Street2 @ViewBag.ShippingAddresses[index].City @ViewBag.ShippingAddresses[index].ZipCode @ViewBag.ShippingAddresses[index].Province</p>
+                        <p>@countryLanguage.CountryName</p>
+                        <p>Phone: @ViewBag.ShippingAddresses[index].Telphone</p>
+                        <a href="@Url.Content("~/PlaceOrder/CheckOut?address_id=" + ViewBag.ShippingAddresses[index].AddressId)&modify=1" class="btn_orange btn_w128">@Lang.TipModify</a>
+                    </div>
+                }
+            }
+        }
+
+        <!-- 有地址初始状态结束 -->
+        @if (ViewBag.ShippingAddresses.Count <= 0)
+        {
+            <!-- 无地址初始状态开始 -->
+            <form onsubmit="return false;" method="post" action="/PlaceOrder/AddAddress" name="addaddressnewform" id="addaddressnewform" class="addaddressform">
+                <div class="address_edit" style="display: block">
+                    <table cellpadding="0" cellspacing="0">
+                        <tr>
+                            <th><span class="fred">*</span>@Lang.TipFirstName</th>
+                            <td><input id="first_name" name="first_name" type="text" value="@Model.Address.FirstName" maxlength="33" class="inputw270 input_text_wrap"><div class="fred">@Lang.TipThisIsText</div></td>
+                        </tr>
+                        <tr>
+                            <th><span class="fred">*</span>@Lang.TipLastName</th>
+                            <td><input class="inputw270 input_text_wrap" id="last_name" name="last_name" type="text" value="@Model.Address.LastName" maxlength="32"><div class="fred">@Lang.TipThisIsText</div></td>
+                        </tr>
+                        <tr>
+                            <th><span class="fred">*</span>@Lang.TipAddressLine1</th>
+                            <td><input class="inputw400 input_text_wrap" id="street_address" name="street_address" type="text" /><div class="fred">@Lang.TipThisIsText</div></td>
+                        </tr>
+                        <tr>
+                            <th>@Lang.TipAddressLine2</th>
+                            <td>
+                                <input class="inputw400 input_text_wrap" id="street_address2" name="street_address2" type="text" />
+                                <p>@Html.Raw(Lang.TipNoteSinceBox) </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><span class="fred">*</span>@Lang.TipCountry</th>
+                            <td>
+                                <div class="select_cont select_w235" id="country_id_add_address" data-callback="getProvinceByCountry">
+                                    <input type="hidden" id="country_id" name="country_id" value="@Model.CountryLanguage.CountryId" />
+                                    <span class="select_cont_span">@Model.CountryLanguage.CountryName</span>
+                                    <div class="pop_select_cont" style="display:none">
+                                        <input id="country_search" name="country_search" type="text" class="input_text_wrap inputw228" />
+                                        <ul data-value="@Model.CountryLanguage.CountryId">
+                                            @if (Model.CommonCountryLanguages != null)
+                                            {
+                                                foreach (var country in Model.CommonCountryLanguages)
+                                                {
+                                                    <li class="list_item" data-value="@country.CountryId">@country.CountryName</li>
+                                                }
+                                            }
+
+                                            <li class="list_line list_item_general">----------</li>
+                                            @if (Model.CountryLanguages != null)
+                                            {
+                                                foreach (var country in Model.CountryLanguages)
+                                                {
+                                                    <li class="list_item list_item_general" data-value="@country.CountryId">@country.CountryName</li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="fred">@Lang.TipThisIsText</div>
+                            </td>
+                        </tr>
+                        <tr class="province_name">
+                            <th><span class="fred">*</span>@Lang.TipStateProReg</th>
+                            <td>
+                                <input class="inputw270 input_text_wrap" type="text" id="province_name" name="province_name" />
+                                <div class="fred">@Lang.TipThisIsText</div>
+                                <p>@Html.Raw(Lang.TipNoteStateDeliv) </p>
+                            </td>
+                        </tr>
+                        <tr style="display:none;" class="province_id">
+                            <th><span class="fred">*</span>@Lang.TipStateProReg</th>
+                            <td>
+                                <select id="province_id" name="province_id" class="inputw270 input_text_wrap">
+                                    <option value="0">@Lang.TipPleaseSelect</option>
+                                </select>
+                                <div class="fred">@Lang.TipThisIsText</div>
+                                <p>@Html.Raw(Lang.TipNoteStateDeliv) </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><span class="fred">*</span>@Lang.TipCityNoPun</th>
+                            <td>
+                                <input class="inputw270 input_text_wrap" type="text" id="city" name="city" />
+                                <div class="fred">@Lang.TipThisIsText</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><span class="fred">*</span>@Lang.TipPostZipCode</th>
+                            <td>
+                                <input class="inputw270 input_text_wrap" type="text" name="zip_code" />
+                                <div class="fred">@Lang.TipThisIsText</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><span class="fred">*</span>@Lang.TipPhoneNumber</th>
+                            <td>
+                                <input class="inputw270 input_text_wrap" type="text" name="phone_number" />
+                                <div class="fred">@Lang.TipThisIsText</div>
+                                <p>@Lang.TipPhoneToDeliv</p>
+                                <p class="fgrey_deep"><label><input type="checkbox" checked="checked" readonly="readonly" disabled="disabled" /><input type="hidden" name="is_default_shipping_address" value="true">@Lang.TipSetShipAddress</label></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td><a class="btn_orange btn_p30 confirm_yes" href="javascript:void(0)">@Lang.TipSave</a></td>
+                        </tr>
+                    </table>
+                </div>
+                <input type="hidden" id="address_id" name="address_id" value="@Model.Address.AddressId" />
+                <input type="hidden" id="has_province" name="has_province" value="0" />
+            </form>
+
+            <!-- 无地址初始状态结束 -->
+        }
+
+        @if (@ViewBag.Modify == 1)
+        {
+            <!-- 地址选择状态开始 -->
+            <div class="all_address_cont" style="display: block">
+                <ul>
+                    @for (int index = 0; index < ViewBag.ShippingAddresses.Count; index++)
+                    {
+                        var countryLanguage = ServiceFactory.ConfigureService.GetCountryLanguage(ViewBag.ShippingAddresses[index].Country, ServiceFactory.ConfigureService.SiteLanguageId);
+                        if (index % 3 == 0 && index != 0)
+                        {
+                            @Html.Raw("</ul><ul>");
+                        }
+                        var shippingToThis = " style=display:none;";
+                        string current = string.Empty;
+                        string checkedStr = string.Empty;
+                        if (ViewBag.ShippingAddresses[index].AddressId == ViewBag.AddressId)
+                        {
+                            shippingToThis = string.Empty;
+                            current = "class=current";
+                            checkedStr = "checked=checked";
+                        }
+
+                        <li @current>
+                            <label for="address_id_@ViewBag.ShippingAddresses[index].AddressId" data-value="@ViewBag.ShippingAddresses[index].AddressId" class="address_label">
+                                <input type="radio" id="address_id_@ViewBag.ShippingAddresses[index].AddressId" name="address_id" @checkedStr /><strong>@ViewBag.ShippingAddresses[index].FullName </strong>
+                                <p>@ViewBag.ShippingAddresses[index].Street1 @ViewBag.ShippingAddresses[index].Street2 @ViewBag.ShippingAddresses[index].City @ViewBag.ShippingAddresses[index].ZipCode @ViewBag.ShippingAddresses[index].Province</p>
+                                <p>@countryLanguage.CountryName</p>
+                                <p>Phone: @ViewBag.ShippingAddresses[index].Telphone</p>
+                            </label>
+                            <p>
+                                @if (ViewBag.ShippingAddresses[index].AddressId == SessionHelper.CurrentCustomer.ShippingAddress)
+                                {
+                                    if (ViewBag.ShippingAddresses[index].AddressId == ViewBag.AddressId)
+                                    {
+                                        shippingToThis = string.Empty;
+                                    }
+                                    <strong>@Lang.TipDefaShipAddress</strong>
+                                }
+                                else
+                                {
+                                    <strong>&nbsp;</strong>
+                                }
+                            </p>
+                            <p>
+                                <a class="font_underline fblue_mid" data-target="#otherpack" data-toggle="modal" href="javascript:void(0)" data-remote="/PlaceOrder/AddressInfo/@ViewBag.ShippingAddresses[index].AddressId">@Lang.TipEdit</a>
+                                @if (ViewBag.ShippingAddresses[index].AddressId != ViewBag.AddressId && ViewBag.ShippingAddresses[index].AddressId != SessionHelper.CurrentCustomer.ShippingAddress)
+                                {
+                                    <a class="font_underline fblue_mid shipping_delete" href="javascript:void(0)" data="@ViewBag.ShippingAddresses[index].AddressId">@Lang.TipDelete</a>
+                                }
+
+                            </p>
+
+                            <a id="address_button_@ViewBag.ShippingAddresses[index].AddressId" onclick="window.location = '@Url.Content("~/PlaceOrder/CheckOut?address_id=" + ViewBag.ShippingAddresses[index].AddressId)';" class="btn_orange btn_p10" @shippingToThis><label for="address_id_@ViewBag.ShippingAddresses[index].AddressId">@Lang.TipShipToAddress</label></a>
+
+                        </li>
+                    }
+                    <!--
+                        <li class="current">
+                            <label>
+                                <input name="radio1" type="radio" checked="checked" /><strong>Yolanda Smith </strong>
+                                <p>JIANGBIN WEST ROAD NUMBER 399 COUNTY ROAD 33 BUNNELL, FL 32110-6830</p>
+                                <p>United States</p>
+                                <p>Phone: 123456789</p>
+                            </label>
+                            <p><a class="font_underline fblue_mid" href="javascript:void(0)">Edit</a></p>
+                        </li>
+                        -->
+                </ul>
+                @if (ViewBag.ShippingAddresses.Count > 0)
+                {
+                    <div class="action_border"><a id="add_address" class="btn_orange btn_p30" data-target="#otherpack" data-toggle="modal" href="javascript:void(0)" data-remote="/PlaceOrder/AddressInfo/0">@Lang.TipAddNewAddress</a></div>
+                }
+
+            </div>
+        }
+
+
+    </div>
+    <!-- 地址选择状态结束 -->
+    <!-- 运输方式开始 -->
+    <h3>Shipping Methods</h3>
+    <div class="shipping_methods_cont">
+        <div class="shipping_note">
+            <ul>
+                <li>
+                    <span>1.</span>
+                    @Lang.TipWeFillEnglish
+                    <ins class="arrow_down"></ins>
+                    <!-- note提示文字浮层开始 -->
+                    <div class="pop_wrap">
+                        <div class="pop_note_tip">
+                            <!--todo-->
+                            <i class="top"></i><em class="top"></em>
+                            <div class="close"><a href="javascript:void(0)"></a></div>
+                            @Html.Raw(Lang.TipCheckOutHtmlF)
+                        </div>
+                        <!-- note提示文字浮层结束 -->
+                    </div>
+                </li>
+                <li>
+                    <span>2.</span>@Lang.TipImptAndTans
+                    <ins class="arrow_down"></ins>
+                    <!-- note提示文字浮层开始 -->
+                    <div class="pop_wrap">
+                        <div class="pop_note_tip">
+                            <i class="top"></i><em class="top"></em>
+                            <div class="close"><a href="javascript:void(0)"></a></div>
+                            @Html.Raw(Lang.TipCheckOutHtmlS)
+                        </div>
+                        <!-- note提示文字浮层结束 -->
+                    </div>
+                </li>
+                <li>
+                    <span>3.</span>@Lang.TipPleaseWatchMenth
+                    <ins class="arrow_down"></ins>
+                    <div class="pop_wrap">
+                        <!-- note提示文字浮层开始 -->
+                        <div class="pop_note_tip">
+                            <i class="top"></i><em class="top"></em>
+                            <div class="close"><a href="javascript:void(0)"></a></div>
+                            @Html.Raw(Lang.TipCheckOutHtmlT)
+                        </div>
+                        <!-- note提示文字浮层结束 -->
+                    </div>
+                </li>
+                <li><span>4.</span>@Html.Raw(Lang.TipCheckOutHtmlFo)</li>
+            </ul>
+            <a class="club_img club_img_en" href="javascript:void(0)"></a><!-- 切换语种时，club_img_en对应的class名称后缀变为相应小语种，如换俄语时class名为club_img_ru-->
+            <div class="clearfix"></div>
+        </div>
+        <h5>
+            @Lang.TipTotalShipWeight  <span class="fred">@ViewBag.ShoppingCartSummary.ShippingWeight</span> g.<a class="fblue font_underline" href="javascript:void(0)">@Lang.TipViewDetails</a>
+            <!-- 重量浮层开始，鼠标移动至链接文字时，出现该浮层 -->
+            <div class="popup_weight">
+                <!--todo-->
+                <div class="weight_content">
+                    <i class="top"></i><em class="top"></em>
+                    <table cellpadding="0" cellspacing="0">
+                        <tr>
+                            <th colspan="2">@Lang.TipShipByWegiht </th>
+                        </tr>
+                        <tr>
+                            <td>@Lang.TipTotalProWeight </td>
+                            <td class="noborder_right">@ViewBag.ShoppingCartSummary.GrossWeight g</td>
+                        </tr>
+                        <tr>
+                            <td>@Lang.TipTotalVolWeight</td>
+                            <td class="noborder_right">@ViewBag.ShoppingCartSummary.VolumeWeight g</td>
+                        </tr>
+                        <tr>
+                            <td>@Lang.TipPackBoxWeight </td>
+                            <td class="noborder_right">@ViewBag.ShoppingCartSummary.PackageWeight g</td>
+                        </tr>
+                        <tr>
+                            <td class="noborder_bottom">@Lang.TipTotalShipWeightNoPun </td>
+                            <td class="noborder_bottom noborder_right">@ViewBag.ShoppingCartSummary.ShippingWeight g</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <!-- 重量浮层结束 -->
+        </h5>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th class="sp_method">@Lang.TipShippingMethod</th>
+                <th class="sp_time"><a href="javascript:void(0)">@Lang.TipEstShipTime<ins class="sort_arrow" data-sort-frist="day" data-sort-second="cost"></ins></a></th>
+                <th class="sp_price"><a href="javascript:void(0)">@Lang.TipShippingCost<ins class="sort_arrow_asc" data-sort-frist="cost" data-sort-second="day"></ins></a></th>
+                <th class="sp_note">@Lang.TipNoteNoPun</th>
+            </tr>
+        </table>
+        <table cellpadding="0" cellspacing="0" class="shipping_list showallmethods">
+            @foreach (var shippingAmounts in (IList<ShippingAmount>)ViewBag.ShippingAmounts)
+            {
+                var shippingLanguage = ((List<ShippingLanguage>)ViewBag.ShippingLanguages).Where(x => x.ShippingId == shippingAmounts.ShippingId).ToList();
+                var shippingName = shippingAmounts.ShippingName;
+                var shippingDescription = string.Empty;
+                if (!shippingLanguage.IsNullOrEmpty() && shippingAmounts.ShippingId != 999)
+                {
+                    shippingName = shippingLanguage[0].Name;
+                    shippingDescription = shippingLanguage[0].ShippingDescription;
+                }
+                string current = string.Empty;
+                string checkedStr = string.Empty;
+                if (shippingAmounts.ShippingId == ViewBag.ShippingId)
+                {
+                    current = "class=current";
+                    checkedStr = "checked=checked";
+                }
+
+                <tr @current>
+                    <td class="sp_method"><input type="radio" id="shipping_id_@shippingAmounts.ShippingId" name="shipping_id" data-shippingid="@shippingAmounts.ShippingId" @checkedStr><label for="shipping_id_@shippingAmounts.ShippingId"><ins class="@shippingAmounts.ShippingCode"></ins></label><label for="shipping_id_@shippingAmounts.ShippingId"><span>@Html.Raw(shippingName)</span></label></td>
+                    <td class="sp_time">@shippingAmounts.DayLow - @shippingAmounts.DayHigh days <input type="hidden" value="@Html.Raw(shippingAmounts.DayLow + shippingAmounts.DayHigh)" class="day"></td>
+                    <td class="sp_price"><span>@PageHelper.GetCurrentCurrency().Format() @PageHelper.ExchangeMoneyByUsd(shippingAmounts.ShippingCost, PageHelper.GetCurrentCurrency()) <input type="hidden" value="@PageHelper.ExchangeMoneyByUsd(shippingAmounts.ShippingCost, PageHelper.GetCurrentCurrency())" class="cost"></span></td>
+                    <td class="sp_note">&nbsp;</td>
+                </tr>
+            }
+
+
+        </table>
+        <div class="shipping_time">
+            <p>
+                <span class="order">@Lang.TipPlaceOrder</span>
+                <span class="leave">@Lang.TipLeaveWare</span>
+                <span class="door">@Lang.TipArrYourDoor</span>
+            </p>
+            <div class="line">&nbsp;</div>
+            <dl>
+                <dt>
+                    @Html.Raw(Lang.TipProceTimeHtml)
+                </dt>
+                <dd>
+                    @Html.Raw(Lang.TipShipTimeHtml)
+                </dd>
+            </dl>
+            <div class="line">&nbsp;</div>
+            <div class="total_time">
+                |<span><i>@Lang.TipTotalToOrder</i></span>|
+            </div>
+        </div>
+    </div>
+    <!-- 运输方式结束 -->
+    <!-- 海关与评论开始 -->
+    <form id="form_checkout" action="@UrlRewriteHelper.GetPlaceOrderUrl()" method="POST" onsubmit="return validate();">
+        <h3>@Lang.TipCustomsComments</h3>
+        <div class="customs_cont">
+            <table cellpadding="0" cellspacing="0">
+                <tr><th rowspan="4">@Lang.TipCustomsDeclaration</th></tr>
+                <tr>
+                    <td class="fgrey">
+                        @Lang.TipIfSkipDecl
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label><input onclick="getReportType(0);" id="report_type_0" name="report_type" type="radio" class="radio" value="0" @reportTypeCheckked0 />@Lang.TipLevaeToTeam</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label><input onclick="getReportType(1);" type="radio" id="report_type_1" name="report_type" class="radio" value="1" @reportTypeCheckked1 />@Lang.TipLetDoMySelf</label>
+                        <!-- 点击到该input后，显示下面的div标签，增加style="display:block"，报税开始 -->
+                        <div class="customs_info">
+                            <table cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <th rowspan="2">@Lang.TipCurrency</th>
+                                    <td colspan="3">
+                                        <div class="select_cont select_w104 lf">
+                                            <i>@reportCurrency</i>
+                                            <div class="pop_select_cont">
+                                                <!-- div上增加display:block即可显示 -->
+                                                <ul data-value="@reportCurrency">
+                                                    @foreach (var currency in ViewBag.Currencies)
+                                                    {
+                                                        <li class="list_item" data-value="@currency.CurrencyId">@currency.CurrencyCode</li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>&nbsp; <span class="fgrey" id="customs_info_total"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="display:none" colspan="3" class="fred">@Lang.TipThisIsText</td><!-- 去掉display:none即可显示，此处不能变为display:block -->
+                                </tr>
+                                <tr>
+                                    <th rowspan="2"><span class="fred">*</span> @Lang.TipGoodsValue</th>
+                                    <td><input class="inputw108 input_text_wrap fgrey txtqty" type="text" id="report_product_money" name="report_product_money" value="0" maxlength="10" data-maximum="0" datatype="f0" /></td>
+                                    <td>[@Lang.TipCorrPrec</td>
+                                    <td><input class="inputw108 input_text_wrap fgrey txtqty" type="text" id="report_product_money_percent" name="report_product_money_percent" maxlength="5" data-maximum="100" datatype="f0" />%]</td>
+                                </tr>
+                                <tr>
+                                    <td style="display:none" colspan="3" class="fred">@Lang.TipThisIsText</td><!-- 去掉display:none即可显示，此处不能变为display:block -->
+                                </tr>
+                                <tr>
+                                    <th rowspan="2">@Lang.TipShippingCostPun</th>
+                                    <td><input class="inputw108 input_text_wrap fgrey txtqty" type="text" id="report_shipping_money" name="report_shipping_money" value="0" maxlength="10" data-maximum="0" datatype="f0" /></td>
+                                    <td>[@Lang.TipCorrPrec</td>
+                                    <td><input class="inputw108 input_text_wrap fgrey txtqty" type="text" id="report_shipping_money_percent" name="report_shipping_money_percent" maxlength="5" data-maximum="100" datatype="f0" />%]</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="fred" id="customs_info_tip" style="display: none;">@Lang.TipThisIsText</td><!-- 去掉display:none即可显示，此处不能变为display:block -->
+                                </tr>
+                            </table>
+                        </div>
+                        <!-- 报税结束 -->
+                    </td>
+                </tr>
+            </table>
+            <table cellpadding="0" cellspacing="0">
+                <!--
+                    <tr><th rowspan="4">Customs No.:</th></tr>
+                    <tr>
+                        <td>
+                            Please write down your CPF/CNPJ No.. It is needed for customs clearance.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="fred">*</span>CPF/CNPJ No.:<input type="text" id="customs_no_number" name="customs_no_number" class="input_text_wrap inputw185" />( required )
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong class="fred">Note:</strong> All parcels via Express to Brazil require CPF/CNPJ No.. If you have none, please try to select Airmail.
+                        </td>
+                    </tr>
+                    -->
+                @if (@ViewBag.CustomsNo != null)
+                {
+                    <tr><th rowspan="4">@Lang.TipCustomsNo</th></tr>
+                    <tr>
+                        <td>
+                            @string.Format(Lang.TipMsgLangTitle,ViewBag.CustomsNo.Note)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @if (@ViewBag.CustomsNo.IsRequired)
+                            {
+                                <span class="fred">*</span>
+                            }
+                            @string.Format(Lang.TipMsgLangTitlePun,ViewBag.CustomsNo.CustomsNoType)<input type="text" id="customs_no_number" name="customs_no_number" class="input_text_wrap inputw185" />
+                            @if (@ViewBag.CustomsNo.IsRequired)
+                            {
+                                @Html.Raw("(required)")
+                            }
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong class="fred">@Lang.TipNoteNoPun</strong> @string.Format(Lang.TipMsgLangTitle,ViewBag.CustomsNo.Note)
+                        </td>
+                    </tr>
+                }
+            </table>
+            <table cellpadding="0" cellspacing="0" class="noborder">
+                <tr>
+                    <th rowspan="3">@Lang.TipOrderComments</th>
+                </tr>
+                <tr>
+                    <td>
+                        <textarea class="textarea_wrap textarea_w800" id="order_remark" name="order_remark" data-toggle="remain" data-target="#cartprodremark_remain" data-maxlen="1000" maxlength="800">@if (ViewBag.PaypalInfo != null) {@Html.Raw(ViewBag.PaypalInfo.Descritpion.Replace("  ", "")) }</textarea>
+                    <span class="fgrey_mid">@Html.Raw(string.Format(Lang.Tip1000Chars,"cartprodremark_remain"))</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- 海关与评论结束 -->
+    <div class="action_cont"><a href="@UrlRewriteHelper.GetShoppingCartUrl()" class="font_underline fblue_mid">@Lang.TipBackToCart</a><label class="btn_border"><input id="btn_continue" type="submit" class="btn_orange btn_p30_input" value="Continue" /></label></div>
+
+    <input type="hidden" id="address_id" name="address_id" value="@ViewBag.AddressId" />
+    <input type="hidden" name="country_id" value="@ViewBag.Country.CountryId" />
+    <input type="hidden" name="shipping_id" value="@ViewBag.ShippingId" />
+    <input type="hidden" id="report_currency_code" name="report_currency_code" value="@ViewBag.ReportCurrencyCode" />
+    <input type="hidden" id="report_currency_id" value="@SessionHelper.CurrentCurrency.CurrencyId" />
+    @{
+        if (ViewBag.CustomsNo != null)
+        {
+            @Html.Raw("        <input type='hidden' id='customs_no_required' name='customs_no_required' value='" + ViewBag.CustomsNo.IsRequired + "' />");
+        }
+        else
+        {
+            @Html.Raw("        <input type='hidden' id='customs_no_required' name='customs_no_required' value='False' />");
+        }
+    }
+
+</form>
+
+</div>
+<!-- 填写订单结束 -->
+<div class="clearfix"></div>
+
+@section HtmlFooter
+{
+    @*特殊包装开始*@
+    <div id="otherpack" class="popup_wrap popup_w650">
+        <div class="modal-body">
+            @Html.Partial("Partial/Address", Model);
+        </div>
+    </div>
+    @*特殊包装结束*@
+}
+
+<script language="javascript">
+    $(function () {
+        $(".select_w235 .pop_select_cont li.list_item_general").each(function () {
+            if ($(this).data("value") != undefined && $(this).data("value") == $(this).parents("ul").filter(":first").data("value")) {
+                //console.log($(this).data("value"));
+                $(this).click();
+                $(".pop_select_cont").hide();
+            }
+        });
+
+        $("#btn_continue").bind("click", function () {
+            $(this).hide().delay(5000).show(0);
+        });
+
+        $("h5 .font_underline").click(function () {
+            if ($(".popup_weight").css("display") == "block") {
+                $(".popup_weight").css("display", "");
+            } else {
+                $(".popup_weight").css("display", "block");
+            }
+        });
+
+        $(".shipping_note ul li ins").click(function () {
+            if ($(this).attr("class") == "arrow_down") {
+                $(this).attr("class", "arrow_up");
+            } else {
+                $(this).attr("class", "arrow_down");
+            }
+            if ($(this).next("div").find(".pop_note_tip").css("display") == "none") {
+                $(this).next("div").find(".pop_note_tip").css("display", "block");
+            } else {
+                $(this).next("div").find(".pop_note_tip").css("display", "none");
+            }
+        });
+        $(".pop_note_tip").find(".close").click(function () {
+            $(this).parents("div").filter(":first").parents("div").filter(":first").prev("ins").attr("class", "arrow_down");
+            $(this).parents("div").filter(":first").css("display", "none");
+        });
+
+        $('.txtqty').unbind('change').bind('keydown',
+            function (e) {
+                //alert(Common.getKeyCode(e));
+                var code = Common.getKeyCode(e);
+                switch (code) {
+                    case 13:
+                        $(this).blur();
+                        break;
+                }
+                if ($(this).hasClass("txtqty") && (((code < 48 || code > 57) && (code < 96 || code > 105) && code != 8 && code != 46 && code != 37 && code != 39) ||
+                    e.shiftKey || ($(this).val().length >= 10 && code != 8))) {
+                    e.preventDefault();
+                }
+            });
+
+
+        $(".address_label").click(function() {
+            var id = $(this).data("value");
+            $(".all_address_cont").find(".btn_p10").hide();
+            $("#address_button_" + id).show();
+        });
+
+        $(".addaddressform .confirm_yes").live("click", function () {
+            $(this).parents("form").filter(":first").submit();
+        });
+
+        $(".province_id select").live("change", function () {
+            $(".province_name input").val("");
+            if ($(this).find("option:selected").val() != "0") {
+                $(".province_name input").val($(this).find("option:selected").text());
+            }
+        });
+
+
+        $(".shipping_delete").click(function () {
+            DivOs.showConfirmModal(Message.MsgConDelAddress, deleteAddress, $(this));
+        });
+
+        function deleteAddress(obj) {
+            $.ajax({
+                type: "POST",
+                url: "/PlaceOrder/DelAddress",
+                data: { "address_id": obj.attr("data") },
+                async: false,
+                success: function (result) {
+                    if (result.result == "success") {
+                        location.reload();
+                    } else {
+                        DivOs.showErrorModal(Message.MsgDelFailed);
+                    }
+                }
+            });
+
+        }
+
+        if ($("input[name='report_type']:checked").val() == "1") {
+            getReportType(1);
+        }
+
+        $('body').on("click", ".select_w104 div ul li", function (e) {
+            $(".select_w104 i").text($(this).text());
+            $("#report_currency_code").val($(this).text());
+            $("#report_currency_id").val($(this).data("value"));
+            GetSummary();
+        });
+
+        $(".customs_info").find(".inputw108").focus(function () {
+            if ($(this).val() == $(this).data("maximum")) {
+                $(this).val("");
+            }
+        });
+
+        $(".customs_info").find(".inputw108").blur(function () {
+            if ($(this).val() == "") {
+                $(this).val($(this).data("maximum"));
+            }
+        });
+
+        $(".customs_info").find(".inputw108").keyup(function () {
+            if ($(this).val() > $(this).data("maximum")) {
+                $(this).val($(this).data("maximum"));
+            }
+        });
+
+        $("#report_product_money").keyup(function () {
+            var percent = $(this).val() / $(this).data("maximum");
+            $("#report_product_money_percent").val((Math.round(percent * 100) / 100) * 100 || 0);
+        });
+
+        $("#report_shipping_money").keyup(function () {
+            var percent = $(this).val() / $(this).data("maximum");
+            $("#report_shipping_money_percent").val((Math.round(percent * 100) / 100) * 100 || 0);
+        });
+
+        $("#report_product_money_percent").keyup(function () {
+            var amount = $("#report_product_money").data("maximum") * $(this).val() / 100 || 0;
+            $("#report_product_money").val(Math.round(amount * 100) / 100 || 0);
+        });
+
+        $("#report_shipping_money_percent").keyup(function () {
+            var amount = $("#report_shipping_money").data("maximum") * $(this).val() / 100 || 0;
+            $("#report_shipping_money").val(Math.round(amount * 100) / 100 || 0);
+        });
+
+        $(".showallmethods input").click(function() {
+            var countryId = $("#country_id").val() || 0;;
+            var posatlCode = "";
+            var shippingid = $(this).data("shippingid");
+            $.post('/ShoppingCart/ChangeShippingMethod', { 'countryId': countryId, "posatlCode": posatlCode, 'shippingid': shippingid }, function (data) {
+                if (data.result == "success") {
+                    $('#div_change_shipping').modal('hide');
+                    location.reload();
+                }
+            });
+        });
+
+        /***shipping methods sort start***/
+        var aCont;
+        $(".sp_price a").live("click", function () {
+            var ins = $(this).find("ins");
+            var className = $(ins).attr("class");
+            if (className == "sort_arrow" || className == "sort_arrow_dec") {
+                clickFun($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+                fSort(compare_down);
+                setTrIndex($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+
+                $(ins).attr("class", "sort_arrow_asc");
+            } else {
+                clickFun($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+                fSort(compare_up);
+                setTrIndex($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+                $(ins).attr("class", "sort_arrow_dec");
+            }
+
+            $(".sp_time ins").attr("class", "sort_arrow");
+        });
+
+        $(".sp_time a").live("click", function () {
+            var ins = $(this).find("ins");
+            var className = $(ins).attr("class");
+            if (className == "sort_arrow" || className == "sort_arrow_dec") {
+                clickFun($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+                fSort(compare_down);
+                setTrIndex($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+
+                $(ins).attr("class", "sort_arrow_asc");
+            } else {
+                clickFun($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+                fSort(compare_up);
+                setTrIndex($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+                $(ins).attr("class", "sort_arrow_dec");
+            }
+
+            $(".sp_price ins").attr("class", "sort_arrow");
+        });
+
+        var clickFun = function (first, second) {
+            aCont = [];
+            fSetDivCont(first, second);
+        };
+        var fSetDivCont = function (first, second) {
+            //$('.showallmethods tr:not(:first)').each(function () {
+            $('.showallmethods tr').each(function () {
+                var trCont = parseFloat($(this).find('.' + first).val() * 10000) + parseFloat($(this).find('.' + second).val());
+                aCont.push(trCont);
+            });
+        }
+        var compare_down = function (a, b) {
+            return a - b;
+        };
+
+        var compare_up = function (a, b) {
+            return b - a;
+        };
+
+        var fSort = function (compare) {
+            aCont.sort(compare);
+        };
+        var setTrIndex = function (sortby, sortby1) {
+            for (i = 0; i < aCont.length; i++) {
+                var trCont = aCont[i];
+                //$('.showallmethods tr:not(:first)').each(function () {
+                $('.showallmethods tr').each(function () {
+                    var thisText = parseFloat($(this).find('.' + sortby).val() * 10000) + parseFloat($(this).find('.' + sortby1).val());
+                    if (thisText == trCont) {
+                        $('.showallmethods').append($(this));
+                    }
+                });
+            }
+        };
+        /***shipping methods sort end***/
+
+
+
+
+    });
+
+
+    function GetSummary() {
+        var shippingId = $("#shipping_id").val() || 0;
+        var countryId = $("#country_id").val() || 0;
+        var couponCustomerId = $("#coupon_customer_id").val() || 0;
+        var currencyId = $("#report_currency_id").val() || 0;
+        $.ajax({
+            url: '/ShoppingCart/GetSummary',
+            data: { "shippingId": shippingId, "countryId": countryId, "couponCustomerId": couponCustomerId, "currencyId": currencyId },
+            dataType: 'json',
+            type: 'POST',
+            success: function (data) {
+                if ($("#report_currency_code").val() == "@ViewBag.ReportCurrencyCode") {
+                    $("#report_product_money").val(@ViewBag.ReportProductMoney);
+                    $("#report_shipping_money").val(@ViewBag.ReportShippingMoney);
+                } else {
+                    $("#report_product_money").val(data.ProductTotal);
+                    $("#report_shipping_money").val(data.ShippingCostValue);
+                }
+
+                $("#report_product_money").attr("data-maximum", data.ProductTotal);
+                $("#report_shipping_money").attr("data-maximum", data.ShippingCostValue);
+
+                $("#report_product_money_percent").val((Math.round($("#report_product_money").val() / $("#report_product_money").attr("data-maximum") * 100) / 100) * 100 || 0);
+                $("#report_shipping_money_percent").val((Math.round($("#report_shipping_money").val() / $("#report_shipping_money").attr("data-maximum") * 100) / 100) * 100 || 0);
+
+                $("#customs_info_total").text(Math.round((data.ProductTotal + data.ShippingCostValue) * 100) / 100);
+
+            },
+            error: function (msg) {
+                //http://diaosbook.com/Post/2012/8/1/invoking-jsonresult-and-return-error-message-in-aspnet-mvc-ajax
+                //异常信息处理 请参考上面链接
+            }
+        });
+    };
+
+    function getReportType(value) {
+        if (value == "1") {
+            $(".customs_info").show();
+
+            $(".select_w104 .pop_select_cont li.list_item").each(function () {
+                if ($(this).text() == $(this).parents("ul").filter(":first").data("value")) {
+                    $(".select_w104 i").text($(this).text());
+                    $("#report_currency_code").val($(this).text());
+                    $("#report_currency_id").val($(this).data("value"));
+                    GetSummary();
+                }
+            });
+        } else {
+            $(".customs_info").hide();
+        }
+    }
+
+    function validate() {
+        if ($("#address_id").val() <= 0) {
+            DivOs.showErrorModal(Message.MsgPleSelAddress);
+            $("#btn_continue").show();
+            return false;
+        }
+        if ($("input[name='report_type']:checked").val() == "1" && parseFloat($("#report_product_money").val()) + parseFloat($("#report_shipping_money").val()) > parseFloat($("#report_product_money").data("maximum")) + parseFloat($("#report_shipping_money").data("maximum"))) {
+            $("#customs_info_tip").text(Message.MsgCustomsThan.format(($("#report_product_money").data("maximum") + $("#report_shipping_money").data("maximum"))));
+            $("#customs_info_tip").show();
+            $("#btn_continue").show();
+            return false;
+        }
+        if ($("#customs_no_required").val() == "True" && $("#customs_no_number").val() == "") {
+            DivOs.showErrorModal(Message.MsgPleFillCpfNo);
+            $("#btn_continue").show();
+            return false;
+        }
+    }
+</script>

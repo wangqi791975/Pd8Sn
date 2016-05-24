@@ -1,0 +1,228 @@
+﻿@using Resources
+<div class="popup_wrap popup_w650 modal fade" id="quickadd">
+    <div class="close" data-dismiss="modal"><a href="javascript:void(0)"></a></div>
+    <h2 class="font14">@Lang.TipQuickAdd</h2>
+    <div class="quick_add_cont">
+        <h5>@Lang.TipPartNoPun</h5>
+        <h5>@Lang.TipQuantityNoPun</h5>
+        <div class="clearfix"></div>
+        <dl id="dl_items">
+            <!-- 输入正确时，ins标签的class名称变为icon_code_ok，p标签不能删除 -->
+            <dt>
+                <input type="text" class="input_text_wrap inputw238 txtprod" onchange="fnChangetxtProd(this)" /><ins class="icon_code_error" style="display: none;"></ins><p class="fred"></p>
+            </dt>
+            <!-- 当货号输入错误时，数量input变为不可输入状态，input的class名增加disabled -->
+            <dd>
+                <input type="text" class="input_text_wrap inputw238 txtqty" maxlength="5" name="input_qty" /><ins></ins><p class="fred"></p>
+            </dd>
+            <dt>
+                <input type="text" class="input_text_wrap inputw238 txtprod" onchange="fnChangetxtProd(this)" /><ins class="icon_code_error" style="display: none;"></ins>
+                <p class="fred"></p>
+            </dt>
+            <dd>
+                <input type="text" class="input_text_wrap inputw238 txtqty" maxlength="5" name="input_qty" /><ins></ins>
+                <p class="fred"></p>
+            </dd>
+            <dt>
+                <input type="text" class="input_text_wrap inputw238 txtprod" onchange="fnChangetxtProd(this)" /><ins class="icon_code_error" style="display: none;"></ins>
+                <p class="fred"></p>
+            </dt>
+            <dd>
+                <input type="text" class="input_text_wrap inputw238 txtqty" maxlength="5" name="input_qty" /><ins></ins>
+                <p class="fred"></p>
+            </dd>
+            <dt>
+                <input type="text" class="input_text_wrap inputw238 txtprod" onchange="fnChangetxtProd(this)" /><ins class="icon_code_error" style="display: none;"></ins>
+                <p class="fred"></p>
+            </dt>
+            <dd>
+                <input type="text" class="input_text_wrap inputw238 txtqty" maxlength="5" name="input_qty" /><ins></ins>
+                <p class="fred"></p>
+            </dd>
+            <dt>
+                <input type="text" class="input_text_wrap inputw238 txtprod" onchange="fnChangetxtProd(this)" /><ins class="icon_code_error" style="display: none;"></ins>
+                <p class="fred"></p>
+            </dt>
+            <dd>
+                <input type="text" class="input_text_wrap inputw238 txtqty" maxlength="5" name="input_qty" /><ins></ins>
+                <p class="fred"></p>
+            </dd>
+            <dt>
+                <input type="text" class="input_text_wrap inputw238 txtprod" onchange="fnChangetxtProd(this)" /><ins class="icon_code_error" style="display: none;"></ins>
+                <p class="fred"></p>
+            </dt>
+            <dd>
+                <input type="text" class="input_text_wrap inputw238 txtqty" maxlength="5" name="input_qty" /><ins></ins>
+                <p class="fred"></p>
+            </dd>
+            <dt>
+                <input type="text" class="input_text_wrap inputw238 txtprod" onchange="fnChangetxtProd(this)" /><ins class="icon_code_error" style="display: none;"></ins>
+                <p class="fred"></p>
+            </dt>
+            <dd>
+                <input type="text" class="input_text_wrap inputw238 txtqty" maxlength="5" name="input_qty" /><ins></ins>
+                <p class="fred"></p>
+            </dd>
+            <dt>
+                <input type="text" class="input_text_wrap inputw238 txtprod" onchange="fnChangetxtProd(this)" /><ins class="icon_code_error" style="display: none;"></ins>
+                <p class="fred"></p>
+            </dt>
+            <dd>
+                <input type="text" class="input_text_wrap inputw238 txtqty" maxlength="5" name="input_qty" /><ins></ins>
+                <p class="fred"></p>
+            </dd>
+            <dt>
+                <input type="text" class="input_text_wrap inputw238 txtprod" onchange="fnChangetxtProd(this)" /><ins class="icon_code_error" style="display: none;"></ins>
+                <p class="fred"></p>
+            </dt>
+            <dd>
+                <input type="text" class="input_text_wrap inputw238 txtqty" maxlength="5" name="input_qty" /><ins></ins>
+                <p class="fred"></p>
+            </dd>
+            <dt>
+                <input type="text" class="input_text_wrap inputw238 txtprod" onchange="fnChangetxtProd(this)" /><ins class="icon_code_error" style="display: none;"></ins>
+                <p class="fred"></p>
+            </dt>
+            <dd>
+                <input type="text" class="input_text_wrap inputw238 txtqty" maxlength="5" name="input_qty" /><ins></ins>
+                <p class="fred"></p>
+            </dd>
+
+        </dl>
+        <div class="action_cont">
+            <p id="lblmsginfo" class="fred hide"></p>
+            <a class="btn_orange btn_w170" id="btnBatchAddItemsToCart" href="javascript:void(0)"><ins class="btn_cart"></ins><span>@Lang.TipAddCart</span></a>
+            <a class="btn_grey btn_w170" id="btnAddMoreItems" href="javascript:void(0)"><ins class="btn_add"></ins><span>@Lang.TipAddMoreItems</span></a>
+            <!-- 点击一次增加两个dt、dd -->
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    //页面加载完成后立即执行代码
+    $(document).ready(function () {
+        $('.quick_add_cont .txtqty').unbind('change').bind('change', function () { fnChangetxtQty(this); });
+        $('#btnAddMoreItems').unbind('click').bind('click', function () { fnAddMoreItems(this); });
+        $('#btnBatchAddItemsToCart').unbind('click').bind('click', function () { fnBatchAddItemsToCart(this); });
+        fnInputBindEvent();
+    });
+
+    function fnInputBindEvent() {
+        var $inp = $('#dl_items input:text'); //所有文本框
+        $inp.bind('keydown', function (e) {
+            //alert(Common.getKeyCode(e));
+            var code = Common.getKeyCode(e);
+            switch (code) {
+                case 9:
+                case 13:
+                    //case 39:
+                    $("#dl_items :input:text:eq(" + ($inp.index(this) + 1) + ")").focus();
+                    e.preventDefault();
+                    break;
+                    //case 37:
+                    //    $("#dl_items :input:text:eq(" + ($inp.index(this) - 1) + ")").focus(); e.preventDefault();break;
+                case 38:
+                    $("#dl_items :input:text:eq(" + ($inp.index(this) - 2) + ")").focus();
+                    e.preventDefault();
+                    break;
+                case 40:
+                    $("#dl_items :input:text:eq(" + ($inp.index(this) + 2) + ")").focus();
+                    e.preventDefault();
+                    break;
+                case 32:
+                    e.preventDefault();
+                    break;
+            }
+        });
+    }
+
+    function fnChangetxtProd(obj) {
+        var $ipt = $(obj);
+        $ipt.next().next().hide();
+        var $inps = $('#dl_items input:text[value=' + $.trim($ipt.val()) + ']'); //文本框内容
+        if ($inps.length > 1) {
+            $ipt.next().next().html(Message.TipEnteredPartNo).show();
+            $ipt.next().removeClass("icon_code_ok").addClass("icon_code_error").show();
+            return false;
+        }
+        if ($ipt.val().length > 0) {
+            $.post('/ShoppingCart/GetProductByProductId', { 'productId': $.trim($ipt.val()) }, function (data) {
+                $ipt.next().show();
+                var txtqty = $ipt.parent().next().find(".txtqty").filter("input:first");
+                $ipt.data("prodid", data.prodid);
+                switch (data.result) {
+                    case "success":
+                        $ipt.next().next().html("").hide();
+                        $ipt.next().removeClass("icon_code_error").addClass("icon_code_ok");
+                        txtqty.data("maxqty", 99999).val(data.qty).focus();
+                        txtqty.removeClass("disabled").removeAttr("disabled");
+                        break;
+                    case "failing":
+                        var msg = data.msg == "err" ? Message.TipNoPartNo : Message.TipItemsRemoved;
+                        $ipt.next().next().html(msg).show();
+                        $ipt.next().removeClass("icon_code_ok").addClass("icon_code_error");
+                        txtqty.addClass("disabled").attr("disabled", "disabled");
+                        break;
+                    case "warning":
+                        $ipt.next().next().html(Message.TipLimitedStock.format(data.maxqty)).show().hide(3000);
+                        txtqty.data("maxqty", data.maxqty).val(data.qty).focus();
+                        $ipt.next().removeClass("icon_code_error").addClass("icon_code_ok");
+                        if (data.maxqty <= 0) {
+                            $ipt.next().removeClass("icon_code_ok").addClass("icon_code_error");
+                            txtqty.addClass("disabled").attr("disabled", "disabled");
+                        }
+                        break;
+                }
+            });
+        }
+        return true;
+    }
+
+    function fnChangetxtQty(obj) {
+        var $ipt = $(obj);
+        if ($ipt.val() > $ipt.data("maxqty")) {
+            $ipt.val($ipt.data("maxqty"));
+            //$ipt.next().show();
+            //$ipt.next().removeClass("icon_code_ok").addClass("icon_code_error");
+            $ipt.next().next().html(Message.TipLimitedStock.format($ipt.data("maxqty"))).show().hide(3000);
+
+        }
+    }
+
+    function fnAddMoreItems(obj) {
+        $("#dl_items").append('<dt><input type="text" class="input_text_wrap inputw238 txtprod" onchange="fnChangetxtProd(this)" /><ins class="icon_code_error" style="display: none;"></ins><p class="fred"></p></dt><dd><input type="text" class="input_text_wrap inputw238 txtqty" maxlength="5" name="input_qty" /><ins></ins><p class="fred"></p></dd>');
+        $("#dl_items").append('<dt><input type="text" class="input_text_wrap inputw238 txtprod" onchange="fnChangetxtProd(this)" /><ins class="icon_code_error" style="display: none;"></ins><p class="fred"></p></dt><dd><input type="text" class="input_text_wrap inputw238 txtqty" maxlength="5" name="input_qty" /><ins></ins><p class="fred"></p></dd>');
+        fnInputBindEvent();
+    }
+
+    function fnBatchAddItemsToCart(obj) {
+        var errcount = $(".icon_code_error:visible").length;
+        if (errcount > 0) {
+            $("#lblmsginfo").html(Message.TipEnterAccurateData).show().hide(3000);
+            return false;
+        }
+        var $inps = $('#dl_items input:text'); //所有文本框
+        var items = "";
+        $inps.each(function (i, item) {
+            if ($(item).val().length > 0
+                && (($(item).hasClass("txtprod") && $(item).next().hasClass("icon_code_ok"))
+                || ($(item).hasClass("txtqty") && !$(item).hasClass("disabled")))) {
+                items = items + ($(item).hasClass("txtprod") ? $.trim($(item).data("prodid")) + "," : $(item).val() + "|");
+            }
+        });
+        if (items.length > 0) {
+            items = items.substring(0, items.length - 1);
+            $.post('/ShoppingCart/BatchAddToCart', { 'items': items }, function (data) {
+                if (data.result == "success") {
+                    $('#quickadd').modal('hide');
+                    //fnRefresh();
+                    location.reload();
+                } else {
+                    $("#lblmsginfo").html(data.msg).show().hide(3000);
+                }
+            });
+        }
+        return true;
+    }
+</script>

@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "更新匹配商品数据";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+<div class="pull-right">
+    <!-- search bar -->
+<div class="ajax_detail">
+    <div class="ajax_info">
+        <form method="post" action="@Url.Content("~/Product/UploadBestMatchItems")" enctype="multipart/form-data" id="uploadForm" name="uploadForm" class="form-upload" onsubmit="return false;">
+            文件：<input type="file" id="bestmatchfile" name="bestmatchfile">
+                  <input type="submit" value="上传" class="btn btn-primary ajax_update">
+            <a href="~/ImportModelFiles/Bestmatch/Best-match.xls">下载模板</a>
+        </form>
+    </div>   </div>
+</div>
+<div class="clearboth"></div>

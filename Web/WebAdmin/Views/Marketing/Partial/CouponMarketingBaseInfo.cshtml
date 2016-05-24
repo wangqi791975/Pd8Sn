@@ -1,0 +1,142 @@
+﻿@using Com.Panduo.Service.Customer
+@using Com.Panduo.Service.Marketing
+@using Com.Panduo.Service.Marketing.Coupon
+@using Com.Panduo.Service.SiteConfigure
+@model CouponMarketing
+
+<div class="control-group">
+    <label class="control-label"><i class="fred">*</i>场景：</label>
+    <div class="controls">
+        @Html.DropDownListFor(m => m.RewardType, ViewBag.CouponMarketingRewardType as SelectList, new { @class = "input-xlarge" })
+    </div>
+</div>
+<hr />
+<div class="hide couponconddiv">
+    <div class="control-group">
+        <label class="control-label">活动名称：</label>
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Name, new { @class = "input-xlarge" })
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label"><i class="fred">*</i>客户对象：</label>
+        <div class="controls">
+            @Html.DropDownListFor(m => m.CustomerType, ViewBag.MarketingCustomerType as SelectList, new { @class = "input-xlarge", id = "FD_CustomerType" })
+            <label class="checkbox inline">
+                <input name="pclub" type="checkbox" @(Model.IsExcludeClub ? "checked" : "") />排除Club客户</label>
+            <label class="checkbox inline">
+                <input name="pchannel" type="checkbox" @(Model.IsExcludeChannels ? "checked" : "")/>排除渠道商客户</label>
+            <div id="FD_CustomerType_1" style="padding-left: 8px; margin-bottom: 5px;" @(Model.CustomerType == MarketingCustomerType.VipCustomer ? "" : "class=hide")>
+                <label class="checkbox inline">
+                    <input type="checkbox" data-toggle="checkall" id="FD_CustomerVipIds" @(Model.CustomerVipIds.IsNullOrEmpty() ? "" : Model.CustomerVipIds.Count == 0 || Model.CustomerVipIds.Count == ViewBag.CustomerGroupDescs.Count ? "checked" : "") />所有</label>
+                @foreach (var customerGroupDesc in ViewBag.CustomerGroupDescs)
+                {
+                    <label class="checkbox inline">
+                        <input name="exvip" type="checkbox" data-toggle="checkthis" @(Model.CustomerVipIds.IsNullOrEmpty() ? "" : Model.CustomerVipIds.Count == 0 ? "checked" : (Model.CustomerVipIds.Contains(customerGroupDesc.Key) ? "checked" : "")) value="@customerGroupDesc.Key" id="FD_CustomerVipIds_@customerGroupDesc.Key" />@customerGroupDesc.Value</label>
+                }
+            </div>
+            <div id="FD_CustomerType_2" style="padding-left: 8px; margin-bottom: 5px;" @(Model.CustomerType == MarketingCustomerType.ClubCustomer ? "" : "class=hide")>
+                <label class="checkbox inline">
+                    <input type="checkbox" data-toggle="checkall" id="FD_ClubLevels" @(Model.ClubLevels.IsNullOrEmpty() ? "" : Model.ClubLevels.Count == 0 || Model.ClubLevels.Count == ViewBag.ClubLevel.Count ? "checked" : "") />所有</label>
+                @foreach (var customergroup in (Dictionary<ClubType, string>)ViewBag.ClubLevel)
+                {
+                    <label class="checkbox inline">
+                        <input name="exclub" type="checkbox" data-toggle="checkthis" @(Model.ClubLevels.IsNullOrEmpty() ? "" : Model.ClubLevels.Count == 0 ? "checked" : (Model.ClubLevels.Contains((int)customergroup.Key) ? "checked" : "")) value="@customergroup.Key" id="FD_ClubLevels_@((int)customergroup.Key)" />@customergroup.Value</label>
+                }
+            </div>
+            <div id="FD_CustomerType_4" style="padding-left: 8px; margin-bottom: 5px;"  @(Model.CustomerType == MarketingCustomerType.ImportCustomer ? "" : "class=hide")>
+                <span class="help-inline">文件：<input type="file" name="uploadcustomer" /><a href="~/Upload/ImportCustomer/importdemo.xlsx" target="_blank">下载模板</a></span>
+            </div>
+            <em id="customerobjerror" class="error" style="color: #d14"></em>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label"><i class="fred">*</i>语种：</label>
+        <div class="controls">
+            <label class="checkbox inline">
+                <input type="checkbox" data-toggle="checkall" id="FD_LanguageIds" @(Model.LanguageIds.IsNullOrEmpty() ? "" : Model.LanguageIds.Count == 0 || Model.LanguageIds.Count == ViewBag.AllLanguage.Count ? "checked" : "") />所有
+            </label>
+            @foreach (var language in (List<Language>)ViewBag.AllLanguage)
+            {
+                <label class="checkbox inline">
+                    <input type="checkbox" data-toggle="checkthis" name="language" @(Model.LanguageIds.IsNullOrEmpty() ? "" : Model.LanguageIds.Count == 0 ? "checked" : (Model.LanguageIds.Contains(language.LanguageId) ? "checked" : "")) id="FD_LanguageIds_@(language.LanguageId)" value="@language.LanguageId" @(Model.IsNullOrEmpty() ? "" : (("," + Model.LanguageIds + ",").Contains("," + language.LanguageId + ",") ? "checked" : ""))/>@language.LanguageName
+                </label>
+            }
+            <div>
+                <em id="languageerror" class="error" style="color: #d14"></em>
+            </div>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">国家：</label>
+        <div class="controls">
+            所有
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label"><i class="fred">*</i>CouponCode：</label>
+        <div class="controls">
+            @Html.TextBoxFor(m => m.CouponCode)<label class="inline" class="hide"></label>
+            <em class="hide error" style="color: #d14"></em>
+        </div>
+    </div>
+    @{
+        var effectiveBeginDate = Model.IsNullOrEmpty() ? "" : Model.EffectiveBegin.ToString().Split(' ').First();
+        var effectiveBeginTime = Model.IsNullOrEmpty() ? "" : Model.EffectiveBegin.ToString().Split(' ').LastOrDefault();
+        var effectiveEndDate = Model.IsNullOrEmpty() ? "" : Model.EffectiveEnd.ToString().Split(' ').First();
+        var effectiveEndTime = Model.IsNullOrEmpty() ? "" : Model.EffectiveEnd.ToString().Split(' ').LastOrDefault();
+    }
+    <label class="control-label"><i class="fred">*</i>开始时间：</label>
+    <div class="controls">
+        <div class="bfh-datepicker" data-format="y-m-d" data-date="@(effectiveBeginDate ?? string.Empty)" data-icon="icon-calendar" data-name="limitBeginDate" data-placeholder="开始时间"></div>
+        <div class="bfh-timepicker" data-icon="icon-time" data-name="limitBeginTime" data-time="@(effectiveBeginTime ?? string.Empty)"></div>
+        <code>（北京时间）</code>
+        <em id="beginerror" class="inline" style="color: #d14"></em>
+    </div>
+    <label class="control-label"><i class="fred">*</i>结束时间：</label>
+    <div class="controls">
+        <div class="bfh-datepicker" data-format="y-m-d" data-date="@(effectiveEndDate ?? string.Empty)" data-icon="icon-calendar" data-name="limitEndDate" data-placeholder="开始时间"></div>
+        <div class="bfh-timepicker" data-icon="icon-time" data-name="limitEndTime" data-time="@(effectiveEndTime ?? string.Empty)"></div>
+        <code>（北京时间）</code>
+        <em id="enderror" class="inline" style="color: #d14"></em>
+        <label>（*不填写表示无结束日期）</label>
+    </div>
+    <div class="control-group">
+        <label class="control-label">启用/禁用：</label>
+        <div class="controls">
+            <label class="radio inline">
+                @Html.RadioButtonFor(m => m.Status, "1", new { @checked = "checked" })启用
+            </label>
+            <label class="radio inline">
+                @Html.RadioButtonFor(m => m.Status, "0")禁用
+            </label>
+        </div>
+    </div>
+</div>
+<script>
+    $("#RewardType").change(function () {
+        if ($("#RewardType option:selected").val() == -1) {
+            $(".couponconddiv").hide();
+        } else {
+            $(".couponconddiv").show();
+            if ($("#RewardType option:selected").val() == 2) {
+                $("#FD_CustomerType").val(2);
+                $("#FD_CustomerType").change();
+                $("#FD_CustomerType").attr("disabled", "");
+                $("[name='pclub']").parent().hide();
+                $("[name='pchannel']").parent().hide();
+            } else {
+                $("#FD_CustomerType").val(0);
+                $("#FD_CustomerType").change();
+                $("#FD_CustomerType").removeAttr("disabled");
+                if ($("#RewardType option:selected").val() == 0) {
+                    $("[name='pclub']").parent().hide();
+                    $("[name='pchannel']").parent().hide();
+                } else {
+                    $("[name='pclub']").parent().show();
+                    $("[name='pchannel']").parent().show();
+                }
+            }
+        }
+    });
+</script>

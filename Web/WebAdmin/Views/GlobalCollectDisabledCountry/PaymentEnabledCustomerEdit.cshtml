@@ -1,0 +1,15 @@
+﻿@{
+    Layout = null;
+}
+<form name="updateForm" action="@Url.Content("~/GlobalCollectDisabledCountry/PaymentEnabledCustomerSave")" method="post" onsubmit="return false;">
+    <input type="hidden" id="current_url" name="current_url" value="@Url.Content("~/GlobalCollectDisabledCountry/PaymentEnabledCustomerList")" />
+    <table>
+        <tr>
+            <td>客户邮箱：</td>
+            <td>
+                <input id="txtEmail" name="txtEmail" type="text" value="" placeholder="panduo@gmail.com" />
+                <input id="paymentType" name="paymentType" type="hidden" value="@ViewBag.PaymentType" />
+            </td>
+        </tr>
+    </table>
+</form>

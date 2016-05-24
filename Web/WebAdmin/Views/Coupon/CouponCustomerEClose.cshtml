@@ -1,0 +1,17 @@
+﻿@{
+    Layout = null;
+}
+@model Com.Panduo.Service.Coupon.CouponCustomerView
+
+<form name="updateForm" action="/Coupon/CouponCustomerEClose" method="post" onsubmit="return false;">
+    <input type="hidden" id="current_url" name="current_url" value="@Url.Content("~/Coupon/CouponCustomerList")" />
+    <input type="hidden" name="id" value="@Model.Id" />
+    <table class="table table-striped">
+        @Html.Partial("Partial/CouponViewInfo",Model)
+        <tr>
+            <td style="width: 20%"><i class="fred">*</i>关闭原因：</td>
+            <td>
+                <textarea name="closereason"></textarea></td>
+        </tr>
+    </table>
+</form>

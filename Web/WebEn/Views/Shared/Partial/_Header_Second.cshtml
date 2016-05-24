@@ -1,0 +1,21 @@
+﻿@using Resources
+<div id="header">
+    <h1 class="lf"><a href="/" title="8seasons">@Lang.TipBeadsJewelryMaking</a></h1>
+    <div class="search lf">
+        <div class="search_input_wrap">
+            <input name="keyword" type="text" id="head_search" class="inputw314 input_text_wrap search_icon lf" value="@ViewBag.Keyword" placeholder="@Lang.TipSearchForOver" />
+            <button class="btn_search lf" id="head_search_btn" data-url="@UrlRewriteHelper.GetProductSearchUrl("|keyword|", 1)">@Lang.TipSearch</button>
+            <ul class="search_filter">
+            </ul>
+        </div>
+        @foreach (var item in CacheHelper.SearchKeywords)
+        {<span><a href="@item.KeywordUrl">@item.KeywordName</a></span>}
+    </div>
+    <h3 class="font14 lf">
+        <a rel="nofollow" href="@UrlRewriteHelper.GetContactUsUrl()"><ins class="icon_head_contact"></ins><i>@Lang.TipContactUs</i></a>
+    </h3>
+    <h3 class="font14 lf">
+        <a rel="nofollow" href="@UrlRewriteHelper.GetShoppingCartUrl()"><ins class="icon_head_cart"></ins><ins>@Lang.TipCart <span class="font12">(  <strong class="forange" id="lblcart_prodcount">@SessionHelper.CurrentShoppingCarItemCount</strong> )</span></ins></a>
+    </h3>
+    <div class="clearfix"></div>
+</div>

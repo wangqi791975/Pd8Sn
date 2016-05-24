@@ -1,0 +1,107 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Customer
+@using Com.Panduo.Service.Order
+@using Com.Panduo.Service.Payment
+@using Com.Panduo.Web.Controllers
+@model Com.Panduo.Service.PageData<Com.Panduo.Service.Order.Order>
+@{
+    Layout = null;
+}
+
+<table class="table table-striped" data-delaction="/Order/Delete">
+    <thead>
+    <tr>
+        <th width="15%">订单号</th>
+        <th width="15%">客户邮箱</th>
+        <th width="10%">客户姓名</th>
+        <th width="5%">Club会员</th>
+        <th width="10%">支付方式</th>
+        <th width="10%">运输方式</th>
+        <th width="5%">来源</th>
+        <th width="5%">语言</th>
+        <th width="10%">订单总金额</th>
+        <th width="10%">下单时间</th>
+        <th width="5%">下单Vip</th>
+        <th width="5%">状态</th>
+        <th width="20%">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.Data)
+        {
+            var customer = ServiceFactory.CustomerService.GetCustomerById(order.CustomerId);
+            
+            <tr>
+            <td>
+                @order.OrderNo
+            </td>
+                <td>
+                    @if (!customer.IsNullOrEmpty())
+                    {
+                        @customer.Email
+                    }
+                </td>
+                <td>
+                    @if (!customer.IsNullOrEmpty())
+                    {
+                        @customer.FullName
+                    }
+                </td>
+                <td>
+                    @if (!customer.IsNullOrEmpty())
+                    {
+                        if (customer.ClubLevel > 0)
+                        {
+                            @Html.Raw("C" + customer.ClubLevel);
+                        }
+                    }
+                </td>
+                <td>
+                    @OrderController.GetPaymentName(order.PaymentMethod.ToEnum<PaymentType>())
+                </td>
+                <td>
+                     @Html.Raw(CacheHelper.GetShippingName(order.ShippingId));
+                </td>
+                <td>
+                    @if (order.OrderSource == 0)
+                    {
+                        @Html.Raw("W");
+                    }
+                    else if (order.OrderSource == 1)
+                    {
+                        @Html.Raw("M");
+                    }
+                </td>
+                <td>
+                    @order.LanguageCode
+                </td>
+                <td>
+                    @if (!order.OrderCost.IsNullOrEmpty())
+                    {
+                        @order.Currency @order.OrderCost.TotalOrderAmt
+                    }
+                </td>
+                <td>
+                    @order.OrderTime
+                </td>
+                <td>
+                     @if (!order.OrderCost.IsNullOrEmpty())
+                     {
+                         @order.OrderCost.VipDiscount
+                     }
+                </td>
+                <td>
+                    @order.OrderStatus
+                </td>
+                <td>
+                    <a class="btn btn-mini" data-id="@order.OrderId" href="/Order/Detail?orderno=@order.OrderNo"><i class="icon-trash icon-white"></i>编辑</a>
+                    @if (order.OrderStatus!=OrderStatusType.Deleted)
+                    {
+                        <a class="btn btn-mini btn-danger btn-info-view" data-id="@order.OrderId"><i class="icon-trash icon-white"></i>删除</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.Partial("~/Views/Shared/Partial/_Page_Bottom.cshtml", @Model.Pager)

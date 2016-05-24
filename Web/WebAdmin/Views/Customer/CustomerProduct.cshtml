@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "CustomerProduct";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+<div class="pull-right">
+    <form method="post" action="@Url.Content("~/Customer/CustomerProductList/" + ViewBag.CustomerId)" id="searchForm" name="searchForm" class="form-search">
+        <table>
+            <tr>
+                <td>搜索：</td>
+                <td>
+                    <input type="text" onkeyup="$(this).val($(this).val().replace(/\//g,''));" placeholder="搜索" name="keyword">
+                    <button type="submit" class="btn">搜索</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div class="clearboth"></div>
+
+<div class="ajax_detail">
+    <form method="post" class="form-horizontal" action="/Customer/DeleteCustomerProduct" onsubmit="return false;">
+        <input type="submit" value="批量删除" class="btn btn-primary ajax_update">
+        <div id="main" class="ajax-list" data-url="/Customer/CustomerProductList/@ViewBag.CustomerId">
+        </div>
+        <input type="submit" value="批量删除" class="btn btn-primary ajax_update">
+    </form>
+</div>

@@ -1,0 +1,130 @@
+﻿@using Com.Panduo.Service.Product
+@using Resources
+@model IList<ProductInfo>
+@{
+    string classIndex = string.Empty;
+    var isLogin = SessionHelper.CurrentCustomer.IsNullOrEmpty();
+    var flag = true;
+}
+
+@for (int c = 0; c < Model.Count; c++)
+{
+    if (c % 3 == 0 || c == 0)
+    {
+        @Html.Raw("<ul>");
+        classIndex = string.Empty;
+    }
+    else
+    {
+        classIndex = "2";
+    }
+
+    <li>
+        <div class="gallery_img@(classIndex)">
+            <a href="@UrlRewriteHelper.GetProductDetailUrl(Model[c].Product.ProductId, Model[c].ProductEnName)" class="gallery_pro_img_a">
+                <img class="scrollLoading" src="@Url.Content("~/Images/snap.jpg")" data-url="@ImageHelper.GetImageUrl(Model[c].Product.MainImage, 310)" />
+                @{
+    var ifhot = Model[c].IsHot;
+    var ifnew =  (!ifhot) && (DateTime.Now.Subtract(Model[c].Product.CreateTime).TotalDays <= 30);//NEW标签
+    var ifstocklimit = Model[c].ProductStock.JudgeStocklimit();       
+                }
+                <div class="promotion_icon">
+                    @* 折扣icon_sale和新品icon_newhot标签直接不能有空白*@
+                    @if (Model[c].ProductPrice.PromotionalDiscount < 1)
+                    { <ins class="icon_sale"><span> @PageHelper.GetShowDiscount(Model[c].ProductPrice.PromotionalDiscount)</span></ins>}@if (ifhot)
+                                                                                                                                        {<ins class="icon_newhot"><span>@Lang.TipHOT</span></ins>} @if (ifnew)
+                                                                                                                                        {<ins class="icon_newhot"><span>@Lang.TipNEW</span></ins>}@if (ifstocklimit)
+                                                                                                                                                                                         {<ins class="icon_limitedstock"><span>@Lang.TipLmtStock</span></ins>}
+                </div>
+            </a>
+        </div>
+        <div class="gallery_popup">
+            <div class="pro_popup_detail@(classIndex)">
+                @* 飘窗右定位 pro_popup_detail*@
+                <div class="gallery_table">
+                    <h5><a href="#" title="">@(Model[c].ProductName) (@Model[c].Product.ProductCode)</a></h5>
+                    @Html.Partial("~/Views/Product/Partial/_Price_Small.cshtml", Model[c])
+                </div>
+                 <p>
+                @if (isLogin)
+                {
+                   <a rel="nofollow" href="javascript:void(0)" onclick="$('#logindiv').modal('show');" title="@Lang.TipLoginViewVIPrice">@Lang.TipLoginViewVIPrice</a>
+                }
+                 </p>
+                <p class="fgrey_mid">@Lang.TipGrossWeight @(Model[c].Product.Weight)g</p>
+            </div>
+        </div>
+        <div class="gallery_info">
+            <p class="gallery_service">
+                @if (Model[c].HasSimilarItems)
+                {
+                    <a rel="nofollow" class="fblue_mid" target="_blank" href="@UrlRewriteHelper.GetSimiliarItemsUrl(Model[c].Product.ProductId, 1)">@Lang.TipSimilarItems</a><br/>}
+                @if (@Model[c].Product.IsOtherPack)
+                {
+                    <a rel="nofollow" class="fblue_mid" data-target="#otherpack" data-toggle="modal" href="javascript:void(0)" data-remote="/Product/OtherPackage/@Model[c].Product.ProductId">@Lang.TipOtherPackageSizes</a>
+                }
+            </p>
+            <p class="gallery_pro_name"><a href="@UrlRewriteHelper.GetProductDetailUrl(Model[c].Product.ProductId, Model[c].ProductEnName)">@(Model[c].ProductName)</a>
+            </p>
+            <div class="gallery_pro_price">
+                <p class="lf">@Lang.TipAsLowAsNoPun</p>
+                <p class="rt">
+                    @{ var stepPrice = Model[c].ProductPrice.StepPrice; }
+                    @if (stepPrice.Count > 0)
+                    {
+
+                        var discount = PageHelper.GetDiscount(Model[c].ProductPrice);
+                        if (discount > 0 && discount < 1)
+                        {
+                            <del class="fgrey">@PageHelper.GetCurrentCurrency().Format(PageHelper.ExchangeMoneyByUsd(stepPrice[stepPrice.Count - 1].OriginalPrice))</del><br/>
+                        }
+                        <span class="fred">@PageHelper.GetProductAsLowAsPrice(Model[c].ProductPrice)</span>
+                    }
+
+                </p>
+                <div class="clearfix"></div>
+
+            </div>
+            <div>
+                @if (Model[c].Product.Status == ProductStatus.OffLine)
+                {
+                    <a class="btn_removed lf">Removed</a>
+                    <div class="clearfix"></div>
+                }
+                else
+                {
+                    if (Model[c].Product.Status == ProductStatus.BackOrder)
+                    {
+                        int days = Model[c].ProductStock.GetProductStockDay();
+                        if (days > 0)
+                        {
+                            @Html.Raw("<span class=\"fgrey_mid time\">" + @days + " days </span>")
+                        }
+                        else
+                        {
+                            @Html.Raw("<span class=\"fgrey_mid time\">in 15 days </span>")
+                        }
+                        <a rel="nofollow" class="lf btn_orange btn_w100" href="javascript:void(0)" data-productid="@Model[c].Product.ProductId" data-restocktime="@days" onclick=" fnBackorderAddToCart(this) ">@Lang.TipBackorder</a>
+                    }
+                    else
+                    {
+                        <label><input class="lf inputw61 input_text_wrap" type="text" value="1" name="input_qty_@Model[c].Product.ProductId"/></label>
+                        <a rel="nofollow" class="lf btn_orange btn_w100 cart_btn_add" data-productid="@Model[c].Product.ProductId" data-pagesource="productgallery" href="javascript:void(0)"><ins class="btn_cart"></ins></a>
+                    }
+                    <a rel="nofollow" class="rt btn_grey btn_w40 wishlist_btn_add" data-productid="@Model[c].Product.ProductId" data-pagesource="productgallery" href="javascript:void(0)"><ins class="btn_wishlist"></ins></a>
+                    <div class="clearfix"></div>
+                    if (Model[c].ProductStock.JudgeStocklimit() && Model[c].ProductStock.StockNumber > 0)
+                    {
+                        <p>@Model[c].ProductStock.StockNumber @Lang.TipStockAvailable</p>
+                    }
+                }
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </li>
+
+    if ((c + 1) % 3 == 0 && c < Model.Count || (c + 1) == Model.Count)
+    {
+        @Html.Raw("<div class=\"clearfix\"></div></ul>")
+    }
+}

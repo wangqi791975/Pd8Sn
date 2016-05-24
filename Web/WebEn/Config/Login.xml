@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Login>  
+  <Controller Name="Checkout">
+    <!--Include如果配置了*或者ALL的表示这个Controller下的所有Action都需要登陆，如果只有某些Action需要登录那么就用逗号分隔开来-->
+    <Include>*</Include>
+    <!--Exclude该Action不需要登录验证用逗号分隔的列表-->
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Order">
+    <Include>*</Include>
+    <Exclude>ServerOrderInvoice</Exclude>
+  </Controller>
+  <Controller Name="Wishlist">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Privilege">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Payment">
+    <Include>*</Include>
+    <Exclude>PaypalNotifyForPayOrder,PaypalNotifyForPayClub,OceanPaymentNotifyForPayOrder,DoPaypalExpressCheckoutPayment,UploadPaymentReceipt</Exclude>
+  </Controller>
+  <Controller Name="SiteHelp">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller> 
+  <Controller Name="PlaceOrder">
+    <Include>*</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Account">
+    <Include>AccountSetting,AddressBook,MyPreference,NewsLetter,Club,MyCoupon,MyAccount,AddCoupon</Include>
+    <Exclude></Exclude>
+  </Controller>
+  <Controller Name="Reviews">
+    <Include>*</Include>
+    <Exclude>Testimonial</Exclude>
+  </Controller>
+  <Controller Name="ShoppingCart">
+    <Include>MoveToWishlist,MoveAllToWishlist</Include>
+    <Exclude></Exclude>
+  </Controller>
+</Login>

@@ -1,0 +1,18 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Product.Category
+@using Com.Panduo.Common
+@using Resources
+@model Com.Panduo.Web.Models.Product.ProductVo
+@{
+    ViewBag.Title = Lang.TipProduct + ViewBag.time;
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@section HtmlHead
+{
+    @Html.JsFor("scrollloading.js", "~/Js/jquery.scrollLoading.min.js,~/Js/Product/Index.js", fileVersion: "1.5")
+}
+<div id="main">
+    @Html.Partial("~/Views/Product/Partial/_Product_Refine_By.cshtml")
+    @Html.Partial("~/Views/Product/Partial/_Product_List_One.cshtml", @Model.ProductInfo)
+</div>
+<div class="clearfix"></div>

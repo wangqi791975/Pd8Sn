@@ -1,0 +1,137 @@
+﻿@{
+    Layout = null;
+    string customerFullName = ViewBag.CustomerFullName;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Congratulations, you have new VIP level at 8Seasons.com!</title>
+</head>
+
+<body>
+    <table align="0" border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto; background: #FFF;" width="670">
+        <tr>
+            <td valign="top">
+                <table align="0" border="0" cellpadding="0" cellspacing="0" style="border: 1px solid #ccc;" width="670">
+                    <tr>
+                        <td>
+                            <table width="670" border="0" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td width="5"></td>
+                                    <td align="left" style="border-bottom: 1px solid #ccc; padding: 10px 0 5px 0;">
+                                        <a href="javascript:void(0)">
+                                            <img src="@Url.Content("~/Images/mail/news_logo.png")" border="0" alt=""/></a>
+                                    </td>
+                                    <td width="5"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="padding: 5px 0;">
+                            <a href="@ViewBag.BannerLink" target="_blank">
+                                <img src="@(ViewBag.BannerUrl)" alt="" border="0" /></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" style="font-size: 12px; color: #333; font-family: Verdana,Arial; font-weight: normal; padding: 0 5px 0 8px; line-height: 18px;"><strong>Dear @(customerFullName.IsNullOrEmpty() ? "Customer" : ViewBag.CustomerFullName):</strong>
+                            <p>Thanks for  all of your great business with 8seasons!</p>
+                            <p>Congratulations!  Your VIP level has been upgraded to<strong> {客户当前VIP级别的名称}</strong>.</p>
+                            <p>Up to now,  all of your previous purchases on our website reach to {历史订单总金额，币种为美元}.</p>
+                            <p>
+                                <strong>Please feel free to check out the chart below for your next VIP  level and discount.</strong>
+                            </p>
+                            <table width="98%" border="0" cellspacing="0" cellpadding="0" style="border: 1px solid #e1e1e1; margin-left: 25px; line-height: 20px; margin: 0 auto; text-align: center;">
+                                <tr>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;"><strong>Cumulative Purchase</strong>
+                                    </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">
+                                        <strong>Member Level</strong>
+                                    </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">
+                                        <strong>VIP Discount</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">USD 200 -    USD 500
+                                    </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">Bronze(Your    Level) </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">3% </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">USD 500 -    USD 600 </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">Silver </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">4% </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">USD 600 -    USD 1000 </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">Gold </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">5% </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">USD 1000    - USD 2000 </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">Platinum </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">6% </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">USD 2000    - USD 3200 </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">Diamond </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">7% </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">USD 3200    - USD 5000 </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">Advanced    1 </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">8% </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">USD 5000    - USD 7000 </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">Advanced    2 </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">9% </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">USD 7000    - USD 14000 </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">Advanced    3 </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">10% </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">USD 14000    - USD 20000 </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">Super 1 </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">13% </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">USD 20000    - USD 50000 </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">Super 2 </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">15% </td>
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">≥USD    50000 </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">Super 3 </td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">20% </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" valign="top" style="padding: 5px; text-align: left; color: #ff6701;">
+                                        <strong>Kindly Note</strong>: the discount is only for goods value not including postage. </td>
+                                </tr>
+                            </table>
+                            <p>We also offer Single Order Discount, please go ahead to check <a href="链接到VIP等级说明页面，要等新版Help Center文章确定才能确定链接" style="color: #0066cc;">Details>> </a>.</p>
+                            <p>
+                                Best regards
+                                <br />
+                            8Seasons Team</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td height="10"></td>
+        </tr>
+        <tr>
+            <td width="670" style="text-align: center; font-size: 12px; color: #999; font-family: Verdana,Arial; font-weight: normal; padding: 10px; line-height: 20px; border: 1px solid #ccc;">&copy;2002-2015 Hangzhou Panduo Information technology Co., Ltd. China Wholesale Beads.<br />
+                All rights reserved </td>
+        </tr>
+    </table>
+    @* Todo:这里邮件主题别忘掉了 *@
+    <!--<tilte>Welcome to 8Seasons ( Beads, Jewelry Making Supplies & Crafts Wholesaler )</tilte>-->
+</body>
+</html>

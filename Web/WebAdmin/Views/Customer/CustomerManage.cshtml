@@ -1,0 +1,97 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Customer
+@{
+    ViewBag.Title = "CustomerManage";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+<div class="pull-left ajax_detail">
+    <form method="POST" action="/Customer/BindCustomerProduct" onsubmit="return false;">
+        <table>
+            <tr>
+                <td>绑定商品编号：</td>
+                <td>
+                    <input name="file" type="file" accept=".xls,.xlsx" /></td>
+                <td>
+                    <input type="submit" class="btn ajax_update" value="上传" /></td>
+                <td><a href="/ImportModelFiles/CustomerProduct/customer-products.xls">下载模版</a></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="pull-right">
+    <form method="post" action="@Url.Content("~/Customer/CustomerManageList")" id="searchForm" name="searchForm" class="form-search">
+        <table>
+            <tr>
+                <td colspan="2">搜索：</td>
+                <td colspan="6">
+                    <input type="text" onkeyup="$(this).val($(this).val().replace(/\//g,''));" placeholder="搜索" name="keyword">
+                    <br />
+                    <em style="float: right; color: #d14">(搜索的范围限于客户ID或者客户email)</em>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">客户类型：</td>
+                <td colspan="6">
+                    <select id="custype" name="custype">
+                        <option value="0">所有客户</option>
+                        <option value="1">绑定商品客户</option>
+                        <option value="2">8seasons Club会员</option>
+                        <option value="3">Wholesaler</option>
+                        <option value="4">Retailer</option>
+                        <option value="5">Jewelry DIY Fan</option>
+                        <option value="6">注册未下单客户</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">语言：</td>
+                <td colspan="2">
+                    <select id="selang" name="lang" style="width: 80px;">
+                        <option value="0">All</option>
+                        @foreach (var lang in ServiceFactory.ConfigureService.GetAllValidLanguage())
+                        {
+                            <option value="@lang.LanguageId">@lang.ChineseName</option>
+                        }
+                    </select>
+                </td>
+                <td colspan="2">来源：</td>
+                <td colspan="2">
+                    <select name="source" style="width: 80px;">
+                        <option value="0">All</option>
+                        @foreach (string str in Enum.GetNames(typeof(SourceType)))
+                        {
+                            <option value="@(Enum.Format(typeof(SourceType), Enum.Parse(typeof(SourceType), str), "d"))">@str</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <button type="submit" class="btn">查询</button>
+    </form>
+</div>
+
+<div class="clearboth"></div>
+
+<div class="ajax_detail">
+    <form method="post" id="subscribeform" name="subscribeform" class="form-horizontal" action="/Customer/Subscribe" onsubmit="return false;">
+        <input type="submit" id="btnSubscribe" value="Subscribe to Mailchimp" class="btn btn-primary ajax_update">
+        <div id="main" class="ajax-list" data-url="/Customer/CustomerManageList">
+        </div>
+        <input type="submit" id="btnSubscribe" value="Subscribe to Mailchimp" class="btn btn-primary ajax_update">
+    </form>
+</div>
+@section HtmlFooter
+{
+    <div class="modal hide fade ajax_detail" data-url="/Customer/CustomerManagerRemark">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">&times;</a>
+            <h3>编辑</h3>
+        </div>
+        <div class="modal-body ajax_info">
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:void(0)" class="btn btn-primary ajax_update">保存</a>
+            <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+        </div>
+    </div>
+}

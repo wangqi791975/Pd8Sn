@@ -1,0 +1,89 @@
+﻿#搜索同义词配置文件。如果同义词都是单词，建议直接配置Solr服务的同义词配置文件(conf\synonyms.txt)。
+#不分大小写。格式如下：watchefaces,watch face,watch faces
+artistic wire,aluminum wire,brass wire
+animal print beads,paw print
+baby charms,baby
+best friend,couple
+bezel,bezels,cabochon setting
+book marks,bookmark
+breast cancer,breast cancer awareness,breast cancer charm,breast cancer charms,breast cancer ribbon,awareness,breast cancer beads
+bracelet blank with square bezel settings,square bracelet blanks
+cable chain,cross chain
+cameo setting,cabochon setting
+catena per collana,necklace chain
+chaton,glass rhinestone beads 
+chinese knotting cord,chinese knot
+clip on charms,clip-on
+coin bezel,round setting
+crow beads,seed beads
+cuff links,cufflink
+cup cake,cake
+cupchain,rhinestone chain
+curb chain,twist chain
+delicas,delica,seed beads
+diamante,rhinestone,cubic zirconia beads
+dog paw,paw print
+dog tag,tag
+dust plug,plug
+ear wires,earring hooks,hoop earrings
+end cone,cones for beads
+eyepin,eyepins,eye pin,eye pins,eye-pin
+fimo,polymer clay
+fireline,crystal thread
+flip flop,slipper
+gemstone,gemstones,gem stones
+glass pony beads,glass seed beads
+gold filled chain,gold chain
+handmade,hand made
+headband,head band
+headpin	headpins,head pin,head pins,head-pin
+horseshoe,horse shoe
+hotfix,hot fix,acrylic rhinestone cabochons
+jump ring,jump rings,jumpring,jumprings
+keychain,key chain
+keyring,keyrings,key ring,key rings
+ladybird,ladybug
+large hole,european
+large-hole,european
+large whole beads,large hole beads
+lead free,lead-free
+leverback,lever back
+lobster claw,lobster clasp,lobster claw clasp,lobster clasp,lobster claw clasps
+love connector,love link
+made with love,love
+mood beads,smile
+multicolor,multi color,multicolour
+multistrand,multi strand,multi-strand
+murano,foil lampwork
+navy,eagle,anchor,owl,sea blue,sapphire 
+nickel and lead free,nickel free and lead free,nickel free lead free
+nickel free,nickel-free,nickelfree
+pandora,european
+paracord,braided cord
+pewter,tibetan style
+plastic beads,plastic bead,acrylic beads,acrylic bead
+pocket watch,watch
+polaris-perlen,frosted
+ring base,ring blanks,ring shanks,ring components
+seed beads,seedbeads,seed bead
+shambella beads,shamballa beads,rhinestone ball beads,polymer clay glass rhinestone round
+sideways cross charm,sideways cross
+silk thread,silk cord,silk wire
+slider charms,slide charms
+spray painted,spray-painted
+springring,spring ring,springs
+sun glasses,sunglasses
+strass,swarovski crystal
+stretch cord,elastic cord
+tea pot,tea pots,teapot,teapots
+tear drop,drop
+teardrop,teardrops,tear drop,tear drops
+teddy bear,bear
+tibetan silver,tibetan style
+tigertail,tiger tail
+tinkerbell,tinker bell
+velvet ribbon,satin ribbon
+watchface,watchefaces,watch face,watch faces
+wine charms,wine
+word charms,word
+zircon,cubic zirconia

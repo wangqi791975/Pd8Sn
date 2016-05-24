@@ -1,0 +1,22 @@
+﻿@using Resources
+@model Com.Panduo.Web.Models.Payment.OfflinePaymentInfo<Com.Panduo.Service.Payment.PayConfig.WesternUnionConfig>
+
+Order Number: # @Model.OrderNo
+@if (Model.HasCash)
+{ 
+<text>@Lang.TipGrandTotal @Model.Amount</text>
+}
+else
+{
+<text>@Lang.TipYouNeedPay @Model.Amount</text>
+}
+
+@Lang.TipOurBankAccount - 8seasons.com
+
+@Lang.TipFirstName @Model.PaymentInfo.FirstName
+@Lang.TipLastName @Model.PaymentInfo.LastName
+@Lang.TipAddress @Model.PaymentInfo.Address
+@Lang.TipZipCode @Model.PaymentInfo.ZipCode
+@Lang.TipCity @Model.PaymentInfo.City
+@Lang.TipCountry @Model.PaymentInfo.Country
+@Lang.TipTelphone @Model.PaymentInfo.Phone

@@ -1,0 +1,66 @@
+﻿@using Resources
+@model Com.Panduo.Service.Product.ProductInfo
+@{
+    var discount =Model.ProductPrice.ClubDiscount;//club discount
+}
+<div class="price_popoup">
+    <i class="top"></i><em class="top"></em>
+    <h5>
+        <a href="javascript:void(0)" class="close"></a>
+        <ins class="clublogo"></ins>
+        <p>@Lang.TipExclusivePrice</p>
+    </h5>
+    <table>
+       @if (!Model.ProductPrice.IsNullOrEmpty())
+       {
+    <tr>
+        @{
+            int qty = 1;
+        }
+        @for (int i = 0; i < Model.ProductPrice.StepPrice.Count; i++)
+            {
+                if (i == 0 && i != Model.ProductPrice.StepPrice.Count - 1)
+                {
+            <td>
+                @(Model.ProductPrice.StepPrice[i].Quantity)-@(Model.ProductPrice.StepPrice[i+1].Quantity-1)<br />
+                <del>@PageHelper.ExchangeMoneyByUsd(Model.ProductPrice.StepPrice[i].OriginalPrice)</del><br />
+                <span>@PageHelper.ExchangeMoneyByUsd(Model.ProductPrice.StepPrice[i].GetDiscountPrice(discount))</span>
+            </td>
+                 }
+                 //最后一个梯度
+                 else if (i == Model.ProductPrice.StepPrice.Count - 1)
+                { 
+                     <td>
+                       @(Model.ProductPrice.StepPrice[i].Quantity)+<br />
+                      <del>@PageHelper.ExchangeMoneyByUsd(Model.ProductPrice.StepPrice[i].OriginalPrice)</del><br />
+                      <span>@PageHelper.ExchangeMoneyByUsd(Model.ProductPrice.StepPrice[i].GetDiscountPrice(discount))</span>     
+                     </td>
+                }
+                else
+                {
+                    <td>
+                        @(Model.ProductPrice.StepPrice[i].Quantity)-@(Model.ProductPrice.StepPrice[i+1].Quantity-1)<br />
+                        <del>@PageHelper.ExchangeMoneyByUsd(Model.ProductPrice.StepPrice[i].OriginalPrice)</del><br />
+                        <span>@PageHelper.ExchangeMoneyByUsd(Model.ProductPrice.StepPrice[i].GetDiscountPrice(discount))</span>
+                    </td>
+                }
+      
+                
+                @*
+                   <td>
+                        (Model.ProductPrice.StepPrice[i].Quantity)+
+                        <br />
+                        <span class="font13">Chat</span>
+                    </td>
+                *@
+                
+                qty = Model.ProductPrice.StepPrice[i].Quantity;
+            }
+    </tr>
+}
+    </table>
+    <div class="bottom">
+        <p><span class="fred">*</span> <a rel="nofollow" href="@UrlRewriteHelper.GetClubHomeUrl()" target="_blank">@Lang.TipAboutClub</a></p>
+        <a class="btn_join" rel="nofollow" href="@UrlRewriteHelper.GetClubJoinUrl()" target="_blank">@Lang.TipJoinClub</a>
+    </div>
+</div>

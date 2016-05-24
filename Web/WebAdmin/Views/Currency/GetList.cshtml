@@ -1,0 +1,55 @@
+﻿@model IList<Com.Panduo.Service.SiteConfigure.Currency>
+@{
+    Layout = null;
+}
+
+<table class="table table-striped table-bordered">
+    <thead>
+        @if (@ViewBag.Remote <= 0)
+        {
+            <tr>
+                <th width="30%">货币名称</th>
+                <th width="30%">货币代码</th>
+                <th width="40%">当前汇率</th>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <th width="30%">货币名称</th>
+                <th width="30%">货币代码</th>
+                <th width="20%">当前汇率</th>
+                <th width="20%">新的汇率</th>
+            </tr>
+        }
+
+    </thead>
+    <tbody>
+        @foreach (var currency in @Model)
+        {
+            <tr>
+                <td>@currency.ChineseName</td>
+                <td>@currency.CurrencyCode</td>
+                <td>@currency.ExchangeRate</td>
+                @if (@ViewBag.Remote > 0)
+                {
+                    <td>
+                        @if (currency.ExchangeRateRemote != null && currency.ExchangeRate != currency.ExchangeRateRemote)
+                        {
+                            <span class="badge badge-important">@currency.ExchangeRateRemote</span>
+                        }
+                        else if (currency.ExchangeRateRemote != null)
+                        {
+                            @currency.ExchangeRateRemote
+                        }
+                        else
+                        {
+                            @Html.Raw("<s>无法获取</s>");
+                        }
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+<input type="hidden" id="currencies" value="@Model.ToJson()" />

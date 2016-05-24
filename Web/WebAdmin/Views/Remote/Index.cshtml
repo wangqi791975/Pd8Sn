@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "偏远信息";
+}
+@model IList<Com.Panduo.Service.Order.ShippingOption.Shipping>
+<div class="pull-right">
+    <!-- search bar -->
+    <div class="pull-right">
+        <form method="post" action="@Url.Content("~/Remote/GetList")" id="searchForm" name="searchForm" class="form-search">
+           考虑偏远的运输方式：<select id="shippingcode" name="shippingcode">
+                @foreach (var ship in Model)
+                {
+                    <option value="@ship.ShippingCode">@ship.ShippingName</option>
+                }
+            </select>
+          方式：<select id="DisplayId" name="DisplayId">
+               <option value="1">城市</option>
+               <option value="2">邮编</option>
+          </select>
+            <button type="submit" class="btn"><i class="icon-search"></i>提交</button>
+        </form>
+    </div>
+</div>
+<div class="clearboth"></div>
+<div id="main" class="ajax-list"></div>

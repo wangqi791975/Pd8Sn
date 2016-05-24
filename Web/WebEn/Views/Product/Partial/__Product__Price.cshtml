@@ -1,0 +1,88 @@
+﻿@model Com.Panduo.Web.Models.Product.ProductPriceVo 
+@if(!Model.IsNullOrEmpty()){
+    <tr>
+        @{
+            int qty = 1;
+            var displayNoHaggle = 0M;
+        }
+        @for (int i = 0; i < Model.ProductPrice.StepPrice.Count; i++)
+        {
+            if (i == 0 && i != Model.ProductPrice.StepPrice.Count - 1)
+            {
+                displayNoHaggle = Model.ProductPrice.StepPrice[i].GetDiscountPrice(Model.Discount);
+                <td class="noborder">
+                    @(Model.ProductPrice.StepPrice[i].Quantity)-@(Model.ProductPrice.StepPrice[i + 1].Quantity - 1)<br/>
+                    @if (Model.IsDispalyOriginalPrice)
+                    {
+                        <del>@PageHelper.ExchangeMoneyByUsd(Model.ProductPrice.StepPrice[i].OriginalPrice, PageHelper.GetCurrentCurrency())</del>
+                        <br/>
+                    }
+                    @if (Model.ProductPrice.IsNoHaggle)
+                    {
+                        <span class="font13">@PageHelper.ExchangeMoneyByUsd(displayNoHaggle, PageHelper.GetCurrentCurrency())</span>
+                    }
+                    else
+                    {
+                        <span class="font13">@PageHelper.ExchangeMoneyByUsd(Model.ProductPrice.StepPrice[i].GetDiscountPrice(Model.Discount), PageHelper.GetCurrentCurrency())</span>
+                    }
+                </td>
+            }
+
+                 //最后一个梯度
+                else if (i == Model.ProductPrice.StepPrice.Count - 1)
+                { 
+                   <td>
+                    @(Model.ProductPrice.StepPrice[i].Quantity)+<br/>
+                    @if (Model.IsDispalyOriginalPrice)
+                    {
+                        <del>@PageHelper.ExchangeMoneyByUsd(Model.ProductPrice.StepPrice[i].OriginalPrice, PageHelper.GetCurrentCurrency())</del>
+                        <br/>
+                    }
+
+                        @if (Model.ProductPrice.IsNoHaggle)
+                        {
+                            <span class="font13">@PageHelper.ExchangeMoneyByUsd(displayNoHaggle, PageHelper.GetCurrentCurrency())</span>
+                        }
+                        else
+                        {
+                            <span class="font13">@PageHelper.ExchangeMoneyByUsd(Model.ProductPrice.StepPrice[i].GetDiscountPrice(Model.Discount), PageHelper.GetCurrentCurrency())</span>
+                        }
+
+                       
+                </td>
+                }
+                else 
+                {
+                    <td>
+                        @(Model.ProductPrice.StepPrice[i].Quantity)-@(Model.ProductPrice.StepPrice[i+1].Quantity-1)<br />
+                          @if (Model.IsDispalyOriginalPrice) { 
+                        <del>@PageHelper.ExchangeMoneyByUsd(Model.ProductPrice.StepPrice[i].OriginalPrice,PageHelper.GetCurrentCurrency())</del><br />}
+
+                            @if (Model.ProductPrice.IsNoHaggle)
+                            {
+                                 <span class="font13">@PageHelper.ExchangeMoneyByUsd(displayNoHaggle, PageHelper.GetCurrentCurrency())</span>
+                            }
+
+                            else
+                            {
+                                <span class="font13">@PageHelper.ExchangeMoneyByUsd(@Model.ProductPrice.StepPrice[i].GetDiscountPrice(Model.Discount), PageHelper.GetCurrentCurrency())</span>
+                            }
+                    </td>
+                }
+                
+                
+                         @*    <td>
+                (Model.ProductPrice.StepPrice[i].Quantity)+<ins class="amount50_down">
+                    <div class="poptip poptip_w350">
+                        <i class="top"></i><em class="top"></em>
+                        Bulk wholesale price. If the inventory is not enough, it may take average 5-15 days for preparation.
+                    </div>
+                </ins>
+                <br />
+                <span class="font13">Chat</span>
+            </td>*@
+          
+                qty = Model.ProductPrice.StepPrice[i].Quantity;
+            }
+    </tr>
+}

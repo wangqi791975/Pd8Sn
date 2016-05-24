@@ -1,0 +1,17 @@
+﻿@using Resources
+@model Com.Panduo.Web.Models.Product.RecommendItemVo
+@{
+    Layout = null;
+}
+
+@if (Model.ProductInfo.Count > 0)
+{
+    <h2 class="font14">@Lang.TipAlsoBought</h2>
+    <ul>
+        @foreach (var alsoBuy in Model.ProductInfo)
+        {
+            @Html.Partial("~/Views/Product/Partial/__Product__Item__Grid__View.cshtml", alsoBuy)
+        }
+        <div class="clearfix"></div>
+    </ul>
+}

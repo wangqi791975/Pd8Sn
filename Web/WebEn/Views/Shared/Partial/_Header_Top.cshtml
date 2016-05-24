@@ -1,0 +1,80 @@
+﻿@using Com.Panduo.Common
+@using Resources
+@{
+    var currentCustomer = SessionHelper.CurrentCustomer;
+    var defalutCurrency = PageHelper.GetCurrentCurrency();
+}
+<div class="wrap">
+    <div class="site_nav_lf">
+        <ul>
+            <li class="site_nav_language">
+                <a rel="nofollow" href="javascript:void(0)">@Lang.TipLanguage<ins class="icon_arrow"></ins></a>
+                <ul class="language_on">
+                    @foreach (var language in CacheHelper.Languages)
+                    {
+                        <li><a rel="nofollow" href="@PageHelper.GetWebSizeUrlByLanguage(language)" title="@language.LanguageName">@language.LanguageName</a></li>
+                    }
+                </ul>
+            </li>
+            <li>
+                <span class="site_nav_pipe">|</span><div class="lf">@Lang.TipCurrency</div>
+                <div class="site_nav_currency lf">
+                    <a rel="nofollow" href="javascript:void(0)"><ins class="@string.Format("icon_currency_{0}", defalutCurrency.CurrencyCode.ToLower())"></ins>@defalutCurrency.CurrencyCode<ins class="icon_arrow"></ins></a>
+                    <ul class="currency_on">
+                        @foreach (var currency in CacheHelper.Currencies)
+                        {
+                            if (currency.CurrencyCode == defalutCurrency.CurrencyCode)
+                            {
+                            <li class="current"><a rel="nofollow" href="javascript:void(0)" title="@currency.CurrencyCode"><ins class="@string.Format("icon_currency_{0}", currency.CurrencyCode.ToLower())"></ins>@currency.CurrencyCode</a></li>
+                            }
+                            else
+                            { 
+                            <li><a rel="nofollow" href="javascript:void(0)" title="@currency.CurrencyCode"><ins class="@string.Format("icon_currency_{0}", currency.CurrencyCode.ToLower())"></ins>@currency.CurrencyCode</a></li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="site_nav_rt">
+        <ul>
+            <li>
+                @if (!currentCustomer.IsNullOrEmpty())//(CommonHelper.IsNullOrEmpty(ViewBag.User))//判断当期用户是否登陆
+                {
+                    <!--登录状态-->
+                    @:Hi, <strong class="forange">@currentCustomer.FullName</strong>! (<a rel="nofollow" id="head_logout" href="javascript:void(0)">@Lang.TipLogOut</a>)
+                }
+                else
+                {
+                    <!--未登录状态-->
+                    <a rel="nofollow" href="@UrlRewriteHelper.GetLoginUrl()" class="font_underline">@Lang.TipLogin</a> @:@Lang.TipOrLower <a rel="nofollow" href="@UrlRewriteHelper.GetRegisterUrl()" class="font_underline">@Lang.TipRegister</a>
+                                                                }
+            </li>
+            <li>
+                <span class="site_nav_pipe">|</span>
+                <div class="site_nav_account">
+                    <a href="@UrlRewriteHelper.GetMyAccount()">@Lang.TipMyAccount<ins class="icon_arrow"></ins></a>
+                    <ul class="account_on">
+                        <li><a rel="nofollow" href="@UrlRewriteHelper.GetMyAccountOrderSearchUrl(-1)">@Lang.TipMyOrders</a></li>
+                        <li><a rel="nofollow" href="@UrlRewriteHelper.GetMyWishList()">@Lang.TipWishlist</a></li>
+                        <li><a rel="nofollow" href="@UrlRewriteHelper.GetAccountSettingUrl()">@Lang.TipAccountSetting</a></li>
+                        <li><a rel="nofollow" href="@UrlRewriteHelper.GetAddressBookUrl()">@Lang.TipAddressBook</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <span class="site_nav_pipe">|</span>
+                <div class="site_nav_help">
+                    <a rel="nofollow" href="@UrlRewriteHelper.GetHelpCenterUrl()">@Lang.TipHelp<ins class="icon_arrow"></ins></a>
+                    <ul class="help_on">
+                        <li><a rel="nofollow" href="javascript:void(0)">@Lang.TipPaymentMethod</a></li>
+                        <li><a rel="nofollow" href="javascript:void(0)">@Lang.TipVIPolicy</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li><span class="site_nav_pipe">|</span><a rel="nofollow" href="@UrlRewriteHelper.GetShippingFeeUrl()">@Lang.TipShippingFee</a></li>
+            <li><span class="site_nav_pipe">|</span><a href="http://m.8seasons.com">@Lang.TipMobileSite</a></li>
+        </ul>
+    </div>
+</div>

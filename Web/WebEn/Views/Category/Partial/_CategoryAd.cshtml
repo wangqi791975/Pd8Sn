@@ -1,0 +1,6 @@
+﻿@model Com.Panduo.Service.Product.Category.CategoryAdvertisement
+@if (!Model.IsNullOrEmpty() && !Model.AdvertisingImage.IsNullOrEmpty())
+{
+    <a href="@(Model.Url.IsNullOrEmpty()?"javascript:void(0)":Model.Url)" class="list_banner"><img src="@ImageHelper.GetCategoryAdImageUrl(Model.AdvertisingImage)" alt="@Model.AdvertisingWords" /></a>	
+}
+

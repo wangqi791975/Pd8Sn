@@ -1,0 +1,24 @@
+﻿@{
+    Layout = null;
+}
+<form name="updateForm" action="/TopKeyword/SubjectEdit" method="post" onsubmit="return false;">
+    <input type="hidden" id="current_url" name="current_url" value="/TopKeyword/TopKeywordSubjectList" />
+    <table class="table table-striped">
+        <tr>
+            <td width="20%">ID：</td>
+            <td>
+                <input type="text" name="txtTopKeywordSubjectId" value="@ViewBag.Item.TopKeywordSubjectId" readonly="readonly" class="input-mini" /></td>
+        </tr>
+        <tr>
+            <td width="40%">语种：</td>
+            <td>
+                @Html.DropDownList("ddlLanguage")
+            </td>
+        </tr>
+        <tr>
+            <td width="40%">关键词主题名称：</td>
+            <td>
+                <input type="text" name ="txtTopKeywordSubjectName" required="required" value="@ViewBag.Item.TopKeywordSubjectName" /></td>
+        </tr>
+    </table>
+</form>

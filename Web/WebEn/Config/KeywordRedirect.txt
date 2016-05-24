@@ -1,0 +1,2 @@
+﻿#关键字跳转配置文件。不为分大小写。设置格式为:关键字=>URL,如:hello kitty=>http://www.baidu.com
+hello kitty=>http://www.8seasons.com/productsearch?keyword=beadskitty&page=1

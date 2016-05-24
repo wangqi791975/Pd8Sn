@@ -1,0 +1,130 @@
+﻿@using Com.Panduo.Web.Common
+@using Com.Panduo.Common
+@using Resources
+@model Com.Panduo.Service.Pager
+
+@if (Model != null && Model.TotalRowCount > 0)
+{
+    var style = ViewData["style"] as string;
+    <div class="ListPage page-box" style="@Html.Raw(style)">
+        @if (Model.TotalRowCount > 0)
+        { 
+            <h2 style="float: left;">
+                @Html.Raw(string.Format(Lang.TipPagerItems, Model.TotalRowCount, Model.CurrentPage, Model.PageCount))
+            </h2>
+        }
+        <ul>
+            @if (Model.PageCount > 1)
+            {
+                var currentUrl = ViewBag.PageUrl as string;
+                var previous = Model.CurrentPage <= 1 ? 1 : Model.CurrentPage - 1;
+                previous = previous < 1 ? 1 : previous;
+                var next = Model.CurrentPage >= Model.PageCount ? Model.PageCount : Model.CurrentPage + 1;
+
+                //显示的按钮页码
+                var pageButtons = new List<int>();
+
+                var startIndex = 0;
+                var endIndex = 0;
+                var pageButtonCount = 9;//最多显示数字链接个数
+                var middleOffset = 3;//单边显示个数
+                if (Model.PageCount <= pageButtonCount)
+                {
+                    //如果总页数<=要显示的页数，则全部显示
+                    startIndex = 1;
+                    endIndex = Model.PageCount;
+                }
+                else
+                {
+                    if (Model.CurrentPage < pageButtonCount)
+                    {
+                        startIndex = 1;
+                        endIndex = pageButtonCount;
+                    }
+                    else
+                    {
+                        //第一页总是显示
+                        pageButtons.Add(1);
+
+                        //显示...页码
+                        pageButtons.Add(0);
+
+                        if ((Model.CurrentPage + middleOffset) <= Model.PageCount)
+                        {
+                            startIndex = Model.CurrentPage - middleOffset;
+                            endIndex = Model.CurrentPage + middleOffset;
+                        }
+                        else
+                        {
+                            endIndex = Model.PageCount;
+                            startIndex = endIndex - middleOffset;
+                        }
+                    }
+                }
+
+                //要添加的数据
+                for (var i = startIndex; i <= endIndex; i++)
+                {
+                    pageButtons.Add(i);
+                }
+                if (Model.CurrentPage != 1)
+                {
+                <li class="BtnPage">
+                    <a title="@Lang.TipFirstPage" page-number="1" href="@PageHelper.GetUrl(1, currentUrl)">@Lang.TipFirst</a>
+                </li>
+                <li class="previous Margin-Left">
+                    <a title="@Lang.TipPrevious" page-number="@previous" href="@PageHelper.GetUrl(previous, currentUrl)">@Lang.TipPrevious</a>
+                </li>
+                }
+
+                foreach (var i in pageButtons)
+                {
+                    if (i != 0)
+                    {
+                <li @(i == Model.CurrentPage ? "class=Page-Hover" : string.Empty) >
+                    @if (i == Model.CurrentPage)
+                    { 
+                        <span>@i</span>
+                    }
+                    else
+                    {
+                        <a title="@i" page-number="@i"  href="@PageHelper.GetUrl(i, currentUrl)">@i</a> 
+                    }
+                </li>
+                    }
+                    else
+                    { 
+                <li>...</li>  
+                    }
+                }
+                if (Model.CurrentPage != Model.PageCount)
+                {
+                <li class="BtnNext Margin-Left"><a title="@Lang.TipNext" page-number="@next" href="@PageHelper.GetUrl(next, currentUrl)" >@Lang.TipNext</a></li>
+                <li class="last"><a title="@Lang.TipLast" page-number="@Model.PageCount" href="@PageHelper.GetUrl(Model.PageCount, currentUrl)">@Lang.TipLast</a></li>
+     
+                }
+            }
+        </ul>
+        <div class="Clear">
+        </div>
+    </div>  
+}
+else
+{
+    <div class="ListPage">
+        <h2 style="float: left;">
+            <strong>105 items</strong> in Bath Towels</h2>
+        <ul>
+            <li class="BtnPage"><a href="#">Page</a></li>
+            <li><a href="#">1</a></li>
+            <li>2</li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li>...</li>
+            <li><a href="#">10</a></li>
+            <li class="BtnNext"><a href="#">Next</a></li>
+        </ul>
+        <div class="Clear">
+        </div>
+    </div>
+}

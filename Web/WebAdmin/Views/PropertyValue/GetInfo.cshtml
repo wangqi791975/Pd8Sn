@@ -1,0 +1,64 @@
+﻿@using Com.Panduo.Service.Product.Property
+@using Com.Panduo.Service.SiteConfigure
+@{
+    Layout = null;
+    string languageIds = ((IList<Language>)ViewBag.languages).Select(x => x.LanguageId).Join(",");
+}
+<form onsubmit="return false;" method="post" action="/PropertyValue/Update" name="updateForm">
+    <input type="hidden" value="/PropertyValue/GetList/@ViewBag.PropertyValue.PropertyId" name="current_url" id="current_url">
+    <input type="hidden" value="@ViewBag.Id" id="id" name="id" />
+    <input type="hidden" name="language_ids" value="@languageIds" />
+    <table class="table table-striped">
+        <tbody>
+            <tr style="display: none;">
+                <td width="20%">属性值编号：</td>
+                <td><input class="input-mini" type="text" value="@ViewBag.PropertyValue.PropertyValueCode" disabled="disabled"></td>
+            </tr>
+            <tr>
+                <td width="20%">属性值名称：</td>
+                <td><input type="text" value="@ViewBag.PropertyValue.PropertyValueName" required="required" name="property_value_name"></td>
+            </tr>
+            @for (int i = 0; i < ViewBag.Languages.Count; i++)
+            {
+                var propertyValueName = string.Empty;
+                if (ViewBag.PropertyValueLanguages != null)
+                {
+                    IList<PropertyValueLanguage> propertyValueLanguages = ((IList<PropertyValueLanguage>)ViewBag.PropertyValueLanguages).Where(x => x.LanguageId == ViewBag.Languages[i].LanguageId).ToList();
+                    if (!propertyValueLanguages.IsNullOrEmpty())
+                    {
+                        propertyValueName = propertyValueLanguages[0].PropertyValueName;
+                    }
+                }
+                <tr>
+                    <td>@ViewBag.Languages[i].ChineseName：</td>
+                    <td><input type="text" value="@propertyValueName" name="property_value_name_@ViewBag.Languages[i].LanguageId" required="required" maxlength="32"></td>
+                </tr>
+            }
+            <tr>
+                <td>前台排序：</td>
+                <td><input class="input-mini" type="text" value="@ViewBag.PropertyValue.DisplayOrder" required="required" id="display_order" name="display_order" datatype="i1" maxlength="5"> &nbsp;<span class="badge badge-important" style="display: none;"></span></td>
+            </tr>
+            <tr>
+                <td>属性状态：</td>
+                <td>
+                    @if (@ViewBag.PropertyValue.IsValid)
+                    {
+                        @Html.Raw("<input type='radio' name='is_valid' value='true' checked='checked' /> 启用　　<input type='radio' name='is_valid' value='false' /> 禁用");
+                    }
+                    else
+                    {
+                        @Html.Raw("<input type='radio' name='is_valid' value='true' /> 启用　　<input type='radio' name='is_valid' value='false' checked='checked' /> 禁用");
+                    }
+                </td>
+            </tr>
+            @if (@ViewBag.PropertyValueGroup != null)
+            {
+                <tr>
+                    <td>属性值组：</td>
+                    <td>@ViewBag.PropertyValueGroup.PropertyValueGroupName</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</form>

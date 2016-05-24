@@ -1,0 +1,71 @@
+﻿@using Com.Panduo.Service
+@using Resources
+@{
+   Layout =null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>8seasons首页</title>
+    @Html.CssFor("8seasons.css", new[] {"~/Css/layout.css", "~/Css/form.css", "~/Css/public.css", "~/Css/main.css"}, fileVersion: "1.5")
+    @Html.JsFor("base.js", "~/Js/jquery-1.8.3.min.js,~/Js/jquery.form.min.js,~/Js/Base/message.js,~/Js/Base/bootstrap.js,~/Js/Base/common.js,~/Js/Base/main.js", fileVersion: "1.4")
+</head>
+
+<body>
+
+<div class="wrap sourcing">
+    <!-- 头部开始 -->
+    <div id="header">
+        <h1 class="lf"><a href="/" title="@Lang.Tip8seasons">@Lang.TipChineseJewelry</a>
+        </h1>
+        <div class="clearfix"></div>
+    </div>
+    <!-- 头部结束 -->
+    <div class="sourcing_header">
+        <h2>@Lang.TipOEMSourcingPro</h2>
+    </div>
+    <div class="success_info">
+        <h2 class="font_verdana"><ins></ins>
+            <p>@Html.Raw(Lang.TipSubmitSuccess)</p>
+        </h2>
+        <h2 class="font_verdana next_choose">
+            <p>@Html.Raw(string.Format(Lang.TipAddOtherSourcing,UrlRewriteHelper.GetProductSouringUrl()))
+            </p>
+        </h2>
+    </div>
+    <div class="recommend_window">
+        <h3 class="font20">@Lang.TipMayPerferHere</h3>
+        <div class="search_error_banner">
+                    <a href="@(ServiceFactory.ConfigureService.GetConfig("HomeUrl").Value)">
+            <img src="@ServiceFactory.ConfigureService.GetConfig("HomePath").Value" />
+        </a>
+        <a href="@(ServiceFactory.ConfigureService.GetConfig("NewArrUrl").Value)" class="banner_rt">
+            <img src="@(ServiceFactory.ConfigureService.GetConfig("NewArrPath").Value)" />
+        </a>
+        <a href="@(ServiceFactory.ConfigureService.GetConfig("BestSellUrl").Value)">
+            <img src="@(ServiceFactory.ConfigureService.GetConfig("BestSellPath").Value)" />
+        </a>
+        <a href="@(ServiceFactory.ConfigureService.GetConfig("SaleUrl").Value)" class="banner_rt">
+            <img src="@(ServiceFactory.ConfigureService.GetConfig("SalePath").Value)" />
+        </a>
+
+
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+@*底部开始*@
+<div id="foot">
+@Html.Partial("~/Views/Shared/Partial/_Footer.cshtml")
+</div>
+    @*弹窗开始*@
+    @Html.Partial("~/Views/Shared/Partial/_Popup.cshtml")
+    @*弹窗结束*@
+    @*小耳朵开始*@
+    @Html.Partial("~/Views/Shared/Partial/_ToolBar.cshtml")
+    @*小耳朵结束*@
+
+</body>
+</html>

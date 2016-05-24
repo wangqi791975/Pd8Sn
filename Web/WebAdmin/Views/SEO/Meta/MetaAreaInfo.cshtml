@@ -1,0 +1,62 @@
+﻿@using Com.Panduo.Service.SEO
+@using Com.Panduo.Service.SiteConfigure
+@model Dictionary<int, MetaArea>
+@{
+    Layout = null;
+}
+
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        @{
+            var loop = 0;
+        }
+        @foreach (Language lang in ViewBag.Languages)
+        {
+            <li class="@(loop++ == 0 ? "active" : "")"><a data-target="#tab-@lang.LanguageId" href="javascript:void(0)" data-toggle="tab">@lang.ChineseName</a></li>
+        }
+    </ul>
+    <div class="tab-content">
+        @{
+            loop = 0;
+        }
+        @foreach (Language lang in ViewBag.Languages)
+        {
+            var metaArea = Model.TryGetValue(lang.LanguageId);
+            metaArea = metaArea ?? new MetaArea();
+            <div class="ajax_detail tab-pane @(loop++ == 0 ? "active" : "")" id="tab-@lang.LanguageId">
+                <form class="form-horizontal" name="updateForm" action="@Url.Content("~/Meta/SetMetaArea")" method="post" onsubmit="return false;">
+                    <input type="hidden" name="HID_languageId" value="@lang.LanguageId"/>
+                    <input type="hidden" name="HID_areaId" value="@ViewBag.AreaId"/>
+                    <div class="control-group">
+                        <label class="control-label">页面名称：</label>
+                        <div class="controls">
+                            <input type="text" class="span8" name="FD_PageName" id="FD_PageName" value="@metaArea.PageName">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Title：</label>
+                        <div class="controls">
+                            <input type="text" class="span8" name="FD_Title" id="FD_Title" value="@metaArea.Title">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Keywords：</label>
+                        <div class="controls">
+                            <input type="text" class="span8" name="FD_Keywords" id="FD_Keywords" value="@metaArea.Keywords">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Description：</label>
+                        <div class="controls">
+                            <textarea class="span8" name="FD_Description" id="FD_Description">@metaArea.Description</textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <a class="btn btn-primary ajax_update" href="javascript:void(0)">保存修改</a>
+                        <a class="btn" href="@Url.Content("~/Meta/Index")">取消</a>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</div>

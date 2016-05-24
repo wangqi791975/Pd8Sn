@@ -1,0 +1,12 @@
+﻿@{
+    Layout = null;
+}
+<form name="updateForm" action="@Url.Content("~/ProductPriceRise/Submit")" method="post" onsubmit="return false;">
+    <input type="hidden" id="current_url" name="current_url" value="@Url.Content("~/ProductPriceRise/GetList")" />
+    <table class="table table-striped input-append">
+        <tr>
+            <td width="50%" style="text-align: center">上浮比例：</td>
+            <td width="50%"><input class="input-mini" type="text" name="rise_value" maxlength="3" datetype="i1" /><span class="add-on">%</span></td>
+        </tr>
+    </table>
+</form>

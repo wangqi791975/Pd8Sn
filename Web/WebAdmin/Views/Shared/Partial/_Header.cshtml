@@ -1,0 +1,101 @@
+﻿@using System.Collections
+@using Com.Panduo.Service
+@{
+    var currentController = ViewContext.RouteData.Values["controller"].ToString().ToLower();
+    var currentAction = ViewContext.RouteData.Values["action"].ToString().ToLower();
+
+
+    var menus = ServiceFactory.AdminUserService.GetAllAdminMenus();
+    var topMenus = new List<Dictionary<string, object>>();
+    foreach (var menu in menus)
+    {
+        topMenus.Add(new Dictionary<string, object> { { "name", "divider-vertical" } });
+        var obj = new Dictionary<string, object>();
+        obj.Add("name", menu.Name);
+        if (menu.AdminModules.Count > 0)
+        {
+            var modules = new List<Dictionary<string, object>>();
+            foreach (var module in menu.AdminModules)
+            {
+                if (SessionHelper.CurrentAdminUserModules.Select(m => m.ModuleCode).Contains(module.ModuleCode))
+                {
+                    modules.Add(new Dictionary<string, object> { { "name", module.Name }, { "controller", module.Controller }, { "action", module.Action } });
+                }
+            }
+            obj.Add("drops", modules);
+        }
+        topMenus.Add(obj);
+    }
+}
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="/">8Seasons Admin</a>
+            <div class="nav-collapse">
+                <ul class="nav">
+                    @foreach (Dictionary<string, Object> topMenu in topMenus)
+                    {
+                        if (topMenu.TryGetValue("name").ToString() == "divider-vertical")
+                        {
+                        <li class="divider-vertical"></li>
+                        }
+                        else if (!topMenu.TryGetValue("controller").IsNullOrEmpty())
+                        {
+                            var active = "";
+                            if (currentController == topMenu.TryGetValue("controller").ToString().ToLower() && currentAction == topMenu.TryGetValue("action").ToString().ToLower())
+                            {
+                                active = "class=\"active\"";
+                            }
+                        <li @active><a href="@Url.Content("~/" + topMenu.TryGetValue("controller") + "/" + topMenu.TryGetValue("action"))">@topMenu.TryGetValue("name").ToString()</a></li>
+                        }
+                        else if (!topMenu.TryGetValue("drops").IsNullOrEmpty())
+                        {
+                            var active = "";
+                            var dropStr = "";
+                            foreach (Dictionary<string, Object> drop in (IEnumerable)topMenu.TryGetValue("drops"))
+                            {
+                                var activeLi = "";
+                                if (!drop.TryGetValue("controller").IsNullOrEmpty())
+                                {
+                                    if (currentController == drop.TryGetValue("controller").ToString().ToLower())
+                                    {
+                                        active = "active";
+                                        if (currentAction == drop.TryGetValue("action").ToString().ToLower())
+                                        {
+                                            activeLi = "class=\"active\"";
+                                        }
+                                    }
+                                    dropStr += "<li " + activeLi + "><a href=" + Url.Content("~/" + drop.TryGetValue("controller") + "/" + drop.TryGetValue("action")) + ">" + drop.TryGetValue("name") + "</a></li>";
+                                }
+                                else
+                                {
+                                    dropStr += "<li><a href=\"javascript:void(0)\">" + drop.TryGetValue("name") + "</a></li>";
+                                }
+                            }
+                        <li class="dropdown @active">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">@topMenu.TryGetValue("name").ToString()<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                @Html.Raw(dropStr)
+                            </ul>
+                        </li>
+                        }
+                        else
+                        {
+                        <li>@topMenu.TryGetValue("name").ToString()</li>
+                        }
+                    }
+                </ul>
+                <ul class="nav pull-right">
+                    <li><a href="/Home/Index">首页</a></li>
+                    <li><a href="/AdminUser/ModifyPassword">修改密码</a></li>
+                    <li><a href="/AdminUser/LogOut">退出</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,226 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Product.Category
+@{
+    Layout = null;
+    var language = ServiceFactory.ConfigureService.GetAllValidLanguage();
+}
+
+<form name="updateForm" id="updateForm" action="@Url.Content("~/Category/GetPopularSearch")" method="post" onsubmit="return false;">
+    <div id="tab_attribute_price" class="tab-pane">
+        <div class="tab-content" style="padding-top: 10px;">
+            <ul class="nav nav-tabs">
+                @for (int i = 0; i < language.Count; i++)
+                {
+                    var classActive = " class=";
+                    if (i == 0)
+                    {
+                        classActive = " class=active";
+                    }
+                    <li @classActive><a data-toggle="tab" href="javascript:void(0)" data-target="#tab_marketing_@language[i].LanguageId">@language[i].ChineseName</a></li>
+                }
+            </ul>
+            @for (int i = 0; i < language.Count; i++)
+            {
+                List<CategoryKeyword> categoryKeywords = ServiceFactory.CategoryService.GetCategoryKeywords(ViewBag.CategoryId, @language[i].LanguageId);
+                var classActive = " class='tab-pane controls'";
+                if (i == 0)
+                {
+                    classActive = " class='tab-pane active controls'";
+                }
+                <div id="tab_marketing_@language[i].LanguageId" @Html.Raw(classActive)>
+                    <table class="table" id="profitTable_@language[i].LanguageId" style="width: 99%; margin-bottom: 0px;">
+                        <thead>
+                            <tr>
+                                <th style="width: 10%">关键词</th>
+                                <th style="width: 25%">链接</th>
+                                <th style="width: 10%">排序</th>
+                                <th style="width: 7%"></th>
+                                <th style="">提示</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (!categoryKeywords.IsNullOrEmpty())
+                            {
+                                foreach (var keyword in categoryKeywords)
+                                {
+                                <tr>
+                                    <td>
+                                        <input type="text" class="input-mini profit_min" name="keyword" value="@keyword.Keyword"></td>
+                                    <td>
+                                        <input type="text" class="input-xlarge profit_max" name="url" value="@keyword.Url" ></td>
+                                    <td>
+                                        <input type="text" class="input-mini" name="diplayorder" value="@keyword.DiplayOrder"></td>
+                                    <td>
+                                        <a href="javascript:void(0);" onclick=" deleteKeywordTr(this, @keyword.Id) ">删除</a>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>
+                                        <input type="text" class="input-mini profit_min" name="keyword" value=""></td>
+                                    <td>
+                                        <input type="text" class="input-xlarge profit_max" name="url" value=""></td>
+                                    <td>
+                                        <input type="text" class="input-mini" name="diplayorder" value="10"></td>
+                                    <td>
+                                        <a href="javascript:void(0);" onclick="deleteKeywordTr(this,0)">删除</a>
+                                    </td>
+                                    <td></td>
+                                </tr>                                
+                                <tr>
+                                    <td>
+                                        <input type="text" class="input-mini profit_min" name="keyword" value=""></td>
+                                    <td>
+                                        <input type="text" class="input-xlarge profit_max" name="url" value=""></td>
+                                    <td>
+                                        <input type="text" class="input-mini" name="diplayorder" value="20"></td>
+                                    <td>
+                                        <a href="javascript:void(0);" onclick="deleteKeywordTr(this,0)">删除</a>
+                                    </td>
+                                    <td></td>
+                                </tr>                                
+                                <tr>
+                                    <td>
+                                        <input type="text" class="input-mini profit_min" name="keyword" value=""></td>
+                                    <td>
+                                        <input type="text" class="input-xlarge profit_max" name="url" value=""></td>
+                                    <td>
+                                        <input type="text" class="input-mini" name="diplayorder" value="30"></td>
+                                    <td>
+                                        <a href="javascript:void(0);" onclick="deleteKeywordTr(this,0)">删除</a>
+                                    </td>
+                                    <td></td>
+                                </tr>                                
+                                <tr>
+                                    <td>
+                                        <input type="text" class="input-mini profit_min" name="keyword" value=""></td>
+                                    <td>
+                                        <input type="text" class="input-xlarge profit_max" name="url" value=""></td>
+                                    <td>
+                                        <input type="text" class="input-mini" name="diplayorder" value="40"></td>
+                                    <td>
+                                        <a href="javascript:void(0);" onclick="deleteKeywordTr(this,0)">删除</a>
+                                    </td>
+                                    <td></td>
+                                </tr>                                
+                                <tr>
+                                    <td>
+                                        <input type="text" class="input-mini profit_min" name="keyword" value=""></td>
+                                    <td>
+                                        <input type="text" class="input-xlarge profit_max" name="url" value=""></td>
+                                    <td>
+                                        <input type="text" class="input-mini" name="diplayorder" value="50"></td>
+                                    <td>
+                                        <a href="javascript:void(0);" onclick="deleteKeywordTr(this,0)">删除</a>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <a href="javascript:void(0);" onclick="addkeywordTr('profitTable_@language[i].LanguageId');">新增关键词</a>
+                    <a href="javascript:void(0)" onclick="updatekeyword('@language[i].LanguageId','profitTable_@language[i].LanguageId')" class="btn btn-primary ajax_update">保存修改</a>
+                </div>
+            }
+            <table style="display: none;">
+                <tr class="copytr">
+                    <td>
+                        <input type="text" class="input-mini profit_min" name="keyword" value=""></td>
+                    <td>
+                        <input type="text" class="input-xlarge profit_max" name="url" value=""></td>
+                    <td>
+                        <input type="text" class="input-mini" name="diplayorder" number="integer" value="60"></td>
+                    <td>
+                        <a href="javascript:void(0);" onclick=" deleteKeywordTr(this, 0) ">删除</a>
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</form>
+
+<script>
+    // 添加关键词
+    function addkeywordTr(id) {
+        var count = $("#" + id + " tbody tr").length;
+        $('.copytr').find("[name = 'diplayorder']").val((count + 1) * 10);
+        var tr = $('.copytr').first().clone(true);
+        $(tr).removeClass();
+        $('#' + id + ' tbody').append(tr);
+    }
+    // 删除关键词
+    function deleteKeywordTr(obj, keywordId) {
+        if (keywordId == 0) {
+            obj.parentElement.parentElement.remove();
+        }
+        else {
+            if (confirm("是否确定删除？")) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Category/DeleteKeyword",
+                    data: { "keywordId": keywordId },
+                    success: function (result) {
+                        if (result) {
+                            obj.parentElement.parentElement.remove();
+                        }
+                        else {
+                            alert("failure!");
+                        }
+                    }
+                });
+            }
+        }
+    }
+    //更新关键词
+    function updatekeyword(langId, id) {
+        var keywordobjs = '';
+        var haserror;
+        $("#" + id + " tbody tr").each(function () {
+            var val = $(this).find("td:eq(0)").find("input").val();
+            var url = $(this).find("td:eq(1)").find("input").val();
+            var ord = $(this).find("td:eq(2)").find("input").val();
+            if (val.length > 100) {
+                $(this).find("td:eq(4)").html("<lable>关键字最多输入100个字符！</lable>");
+                haserror = true;
+                return false;
+            }
+            if (url.length > 256) {
+                $(this).find("td:eq(4)").html("<lable>链接最多输入256个字符！</lable>");
+                haserror = true;
+                return false;
+            }
+            if ((val == "" && url) != "" || (val != "" && url == "")) {
+                $(this).find("td:eq(4)").html("<lable>请输入对应的关键词/链接！</lable>");
+                haserror = true;
+                return false;
+            }
+            if (val == "" && url == "" && ord == "") {
+                return true;
+            }
+            var keywordobj = '{"Keyword":"' + $(this).find("td:eq(0)").find("input").val() + '","Url":"' + $(this).find("td:eq(1)").find("input").val() + '","DiplayOrder":"' + $(this).find("td:eq(2)").find("input").val() + '"}';
+            keywordobjs = keywordobjs + keywordobj + "{,}";
+        });
+        if (haserror)
+            return false;
+        keywordobjs = keywordobjs.substr(0, keywordobjs.length - 3);
+
+        $.ajax({
+            type: "POST",
+            url: "/Category/UpdateKeyword",
+            data: { "langId": langId, "categoryId": "@ViewBag.CategoryId", "keywordobjs": keywordobjs },
+            success: function (result) {
+                alert("success!");
+            }
+        });
+    }
+
+    //  移除modal内数据，才可重新加载
+    $("#pupularkeyword").on("hidden", function () {
+        $(this).removeData("modal");
+    });
+</script>

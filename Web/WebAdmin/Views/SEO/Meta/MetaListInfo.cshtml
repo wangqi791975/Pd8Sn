@@ -1,0 +1,127 @@
+﻿@using Com.Panduo.Service.SEO
+@using Com.Panduo.Service.Product.Category
+@using Com.Panduo.Service.SiteConfigure
+@model List<MetaList>
+@{
+    Layout = null;
+    var metaListFirst = Model.IsNullOrEmpty() ? new MetaList() : Model.First();
+    metaListFirst = metaListFirst ?? new MetaList();
+}
+
+<div class="ajax_detail">
+    <form class="form-horizontal" name="updateForm" action="@Url.Content("~/Meta/SetMetaList")" method="post" onsubmit=" return false; ">
+        <input type="hidden" name="HID_languageId" value="@ViewBag.LanguageId"/>
+        <input type="hidden" name="HID_categoryId" value="@ViewBag.CategoryId"/>
+        <div class="control-group">
+            <label class="control-label">当前类别路径：</label>
+            <div class="controls">
+                @{
+                    List<CategoryLanguage> currentCategory = ViewBag.currentCategory;
+                    List<string> cl = new List<string>();
+                }
+                @foreach (var cc in currentCategory)
+                {
+                    cl.Add(cc.CategoryEnglishName);
+                }
+                @Html.Raw(string.Join(" > ", cl))
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">类别名称：</label>
+            <div class="controls">
+                @Html.Raw(currentCategory.Last().CategoryEnglishName)
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">类别别名：</label>
+            <div class="controls">
+                <input type="text" class="span8" name="FD_Alias" id="FD_Alias" value="@metaListFirst.Alias">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">面包屑Title：</label>
+            <div class="controls">
+                <input type="text" class="span8" name="FD_Breadcrumb" id="FD_Breadcrumb" value="@metaListFirst.Breadcrumb">
+            </div>
+        </div>
+
+        <div class="tabbable">
+            <ul class="nav nav-tabs">
+                @{
+                    var loop = 0;
+                    var metaListTypes = new Dictionary<MetaListPageType, string>
+                    {
+                        {MetaListPageType.Home, "Home 区"},
+                        {MetaListPageType.New, "New Arrivals区"},
+                        {MetaListPageType.Mix, "混合区"},
+                        {MetaListPageType.Promotion, "促销区"},
+                        {MetaListPageType.Area, "商品专区"},
+                        {MetaListPageType.Search, "全站搜索区"}
+                    };
+                }
+                @foreach (var metaListType in metaListTypes)
+                {
+                    <li class="@(loop++ == 0 ? "active" : "")"><a data-target="#tab-@metaListType.Key" href="javascript:void(0)" data-toggle="tab">@metaListType.Value</a></li>
+                }
+            </ul>
+            <div class="tab-content">
+                @{
+                    loop = 0;
+                }
+                @foreach (var metaListType in metaListTypes)
+                {
+                    var v = metaListType.Value;
+                    var k = metaListType.Key;
+                    var metaList = Model.IsNullOrEmpty() ? new MetaList() : Model.Where(x => x.PageType == k).ToList().FirstOrDefault();
+                    metaList = metaList ?? new MetaList();
+                    <div class="tab-pane @(loop++ == 0 ? "active" : "")" id="tab-@metaListType.Key">
+                        <input type="hidden" name="HID_metaListType" value="@k"/>
+                        <h4>筛选属性的情况：</h4>
+                        <div class="control-group">
+                            <label class="control-label">Title：</label>
+                            <div class="controls">
+                                <input type="text" class="span8" name="FD_TitlePro_@k" id="FD_TitlePro_@k" value="@metaList.TitlePro">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Keywords：</label>
+                            <div class="controls">
+                                <input type="text" class="span8" name="FD_KeywordsPro_@k" id="FD_KeywordsPro_@k" value="@metaList.KeywordsPro">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Description：</label>
+                            <div class="controls">
+                                <textarea class="span8" name="FD_DescriptionPro_@k" id="FD_DescriptionPro_@k">@metaList.DescriptionPro</textarea>
+                            </div>
+                        </div>
+                        <hr />
+                        <h4>不筛选属性的情况：</h4>
+                        <div class="control-group">
+                            <label class="control-label">Title：</label>
+                            <div class="controls">
+                                <input type="text" class="span8" name="FD_Title_@k" id="FD_Title_@k" value="@metaList.Title">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Keywords：</label>
+                            <div class="controls">
+                                <input type="text" class="span8" name="FD_Keywords_@k" id="FD_Keywords_@k" value="@metaList.Keywords">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Description：</label>
+                            <div class="controls">
+                                <textarea class="span8" name="FD_Description_@k" id="FD_Description_@k">@metaList.Description</textarea>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="form-actions">
+            <a class="btn btn-primary ajax_update" href="javascript:void(0)">保存修改</a>
+            <a class="btn" href="@Url.Content("~/Meta/Index")">取消</a>
+        </div>
+    </form>
+</div>

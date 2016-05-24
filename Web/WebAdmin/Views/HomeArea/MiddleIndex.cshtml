@@ -1,0 +1,26 @@
+﻿@using Com.Panduo.Service.Marketing.Banner
+@{
+    ViewBag.Title = "首页中间区域静态化设置";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@section HtmlHead
+{
+    <script type="text/javascript">
+        $(function() {
+            if ($("select[name=type]").val() > 0) {
+                $("select[name=type]").next().click();
+            }
+        });
+    </script>
+}
+<form id="searchForm" class="form-search" method="post" action="/HomeArea/MiddleIndex" name="searchForm">
+    区域：
+    <input type="hidden" name="areaId" value="@ViewBag.HidAreaId" />
+    <select name="type" onchange="$(this).next().click();">
+        <option value="">请选择...</option>
+        <option value="@((int)HomeAreaType.RightCategory)" @(ViewBag.HidType ==(int)HomeAreaType.RightCategory ? "selected=\"selected\"" : "")>Part 1 – 类别展示右侧</option>
+        <option value="@((int)HomeAreaType.BelowCategory)" @(ViewBag.HidType == (int)HomeAreaType.BelowCategory ? "selected=\"selected\"" : "")>Part 2 – 类别展示下方</option>
+    </select>
+    <button class="btn hide" type="submit">搜索</button>
+</form>
+<div class="ajax-list"></div>

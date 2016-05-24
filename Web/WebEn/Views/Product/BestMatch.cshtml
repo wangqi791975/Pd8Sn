@@ -1,0 +1,33 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Product.Category
+@using Resources
+@model Com.Panduo.Web.Models.Product.SimilarItemVo
+@{
+    ViewBag.Title = "BestMatched";
+    Layout = "~/Views/Shared/Layout/_Layout_NoLeft.cshtml";
+}
+@section HtmlHead
+{
+    @Html.JsFor("scrollloading.js", "~/Js/jquery.scrollLoading.min.js,~/Js/Product/Index.js", fileVersion: "1.5")
+}
+@*左侧开始*@
+<div id="sidebar">
+    @Html.Partial("~/Views/Product/Partial/_Product_BestMatched_Item.cshtml", @Model.ProductInfo)
+    <div class="sidebar_wrap">
+        <div class="sidebar_title font14 fgreen">@Lang.TipRefineBy</div>
+        <div class="categories_refineby">
+            @Html.Partial("~/Views/Shared/Partial/_LeftMenu_RefineBy.cshtml")
+        </div>
+    </div>
+</div>
+@* 左侧结束*@
+<div id="main">
+    @* 已选择的属性筛选开始 *@
+    @Html.Partial("~/Views/Product/Partial/_Product_Refine_By.cshtml")
+    @*已选择的属性筛选结束 *@
+
+    @Html.Partial("~/Views/Product/Partial/_Product_List_BestMatch.cshtml", @Model.SimilarProductInfo)
+
+    @Html.Partial("~/Views/Category/Partial/_CategoryDescription.cshtml", @Model.CategoryLanguage ?? new CategoryLanguage())
+</div>
+<div class="clearfix"></div>

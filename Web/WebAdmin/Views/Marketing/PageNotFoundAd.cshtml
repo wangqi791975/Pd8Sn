@@ -1,0 +1,83 @@
+﻿@using Com.Panduo.Service
+@{
+    ViewBag.Title = "系统页面营销推荐";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+    var language = ServiceFactory.ConfigureService.GetAllValidLanguage();
+}
+@using (Html.BeginForm("PageNotFoundAd", "Marketing", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div>
+        <table>
+            <tr>
+                <td>首页</td>
+                <td>
+                    <input id="homeurl" name="HomeUrl" value="@(ViewBag.HomeUrl ?? "")" /></td>
+                <td>新品</td>
+                <td>
+                    <input id="newarrurl" name="NewArrUrl" value="@(ViewBag.NewArrUrl ?? "")" /></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <img src="@(ViewBag.HomePath ?? "")" />
+                </td>
+                <td colspan="2">
+                    <img src="@(ViewBag.NewArrPath ?? "")" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input id="home" name="Home" type="file" /></td>
+                <td colspan="2">
+                    <input id="newarr" name="NewArr" type="file" /></td>
+            </tr>
+            <tr>
+                <td id="homemsg"></td>
+                <td id="newarrmsg"></td>
+            </tr>
+            <tr>
+                <td>热销品</td>
+                <td>
+                    <input id="bestsellurl" name="BestSellUrl" value="@(ViewBag.BestSellUrl ?? "")" /></td>
+                <td>清仓&促销</td>
+                <td>
+                    <input id="saleurl" name="SaleUrl" value="@(ViewBag.SaleUrl ?? "")" /></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <img src="@(ViewBag.BestSellPath ?? "")" />
+                </td>
+                <td colspan="2">
+                    <img src="@(ViewBag.SalePath ?? "")" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input id="bestsell" name="BestSell" type="file" /></td>
+                <td colspan="2">
+                    <input id="sale" name="Sale" type="file" /></td>
+            </tr>
+            <tr>
+                <td id="bestsellmsg"></td>
+                <td id="salemsg"></td>
+            </tr>
+        </table>
+        <input type="submit" onclick="sub()" />
+    </div>
+}
+<script>
+    function sub() {
+        if ($.trim($("#homeurl").val()) == "" || $.trim($("#home").val()) == "") {
+            $("#homemsg").html("首页链接/首页图片不能为空");
+        }
+        if ($.trim($("#newarrurl").val()) == "" || $.trim($("#newarr").val()) == "") {
+            $("#newarrmsg").html("新品链接/新品图片不能为空");
+        }
+        if ($.trim($("#bestsellurl").val()) == "" || $.trim($("#bestsell").val()) == "") {
+            $("#bestsellmsg").html("热销品链接/热销品图片不能为空");
+        }
+        if ($.trim($("#saleurl").val()) == "" || $.trim($("#sale").val()) == "") {
+            $("#salemsg").html("清仓&促销链接/清仓&促销图片不能为空");
+        }
+        return false;
+    }
+</script>

@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "发送邮件";
+}
+@section HtmlHead
+{
+    <script type="text/javascript">
+        // cancel还原
+        $(function() {
+            $('body').on("click", "#btncancel", function() {
+                $("#mailfrom").val($("#mailfrom").data("info"));
+                $("#mailto").val($("#mailto").data("info"));
+                $("#mailtitle").val($("#mailtitle").data("info"));
+                $("#mailcontent").val($("#mailcontent").data("info"));
+            });
+        });
+    </script>
+}
+<form id="searchForm" class="form-search" method="post" action="/ShoppingCart/SendMailContent" name="searchForm">
+    语言：<select id="languageid" name="languageid">
+        <option value="-1">请选择</option>
+        @foreach (var lang in ViewBag.Language)
+        {
+            <option value="@lang.LanguageId">@lang.ChineseName</option>
+        }
+    </select>
+    <input type="hidden" name="CustomerEmail" id="CustomerEmail" value="@ViewBag.CustomerEmail"/>
+    <button type="submit" class="btn"><i class="icon-search"></i>确定</button>
+</form>
+<div class="ajax-list"></div>

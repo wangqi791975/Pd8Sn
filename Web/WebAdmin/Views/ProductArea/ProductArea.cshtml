@@ -1,0 +1,18 @@
+﻿@using Com.Panduo.Service.Marketing
+@{
+    ViewBag.Title = "商品专区设置";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<div class="pull-right">
+    <form method="post" action="@Url.Content("~/ProductArea/ProductAreaList")" id="searchForm" name="searchForm" class="form-search">
+        商品专区名称：<input type="text" onkeyup=" $(this).val($(this).val().replace(/\//g, '')); " placeholder="商品专区名称" name="keyword" />
+        <button class="btn" type="submit">搜索</button>@*<code>说明：时间为北京时间</code>*@
+    </form>
+</div>
+<a class="btn" href="@Url.Content("~/ProductArea/ProductAreaEdit/0")"><i class="icon-plus"></i>新建商品专区</a>
+<a class="btn" href="/ProductArea/ProductAreaURL"><i class="icon-plus"></i>生成URL</a>
+
+<div class="clearboth"></div>
+
+<div id="main" class="ajax-list" data-url="@Url.Content("~/ProductArea/ProductAreaList")"></div>

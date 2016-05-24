@@ -1,0 +1,162 @@
+﻿@{
+    ViewBag.Title = "ClubCustomerDetail";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+    var paypalInfo = ViewBag.ClubPaymengInfo as PaypalInfo;
+}
+@section HtmlHead
+{
+    @Html.JsFor("customer.js", "~/Js/Customer/Customer.js", "1.4")
+}
+@using Com.Panduo.Service.Customer
+@using Com.Panduo.Service.Payment.PayInfo
+@model ClubCustomerView
+<form class="form-horizontal">
+    <div class="well tab-content locationopt">
+        <div id="tab_base_info">
+            <h4>当前会员基本信息：</h4>
+            <div class="control-group">
+                <label class="control-label">会员ID：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @Model.ClubId
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">客户ID：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @Model.CustomerId
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">邮箱：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @Model.CustomerEmail
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">会员年费：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @decimal.Round(Model.Fee,2)
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">会员状态：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @((int)Model.ClubStatus)
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">客服经理：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @Model.ManagerName
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">状态：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @Model.PaymentStatus
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">当前vip等级：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @Model.CustomerLevel
+                </div>
+            </div>
+            <hr />
+            <div class="control-group">
+                <h4 style="float: left">当前Club会员付款详情：</h4>
+            </div>
+            <div class="control-group">
+                <label class="control-label">First Name：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @paypalInfo.FirstName
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Last Name：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @paypalInfo.LastName
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">payer Email：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @paypalInfo.PayerEmail
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">payer ID：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @paypalInfo.PayerId
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">payer status：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @paypalInfo.PayerStatus
+                </div>
+            </div>
+            <hr />
+
+            <div class="control-group">
+                <label class="control-label">payed amount：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @paypalInfo.PaymentFee
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">currency：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @paypalInfo.McCurrency
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">payment date：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @paypalInfo.PaymentDate
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">payment type：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @paypalInfo.PaymentType
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">payment status：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @paypalInfo.PaymentStatus
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">paypal token：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @paypalInfo.Token
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">transaction ID：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @paypalInfo.TxnId
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">transaction type：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @paypalInfo.TxnType
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">invoice：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @paypalInfo.Descritpion
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well form-actions">
+        <span>
+            <a class="btn" href="/Club/ClubCustomer/page=@(ViewBag.Page)">返回</a>
+        </span>
+    </div>
+</form>

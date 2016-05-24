@@ -1,0 +1,89 @@
+﻿@using Com.Panduo.Common
+@using Com.Panduo.Service
+@{
+    Layout = null;
+    bool isLeafCategory = false;
+    string marketingOperation = string.Empty;
+}
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th width="10%">类别ID</th>
+                <th width="25%">类别英文名称</th>
+                <th width="20%">类别图片</th>
+                <th width="15%">类别状态</th>
+                <th width="10%">前台排序</th>
+                <th width="20%">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ViewBag.Breadcrumbs != null && ViewBag.Breadcrumbs.Count > 1)
+            {
+                <tr>
+                    <td colspan="7" class="ajax-pagination">
+                        @foreach (var breadcrumb in ViewBag.Breadcrumbs)
+                        {
+                            if (breadcrumb.Value != "")
+                            {
+                                @Html.Raw("<a href=" + breadcrumb.Value + ">" + breadcrumb.Key + "</a> >> ");
+                            }
+                            else
+                            {
+                                @Html.Raw(breadcrumb.Key);
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+
+            @foreach (var category in ViewBag.Categories)
+            {
+                <tr>
+                    <td>@category.CategoryId</td>
+                    <td class="ajax-pagination">
+                        @{
+                            isLeafCategory = ServiceFactory.CategoryService.IsLeafCategory(category.CategoryId);
+                            if (!isLeafCategory)
+                            {
+                                if (ViewBag.Id == null)
+                                {
+                                    @Html.Raw("<a href=" + Url.Content("~/Category/GetList/" + category.CategoryId) + "><i class='icon-folder-open'></i> " + category.CategoryName + "</a>");
+                                }
+                                else
+                                {
+                                    @Html.Raw("<a href=" + Url.Content("~/Category/GetList/" + ViewBag.Id + "_" + category.CategoryId) + "><i class='icon-folder-open'></i> " + category.CategoryName + "</a>");
+                                }
+                                marketingOperation = string.Empty;
+                            }
+                            else
+                            {
+                                @Html.Raw("<i class='icon-leaf'></i> " + category.CategoryName);
+                                                                                               marketingOperation = "<a class='btn btn-mini btn-info btn-info-view' data-target='#pupularkeyword' data-toggle='modal' href='javascript:void(0)' data-remote='/Category/GetPopularSearch/" + category.CategoryId + "' <i class='icon-edit icon-white'></i> popular search关键词</a>";
+                                
+                            }
+                        }
+
+                    </td>
+
+                    <td><img src="@ImageHelper.GetCategoryImageUrl(category.CategoryImage)" height="50" /></td>
+                    <td>
+                        @if (category.IsDisplay == true)
+                        {
+                            @Html.Raw("<button class='btn btn-mini btn-success'>开启</button>");
+                        }
+                        else
+                        {
+                            @Html.Raw("<button class='btn btn-mini btn-danger'>关闭</button>");
+                        }
+                    </td>
+                    <td>@category.DiplayOrder</td>
+                    <td>
+                        <a style="display: none;" class="btn btn-mini btn-info btn-info-view" id="data-@category.CategoryId" data-id="@category.CategoryId" data-loading-text="<i class='icon-remove icon-white'></i> 加载......"><i class="icon-remove icon-white"></i> 快速编辑</a>
+                        <a class="btn btn-mini btn-primary" href="@Url.Content("~/Category/Edit/" + category.CategoryId)">编辑</a>
+                        @Html.Raw(marketingOperation)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

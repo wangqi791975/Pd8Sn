@@ -1,0 +1,125 @@
+﻿@{
+    ViewBag.Title = "Help Center管理";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<style type="text/css">
+    .nav-tabs > .active > a, .nav-tabs > .active > a:hover
+    {
+        color: #555;
+        cursor: default;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-bottom-color: transparent;
+        background-color: #f5f5f5;
+    }
+</style>
+
+<div class="pull-right">
+    <form method="post" action="@Url.Content("~/HelpCenter/ArticleList")" id="searchForm" name="searchForm" class="form-search">
+        关键词：<input type="text" onkeyup="$(this).val($(this).val().replace(/\//g, ''));" placeholder="关键词" name="keyword" />
+        <button class="btn" type="submit">搜索</button>
+    </form>
+</div>
+<a class="btn" href="javascript:void(0)" data-toggle="modal" data-target=".ajax_show_add" data-backdrop="true"><i class="icon-edit"></i>新建文章</a>
+<div class="clearboth"></div>
+<h3>主题&gt;文章</h3>
+<div id="main" class="ajax-list" data-url="@Url.Content("~/HelpCenter/ArticleList")"></div>
+<a class="btn" href="javascript:void(0)" data-toggle="modal" data-target=".ajax_show_add" data-backdrop="true"><i class="icon-edit"></i>新建文章</a>
+
+<!-- detail -->
+<div class="modal hide fade ajax_detail" data-url="@Url.Content("~/HelpCenter/ArticleEdit")" style="width: 780px">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>编辑文章</h3>
+    </div>
+    <div class="modal-body ajax_info">
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn btn-primary ajax_update">保存</a>
+        <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+    </div>
+</div>
+
+<!-- detail -->
+<div class="modal hide fade ajax_show_add" style="width: 780px">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>添加文章</h3>
+    </div>
+    <div class="modal-body ajax_info">
+        <form name="updateForm" action="/HelpCenter/ArticleSave" method="post" onsubmit="return false;">
+            <div class="control-group">
+                <div class="controls" style="margin: -15px; padding: 14px 15px 15px; background-color: #f5f5f5; border-bottom: 1px solid #ddd;">
+                    标题(中文)：<input type="text" class="input-xlarge" name="txtArticleTitle" id="txtArticleTitle" value="" style="width: 500px" />(仅用于后台显示)
+                        <input type="hidden" name="hidArticleId" value="" />
+                </div>
+                <div class="controls" style="margin-top: 15px;">
+                    <div class="tab-content">
+                        <ul class="nav nav-tabs">
+                            @for (var i = 0; i < ViewBag.AllLanguage.Count; i++)
+                            {
+                                var className = "";
+                                if (i == 0)
+                                {
+                                    className = "class=active";
+                                }
+                                <li @className><a data-toggle="tab" href="javascript:void(0)" data-target="#tab_language_@ViewBag.AllLanguage[i].LanguageId">@ViewBag.AllLanguage[i].ChineseName</a></li>
+                            }
+                        </ul>
+
+                        @for (var i = 0; i < ViewBag.AllLanguage.Count; i++)
+                        {
+                            var item = ViewBag.AllLanguage[i];
+                            var className = "tab-pane";
+                            if (i == 0)
+                            {
+                                className = "tab-pane active";
+                            }
+                            <div class="@className" id="tab_language_@item.LanguageId">
+
+                                <div class="control-group">
+                                    <label class="control-label">标题：</label>
+                                    <div class="controls">
+                                        <input name="txtArticleName_@item.LanguageId" class="input-xlarge" type="text" value="" style="width: 600px" />
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label">内容：</label>
+                                    <div class="controls">
+                                        <textarea name="txtArticleContent_@item.LanguageId" rows="8" id="txtArticleContent_@item.LanguageId" style="width:700px;"></textarea>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        显示在上一级：<label class="radio inline">
+                                            <input name="IsShowParent_@item.LanguageId" type="radio" checked="checked" />是
+                                        </label>
+                                        <label class="radio inline">
+                                            <input name="IsShowParent_@item.LanguageId" type="radio" />否
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        状态：<label class="radio inline">
+                                            <input name="IsShow_@item.LanguageId" type="radio" checked="checked" />显示
+                                        </label>
+                                        <label class="radio inline">
+                                            <input name="IsShow_@item.LanguageId" type="radio" />隐藏
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn btn-primary ajax_add">保存</a>
+        <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+    </div>
+</div>

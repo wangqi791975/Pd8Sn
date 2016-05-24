@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "销售&客服信息管理";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@section HtmlHead
+{
+    @Html.JsFor("customer.js", "~/Js/Customer/Customer.js", "1.3")
+}
+<div id="pull-right" class="pull-right locationopt">
+    <form method="post" action="/Club/ManagerList" id="searchForm" name="searchForm" class="form-search">
+        昵称：<input type="text" onkeyup=" $(this).val($(this).val().replace(/\//g, '')); " name="name">
+        <button class="btn" id="searchBtn" type="submit">搜索</button>
+    </form>
+</div>
+<div class="clearboth"></div>
+<div id="main" class="ajax-list" data-url="/Club/ManagerList">
+</div>
+<a class="btn btn-mini btn-info btn-info-view" id="0" data-id="0" data-loading-text="<i class='icon-edit icon-white'></i> 新建中">新建</a>
+
+@*新建*@
+<div class="modal hide fade ajax_detail" data-url="/Club/ManagerEdit">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>新建</h3>
+    </div>
+    <div class="modal-body ajax_info">
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn btn-primary ajax_update">保存</a>
+        <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+    </div>
+</div>
+@*编辑*@
+<div class="modal hide fade ajax_detail_1" data-url="/Club/ManagerEdit">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>编辑</h3>
+    </div>
+    <div class="modal-body ajax_info">
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn btn-primary ajax_update_1">保存</a>
+        <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+    </div>
+</div>
+

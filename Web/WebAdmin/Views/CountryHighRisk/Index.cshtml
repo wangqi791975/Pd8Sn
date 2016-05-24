@@ -1,0 +1,32 @@
+﻿@model IList<Com.Panduo.Service.SiteConfigure.CountryHighRisk>
+@{
+    ViewBag.Title = "订单 / 高危国家管理";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+
+<div class="ajax_detail">
+    <div class="ajax_info">
+        <form novalidate="novalidate" method="post" action="@Url.Content("~/CountryHighRisk/Submit")" id="cacheForm" name="cacheForm" class="form-horizontal" target="_self">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>请在下方输入国家英文名（多个国家之间用英文,号隔开）</th>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <textarea name="country_high_risks" rows="8" id="ips" style="width:50%;" required="required">@Model.Select(x => x.CountryName).ToList().Join(",")</textarea>
+                        </td>
+                    </tr>
+                </thead>
+            </table>
+            <div class="well form-actions">
+                <input type="submit" value="提交" class="btn btn-primary ajax_update">
+                <span>
+                    <input type="reset" value="取消" class="btn" />
+                </span>
+            </div>
+        </form>
+    </div>
+</div>

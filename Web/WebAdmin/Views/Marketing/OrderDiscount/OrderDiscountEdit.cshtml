@@ -1,0 +1,157 @@
+﻿@using Com.Panduo.Service.Marketing
+@{
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+    var orderDiscountMarketing = (OrderDiscountMarketing)ViewBag.OrderDiscountMarketing;
+    ViewBag.Title = orderDiscountMarketing.Id > 0 ? "订单折扣活动设置 > 编辑" : "订单折扣活动设置 > 新建";
+}
+@section HtmlHead
+{
+    @Html.JsFor("MarketingShipping.js", "~/Js/bootstrap-formhelpers.js,~/Js/Marketing/Marketing.js", fileVersion: "1.4")
+    @Html.CssFor("MarketingShipping.css", "~/Css/bootstrap-formhelpers.min.css", fileVersion: "1.0")
+}
+<div class="alert hide"><a class="close" data-dismiss="alert">&times;</a><span>@ViewBag.ErrorMsg</span></div>
+<form class="form-horizontal" name="OrderDiscountForm" id="OrderDiscountForm" action="@Url.Content("~/Marketing/OrderDiscountSave")" method="post" onsubmit="return false;">
+    <div class="well tab-content">
+
+        <input type="hidden" name="marketingId" value="@orderDiscountMarketing.Id"/>
+
+        @Html.Partial("Partial/MarketingCondition", orderDiscountMarketing)
+
+        <hr />
+        <div class="control-group">
+            <label class="control-label">金额对象：</label>
+            <div class="controls">
+                <select name="FD_AmountType" class="span2" id="FD_AmountType">
+                    <option value="@((int)MarketingAmountType.TotalAmount)" @(orderDiscountMarketing.AmountType == MarketingAmountType.TotalAmount ? "selected=selected" : "")>物品总金额</option>
+                    <option value="@((int)MarketingAmountType.NoDiscountTotalAmount)" @(orderDiscountMarketing.AmountType == MarketingAmountType.NoDiscountTotalAmount ? "selected=selected" : "")>正价商品金额</option>
+                </select>
+            </div>
+        </div>
+        <div id="FD_RewardType_0">
+            <div class="control-group">
+                <label class="control-label">起算金额(USD)&amp;折扣：</label>
+                <div class="controls">
+                    <table class="table table-striped table-bordered" id="TB_Amount_Discount" style="width: 50%; margin-bottom: 0px;">
+                        <thead>
+                            <tr>
+                                <th>起算金额</th>
+                                <th>折扣</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        @if (!orderDiscountMarketing.OrderAmountDiscounts.IsNullOrEmpty())
+                        {
+                            foreach (var item in orderDiscountMarketing.OrderAmountDiscounts)
+                            {
+                            <tr>
+                                <td>
+                                    <input type="text" class="input-medium" datatype="f1" name="Amount" value="@item.Amount.ToString("F")" />
+                                </td>
+                                <td class="input-append">
+                                    <input type="text" class="input-medium" datatype="i1" name="Discount" value="@item.Discount.ToString("0")" /><span class="add-on">%</span>
+                                </td>
+                                <td><a href="javascript:void(0);" class="btn del_tr">删除</a></td>
+                            </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>
+                                    <input type="text" class="input-medium" datatype="f1" name="Amount" value="" />
+                                </td>
+                                <td class="input-append">
+                                    <input type="text" class="input-medium" datatype="i" name="Discount" value="" /><span class="add-on">%</span>
+                                </td>
+                                <td><a href="javascript:void(0);" class="btn del_tr">删除</a></td>
+                            </tr>
+                        }
+                    </table>
+                    <a href="javascript:void(0);" class="btn add_tr" data-target="#TB_Amount_Discount" data-length="1">新增</a>
+                </div>
+            </div>
+        </div>
+
+        @Html.Partial("Partial/MarketingInfo", orderDiscountMarketing)
+
+        <div class="form-actions">
+            <a class="btn btn-primary" id="btnOrderDiscountSave" href="javascript:void(0)">保存</a>
+            <a class="btn" href="@Url.Content("~/Marketing/OrderDiscount")">取消</a>
+        </div>
+    </div>
+</form>
+
+@section HtmlFooter
+{
+    <script type="text/javascript">
+        $(function () {
+            //coupon保存
+            $("#btnOrderDiscountSave").bind("click", fnSaveOrderDiscount);
+            $(".del_tr").click(function () {
+                var tr = $(this).parents("tr");
+                var discount = tr.find("[name=Discount]").val();//$.trim(discount)
+                if (discount == "" || confirm("你确认要删除这一行数据吗?"))
+                    tr.remove();
+            });
+        });
+        var fnSaveOrderDiscount = function () {
+            var btn = $(this);
+            btn.unbind("click").text("请稍等，正在提交数据...");
+            var languages = "";
+            var countrys = "";
+            var discountstr = "";
+            //获取选中语种
+            if ($("#FD_LanguageIds").attr("checked")) {
+                languages = "All";
+            } else {
+                $("[name='FD_LanguageIds']").each(function () {
+                    if ($(this).attr("checked")) {
+                        languages = languages + $(this).val() + ",";
+                    }
+                });
+                if (languages != "")
+                    languages = languages.substr(0, languages.length - 1);
+            }
+            //获取国家
+            if ($("#FD_ContinentIds").attr("checked")) {
+                countrys = "All";
+            } else {
+                $("[name='FD_ContinentIds']").each(function () {
+                    if ($(this).attr("checked")) {
+                        countrys = countrys + $(this).val() + ",";
+                    }
+                });
+                if (countrys != "")
+                    countrys = countrys.substr(0, countrys.length - 1);
+            }
+
+            $("#TB_Amount_Discount").find("tbody tr").each(function () {
+                var tdArr = $(this).children();
+                var amount = tdArr.eq(0).find("input").val(); //金额
+                var discount = tdArr.eq(1).find("input").val(); //折扣
+                if (amount.length > 0) {
+                    discountstr += amount + "|" + discount + ";";
+                }
+            });
+
+            $("#OrderDiscountForm").ajaxSubmit({
+                data: { languages: languages, countrys: countrys, discounts: discountstr },
+                success: function (responseText) {
+                    var msg = "";
+                    if (responseText.result == "success") {
+                        msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作成功!' : responseText.msg;
+                        btn.text("保存成功");
+                        $(".alert").removeClass("alert-error").addClass("alert-success").show().delay(2000).hide(200).find("span").text(msg);
+                        setTimeout(function () {
+                            location.reload();
+                        }, 500);
+                    } else {
+                        btn.text("保存失败").bind("click", fnSaveOrderDiscount);
+                        msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作失败!' : responseText.msg;
+                        $(".alert").removeClass("alert-success").addClass("alert-error").show().delay(2000).hide(200).find("span").text(msg);
+                    }
+                }
+            });
+        };
+    </script>
+}

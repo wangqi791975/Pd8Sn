@@ -1,0 +1,78 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Order
+@using Resources
+@model PageData<Order>
+@{
+    ViewBag.Title = "OrderSearch";
+    Layout = "~/Views/Shared/Layout/_Layout_NoLeft.cshtml";
+}
+@section HtmlHead
+{
+    @Html.JsFor("Order.js", "~/Js/jquery-ui-1.10.4.custom.min.js,~/Js/Order/Order.js", fileVersion: "1.9")
+    @Html.CssFor("Order.css", "~/Css/jquery-ui-1.10.4.custom.min.css", fileVersion: "1.1")
+}
+@Html.Partial("~/Views/Account/Partial/_Account_Siderbar_Menu.cshtml")
+	<div id="main" class="account_wrap">    	
+		<h2 class="font14 account_title">
+        <label id="h2StatusName">@ViewBag.StatusName</label>
+            <div class="cart_add_order">
+			<table width="100%" cellspacing="0" cellpadding="0" border="0">
+			    <tr>
+			        <th scope="row">@Lang.TipQuickOrder</th>
+			        <td><a class="btn_orange btn_w60" href="javascript:void(0)" onclick="$('#quickadd').modal('show');" >@Lang.TipAdd</a></td>
+			    </tr>
+			</table>
+			</div>
+        </h2>
+    <form onsubmit="return false;" method="post" action="/Order/OrderSearch" name="OrderFilterForm" id="OrderFilterForm">
+        <table cellpadding="0" cellspacing="0" class="order_search">
+            <tr>
+                <th>@Lang.TipOrderNoPun</th>
+                <td>
+                    <input class="inputw248 input_text_wrap" type="text" id="orderno" name="OrderNo" /></td>
+                <th>@Lang.TipPartNo</th>
+                <td>
+                    <input class="inputw248 input_text_wrap" type="text" id="partno" name="PartNo" /></td>
+            </tr>
+            <tr>
+                <th>@Lang.TipStatusPun</th>
+                <td>
+                	<div class="select_cont select_w248">
+                        <label class="select_cont_span">@ViewBag.StatusName</label>
+	                    <div class="pop_select_cont">
+	                        <ul>
+	                            <li class="list_item @if(ViewBag.Status == -1){@Html.Raw("active")}" data-value="-1">@Lang.TipAllOrders</li>
+	                            @if (ViewBag.CustomerOrderStatus != null)
+	                            {
+	                                foreach (var os in ViewBag.CustomerOrderStatus)
+	                                {
+	                                    <li class="list_item @if(ViewBag.Status == os.Value){@Html.Raw("active")}" data-value="@os.Value">@os.Name</li>
+	                                }
+	                            } 
+	                        </ul>
+	                    </div>
+                           <input type="hidden" name="status" value="@ViewBag.Status" id="status" />
+	                </div>
+                </td>
+                <th>@Lang.TipOrderDate</th>
+                <td>
+                    <input class="inputw108 input_text_wrap datepicker" type="text" id="startdate" name="startdate" /><span>@Lang.TipTo</span><input class="inputw108 input_text_wrap datepicker" type="text" id="enddate" name="enddate" /></td>
+            </tr>
+            <tr>
+                <th></th>
+                <td colspan="3"><a href="javascript:void(0)" class="btn_orange btn_p30" id="OrderFilterBtn">@Lang.TipFilter</a></td>
+            </tr>
+        </table>
+        </form>
+        @* 商品列表开始*@
+        <div  id="divorderlist">
+            @Html.Partial("~/Views/Order/OrderList.cshtml",@Model)
+		</div>
+		@* 商品列表结束*@
+	</div>
+	<div class="clearfix"></div>
+
+@section HtmlFooter
+{
+    @Html.Partial("~/Views/Shared/Partial/_QuickAddToCart.cshtml")
+}

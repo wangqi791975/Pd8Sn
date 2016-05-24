@@ -1,0 +1,54 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Web.Models.Order
+@using Resources
+@model PageData<OrderDetailItemVo>
+@{
+    Layout = null;
+    var orderDetailIds = Model.Data.Select(c => c.OrderDetail.Id).Join(",");
+    var orderProductIds = Model.Data.Select(c => c.OrderDetail.ProductId).Join(",");
+
+}
+<form onsubmit="return false;" class="reviewform" action="@Url.Content("~/Reviews/Submit")" method="POST" id="reviewform" name="reviewform">
+    @foreach (var data in Model.Data)
+    {
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <th rowspan="2"><div class="pro_img"><a href="@UrlRewriteHelper.GetProductDetailUrl(data.ProductInfo.Product.ProductId, data.ProductInfo.ProductEnName)" target="_blank"><img src="@ImageHelper.GetImageUrl(data.ProductInfo.Product.MainImage,80)" /></a><br /><a class="fblue_mid" href="@UrlRewriteHelper.GetProductDetailUrl(data.ProductInfo.Product.ProductId, data.ProductInfo.ProductEnName)" target="_blank">@data.ProductInfo.Product.ProductCode</a></div></th>
+                <td id="divStars_@data.ProductInfo.Product.ProductId">
+                    <!--已选择的星星class名称变为 star_selected ，默认星星class名称为star_grey-->
+                    <ins class="star_grey" onmouseout="MouseOut(@data.ProductInfo.Product.ProductId)" onmouseover="MouseOver(@data.ProductInfo.Product.ProductId, 1)" onclick="Click(@data.ProductInfo.Product.ProductId, 1)"></ins>
+                    <ins class="star_grey" onmouseout="MouseOut(@data.ProductInfo.Product.ProductId)" onmouseover="MouseOver(@data.ProductInfo.Product.ProductId, 2)" onclick="Click(@data.ProductInfo.Product.ProductId, 2)"></ins>
+                    <ins class="star_grey" onmouseout="MouseOut(@data.ProductInfo.Product.ProductId)" onmouseover="MouseOver(@data.ProductInfo.Product.ProductId, 3)" onclick="Click(@data.ProductInfo.Product.ProductId, 3)"></ins>
+                    <ins class="star_grey" onmouseout="MouseOut(@data.ProductInfo.Product.ProductId)" onmouseover="MouseOver(@data.ProductInfo.Product.ProductId, 4)" onclick="Click(@data.ProductInfo.Product.ProductId, 4)"></ins>
+                    <ins class="star_grey" onmouseout="MouseOut(@data.ProductInfo.Product.ProductId)" onmouseover="MouseOver(@data.ProductInfo.Product.ProductId, 5)" onclick="Click(@data.ProductInfo.Product.ProductId, 5)"></ins>
+                    <input class="reviewrating" type="hidden" value="0" name="rating_@data.ProductInfo.Product.ProductId" id="rating_@data.ProductInfo.Product.ProductId">
+                    <strong>(<span id="reviews_desc_@data.ProductInfo.Product.ProductId">@Lang.TipChooseRating</span>)</strong>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <textarea id="review_content_@data.ProductInfo.Product.ProductId" name="review_content_@data.ProductInfo.Product.ProductId" class="textarea_w580 textarea_wrap reviewcontent">@Lang.TipLeastOneChar</textarea>
+                </td>
+            </tr>
+        </table>
+    }
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <th></th>
+            <td>
+                <p class="action_cont">
+                    <input type="submit" class="lf btn_orange btn_p30" value="@Lang.TipSubmit" onclick="writeReview('#reviewform')" />
+                </p>
+            </td>
+        </tr>
+    </table>
+    <input type="hidden" name="order_id" value="@ViewBag.OrderId" />
+    <input type="hidden" name="order_detail_ids" value="@orderDetailIds" />
+    <input type="hidden" name="order_product_ids" value="@orderProductIds" />
+</form>
+@*底部翻页开始*@
+<div class="ajax-pagination" data-target="#products_list" data-mode="replace">
+    @Html.Partial("~/Views/Shared/Partial/_Ajax_Pager.cshtml", @Model.Pager)
+</div>
+<div class="clearfix"></div>
+@*底部翻页结束*@

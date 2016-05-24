@@ -1,0 +1,42 @@
+﻿@{
+    Layout = null;
+}
+@using Com.Panduo.Service
+@model PageData<Com.Panduo.Service.SiteConfigure.SearchKeyword>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th style="width: 10%">ID</th>
+            <th style="width: 40%">关键词</th>
+            <th style="width: 20%">语言</th>
+            <th style="width: 30%">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var searchkeyword in Model.Data)
+        {
+            <tr>
+                <td>
+                    @searchkeyword.Id
+                </td>
+                <td>
+                    @searchkeyword.KeywordName
+                </td>
+                <td>
+                    @{
+                        var firstOrDefault = ServiceFactory.ConfigureService.GetAllValidLanguage().FirstOrDefault(m => m.LanguageId == searchkeyword.LanguageId);
+                    }
+                    @if (firstOrDefault != null)
+                    {
+                        @firstOrDefault.LanguageName
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-mini btn-info btn-info-view" data-id="@searchkeyword.Id" data-loading-text="<i class='icon-edit icon-white'></i> 加载"><i class="icon-edit icon-white"></i>编辑</a>
+                    <a class="btn btn-mini btn-danger" onclick="deletesearchkeyword(@searchkeyword.Id)" data-id="@searchkeyword.Id"><i class="icon-trash icon-white"></i>删除</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.Partial("~/Views/Shared/Partial/_Page_Bottom.cshtml", @Model.Pager)

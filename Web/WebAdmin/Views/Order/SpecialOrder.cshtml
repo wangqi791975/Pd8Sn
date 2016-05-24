@@ -1,0 +1,90 @@
+﻿@using Com.Panduo.Service
+@model PageData<Com.Panduo.Service.Order.SpecialOrder>
+@{
+    ViewBag.Title = "特殊报价订单管理";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<h2>特殊报价订单管理</h2>
+<a class="btn" href="javascript:void(0)" data-toggle="modal" data-target=".ajax_show_add" data-backdrop="true"><i class="icon-edit"></i> 新建</a>
+<br/>
+<div class="modal hide fade ajax_show_add" data-url="@Url.Content("/Order/AddSpecialOrder")">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>新增累加消费金额</h3>
+    </div>
+    <div class="modal-body ajax_info">
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn btn-primary ajax_add">保存</a>
+        <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+    </div>
+</div>
+
+<div class="modal hide fade ajax_detail" data-url="@Url.Content("/Order/ViewSpecialOrder")">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>查看</h3>
+    </div>
+    <div class="modal-body ajax_info">
+    </div>
+</div>
+
+<table class="table table-striped" data-delaction="/Order/SpecialOrderDelete">
+    <thead>
+    <tr>
+        <th width="5%">客户ID</th>
+        <th width="10%">客户姓名</th>
+        <th width="15%">客户邮箱</th>
+        <th width="20%">增加消费金额</th>
+        <th width="5%">状态</th>
+        <th width="10%">创建时间</th>
+        <th width="20%">创建人</th>
+        <th width="10%">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var specialorder in Model.Data)
+    {
+        <tr>
+            <td>
+                @specialorder.CustomerId
+            </td>
+            <td>
+                @specialorder.CustomerName
+            </td>
+            <td>
+                @specialorder.CustomerMail
+            </td>
+            <td>
+                @specialorder.CurrencyCode @specialorder.Increase
+            </td>
+            <td>
+                @if (specialorder.Status == 1)
+                {
+                    @Html.Raw("活动")
+                }
+                else
+                {
+                    @Html.Raw("删除")
+                }
+            </td>
+            <td>
+                @specialorder.CreateTime
+            </td>
+            <td>
+                @specialorder.CreateAccount
+            </td>
+            <td>
+               <a class="btn btn-mini btn-danger btn-info-view" data-id="@specialorder.SpecialOrderId"><i class="icon-trash icon-white"></i>查看</a>
+                @if (specialorder.Status== 1)
+                {
+                    <a class="btn btn-mini btn-danger btn-ajax-delete" data-id="@specialorder.SpecialOrderId"><i class="icon-trash icon-white"></i>删除</a>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<a class="btn" href="javascript:void(0)" data-toggle="modal" data-target=".ajax_show_add" data-backdrop="true"><i class="icon-edit"></i> 新建</a>
+@Html.Partial("~/Views/Shared/Partial/_Page_Bottom.cshtml", @Model.Pager)

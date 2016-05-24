@@ -1,0 +1,34 @@
+﻿@model Com.Panduo.Service.PageData<Com.Panduo.Service.Product.ProductArea.ProductArea>
+@{
+    Layout = null;
+}
+
+<form id="metaAreaForm" class="form-search" method="post" action="/Meta/metaArea" name="metaAreaForm">
+    前选择一个专区首页：
+    <select name="HID_areaId" onchange=" $(this).next().click(); ">
+        <option value="">---请选择一项---</option>
+        @foreach (var area in Model.Data)
+        {
+            <option value="@area.AreaId" @(ViewBag.HidAreaId == area.AreaId ? "selected=\"selected\"" : "")>@(area.AreaName)首页</option>
+        }
+    </select>
+    <button class="btn hide" type="submit">搜索</button>
+</form>
+
+<div id="metaAreaDiv"></div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#metaAreaForm").submit(function () {
+            var args = $(this).serialize();
+            var pageUrl = $(this).attr('action');
+            $.get(pageUrl + '?' + args, function (data) {
+                $('div#metaAreaDiv').filter(':first').html(data);
+            });
+            return false;
+        });
+        if ($("select[name=HID_areaId]").val() > 0) {
+            $("select[name=HID_areaId]").next().click();
+        }
+    });
+</script>

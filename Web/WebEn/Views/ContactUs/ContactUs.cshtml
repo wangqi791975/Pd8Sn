@@ -1,0 +1,177 @@
+﻿@using Resources
+@{
+    Layout = "~/Views/Shared/Layout/_Layout_NoLeft.cshtml";
+}
+@section HtmlHead
+{
+    @Html.CssFor("WishList.css", new[] { "~/Css/avatar.css" }, fileVersion: "1.0")
+}
+<div class="contact_wrap">
+    <h2 class="font16">@Lang.TipContactUs</h2>
+    <p>@Lang.TipIfContactWays</p>
+    <h3><ins class="msg"></ins><strong>@Lang.TipSendDirectly</strong><div class="clearfix"></div>
+    </h3>
+    <div class="cont">
+        <form id="contactusform" method="POST" action="/ContactUs/ContactUs" onsubmit="return false;">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <th width="10%" scope="row">@Lang.TipYourName</th>
+                    <td>
+                        <input name="name" class="inputw260 input_text_wrap" type="text" value="" />
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><i class="fred">*</i>@Lang.TipEmail</th>
+                    <td>
+                        <input name="email" class="inputw260 input_text_wrap" type="text" value="" />
+                        <div class="fred"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><i class="fred">*</i>@Lang.TipMessage</th>
+                    <td>
+                        <textarea class="textarea_wrap textarea_w410" name="message" cols="" rows=""></textarea>
+                        <div class="fred"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">@Lang.TipAttachment</th>
+                    <td>
+                        <input type="file" id="uploadifycontactus" value="" /></td>
+                </tr>
+                <tr>
+                    <th scope="row">&nbsp;</th>
+                    <td><a id="contactussub" class="btn_orange btn_p30">@Lang.TipSubmit</a><a href="#" class="btn_grey btn_p30">@Lang.TipReset</a></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <h3><ins class="chat"></ins><strong>Live Chat</strong><div class="clearfix"></div>
+    </h3>
+    <div class="cont">
+        <p>@Html.Raw(Lang.TipByStartChat)</p>
+    </div>
+    <h3><ins class="email"></ins><strong>@Lang.TipEmailNoPun</strong><div class="clearfix"></div>
+    </h3>
+    <div class="cont">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="email">
+            <tr>
+                <th width="14%" scope="row">@Lang.TipCustomerServiceUp</th>
+                <td><a href="mailto:service@8seasons.com" class="fblue">service@8seasons.com</a></td>
+            </tr>
+            <tr>
+                <th scope="row">@Lang.TipSalesManager</th>
+                <td><a href="mailto:linden.lin@8seasons.com" class="fblue">linden.lin@8seasons.com</a></td>
+            </tr>
+            <tr>
+                <th scope="row">@Lang.TipCEO</th>
+                <td><a href="mailto:lisa.hong@8Seasons.com" class="fblue">lisa.hong@8Seasons.com</a></td>
+            </tr>
+        </table>
+    </div>
+    <h3><ins class="tel"></ins><strong>@Lang.TipTelphoneNoPun</strong><div class="clearfix"></div>
+    </h3>
+    <div class="cont">
+        <p>@(Lang.TipTelephoneNum)(+86) 579-85335690</p>
+    </div>
+    <h3><ins class="skype"></ins><strong>@Lang.TipSkypeNoPun</strong><div class="clearfix"></div>
+    </h3>
+    <div class="cont">
+        <p>@(Lang.TipUserName)service.8seasons</p>
+    </div>
+    <div class="note">
+        @Html.Raw(Lang.TipContactUsHtmlF)
+    </div>
+
+    <div class="popup_wrap popup_w650 avatar_success" id="contactussuccess" aria-hidden="true" style="display: none; margin-top: -36px;">
+        <ins></ins>
+        <h4 class="font14 fgreen" style="float: left">
+            @Html.Raw(Lang.TipContactUsHtmlS)
+        </h4>
+    </div>
+</div>
+<div class="clearfix"></div>
+<script>
+    var contactattachments = "";//用于记录上传文件的路径集合
+
+    $("#contactussub").click(function () {
+        var email = $("[name='email']");
+        var message = $("[name='message']");
+        $(email).nextAll(".fred").html("");
+        $(message).nextAll(".fred").html("");
+        var ischecked = true;
+        if ($.trim($(email).val()) == "") {
+            $(email).nextAll(".fred").html(Message.ErrorEmailEmpty);
+            ischecked = false;
+        } else if (!DataType.isEmail($.trim($(email).val()))) {
+            $(email).nextAll(".fred").html(Message.ErrorEmailFormat);
+            ischecked = false;
+        } else if ($(email).val().length < 5) {
+            $(email).nextAll(".fred").html(Message.ErrorEmailTooShort);
+            ischecked = false;
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "/ContactUs/CheckedEmail",
+                data: { email: $(email).val() },
+                async: false,
+                success: function (responseText) {
+                    if (!responseText["isExist"]) {
+                        $(email).nextAll(".fred").html(responseText["msg"]);
+                        ischecked = false;
+                    }
+                }
+            });
+        }
+        if ($.trim($(message).val()) == "") {
+            $(message).nextAll(".fred").html(Message.ErrorMessageEmpty);
+            ischecked = false;
+        }
+        if (ischecked) {
+            if ($("#uploadifycontactus-queue").children().length == 0) {
+                submitcontactus();
+            } else {
+                $('#uploadifycontactus').uploadify("upload", "*");
+            }
+        }
+    });
+
+    $('#uploadifycontactus').uploadify({
+        'uploader': '/ContactUs/UploadAttachment',           // 服务器端处理地址
+        'swf': '/Js/uploadify/uploadify.swf',    // 上传使用的 Flash
+        'buttonCursor': 'hand',               // 按钮的鼠标图标
+        'fileObjName': 'Filedata',            // 上传参数名称
+        'fileTypeExts': "*.jpg;*.png;*.gif;*.bmp;",   // 扩展名
+        'fileTypeDesc': "Only accept Jpg, gif, png, bmp.",     // 文件说明
+        'removeCompleted': false,
+        'auto': false,                // 选择之后，自动开始上传
+        'multi': true,
+        'width': 260,
+        'buttonText': Message.TipAdd,
+        'sizeLimit': 2097152,
+        'queueSizeLimit': 5,          // 允许多文件上传的时候，同时上传文件的个数
+        'uploadLimit': 5,
+        'onUploadSuccess': function (fileObj, response, event) {
+            if (response != "") {
+                contactattachments = contactattachments + response + ",";
+            }
+        },
+        'onQueueComplete': submitcontactus
+    });
+
+    function submitcontactus() {
+        if (contactattachments != "") {
+            contactattachments = contactattachments.substr(0, contactattachments.length - 1);
+        }
+        $("#contactusform").ajaxSubmit({
+            data: { attachments: contactattachments },
+            success: function () {
+                $("#contactussuccess").modal("show");
+                setTimeout(function () {
+                    $("#contactussuccess").modal("hide");
+                }, 3000);
+                contactattachments = ""; //提交成功后清空上传路径集合
+            }
+        });
+    }
+</script>

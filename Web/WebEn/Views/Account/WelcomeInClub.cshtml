@@ -1,0 +1,131 @@
+﻿@{
+    ViewBag.Title = "WelcomeInClub";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@{
+    var currency = CacheHelper.GetCurrencyByCode(PageHelper.CURRENCY_CODE_USD);
+}
+@using Com.Panduo.Service.Customer.Club
+@using Resources
+@model ClubShippingFee
+<style type="text/css">
+    *{margin: 0;padding: 0;}
+    .club0611{position: relative;width: 1000px;margin: 0 auto;padding: 280px 0 0 0;background: url(/Images/club01.jpg) no-repeat left top;font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-style: normal;border: 1px #d7d7d7 solid;}
+    .Price0710{position: absolute;left: 195px;top: 235px;font-size: 22px;color: #000;font-weight: normal;}
+    .Price0710 span{font-size: 28px;font-weight: bold;}
+    .club0611 ul{display: block;position: relative;height: 170px;list-style-type: none;line-height: 30px;background: url(/Images/club02.jpg) no-repeat left;}
+    .club0611 li.bottom0611{display: block;position: absolute;left: 216px;top: 18px;}
+    .club0611 li.bottom0611 a{position: relative;display: block;float: left;}
+    .club0611 li.bottom0611 a.btp{width: 260px;height: 70px;background: url(/Images/bottom2.png) no-repeat;}
+    .club0611 li.bottom0611 a.btp:hover{width: 260px;height: 70px;background: url(/Images/bottom1.png) no-repeat;}
+    .club0611 li.bottom0611 a.txt{color: #fe6802;top: 40px;left: 10px;}
+    .club0611 li.notice0611{color: #000;text-decoration: none;padding: 110px 0 0 20px;}
+    .club0611 li.notice0611 span{color: #fe6802;}
+    .club0611 li.example0611{color: #000;text-decoration: none;padding: 0 0 0 20px;}
+    .club0611 li.example0611 span{color: #fe6802;}
+    .club0611 img{vertical-align: bottom;}
+    .save_bg{background: url(/Images/bg.jpg) no-repeat top left;width: 1000px;height: 525px;}
+    .save0704{height: 30px;background-color: #fe6802;font-family: Arial, Helvetica, sans-serif;font-size: 18px;color: #FFF;padding: 7px 30px 0 20px;float: left;margin: 30px 0 0 0;}
+    .save_bg img{position: absolute;width: 230px;height: 190px;left: 22px;top: 560px;}
+    .save_bg table{position: absolute;right: 30px;top: 555px;border-collapse: collapse;color: #000;text-align: center;}
+    .save_bg td{border: solid 1px #d2d2d2;padding: 15px 20px;font-size: 18px;font-weight: 200;}
+    table .before0710{font-size: 14px;color: #9b9b9b;}
+    table .after0710{color: #fe6802;}
+    table span{font-size: 24px;font-weight: bold;}
+    table .for0710 span{font-size: 12px;color: #9b9b9b;font-weight: normal;}
+    .save_bg ul{position: absolute;background: none;left: 0px;top: 750px;width: 970px;}
+    .save_bg ul .hand0710{font-size: 18px;text-align: right;padding: 0 10px 5px 0;}
+    .save_bg ul .hand0710 span{font-size: 24px;font-weight: bold;}
+    .save_bg ul .act0710{height: 30px;background-color: #fe6802;font-size: 18px;color: #FFF;text-align: center;padding: 0 10px;float: right;}
+    .save_bg ul .act0710 span{font-size: 24px;font-weight: bold;}
+    .save_bg ul .check0710{margin-top: 50px;color: #fe6802;padding-left: 20px;}
+    .save_bg ul .check0710 a{color: #fe6802;font-size: 18px;}
+    .save_bg ul .shipping0710{font-size: 14px;color: #000;padding-left: 20px;}
+    .save_bg ul .shipping0710 span{color: #fe6802;}
+</style>
+<script>
+    $(function () {
+        $("#joinclub").click(function () {
+            var urlRequestPayOrderByPaypalVertify = "/Payment/RequestPayClubByPaypalVertify";
+            var urlRequestPayOrderByPaypal = "/Payment/RequestPayClubByPaypal";
+            $.post(urlRequestPayOrderByPaypalVertify, {}, function (jsonData) {
+                $("#joinclub_confirm_modal").modal("hide");
+                if (jsonData.Message != null && jsonData.Message != "") {
+                    var msg = Message[jsonData.Message] ? Message[jsonData.Message] : jsonData.Message;
+                    DivOs.showErrorModal(msg);
+                    return false;
+                } else {
+                    $("#joinclub_confirm_modal").modal("show");
+                    $(".confirm_yes").bind("click", "", function (parameters) {
+                        window.location.href = urlRequestPayOrderByPaypal;
+                    });
+                    return false;
+                }
+            });
+        });
+    });
+
+</script>
+@section HtmlFooter
+{
+    <div id="joinclub_confirm_modal" class="popup_wrap popup_w400 modal fade">
+        <div class="close" data-dismiss="modal"><a href="javascript:void(0)"></a></div>
+        <div class="popup_tip_cont text_center">
+            <p class="confirm_tip" style="text-align: left;">@Lang.TipJoinClubPrompt</p>
+            <div class="action_cont">
+                <a class="btn_orange btn_p30 confirm_yes" href="javascript:void(0)">OK</a>
+            </div>
+        </div>
+    </div>
+}
+<div class="club0611">
+    <p class="Price0710">@Html.Raw(String.Format(Lang.TipMembershipOnly, @currency.SymbolLeft, @PageHelper.ExchangeMoneyByUsd(Model.ShippingFeeAfter, currency), @currency.SymbolRight)) </p>
+    <ul>
+        <li class="bottom0611"><a href="javascript:void(0)" id="joinclub" class="btp"></a><a href="javascript:void(0)" style="display: none;" target="_blank" class="txt">Free Trial >> </a></li>
+        <li class="notice0611"><span>*</span>&nbsp;@Lang.TipWeChargePacking</li>
+        <li class="example0611"><span>*</span>&nbsp;@Lang.TipClubForExample</li>
+    </ul>
+
+
+    <div class="save_bg">
+        <div class="save0704">@Lang.TipWellThenWay</div>
+        <img src="/Images/club09.jpg" />
+        <table>
+            <tr>
+                <td>@Lang.TipMembership</td>
+                <td>@Lang.TipShippingFee</td>
+                <td class="for0710">@Lang.TipExclusiveCoupon<br />
+                    <span>@Lang.TipForMembership</span></td>
+                <td>@Lang.TipActuallySpent</td>
+            </tr>
+            <tr>
+                <td>@Lang.TipBefore</td>
+                <td class="before0710">@String.Format(Lang.TipShippingFeeBefore, Model.ShippingFeeBefore.ToCurrencyMoneyString(currency))</td>
+                <td class="before0710">@Lang.TipNone</td>
+                <td class="before0710">@(Model.ActuallySpentBefore.ToCurrencyMoneyString(currency))</td>
+            </tr>
+            <tr>
+                <td>After</td>
+                <td class="after0710">@Html.Raw(String.Format(Lang.TipClubYearFee, currency.SymbolLeft, PageHelper.ExchangeMoneyByUsd(Model.ShippingFeeAfter)))</td>
+                <td class="after0710">@Html.Raw(String.Format(Lang.TipTotalCoupon, currency.SymbolLeft, PageHelper.ExchangeMoneyByUsd(Model.ExclusiveCoupon)))</td>
+                <td class="after0710">@Html.Raw(String.Format(Lang.TipOnlySpent, currency.SymbolLeft, PageHelper.ExchangeMoneyByUsd(Model.ActuallySpentAfter)))</td>
+            </tr>
+        </table>
+
+        <ul>
+            <li class="hand0710">@Html.Raw(String.Format(Lang.TipHandFeeAppr, currency.SymbolLeft, PageHelper.ExchangeMoneyByUsd(Model.HandlingFee)))</li>
+            <li class="act0710">@Html.Raw(String.Format(Lang.TipActuallySave, currency.SymbolLeft, PageHelper.ExchangeMoneyByUsd(Model.ActuallySave)))</li>
+            <li class="check0710">@Html.Raw(Lang.TipCheckMyTotal)</li>
+            <li class="shipping0710"><span>*</span> @Html.Raw(String.Format(Lang.TipTheAboveShipping, currency.SymbolLeft, Model.ShippingFeeBefore, currency.SymbolLeft, Model.HandlingFee))</li>
+        </ul>
+
+    </div>
+
+    <div>
+        <img src="/Images/club03.jpg" /><img src="/Images/club04.jpg" /><img src="/Images/club05.jpg" /><img src="/Images/club06.jpg" />
+    </div>
+</div>
+
+
+
+

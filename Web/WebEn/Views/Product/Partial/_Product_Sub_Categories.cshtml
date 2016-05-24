@@ -1,0 +1,27 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.ServiceConst
+@using Resources
+@model int 
+@*传人父类别Id*@
+@* 分类图片容器开始 *@
+<div class="categories_figure_cont">
+    @{
+        var category = ServiceFactory.CategoryService.GetCategoryLanguageById(@Model, ServiceFactory.ConfigureService.SiteLanguageId);
+        if (!category.IsNullOrEmpty())
+        {
+            <h2 class="font14">@Lang.TipSubCategories @category.CategoryLanguageName</h2>
+        }
+     }
+        <ul>
+            @{
+                var list = ServiceFactory.CategoryService.GetAllSubCategories(@Model);
+                foreach (var c in list)
+                {
+                    @Html.Partial("~/Views/Product/Partial/_Product_Sub_Categories_Item.cshtml",c)
+                }
+            }
+        </ul>
+   
+    <div class="clearfix"></div>
+</div>
+@*分类图片容器结束 *@

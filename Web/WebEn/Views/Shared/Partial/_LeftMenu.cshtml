@@ -1,0 +1,36 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Web.Models.Product
+@using Resources
+@if (ViewBag.CategoryTree != null)
+{
+    if (ViewBag.CategoryTree.TreeType == CategoryTreeVo.CategoryTreeType.Home)
+    {
+    @Html.Partial("~/Views/Shared/Partial/_LeftMenu_Category.cshtml")
+    }
+    else if (ViewBag.CategoryTree.TreeType == CategoryTreeVo.CategoryTreeType.ProductList || ViewBag.CategoryTree.TreeType == CategoryTreeVo.CategoryTreeType.ProductSearch)
+    {
+    @Html.Partial("~/Views/Shared/Partial/_LeftMenu_All.cshtml")
+    }
+    else if (ViewBag.CategoryTree.TreeType == CategoryTreeVo.CategoryTreeType.ProductDatail)
+    {
+        var @categoryCurrent = "current";
+    <div id="sidebar">
+        <div class="sidebar_wrap">
+            <div class="sidebar_title font14"><ins></ins>@Lang.TipAllCategories</div>
+            @Html.Partial("~/Views/Shared/Partial/_LeftMenu_Detail.cshtml", @categoryCurrent)
+        </div>
+        @if (ServiceFactory.ConfigureService.SiteLanguageCode == PageHelper.LANGUAGE_CODE_EN)
+        {
+            <script type="text/javascript" data-pp-pubid="586408490d" data-pp-placementtype="150x100">
+                (function (d, t) {
+                    "use strict";
+                    var s = d.getElementsByTagName(t)[0], n = d.createElement(t);
+                    n.src = "//paypal.adtag.where.com/merchant.js";
+                    s.parentNode.insertBefore(n, s);
+                }(document, "script"));
+            </script>
+        }
+    </div>
+    }
+
+}

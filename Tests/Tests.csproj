@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FB4259EE-B05A-45DB-9357-948E9A491B77}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Com.Panduo.Tests</RootNamespace>
+    <AssemblyName>Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging, Version=2.1.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL" />
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\RefDLL\Tool\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\RefDLL\NHibernate\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821" />
+    <Reference Include="Memcached.ClientLibrary">
+      <HintPath>..\RefDLL\NHibernate\MemCache\Memcached.ClientLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\RefDLL\Tool\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=3.2.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\RefDLL\NHibernate\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Caches.MemCache">
+      <HintPath>..\RefDLL\NHibernate\MemCache\NHibernate.Caches.MemCache.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Mapping.Attributes, Version=3.2.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\RefDLL\NHibernate\NHibernate.Mapping.Attributes.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\RefDLL\SpringNet\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Aop, Version=2.0.0.40000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\RefDLL\SpringNet\Spring.Aop.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core, Version=2.0.0.40000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\RefDLL\SpringNet\Spring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Data, Version=2.0.0.40000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\RefDLL\SpringNet\Spring.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Data.NHibernate32, Version=2.0.0.40000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\RefDLL\SpringNet\Spring.Data.NHibernate32.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Data.NHibernate32.Tests">
+      <HintPath>..\RefDLL\SpringNet\Spring.Data.NHibernate32.Tests.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Messaging">
+      <HintPath>..\RefDLL\SpringNet\Spring.Messaging.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Scheduling.Quartz20">
+      <HintPath>..\RefDLL\SpringNet\Spring.Scheduling.Quartz20.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Services">
+      <HintPath>..\RefDLL\SpringNet\Spring.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Testing.NUnit">
+      <HintPath>..\RefDLL\SpringNet\Spring.Testing.NUnit.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Web">
+      <HintPath>..\RefDLL\SpringNet\Spring.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Web.Extensions">
+      <HintPath>..\RefDLL\SpringNet\Spring.Web.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Web.Mvc4">
+      <HintPath>..\RefDLL\SpringNet\Spring.Web.Mvc4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\RefDLL\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClubProductServiceTest.cs" />
+    <Compile Include="ClubServiceTest.cs" />
+    <Compile Include="CouponServiceTest.cs" />
+    <Compile Include="CustomerProductServiceTest.cs" />
+    <Compile Include="CustomerServiceTest.cs" />
+    <Compile Include="IChannelServiceTest.cs" />
+    <Compile Include="IOrderServiceTest.cs" />
+    <Compile Include="IPaymentServiceTest.cs" />
+    <Compile Include="IProductImageServiceTest.cs" />
+    <Compile Include="IProductServiceTest.cs" />
+    <Compile Include="IPropertyServiceTest.cs" />
+    <Compile Include="ICashServiceTest.cs" />
+    <Compile Include="IShippingServiceTest.cs" />
+    <Compile Include="NewsletterService.cs" />
+    <Compile Include="ProductSolrServiceTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReviewServiceTest.cs" />
+    <Compile Include="ServiceConfigTest.cs" />
+    <Compile Include="SpringTest.cs" />
+    <Compile Include="SuggestionServiceTest.cs" />
+    <Compile Include="TestDataService.cs" />
+    <Compile Include="ToolsTest.cs" />
+    <Compile Include="IConfigureServiceTest.cs" />
+    <Compile Include="IProductAreaServiceTest.cs" />
+    <Compile Include="ICategoryServiceTest.cs" />
+    <Compile Include="ProductDailyDealServiceTest.cs" />
+    <Compile Include="TopKeywordServiceTest.cs" />
+    <Compile Include="WishListServiceTest.cs" />
+    <Compile Include="MetaServiceTest.cs" />
+    <Compile Include="MarketingServiceTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.config" />
+    <Content Include="Config\PhotosRule.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\product_solr_synonyms.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{08276825-378a-4cc2-ae5f-8296472bf96f}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entity\Entity.csproj">
+      <Project>{A7AEC529-2393-4E1D-8DD9-9E3D38AE4C2A}</Project>
+      <Name>Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceImpl\ServiceImpl.csproj">
+      <Project>{CAA7B534-DFB7-4FAC-AC17-82C92DBA4B0B}</Project>
+      <Name>ServiceImpl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Service\Service.csproj">
+      <Project>{84D49F07-70F0-4A56-9CE1-491C0691AF44}</Project>
+      <Name>Service</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\depoly.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Config\appSettings.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Config\productSolrSettings.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

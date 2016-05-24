@@ -1,0 +1,198 @@
+﻿@using Com.Panduo.Common
+@using Com.Panduo.Service
+@using Com.Panduo.Service.Order.ShoppingCart
+@using Com.Panduo.Service.Product
+@using Resources
+@{
+    Layout = null;
+    var currentCustomer = SessionHelper.CurrentCustomer;//当前登录客户
+    PageData<VShoppingCartItem> normalPager = Model;
+    ShoppingCartSorterCriteria sort = ViewBag.Sort;
+            //PageData<VShoppingCartItem> normalPager = ViewBag.NormalPager;
+}
+<div class="filter_sort">
+    @* 排序状态改变时，在需要改变的元素所在的a标签增加class样式current，另价格排序有升序price_asc和降序price_dec  时间排序有升序arrow_asc和降序arrow_dec *@
+    <div class="lf">
+        @switch (sort)
+        {
+            case ShoppingCartSorterCriteria.AddedTimeNewToOld:
+            <a class="current" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, (int)ShoppingCartSorterCriteria.AddedTimeOldToNew)" title="@Lang.TipOldToNew">@Lang.TipAddedTime<ins class="sort_arrow_asc"></ins></a>
+            <a href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, (int)ShoppingCartSorterCriteria.PriceHighToLow)" title="@Lang.TipPriceLowToHigh">@Lang.TipPrice<ins class="sort_arrow"></ins></a>
+            <a href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, (int)ShoppingCartSorterCriteria.Catefory)">@Lang.TipCategory</a><br />
+                break;
+            case ShoppingCartSorterCriteria.AddedTimeOldToNew:
+            <a class="current" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, (int)ShoppingCartSorterCriteria.AddedTimeNewToOld)" title="@Lang.TipNewToOld">@Lang.TipAddedTime<ins class="sort_arrow_dec"></ins></a>
+            <a href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, (int)ShoppingCartSorterCriteria.PriceHighToLow)" title="@Lang.TipPriceLowToHigh">@Lang.TipPrice<ins class="sort_arrow"></ins></a>
+            <a href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, (int)ShoppingCartSorterCriteria.Catefory)">@Lang.TipCategory</a><br />
+                break;
+            case ShoppingCartSorterCriteria.PriceLowToHigh:
+            <a href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, (int)ShoppingCartSorterCriteria.AddedTimeNewToOld)" title="@Lang.TipNewToOld">@Lang.TipAddedTime<ins class="sort_arrow"></ins></a>
+            <a class="current" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, (int)ShoppingCartSorterCriteria.PriceHighToLow)" title="@Lang.TipPriceLowToHigh">@Lang.TipPrice<ins class="sort_arrow_asc"></ins></a>
+            <a href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, (int)ShoppingCartSorterCriteria.Catefory)">@Lang.TipCategory</a><br />
+                break;
+            case ShoppingCartSorterCriteria.PriceHighToLow:
+            <a href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, (int)ShoppingCartSorterCriteria.AddedTimeNewToOld)" title="@Lang.TipNewToOld">@Lang.TipAddedTime<ins class="sort_arrow"></ins></a>
+            <a class="current" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, (int)ShoppingCartSorterCriteria.PriceLowToHigh)" title="@Lang.TipPriceHighToLow">@Lang.TipPrice<ins class="sort_arrow_dec"></ins></a>
+            <a href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, (int)ShoppingCartSorterCriteria.Catefory)">@Lang.TipCategory</a><br />
+                break;
+            case ShoppingCartSorterCriteria.Catefory:
+            <a href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, (int)ShoppingCartSorterCriteria.AddedTimeNewToOld)" title="@Lang.TipNewToOld">@Lang.TipAddedTime<ins class="sort_arrow"></ins></a>
+            <a href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, (int)ShoppingCartSorterCriteria.PriceLowToHigh)" title="@Lang.TipPriceLowToHigh">@Lang.TipPrice<ins class="sort_arrow"></ins></a>
+            <a class="current" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, (int)ShoppingCartSorterCriteria.AddedTimeNewToOld)">@Lang.TipCategory</a><br />
+                break;
+            default:
+            <a class="current" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, (int)ShoppingCartSorterCriteria.AddedTimeOldToNew)" title="@Lang.TipOldToNew">@Lang.TipAddedTime<ins class="sort_arrow_asc"></ins></a>
+            <a href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, (int)ShoppingCartSorterCriteria.PriceHighToLow)" title="@Lang.TipPriceHighToLow">@Lang.TipPrice<ins class="sort_arrow"></ins></a>
+            <a href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, (int)ShoppingCartSorterCriteria.Catefory)">@Lang.TipCategory</a><br />
+                break;
+        }
+        <a href="javascript:void(0)" class="fblue_mid" onclick="DivOs.showConfirmModal(Message.TipConfirmToWishList, fnMoveAllToWishlist)">@Lang.TipMoveAllToWishlist</a><a href="javascript:void(0)" onclick="DivOs.showConfirmModal(Message.TipConfirmToWishList, fnEmptyShoppingCart)" class="fblue_mid">@Lang.TipEmptyShoppingCart</a>
+    </div>
+    <div class="rt">@Lang.TipTotGrossWght <strong class="forange_mid" id="lblTotalGrossWeight">@ViewBag.TotalGrossWeight g</strong></div>
+</div>
+<div class="cart_order_title">
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <td class="pro_img">@Lang.TipImage</td>
+            <td class="pro_name">@Lang.TipDescription</td>
+            <td class="pro_price">@Lang.TipPrice</td>
+            <td class="pro_qty">@Lang.TipQtyNoPun</td>
+            <td class="pro_subtotal">@Lang.TipSubtoal</td>
+        </tr>
+    </table>
+</div>
+@if (!normalPager.Data.IsNullOrEmpty())
+{
+    foreach (var item in normalPager.Data)
+    {
+    <div class="cart_content">
+        <div class="cart_order_tip" @(item.Tip > 0 ? "style=display:block" : "")>@Html.Raw(string.Format(Lang.TipHaveBeenSold,item.ProductId,item.Tip,item.ProductCode,item.Quantity))</div>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="pro_img">
+                    <a href="@UrlRewriteHelper.GetProductDetailUrl(item.ProductId, item.ProductEnName)" target="_Blank">
+                        @if (item.Discount > 0 && item.Discount < 1)
+                        {
+                            if (item.LabelName.IsNullOrEmpty())
+                            {
+                            <div class="promotion_icon" style="left: 4px;"><ins class="icon_sale" style="width: 70px;"><span>@PageHelper.GetShowDiscount(item.Discount)</span></ins></div>
+                            }
+                        }
+                        <img class="scrollLoading" src="@Url.Content("~/Images/loading.gif")" data-url="@ImageHelper.GetImageUrl(item.MainImage, 80)" />
+                    </a>
+                </td>
+                <td class="pro_name">
+                    <h5><a href="@UrlRewriteHelper.GetProductDetailUrl(item.ProductId, item.ProductEnName)" target="_Blank">
+                        @if (!item.LabelName.IsNullOrEmpty())
+                        {
+                            <span title="@item.LabelName" class="fred">@item.LabelName!-</span>
+                        }
+                        @switch (item.OtherPackType)
+                        {
+                            case ProductOtherPackType.Big:
+                            <span title="@Lang.TipBulkPack" class="fred">@Lang.TipltBulkPackgt</span>
+                                break;
+                            case ProductOtherPackType.Small:
+                            <span title="@Lang.TipSmallPack" class="fred">@Lang.TipltSmallPackgt</span>
+                                break;
+                        }
+                        @item.ProductName
+                    </a></h5>
+                    <p class="fgrey">
+                        @Lang.TipProductNo @item.ProductCode
+                        <br />
+                        @Lang.TipGrossWeightUp @item.Weight g<br />
+                        @if (@item.VolumeWeight > 0)
+                        {
+                            <a class="fblue_mid" href="http://www.8seasons.com/page.html?chapter=0&id=92" target="target">@Lang.TipVolumetricWeight @item.VolumeWeight g</a>
+                        }
+                    </p>
+                </td>
+                <td class="pro_price">
+                    <del class="fgrey" @(item.OriginalPrice != item.Price ? "" : "style=display:none")><i id="lbloriginalprice_@item.ProductId">@item.OriginalPrice.ToExchangeCurrencyMoneyString(PageHelper.GetCurrentCurrency())</i></del>
+                    <p><i id="lblprice_@item.ProductId">@item.Price.ToExchangeCurrencyMoneyString(PageHelper.GetCurrentCurrency())</i></p>
+                    @switch (item.ProdDiscountType)
+                    {
+                        case ProdDiscountType.Vip:
+                            if (!currentCustomer.IsNullOrEmpty() && currentCustomer.IsVip)
+                            {
+                        <ins class="pro_vip"></ins>
+                            }
+                            break;
+                        case ProdDiscountType.Sale:
+                        <ins class="pro_sale"></ins>
+                            break;
+                        case ProdDiscountType.Club:
+                            if (!currentCustomer.IsNullOrEmpty() && currentCustomer.ClubLevel > 0)
+                            {
+                        <ins class="pro_club"></ins>
+                            }
+                            break;
+                    }
+                </td>
+                <td class="pro_qty">
+                    <div class="pop_qty">
+                        <div class="qty_cont">
+                            <i class="bottom"></i><em class="bottom"></em>
+                            <i class="qty_cont_msg"></i>
+                        </div>
+                    </div>
+                    <a href="javascript:void(0)" class="btn_minus_qty">-</a><input type="text" class="inputw35 txtqty" value="@item.Quantity" data-productid="@item.ProductId" maxlength="5" name="input_qty" /><a href="javascript:void(0)" class="btn_plus_qty">+</a>
+                    @if (item.IsBackorder && !item.BackorderDays.IsNullOrEmpty())
+                    {
+                        <span class="backorder">@Lang.TipBackorder<br />
+                            @item.BackorderDays @Lang.TipDays</span>
+                    }
+                    else
+                        if (item.IsLimitStock)
+                        { 
+                        <span class="limit_stock">@Html.Raw(Lang.TipLimitedStock)</span>
+                        }
+                </td>
+                <td class="pro_subtotal">
+                    <p class="fred"><i id="lblsubtotal_@item.ProductId">@item.ProductSubTotal.ToExchangeCurrencyMoneyString(PageHelper.GetCurrentCurrency())</i> </p>
+                </td>
+            </tr>
+        </table>
+        <div class="cart_cont_btn">
+            <div class="lf">
+                <a href="javascript:void(0)" class="fblue_mid btn_del" data-productid="@item.ProductId">@Lang.TipDelete</a><a href="javascript:void(0)" class="fblue_mid btn_movetowithlist" data-productid="@item.ProductId">@Lang.TipMoveToWishlist</a>
+            </div>
+            <div class="rt">
+                @if (item.Remark.IsNullOrEmpty())
+                {<a href="javascript:void(0)" class="btn_add_remark" data-productid="@item.ProductId">@Lang.TipAddRemark</a>}
+                else
+                {<a href="javascript:void(0)" class="btn_edit_remark" data-productid="@item.ProductId">@Lang.TipEditRemark</a>}
+
+                @* 留言信息弹窗开始 鼠标移动到edit remark时，该弹出显示 *@
+                <div class="pop_edit_remark">
+                    <div class="edit_remark">
+                        <i class="top"></i><em class="top"></em>
+                        <i id="lblshowremark_@item.ProductId">@item.Remark</i>
+                    </div>
+                </div>
+                @* 留言信息弹窗结束 *@
+                @* 填写留言弹窗开始 *@
+                <div class="pop_remark">
+                    <div class="remark_cont">
+                        <i class="top"></i><em class="top"></em>
+                        <textarea class="textarea_wrap textarea_w410" name="" cols="" rows="" data-toggle="remain" data-target="#cartprodremark_remain_@item.ProductId" data-maxlen="250" id="txtremark_@item.ProductId">@item.Remark</textarea>
+                        <div class="remark_cont_btn">
+                            <a class="btn_orange btn_p30" href="javascript:void(0)" id="btn_submit_@item.ProductId">@Lang.TipSubmit</a><a class="btn_grey btn_p30" id="btn_cancel_@item.ProductId" href="javascript:void(0)">@Lang.TipCancel</a>
+                            <span>@Html.Raw(string.Format(Lang.Tip250Characters,@item.ProductId))</span>
+                        </div>
+                    </div>
+                </div>
+                @* 填写留言弹窗结束 *@
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    }
+}
+
+@* 底部翻页开始 *@
+<div class="ajax-pagination" data-target="#tab_normal_product" data-mode="replace">
+    @Html.Partial("~/Views/Shared/Partial/_Ajax_Pager.cshtml", normalPager.Pager)
+</div>
+@* 底部翻页结束 *@

@@ -1,0 +1,76 @@
+﻿@using Com.Panduo.Service.Product.ClubProduct
+@{
+    ViewBag.Title = "ClubProduct";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+<div class="pull-left ajax_detail">
+    <form method="POST" action="/ClubProduct/ImportClubProduct" onsubmit="return false;">
+        <table>
+            <tr>
+                <td>选择大类：</td>
+                <td>
+                    <select name="clubProductType">
+                        @foreach (var clubProductType in Enum.GetValues(typeof(ClubProductType)))
+                        {
+                            <option value="@clubProductType">@Enum.GetName(typeof(ClubProductType), clubProductType)</option>
+                        }
+                    </select></td>
+                <td>*请选择一个大类再导入产品</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>导入产品：</td>
+                <td>
+                    <input name="file" type="file" accept=".xls,.xlsx" /></td>
+                <td>
+                    <input type="submit" class="btn ajax_update" value="上传" /></td>
+                <td><a href="/ImportModelFiles/ClubProduct/club-products.xls">下载模版</a></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="pull-right">
+    <form method="post" action="@Url.Content("~/ClubProduct/ClubProductList")" id="searchForm" name="searchForm" class="form-search">
+        <table>
+            <tr>
+                <td>请选择大类：</td>
+                <td>
+                    <select name="clubProductType">
+                        @foreach (var clubProductType in Enum.GetValues(typeof(ClubProductType)))
+                        {
+                            <option value="@clubProductType">@Enum.GetName(typeof(ClubProductType), clubProductType)</option>
+                        }
+                    </select>
+                    <button type="submit" id="clubproductsearch" class="btn">管理商品</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div class="clearboth"></div>
+
+<div id="clubproductlist" class="ajax-list" data-url="/ClubProduct/ClubProductList">
+</div>
+
+<script>
+    function deleteclubproduct(id) {
+        if (confirm("确定删除?"))
+            $.ajax({
+                type: "POST",
+                url: "/ClubProduct/DeleteClubProduct/" + id,
+                success: function (responseText) {
+                    $(".alert").remove();
+                    var msg;
+                    if (responseText.error != true) {
+                        msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作成功!' : responseText.msg;
+                        $("#clubproductlist").before('<div class="alert alert-success"><a class="close" data-dismiss="alert">×</a>' + msg + '</div>');
+                        $("#clubproductsearch").click();
+                    } else {
+                        msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作失败!' : responseText.msg;
+                        $("#clubproductlist").before('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a>' + msg + '</div>');
+                    }
+                }
+            });
+    }
+</script>

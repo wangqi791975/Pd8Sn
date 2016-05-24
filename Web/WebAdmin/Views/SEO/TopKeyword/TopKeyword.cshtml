@@ -1,0 +1,73 @@
+﻿@using Com.Panduo.Service
+@{
+    ViewBag.Title = "关键词列表";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+<div class="btn-group">
+    <button data-toggle="dropdown" class="btn dropdown-toggle">批量操作 <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+        <li><a href="javascript:void(0)" id="deleteBybatch"><i class="icon-trash"></i> 删除</a></li>
+    </ul>
+    <a class="btn" href="javascript:void(0)" data-toggle="modal" data-target=".ajax_show_add" data-backdrop="true"><i class="icon-edit"></i> 添加关键词</a>
+</div>
+<div class="pull-right">
+    <div class="pull-right">
+        <form method="post" action="#" id="searchForm" name="searchForm" class="form-search">
+            关键词名称:
+            <input id="txtTopKeywordName_search" type="text">
+            <button class="btn" id="btnSearch"><i class="icon-search"></i> 搜索</button>
+        </form>
+    </div>
+</div>
+<div class="clearfix"></div>
+当前主题： @ViewBag.TopKeywordSubjectName
+
+<div id="main" class="ajax-list" data-url="@Url.Content("/TopKeyword/TopKeywordList/" + @ViewBag.TopKeywordSubjectId)"></div>
+
+<!-- detail -->
+<div class="modal hide fade ajax_detail" data-url="@Url.Content("/TopKeyword/TopKeywordInfo")">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>编辑关键词</h3>
+    </div>
+    <div class="modal-body ajax_info">
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn btn-primary ajax_update">保存</a>
+        <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+    </div>
+</div>
+
+<!-- detail -->
+<div class="modal hide fade ajax_show_add">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>添加关键词</h3>
+    </div>
+    <div class="modal-body ajax_info">
+        <form name="updateForm" action="/TopKeyword/Edit" method="post" onsubmit="return false;">
+            <table class="table">
+                <tr>
+                    <td width="20%">ID：</td>
+                    <td>
+                        <input type="text" name="txtTopKeywordId" readonly="readonly" class="input-mini" /></td>
+                </tr>
+                <tr>
+                    <td width="40%">关键词主题：</td>
+                    <td>
+                        <input type="hidden" name="hidTopKeywordSubjectId" value="@ViewBag.TopKeywordSubjectId" readonly="readonly" />
+                        <input type="text" name="txtTopKeywordSubjectName" value="@ViewBag.TopKeywordSubjectName" readonly="readonly" /></td>
+                </tr>
+                <tr>
+                    <td width="40%">关键词：</td>
+                    <td>
+                        <input type="text" name="txtTopKeywordName" required="required" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn btn-primary ajax_add">保存</a>
+        <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+    </div>
+</div>

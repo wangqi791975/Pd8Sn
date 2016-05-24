@@ -1,0 +1,15 @@
+﻿@{
+    Layout = null;
+}
+@model Com.Panduo.Service.Customer.CustomerRemark
+<form name="updateForm" action="/Customer/CustomerManagerRemark" method="post" onsubmit="return false;">
+    <input type="hidden" name="customerId" value ="@ViewBag.CustomerId"/>
+    <table class="table table-striped">
+        <tr>
+            <td style="width: 21%">销售备注：</td>
+            <td>
+                <textarea name="remark">@(Model.IsNullOrEmpty() ? "" : Model.Remark)</textarea>
+            </td>
+        </tr>
+    </table>
+</form>

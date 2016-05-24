@@ -1,0 +1,135 @@
+﻿@{
+    ViewBag.Title = "MyAccount";
+    Layout = "~/Views/Shared/Layout/_Layout_NoLeft.cshtml";
+}
+@using System.Security
+@using Com.Panduo.Service
+@using Resources
+@model Com.Panduo.Web.Models.Customer.CustomerVo
+@Html.Partial("~/Views/Account/Partial/_Account_Siderbar_Menu.cshtml")
+@if (!Model.Customer.IsNullOrEmpty())
+{
+   <div id="main" class="account_wrap">
+        <h2 class="font14 account_title">@Lang.TipMyAccount
+            <div class="cart_add_order">
+                <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                        <th scope="row">@Lang.TipQuickOrder</th>
+                        <td><a class="btn_orange btn_w60" href="javascript:void(0)" onclick="$('#quickadd').modal('show');" >@Lang.TipAddNoPun</a></td>
+                    </tr>
+                </table>
+            </div>
+        </h2>
+		
+        <div class="dicount_cont">
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <th class="forange">@Lang.TipMyVipLevel</th>
+                    <td><span class="forange">@(Model.Customer.VipDiscount.ToIntText())% off</span>
+                        @if (Model.Customer.VipDiscount <= 20)
+                        {
+                            <span class="fgrey">@string.Format(Lang.TipJustAwayFrom,PageHelper.GetCurrentCurrency().Format(),PageHelper.ExchangeMoneyByUsd(Model.NextNeedCost).ToIntText(),Model.NextDiscount.ToIntText())</span>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <th>@Lang.TipTotalConsumption</th>
+                    <td>@PageHelper.GetCurrentCurrency().Format() @PageHelper.ExchangeMoneyByUsd(Model.Customer.HistoryAmount.HasValue ? Model.Customer.HistoryAmount.Value : 0.00M)</td>
+                </tr>
+                <tr>
+                    <th>@Lang.TipCustomNo</th>
+                    <td>@Model.TaxNumber</td>
+                </tr>
+                <tr>
+                    <th>@Lang.TipCreditBalanceWithPun</th>
+                    <td>@PageHelper.GetCurrentCurrency().CurrencyCode @PageHelper.ExchangeMoneyByUsd(Model.Balance)<span class="fgrey">@Lang.TipUseBalance</span></td>
+                </tr>				
+            </table>
+            @if (!Model.Customer.IsClub)
+            {
+                <table cellpadding="0" cellspacing="0" style="display: block;">@*此table中的内容为非club会员登录后看到的内容，此table出现时，下面的table消失*@
+                <tr>
+                    <th>@Lang.TipTotalShipFee</th>
+                    <td>
+                        @if (Model.Customer.TotalShippingFee.HasValue)
+                        {
+                           <p>@PageHelper.GetCurrentCurrency().FormatShort(PageHelper.ExchangeMoneyByUsd(Model.Customer.TotalShippingFee.Value))</p>
+                        }
+                        <p>@Lang.TipEnjoyFreeShip<a href="@UrlRewriteHelper.GetClubJoinUrl()" class="fblue_mid">@Lang.TipForDetail</a><ins></ins>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+            }
+            else
+            {
+                if (!Model.ClubCustomer.IsNullOrEmpty())
+                {
+                    <table cellpadding="0" cellspacing="0" style="display: block;">@*此table中的内容为club会员登录后看到的内容，此table出现时，上面的table消失*@
+                <tr>
+                    <th>@Lang.Tip8SeasonsClubWithPun</th>
+                    <td>
+                                <p>@(Lang.TipClubMemberTime)@PageHelper.ToCurrentShortDate(Model.ClubCustomer.BeginDate)-@PageHelper.ToCurrentShortDate(Model.ClubCustomer.EndDate)<ins></ins>
+                                </p>
+                                @if(Model.ClubCustomer.SavingShippingFee>0){
+                                  <p>@(String.Format(Lang.TipJoinClubSave, PageHelper.GetCurrentCurrency().FormatShort(PageHelper.ExchangeMoneyByUsd(Model.ClubCustomer.SavingShippingFee)),PageHelper.ToCurrentShortDate(Model.ClubCustomer.BeginDate)))</p>
+                                }
+                        @if (!Model.ClubCoupon.IsNullOrEmpty()&&Model.ClubCoupon.LimitBeginTime<=DateTime.Now)
+                        {
+                            <p>@string.Format(Lang.TipYouValidUntil,PageHelper.ToCurrentMonth(Model.ClubCoupon.LimitBeginTime),Model.ClubCoupon.LimitEndTime)</p>
+                        }
+                                 
+                    </td>
+                </tr>
+            </table>
+                }
+            }
+			
+        </div>
+        <div class="benfit_cont">
+            <h4>@Lang.TipYouEnjoyBen</h4>
+            <ol>
+
+              @if(!Model.RegisterCoupon.IsNullOrEmpty() && Model.RegisterCoupon.LimitBeginTime <= DateTime.Now)
+                        {
+                          <li>@Model.RegisterCoupon.Amount @if (Model.RegisterCoupon.AmountCurrencyId.HasValue)
+                                                           {
+                                                               @Model.RegisterCoupon.AmountCurrencyId.Value
+                                                           } @Lang.TipCouponIntoAccount <a class="fblue_mid" href="#">@Lang.TipViewLink</a></li>
+                        }
+
+            
+                @if (!Model.CustomerGroup.IsNullOrEmpty() && Model.CustomerGroup.Count > 0)
+                {
+                    <li>
+                        @Lang.TipOrderDiscount
+                        <p class="fgrey">@Lang.TipCheckoutAuto</p>
+                        <table width="608" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <th>@Lang.TipTotProPrice<br/><span class="fgrey">@Lang.TipExcPromItems</span></th>
+                                <th>@Lang.TipDiscount</th>
+                            </tr>
+                            @foreach (var c in Model.CustomerGroup)
+                            {
+                                <tr>
+                                    <td>@String.Format(Lang.TipMoreThan, @PageHelper.GetCurrentCurrency().Format(), @PageHelper.ExchangeMoneyByUsd(c.MinAmount).ToIntText())</td>
+                                    <td>@((100-c.Discount*100).ToIntText())%</td>
+                                </tr>
+                            }
+                        </table>
+                    </li>
+                }
+                <li>@Html.Raw(Lang.TipSysAddVipGroup)</li>
+                <li>@Lang.TipAfterYouPlaced</li>
+            </ol>
+        </div>
+		
+          @Html.Partial("~/Views/Product/Partial/_Product_Hot_Items_View.cshtml", @Model.ProductInfoList)
+		
+    </div>
+}
+<div class="clearfix"></div>
+@section HtmlFooter
+{
+    @Html.Partial("~/Views/Shared/Partial/_QuickAddToCart.cshtml")
+}

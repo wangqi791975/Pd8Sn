@@ -1,0 +1,34 @@
+﻿@model IList<Com.Panduo.Service.Cash.CashSection>
+@{
+    ViewBag.Title = "客户 / Balance限额管理";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+@if (Model.Count > 0)
+{
+    <div class="ajax_detail">
+        <div class="ajax_info">
+            <form method="post" enctype="multipart/form-data" action="@Url.Content("~/CashSection/Submit")" id="updateForm" name="updateForm" class="form-horizontal" target="_self" novalidate="novalidate">
+                <input type="hidden" name="code" value="@Model[0].Code" />
+                <div class=" well tab-content">
+                    <div id="tab_base_info" class="tab-pane active input-prepend">
+                        <div class="control-group">
+                            <label class="control-label">最低金额：</label>
+                            <div class="controls"><span class="add-on">USD</span><input type="text" class="input-small" id="amount_minimum" name="amount_minimum" value="@Model[0].AmountMinimum" required='required' maxlength="8" datetype="i0" /> <span class="badge badge-important">可以为负值</span></div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">最高金额：</label>
+                            <div class="controls"><span class="add-on">USD</span><input type="text" class="input-small" id="amount_maximum" name="amount_maximum" value="@Model[0].AmountMaximum" required='required' maxlength="8" datetype="i1" /></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="well form-actions">
+                    <input type="submit" value="提交" class="btn btn-primary ajax_update">
+                    <span>
+                        <input type="reset" value="取消" class="btn" />
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+}

@@ -1,0 +1,45 @@
+﻿@using Com.Panduo.Service.Customer
+@model Com.Panduo.Service.PageData<Channel>
+@{
+    Layout = null;
+}
+<table class="table table-striped" data-delaction="/Channel/Delete">
+    <thead>
+        <tr>
+            <th width="30%">客户邮箱</th>
+            <th width="20%">添加时间</th>
+            <th width="20%">最后下单时间</th>
+            <th width="15%">操作人</th>
+            <th width="15%">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var channel in Model.Data)
+        {
+            <tr>
+                <td>@channel.CustomerEmail
+                </td>
+                <td>
+                    @channel.AddDateTime
+                </td>
+                <td>
+                    @if (channel.LastOrderDateTime.Value == DateTime.MinValue)
+                    {
+
+                    }
+                    else
+                    {
+                        @channel.LastOrderDateTime 
+                    }
+                </td>
+                <td>
+                    @channel.AdminUser
+                </td>
+                <td>
+                    <a class="btn btn-mini btn-danger btn-ajax-delete" data-id="@channel.CustomerId"><i class="icon-trash icon-white"></i>删除</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.Partial("~/Views/Shared/Partial/_Page_Bottom.cshtml", @Model.Pager)

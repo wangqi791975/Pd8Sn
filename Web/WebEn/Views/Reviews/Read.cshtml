@@ -1,0 +1,57 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Web.Models.Review
+@using Resources
+@model PageData<ReviewProductsProductInfoVo>
+@{
+    ViewBag.Title = "My Products";
+    Layout = "~/Views/Shared/Layout/_Layout_NoLeft.cshtml";
+}
+@section HtmlHead{
+    @Html.JsFor("wishlist.js", "~/Js/jquery.scrollLoading.min.js ,~/Js/WishList/WishList.js", fileVersion: "2.2")
+}
+
+<div class="nav"><a href="#">Home</a> &gt; <a href="#">My Orders</a> &gt; <strong>Reviews</strong></div>
+
+@Html.Partial("~/Views/Account/Partial/_Account_Siderbar_Menu.cshtml")
+<div id="main" class="account_wrap">
+    <h2 class="font14 account_title">@Lang.TipProductReviews</h2>
+    <h5>@Lang.TipDearFriendRev</h5>
+    <div class="warning_wrap" style="display:none;"><ins class="btn_success_cart"></ins><p><strong class="fgreen">@Lang.TipThankFeedback </strong><br /><a href="#" class="fblue_mid">@Lang.TipContinueWrite</a></p></div>
+    <div class="accout_tab">
+        @if (ViewBag.OrderInfo.IsReviewAll == false)
+        {
+            <a href="@UrlRewriteHelper.GetWriteReviews(ViewBag.OrderId)"><h3>@Lang.TipWriteReviews</h3></a>
+            <a href="@UrlRewriteHelper.GetReadReviews(ViewBag.OrderId)"><h3 class="nostock current">@Lang.TipHistoryProRev</h3></a>
+        }
+        else
+        {
+            <a href="@UrlRewriteHelper.GetReadReviews(ViewBag.OrderId)"><h3 class="current">@Lang.TipHistoryProRev</h3></a>
+        }
+        
+    </div>
+    <!-- Write Reviews 开始 -->
+    <div class="reviews_cont" id="products_list">
+        @if (Model.Pager.TotalRowCount > 0)
+        {
+            @Html.Partial("Partial/_ReadList", Model)
+        }
+        else
+        {
+            <div class="title">@Html.Raw(string.Format(Lang.TipNoRevResults,UrlRewriteHelper.GetWriteReviews(ViewBag.OrderId)))</div>
+        }
+    </div>
+    <!-- Write Reviews 结束 -->
+</div>
+<div class="clearfix"></div>
+<script language="javascript">
+    $('body').on("click", ".btn_p30", function () {
+        var jqForm = $(this).parents('form').filter(':first');
+        var $target = $(jqForm.data("target"));
+        jqForm.ajaxSubmit({
+            success: function (responseText) {
+                $target.html(responseText);
+            }
+        });
+
+    });
+</script>

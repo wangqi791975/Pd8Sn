@@ -1,0 +1,3818 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ErrorConfPasswordEmpty" xml:space="preserve">
+    <value>Confirm Password is required.</value>
+    <comment>Customer错误提示，确认密码不能为空</comment>
+  </data>
+  <data name="ErrorCreateEmail" xml:space="preserve">
+    <value>Your entered email address does not match an account in our records. &lt;a href="/register.html" class="fblue_mid font_underline"&gt;Create One&lt;/a&gt;.</value>
+    <comment>Customer错误提示，邮箱不存在，需要创建一个</comment>
+  </data>
+  <data name="ErrorCustomerType" xml:space="preserve">
+    <value>"Which one describes you the best" is a required issue, please complete it.</value>
+    <comment>Customer错误提示，请选择客户类型</comment>
+  </data>
+  <data name="ErrorEmailEmpty" xml:space="preserve">
+    <value>Your Email is required.</value>
+    <comment>Customer错误提示，邮箱不能为空</comment>
+  </data>
+  <data name="ErrorEmailExist" xml:space="preserve">
+    <value>The email address is in our records - please &lt;a href="login.html"&gt;Login&lt;/a&gt; directly.</value>
+    <comment>Customer错误提示，邮箱已存在</comment>
+  </data>
+  <data name="ErrorEmailFormat" xml:space="preserve">
+    <value>Invalid Email.</value>
+    <comment>Customer错误提示，邮箱格式不正确</comment>
+  </data>
+  <data name="ErrorEmailNotExist" xml:space="preserve">
+    <value>There is no match for that email. Please try again.</value>
+    <comment>Customer错误提示，邮箱不存在</comment>
+  </data>
+  <data name="ErrorEnterEmail" xml:space="preserve">
+    <value>Please enter your email address.</value>
+    <comment>Customer错误提示，请输入邮箱地址</comment>
+  </data>
+  <data name="ErrorLongPassword" xml:space="preserve">
+    <value>Your Password should not more than 32 characters.</value>
+    <comment>Customer错误提示，密码长度必须小于32位</comment>
+  </data>
+  <data name="ErrorPassword" xml:space="preserve">
+    <value>There is no match for that password. Please try again.</value>
+    <comment>Customer错误提示，密码错误</comment>
+  </data>
+  <data name="ErrorPasswordEmpty" xml:space="preserve">
+    <value>Your password is required.</value>
+    <comment>Customer错误提示，密码不能为空</comment>
+  </data>
+  <data name="ErrorPasswordNotMatch" xml:space="preserve">
+    <value>Passwords do not match.</value>
+    <comment>Customer错误提示，密码不匹配</comment>
+  </data>
+  <data name="ErrorShortPassword" xml:space="preserve">
+    <value>Your Password should contain a minimum of 5 characters.</value>
+    <comment>Customer错误提示，密码长度必须大于5位</comment>
+  </data>
+  <data name="ErrorValidateCode" xml:space="preserve">
+    <value>Verification Code error.</value>
+    <comment>Customer错误提示，验证码错误</comment>
+  </data>
+  <data name="MsgGoAccount" xml:space="preserve">
+    <value>Go to &lt;a href="login.html"&gt;My Account&lt;/a&gt;</value>
+    <comment>Customer消息提示，去我的账户</comment>
+  </data>
+  <data name="MsgUpdatePwdSuccess" xml:space="preserve">
+    <value>Your password has been updated successfully!</value>
+    <comment>Customer消息提示，密码修改成功</comment>
+  </data>
+  <data name="Tip8SeasonsClub" xml:space="preserve">
+    <value>8Seasons Club</value>
+    <comment>文字提示，8season会员</comment>
+  </data>
+  <data name="TipAdd" xml:space="preserve">
+    <value>Add:</value>
+    <comment>Product文字提示，新增</comment>
+  </data>
+  <data name="TipAsLowAs" xml:space="preserve">
+    <value>As low as:</value>
+    <comment>Product文字提示，最低价格</comment>
+  </data>
+  <data name="TipAsLowAsNoPun" xml:space="preserve">
+    <value>As low as</value>
+    <comment>Product文字提示，最低价格</comment>
+  </data>
+  <data name="TipBestMatch" xml:space="preserve">
+    <value>Best Match</value>
+    <comment>Product文字提示，最匹配</comment>
+  </data>
+  <data name="TipBestSeller" xml:space="preserve">
+    <value>Best Sellers</value>
+    <comment>Product文字提示，热销</comment>
+  </data>
+  <data name="TipBindSuccess" xml:space="preserve">
+    <value>Bind your Account Successfully</value>
+    <comment>Customer文字提示，成功绑定你的账号</comment>
+  </data>
+  <data name="TipCompanyProfile" xml:space="preserve">
+    <value>Company Profile</value>
+    <comment>文字提示，公司简介</comment>
+  </data>
+  <data name="TipConfPassword" xml:space="preserve">
+    <value>Confirm Password:</value>
+    <comment>Customer文字提示，确认密码</comment>
+  </data>
+  <data name="TipConfPwd" xml:space="preserve">
+    <value>Confirm New Password:</value>
+    <comment>Customer文字提示，确认新密码</comment>
+  </data>
+  <data name="TipCustomerService" xml:space="preserve">
+    <value>Customer service</value>
+    <comment>Footer文字提示，客户服务</comment>
+  </data>
+  <data name="TipDescribeYou" xml:space="preserve">
+    <value>which one describes you the best?</value>
+    <comment>Customer文字提示，最符合的描述</comment>
+  </data>
+  <data name="TipDescription" xml:space="preserve">
+    <value>Description</value>
+    <comment>Product文字提示，描述</comment>
+  </data>
+  <data name="TipDIYFan" xml:space="preserve">
+    <value>DIY Fan</value>
+    <comment>Customer文字提示，diy迷</comment>
+  </data>
+  <data name="TipDropShipping" xml:space="preserve">
+    <value>Drop shipping</value>
+    <comment>文字提示，代发货</comment>
+  </data>
+  <data name="TipDutyAdvice" xml:space="preserve">
+    <value>Customs Duty Advice</value>
+    <comment>文字提示，关税建议</comment>
+  </data>
+  <data name="TipEmail" xml:space="preserve">
+    <value>Email:</value>
+    <comment>Customer文字提示，email</comment>
+  </data>
+  <data name="TipEnjoyDiscount" xml:space="preserve">
+    <value>You can also enjoy the following discount now:</value>
+    <comment>Customer文字提示，享受以下折扣</comment>
+  </data>
+  <data name="TipEnterEmail" xml:space="preserve">
+    <value>Enter Email Address here</value>
+    <comment>Footer文字提示，此处输入邮箱地址</comment>
+  </data>
+  <data name="TipEnterNPwd" xml:space="preserve">
+    <value>Enter New Password:</value>
+    <comment>Customer文字提示，输入新密码</comment>
+  </data>
+  <data name="TipFacebookLogin" xml:space="preserve">
+    <value>Login with Facebook</value>
+    <comment>Customer文字提示，脸书登录</comment>
+  </data>
+  <data name="TipFgtPwd" xml:space="preserve">
+    <value>Forgot password?</value>
+    <comment>Customer文字提示，忘记密码</comment>
+  </data>
+  <data name="TipFollowUsOn" xml:space="preserve">
+    <value>Follow us on</value>
+    <comment>Footer文字提示，追踪</comment>
+  </data>
+  <data name="TipForgetPassword" xml:space="preserve">
+    <value>Forgot your password?</value>
+    <comment>Customer文字提示，忘记你的密码</comment>
+  </data>
+  <data name="TipFreeSample" xml:space="preserve">
+    <value>Free Sample</value>
+    <comment>文字提示，免费样品</comment>
+  </data>
+  <data name="TipFriendsSay" xml:space="preserve">
+    <value>Our Friends Say</value>
+    <comment>Footer文字提示，我们的朋友说</comment>
+  </data>
+  <data name="TipGetFirstInfo" xml:space="preserve">
+    <value>Get first-hand information of New Arrivals and promotion updates.</value>
+    <comment>Footer文字提示，获取第一手信息</comment>
+  </data>
+  <data name="TipHaveAccount" xml:space="preserve">
+    <value>Already have an account?</value>
+    <comment>Customer文字提示，已经有账号</comment>
+  </data>
+  <data name="TipHome" xml:space="preserve">
+    <value>Home</value>
+    <comment>Customer文字提示，home</comment>
+  </data>
+  <data name="TipInStock" xml:space="preserve">
+    <value>In Stock</value>
+    <comment>Product文字提示，库存</comment>
+  </data>
+  <data name="TipJoinCoupon" xml:space="preserve">
+    <value>Join us Free and Get $15 coupon</value>
+    <comment>Customer文字提示，加入获取优惠券</comment>
+  </data>
+  <data name="TipLogin" xml:space="preserve">
+    <value>Login</value>
+    <comment>文字提示，login</comment>
+  </data>
+  <data name="TipMedium" xml:space="preserve">
+    <value>Medium</value>
+    <comment>Customer文字提示，密码强度中</comment>
+  </data>
+  <data name="TipMoreTestimonials" xml:space="preserve">
+    <value>More Testimonials</value>
+    <comment>Footer文字提示，更多客户评价</comment>
+  </data>
+  <data name="TipName" xml:space="preserve">
+    <value>Name:</value>
+    <comment>Customer文字提示，姓名</comment>
+  </data>
+  <data name="TipNewest" xml:space="preserve">
+    <value>Newest</value>
+    <comment>Product文字提示，新品</comment>
+  </data>
+  <data name="TipOEMPro" xml:space="preserve">
+    <value>OEM &amp; Sourcing &lt;span class="fblue"&gt;Pro&lt;/span&gt;</value>
+    <comment>Footer文字提示，专业采购</comment>
+  </data>
+  <data name="TipOnSale" xml:space="preserve">
+    <value>On Sale</value>
+    <comment>Product文字提示，促销</comment>
+  </data>
+  <data name="TipOr" xml:space="preserve">
+    <value>OR</value>
+    <comment>Customer文字提示，或</comment>
+  </data>
+  <data name="TipOtherPackage" xml:space="preserve">
+    <value>Other package sizes</value>
+    <comment>Product文字提示，大小包装</comment>
+  </data>
+  <data name="TipPassword" xml:space="preserve">
+    <value>Password:</value>
+    <comment>Customer文字提示，password</comment>
+  </data>
+  <data name="TipPeriod" xml:space="preserve">
+    <value>.</value>
+    <comment>文字提示，句号</comment>
+  </data>
+  <data name="TipPrice" xml:space="preserve">
+    <value>Price</value>
+    <comment>Product文字提示，价格</comment>
+  </data>
+  <data name="TipPwdReset" xml:space="preserve">
+    <value>Password Reset</value>
+    <comment>Customer文字提示，密码重置</comment>
+  </data>
+  <data name="TipQTY" xml:space="preserve">
+    <value>QTY:</value>
+    <comment>Product文字提示，数量</comment>
+  </data>
+  <data name="TipReceiveNewsletters" xml:space="preserve">
+    <value>I’d like to receive 8Seasons newsletters with the latest offers and news.</value>
+    <comment>Customer文字提示，接受订阅</comment>
+  </data>
+  <data name="TipRegister" xml:space="preserve">
+    <value>Register</value>
+    <comment>Customer文字提示，注册</comment>
+  </data>
+  <data name="TipRequiredInfo" xml:space="preserve">
+    <value>Required Information</value>
+    <comment>Customer文字提示，必要信息</comment>
+  </data>
+  <data name="TipResetPwd" xml:space="preserve">
+    <value>Reset Password</value>
+    <comment>Customer文字提示，重置密码</comment>
+  </data>
+  <data name="TipRetailer" xml:space="preserve">
+    <value>Retailer</value>
+    <comment>Customer文字提示，零售商</comment>
+  </data>
+  <data name="TipReturnPolicy" xml:space="preserve">
+    <value>Return Policy</value>
+    <comment>Footer文字提示，退货方案</comment>
+  </data>
+  <data name="TipSendCoupon" xml:space="preserve">
+    <value>&lt;i class="fred"&gt;{0} {1}&lt;/i&gt; coupon has been added to your account successfully.</value>
+    <comment>Customer文字提示，送注册优惠券成功，0：币种符号，1：金额</comment>
+  </data>
+  <data name="TipService" xml:space="preserve">
+    <value>Service</value>
+    <comment>文字提示，服务</comment>
+  </data>
+  <data name="TipShippingFee" xml:space="preserve">
+    <value>Shipping Fee</value>
+    <comment>文字提示，运费</comment>
+  </data>
+  <data name="TipShippingWeight" xml:space="preserve">
+    <value>Shipping Weight:</value>
+    <comment>Product文字提示，运输重量</comment>
+  </data>
+  <data name="TipStrong" xml:space="preserve">
+    <value>Strong</value>
+    <comment>Customer文字提示，密码强度强</comment>
+  </data>
+  <data name="TipSubmit" xml:space="preserve">
+    <value>Submit</value>
+    <comment>Customer文字提示，提交</comment>
+  </data>
+  <data name="TipSubscribe" xml:space="preserve">
+    <value>Subscribe</value>
+    <comment>Footer文字提示，订阅</comment>
+  </data>
+  <data name="TipSubTestimonial" xml:space="preserve">
+    <value>Submit a testimonial</value>
+    <comment>Footer文字提示，提交评论</comment>
+  </data>
+  <data name="TipTermCondition" xml:space="preserve">
+    <value>Terms and Conditions</value>
+    <comment>Customer文字提示，条款条件</comment>
+  </data>
+  <data name="TipVerificationCode" xml:space="preserve">
+    <value>Verification Code:</value>
+    <comment>Customer文字提示，验证码</comment>
+  </data>
+  <data name="TipVerificationCodeNoPun" xml:space="preserve">
+    <value>Verification Code</value>
+    <comment>Customer文字提示，验证码</comment>
+  </data>
+  <data name="TipView" xml:space="preserve">
+    <value>View:</value>
+    <comment>Product文字提示，展示</comment>
+  </data>
+  <data name="TipVIPolicy" xml:space="preserve">
+    <value>VIP Policy</value>
+    <comment>文字提示，vip政策</comment>
+  </data>
+  <data name="TipWeak" xml:space="preserve">
+    <value>Weak</value>
+    <comment>Customer文字提示，密码强度弱</comment>
+  </data>
+  <data name="TipWelcomeJoin" xml:space="preserve">
+    <value>Welcome to Join us!</value>
+    <comment>Customer文字提示，欢迎加入我们</comment>
+  </data>
+  <data name="TipWholesaler" xml:space="preserve">
+    <value>Wholesaler</value>
+    <comment>Customer文字提示，批发商</comment>
+  </data>
+  <data name="TipWriteReview" xml:space="preserve">
+    <value>Write a review</value>
+    <comment>Review文字提示，写一条产品评论</comment>
+  </data>
+  <data name="TipWriteTestimonial" xml:space="preserve">
+    <value>Write A Testimonial</value>
+    <comment>Footer文字提示，写一条评论</comment>
+  </data>
+  <data name="TipYourAccountIs" xml:space="preserve">
+    <value>Your account is</value>
+    <comment>Customer文字提示，你的账号是</comment>
+  </data>
+  <data name="TipAgree8Seasons" xml:space="preserve">
+    <value>&lt;p&gt;By creating an account, you agree to 8seasons.com's &lt;a class="forange font_underline" href="javascript:void(0)"&gt;Terms and Conditions&lt;/a&gt;.&lt;/p&gt;</value>
+    <comment>Review文字提示，同意条款</comment>
+  </data>
+  <data name="TipCapJoinCoupon" xml:space="preserve">
+    <value>&lt;p&gt;Join us to get &lt;strong class="forange_mid"&gt;$15&lt;/strong&gt; coupon and enjoy discount up to &lt;strong class="forange_mid"&gt;20%&lt;/strong&gt; off&lt;/p&gt;</value>
+    <comment>Customer文字提示，加入我们获取16优惠券</comment>
+  </data>
+  <data name="TipCharRemaining" xml:space="preserve">
+    <value>characters remaining</value>
+    <comment>Review文字提示，字符限制</comment>
+  </data>
+  <data name="TipChooseRating" xml:space="preserve">
+    <value>Please choose a rating for this item.</value>
+    <comment>Review文字提示，请评分</comment>
+  </data>
+  <data name="TipCustomerReview" xml:space="preserve">
+    <value>Customers' Reviews</value>
+    <comment>Review文字提示，客户评价</comment>
+  </data>
+  <data name="TipDearFriend" xml:space="preserve">
+    <value>Dear friend, please tell us what you think about this product and share your opinions with others. Thanks a lot!</value>
+    <comment>Review文字提示，写评论提示</comment>
+  </data>
+  <data name="TipLeastOneChar" xml:space="preserve">
+    <value>Please add a few more words to your comments. The review needs to have at least 1 character.</value>
+    <comment>Review文字提示，请输入至少一个字符</comment>
+  </data>
+  <data name="TipTestimonials" xml:space="preserve">
+    <value>Testimonials:</value>
+    <comment>Review文字提示，综合评价</comment>
+  </data>
+  <data name="TipTestimonialsHint" xml:space="preserve">
+    <value>Your testimonials are highly appreciated for 8seasons. We are so grateful for those who warmly share your
+experience here. If dear you have a testimonial you would like to say, welcome to write it in the following form. Thank you!</value>
+    <comment>Review文字提示，评论提示</comment>
+  </data>
+  <data name="ErrorEmptyVerificationCode" xml:space="preserve">
+    <value>Please enter the Verification Code in the picture.</value>
+    <comment>Customer错误提示，验证码不能为空</comment>
+  </data>
+  <data name="TipAddCart" xml:space="preserve">
+    <value>Add To Cart</value>
+    <comment>Product文字提示，添加购物车</comment>
+  </data>
+  <data name="TipAddWishlist" xml:space="preserve">
+    <value>Add To Wishlist</value>
+    <comment>Product文字提示，添加心愿单</comment>
+  </data>
+  <data name="TipAlsoBought" xml:space="preserve">
+    <value>After viewing this item, customers also bought...</value>
+    <comment>Product文字提示，买了这个商品的客户还买了。。。</comment>
+  </data>
+  <data name="TipAskQue" xml:space="preserve">
+    <value>Ask a question</value>
+    <comment>Product文字提示，提问</comment>
+  </data>
+  <data name="TipAttachment" xml:space="preserve">
+    <value>Attachment:</value>
+    <comment>Product文字提示，附件</comment>
+  </data>
+  <data name="TipBackorder" xml:space="preserve">
+    <value>Backorder</value>
+    <comment>Product文字提示，延期未交订单</comment>
+  </data>
+  <data name="TipContactUsF" xml:space="preserve">
+    <value>Contact us freely for any question.</value>
+    <comment>Product文字提示，有任何问题随时联系</comment>
+  </data>
+  <data name="TipGrossWeight" xml:space="preserve">
+    <value>Gross weight:</value>
+    <comment>Product文字提示，净重</comment>
+  </data>
+  <data name="TipImportDutyRisk" xml:space="preserve">
+    <value>Import Duty Risk</value>
+    <comment>Product文字提示，货物进口关税险</comment>
+  </data>
+  <data name="TipLmtStock" xml:space="preserve">
+    <value>Limited stock</value>
+    <comment>Product文字提示，库存有限</comment>
+  </data>
+  <data name="TipMainProduct" xml:space="preserve">
+    <value>Main Product</value>
+    <comment>Product文字提示，主要产品</comment>
+  </data>
+  <data name="TipNEW" xml:space="preserve">
+    <value>NEW</value>
+    <comment>Product文字提示，新</comment>
+  </data>
+  <data name="TipOthPakSize" xml:space="preserve">
+    <value>Other Available Package Sizes</value>
+    <comment>Product文字提示，其他包大小</comment>
+  </data>
+  <data name="TipPartNo" xml:space="preserve">
+    <value>Part No.:</value>
+    <comment>Product文字提示,零件号码</comment>
+  </data>
+  <data name="TipPerPack" xml:space="preserve">
+    <value>/pack</value>
+    <comment>Product文字提示，每包</comment>
+  </data>
+  <data name="TipQualityControl" xml:space="preserve">
+    <value>Quality Control</value>
+    <comment>Product文字提示，质量控制</comment>
+  </data>
+  <data name="TipQueSendSucc" xml:space="preserve">
+    <value>Question Sent Successfully!</value>
+    <comment>Product文字提示，问题发送成功</comment>
+  </data>
+  <data name="TipQuestion" xml:space="preserve">
+    <value>Question:</value>
+    <comment>Product文字提示，问题</comment>
+  </data>
+  <data name="TipRepTwoDays" xml:space="preserve">
+    <value>You will get our reply within 2 business days.</value>
+    <comment>Product文字提示，2个工作日之内回复</comment>
+  </data>
+  <data name="TipShipInTime" xml:space="preserve">
+    <value>Ship in 48 hours</value>
+    <comment>Product文字提示，48小时内运送</comment>
+  </data>
+  <data name="TipSimilarItems" xml:space="preserve">
+    <value>Similar Items</value>
+    <comment>Product文字提示，相似商品</comment>
+  </data>
+  <data name="TipStockAvailable" xml:space="preserve">
+    <value>Stock Available</value>
+    <comment>Product文字提示，可用库存</comment>
+  </data>
+  <data name="TipAccountSetting" xml:space="preserve">
+    <value>Account setting</value>
+    <comment>Account文字提示，账户设置</comment>
+  </data>
+  <data name="TipAcrylicBeads" xml:space="preserve">
+    <value>Acrylic Beads</value>
+    <comment>Footer文字提示，克力珠</comment>
+  </data>
+  <data name="TipAddressBook" xml:space="preserve">
+    <value>Address book</value>
+    <comment>MyAccount文字提示，地址簿</comment>
+  </data>
+  <data name="TipAllCategories" xml:space="preserve">
+    <value>All Categories</value>
+    <comment>文字提示，所有类别</comment>
+  </data>
+  <data name="TipBeads" xml:space="preserve">
+    <value>Beads</value>
+    <comment>Footer文字提示，Beads</comment>
+  </data>
+  <data name="TipBestItems" xml:space="preserve">
+    <value>Best Matched Items</value>
+    <comment>Product文字提示，最佳匹配商品</comment>
+  </data>
+  <data name="TipCart" xml:space="preserve">
+    <value>Cart</value>
+    <comment>文字提示，购物车</comment>
+  </data>
+  <data name="TipCharmsWholesale" xml:space="preserve">
+    <value>Charms Wholesale</value>
+    <comment>Footer文字提示，Charms Wholesale</comment>
+  </data>
+  <data name="TipCheckEmailFormat" xml:space="preserve">
+    <value>Please check the email address. It should look like: email@hotmail.com.</value>
+    <comment>Footer文字提示，检查邮箱格式</comment>
+  </data>
+  <data name="TipCheckInfoFi" xml:space="preserve">
+    <value>Check the information you entered to make sure it's correct.</value>
+    <comment>404文字提示，检查您输入的信息,以确保它是正确的</comment>
+  </data>
+  <data name="TipCheckInfoFo" xml:space="preserve">
+    <value>If you seek Help, click the Help on the left top of our website, and you may find what you want to know there.</value>
+    <comment>404文字提示，如果您正在寻找帮助，请点击我们的网站的左上角的帮助，你会发现你想知道的地方。</comment>
+  </data>
+  <data name="TipCheckInfoSe" xml:space="preserve">
+    <value>Try to access the page directly from Home page instead of using a bookmark. If the page has been removed, reset your bookmark.</value>
+    <comment>404文字提示，尝试直接使用书签的主页，而不是访问页面。如果页面移动，重置您的书签。</comment>
+  </data>
+  <data name="TipCheckInfoTh" xml:space="preserve">
+    <value>Enter keywords in the Search box and click the Search button. Or, search through the categories on the left.</value>
+    <comment>404文字提示，在搜索框中输入关键字，点击搜索按钮。或者，浏览左侧的类别。</comment>
+  </data>
+  <data name="TipChineseJewelry" xml:space="preserve">
+    <value>Beads, Jewelry Making Supplies &amp; Crafts Wholesaler</value>
+    <comment>logo下方文字提示，中国珠子和珠宝供应商</comment>
+  </data>
+  <data name="TipClayBeads" xml:space="preserve">
+    <value>Clay Beads</value>
+    <comment>Footer文字提示，Clay Beads</comment>
+  </data>
+  <data name="TipClearAll" xml:space="preserve">
+    <value>Clear all</value>
+    <comment>文字提示，清空</comment>
+  </data>
+  <data name="TipCompanyAddress" xml:space="preserve">
+    <value>&lt;strong&gt;Address:&lt;/strong&gt; 588 Jiangnan Road, Binjiang District, Hangzhou, Zhejiang P.R.C.&lt;strong&gt;ZipCode:&lt;/strong&gt; 310051</value>
+    <comment>Footer文字提示，公司地址</comment>
+  </data>
+  <data name="TipCompanyEmail" xml:space="preserve">
+    <value>&lt;strong&gt;Email:&lt;/strong&gt; &lt;a href="#" class="fblue"&gt;service@8seasons.com&lt;/a&gt;</value>
+    <comment>Footer文字提示，公司邮箱</comment>
+  </data>
+  <data name="TipCompanyFax" xml:space="preserve">
+    <value>&lt;strong&gt;Fax:&lt;/strong&gt; (+86)579-85261619</value>
+    <comment>Footer文字提示，公司传真</comment>
+  </data>
+  <data name="TipCompanyTel" xml:space="preserve">
+    <value>&lt;strong&gt;Tel:&lt;/strong&gt; (+86) 579-85335690</value>
+    <comment>Footer文字提示，公司电话</comment>
+  </data>
+  <data name="TipContactUs" xml:space="preserve">
+    <value>Contact Us</value>
+    <comment>文字提示，联系我们</comment>
+  </data>
+  <data name="TipContinueShopping" xml:space="preserve">
+    <value>Continue Shopping</value>
+    <comment>文字提示，继续购物</comment>
+  </data>
+  <data name="TipCurrency" xml:space="preserve">
+    <value>Currency:</value>
+    <comment>文字提示，币种</comment>
+  </data>
+  <data name="TipExclusiveSale" xml:space="preserve">
+    <value>Exclusive SALE</value>
+    <comment>Header文字提示，独家发售</comment>
+  </data>
+  <data name="TipFacebook" xml:space="preserve">
+    <value>Facebook</value>
+    <comment>Footer文字提示，脸书</comment>
+  </data>
+  <data name="TipGemstoneBeads" xml:space="preserve">
+    <value>Gemstone Beads</value>
+    <comment>Footer文字提示，宝石园珠</comment>
+  </data>
+  <data name="TipGlassBeads" xml:space="preserve">
+    <value>Crystal Glass Beads</value>
+    <comment>Footer文字提示，玻璃珠</comment>
+  </data>
+  <data name="TipGO" xml:space="preserve">
+    <value>GO</value>
+    <comment>文字提示，翻页的GO</comment>
+  </data>
+  <data name="TipGoogle" xml:space="preserve">
+    <value>Google+</value>
+    <comment>Footer文字提示，谷歌</comment>
+  </data>
+  <data name="TipHelp" xml:space="preserve">
+    <value>Help</value>
+    <comment>文字提示，帮助</comment>
+  </data>
+  <data name="TipJewelrySupplies" xml:space="preserve">
+    <value>Jewelry Supplies</value>
+    <comment>Footer文字提示，珠宝用品</comment>
+  </data>
+  <data name="TipLampwork" xml:space="preserve">
+    <value>Lampwork</value>
+    <comment>Footer文字提示，Lampwork</comment>
+  </data>
+  <data name="TipLanguage" xml:space="preserve">
+    <value>Language</value>
+    <comment>Review文字提示，语言</comment>
+  </data>
+  <data name="TipAffiliates" xml:space="preserve">
+    <value>Affiliates</value>
+    <comment>Footer文字提示，链接</comment>
+  </data>
+  <data name="TipMarketSpotlight" xml:space="preserve">
+    <value>Market Spotlight</value>
+    <comment>Hrader文字提示，市场焦点</comment>
+  </data>
+  <data name="TipMayPerfer" xml:space="preserve">
+    <value>You may choose to:</value>
+    <comment>404文字提示：你可能选择做</comment>
+  </data>
+  <data name="TipMayPerferHere" xml:space="preserve">
+    <value>Or you may prefer to start from here</value>
+    <comment>404文字提示，喜欢这里开始</comment>
+  </data>
+  <data name="TipMobileSite" xml:space="preserve">
+    <value>Mobile Site</value>
+    <comment>文字提示，手机站</comment>
+  </data>
+  <data name="TipMore" xml:space="preserve">
+    <value>More &gt;</value>
+    <comment>Product文字提示：更多</comment>
+  </data>
+  <data name="TipMyAccount" xml:space="preserve">
+    <value>My Account</value>
+    <comment>MyAccount文字提示，我的账户</comment>
+  </data>
+  <data name="TipMyOrders" xml:space="preserve">
+    <value>My orders</value>
+    <comment>MyAccount文字提示，我的订单</comment>
+  </data>
+  <data name="TipOrLower" xml:space="preserve">
+    <value>or</value>
+    <comment>文字提示，或者</comment>
+  </data>
+  <data name="TipPageMove" xml:space="preserve">
+    <value>This page may be removed or is no longer available. Please try one of the following:</value>
+    <comment>404文字提示：页面不可用或者被移除，请尝试下列方法</comment>
+  </data>
+  <data name="TipPaymentMethod" xml:space="preserve">
+    <value>Payment Method</value>
+    <comment>MyAccount文字提示，付款方式</comment>
+  </data>
+  <data name="TipPinterest" xml:space="preserve">
+    <value>Pinterest</value>
+    <comment>Footer文字提示，Pinterest</comment>
+  </data>
+  <data name="TipRating" xml:space="preserve">
+    <value>Rating:</value>
+    <comment>Product文字提示,评分</comment>
+  </data>
+  <data name="TipRecentlyViewed" xml:space="preserve">
+    <value>Recently Viewed</value>
+    <comment>Product文字提示,最近浏览</comment>
+  </data>
+  <data name="TipRefineBy" xml:space="preserve">
+    <value>Refine By</value>
+    <comment>文字提示,搜索范围</comment>
+  </data>
+  <data name="TipRightsReserved" xml:space="preserve">
+    <value>&lt;ins&gt;Hangzhou Panduo Information technology Co., Ltd.&lt;/ins&gt; &lt;ins&gt;&lt;strong&gt;China Wholesale Beads.&lt;/strong&gt;&lt;/ins&gt; All rights reserved</value>
+    <comment>Footer文字提示，版权所有</comment>
+  </data>
+  <data name="TipSearch" xml:space="preserve">
+    <value>Search</value>
+    <comment>文字提示，搜索</comment>
+  </data>
+  <data name="TipSeedBeads" xml:space="preserve">
+    <value>Seed Beads</value>
+    <comment>Footer文字提示，Seed Beads</comment>
+  </data>
+  <data name="TipSitemap" xml:space="preserve">
+    <value>Sitemap</value>
+    <comment>Footer文字提示，网站</comment>
+  </data>
+  <data name="TipSourcing" xml:space="preserve">
+    <value>Sourcing for products</value>
+    <comment>404文字提示：找货</comment>
+  </data>
+  <data name="TipSystemError" xml:space="preserve">
+    <value>System error and it was unable to complete your request.Please try again later.&lt;br/&gt;
+                Sorry for any inconvenience.</value>
+    <comment>SystemError文字提示，系统错误，无法完成您的请求，请稍后再试</comment>
+  </data>
+  <data name="TipTodayDeals" xml:space="preserve">
+    <value>Today's Deals</value>
+    <comment>Header文字提示，今日优惠</comment>
+  </data>
+  <data name="TipTwitter" xml:space="preserve">
+    <value>Twitter</value>
+    <comment>Footer文字提示，推特</comment>
+  </data>
+  <data name="TipViewAll" xml:space="preserve">
+    <value>View all &gt;&gt;</value>
+    <comment>文字提示，显示全部</comment>
+  </data>
+  <data name="TipViewAllCategories" xml:space="preserve">
+    <value>View All Sub-categories &gt;&gt;</value>
+    <comment>文字提示，显示全部类别</comment>
+  </data>
+  <data name="TipWhatNew" xml:space="preserve">
+    <value>What's New</value>
+    <comment>Header文字提示，新品</comment>
+  </data>
+  <data name="TipWholesaleBeads" xml:space="preserve">
+    <value>Wholesale Beads</value>
+    <comment>Footer文字提示，批发珠宝</comment>
+  </data>
+  <data name="TipWholesaleButtons" xml:space="preserve">
+    <value>Wholesale Buttons</value>
+    <comment>Footer文字提示，Wholesale Buttons</comment>
+  </data>
+  <data name="TipWishlist" xml:space="preserve">
+    <value>Wishlist</value>
+    <comment>MyAccount文字提示，心愿单</comment>
+  </data>
+  <data name="TipAboutClub" xml:space="preserve">
+    <value>About 8Seasons Club?</value>
+    <comment>Club文字提示，关于Club会员</comment>
+  </data>
+  <data name="TiperPack" xml:space="preserve">
+    <value>per Pack</value>
+    <comment>Product文字提示，每包</comment>
+  </data>
+  <data name="TipExclusivePrice" xml:space="preserve">
+    <value>Exclusive Price for Club Members:</value>
+    <comment>Product文字提示，度假俱乐部会员价格</comment>
+  </data>
+  <data name="TipGrossWeightUp" xml:space="preserve">
+    <value>Gross Weight:</value>
+    <comment>文字提示，净重</comment>
+  </data>
+  <data name="TipHotItems" xml:space="preserve">
+    <value>Hot Items</value>
+    <comment>Product文字提示，热卖品</comment>
+  </data>
+  <data name="TipItemsFound" xml:space="preserve">
+    <value>&lt;span&gt;{0} &lt;/span&gt;item(s) found in {1}</value>
+    <comment>Product文字提示，发现产品在，0：数量，1：搜索的类别/标准类别名称</comment>
+  </data>
+  <data name="TipJoinClub" xml:space="preserve">
+    <value>Join 8Seasons Club</value>
+    <comment>Club文字提示，加入Club会员</comment>
+  </data>
+  <data name="TipLoginViewVIPrice" xml:space="preserve">
+    <value>Login to View your VIP Price</value>
+    <comment>Product文字提示，登录显示VIP价格</comment>
+  </data>
+  <data name="TipNote" xml:space="preserve">
+    <value>Note:</value>
+    <comment>Product文字提示，描述</comment>
+  </data>
+  <data name="TipOtherPackageSizes" xml:space="preserve">
+    <value>Other Package Sizes</value>
+    <comment>Product文字提示，其他包装尺寸</comment>
+  </data>
+  <data name="TipPromotionPrice" xml:space="preserve">
+    <value>Your Price of Promotion Discount</value>
+    <comment>Product文字提示，促销折扣价</comment>
+  </data>
+  <data name="TipQuantity" xml:space="preserve">
+    <value>Quantity:</value>
+    <comment>Product文字提示，数量</comment>
+  </data>
+  <data name="TipSubCategories" xml:space="preserve">
+    <value>Sub Categories of</value>
+    <comment>Product文字提示，分类</comment>
+  </data>
+  <data name="TipToMetricUnits" xml:space="preserve">
+    <value>Convert to Metric units.</value>
+    <comment>Product文字提示，转换为公制单位</comment>
+  </data>
+  <data name="TipVolumeWeight" xml:space="preserve">
+    <value>Volume weight:</value>
+    <comment>Product文字提示，体积重</comment>
+  </data>
+  <data name="TipYourPrice" xml:space="preserve">
+    <value>Your Price</value>
+    <comment>Product文字提示，你的价格</comment>
+  </data>
+  <data name="TipAccountSettingUp" xml:space="preserve">
+    <value>Account Setting</value>
+    <comment>Account文字提示，账户设置（大写）</comment>
+  </data>
+  <data name="TipAvatar" xml:space="preserve">
+    <value>Avatar:</value>
+    <comment>Account文字提示，头像</comment>
+  </data>
+  <data name="TipChangeAdd" xml:space="preserve">
+    <value>Change Email Address</value>
+    <comment>Account文字提示，修改地址</comment>
+  </data>
+  <data name="TipChangePwd" xml:space="preserve">
+    <value>Change the Password</value>
+    <comment>Account文字提示，修改密码</comment>
+  </data>
+  <data name="TipCurrentPassword" xml:space="preserve">
+    <value>Current Password:</value>
+    <comment>Account文字提示，当前密码</comment>
+  </data>
+  <data name="TipEdit" xml:space="preserve">
+    <value>Edit</value>
+    <comment>文字提示，编辑</comment>
+  </data>
+  <data name="TipNewPassword" xml:space="preserve">
+    <value>New Password:</value>
+    <comment>Account文字提示，新密码</comment>
+  </data>
+  <data name="TiprofileSetting" xml:space="preserve">
+    <value>Profile Setting</value>
+    <comment>Account文字提示，配置文件窗口</comment>
+  </data>
+  <data name="TipSave" xml:space="preserve">
+    <value>Save</value>
+    <comment>文字提示，保存</comment>
+  </data>
+  <data name="TipEditAvatar" xml:space="preserve">
+    <value>Edit your Avatar</value>
+    <comment>Account文字提示，编辑头像</comment>
+  </data>
+  <data name="ErrorImageEmpty" xml:space="preserve">
+    <value>Please upload a image.</value>
+    <comment>Account错误提示，上传图片为空</comment>
+  </data>
+  <data name="ErrorImageFormat" xml:space="preserve">
+    <value>Image ratio does not meet the requirements.</value>
+    <comment>Account错误提示，图片比例不符合要求</comment>
+  </data>
+  <data name="ErrorImageSize" xml:space="preserve">
+    <value>Image size must be greater than {最小尺寸}</value>
+    <comment>Account错误提示，图片尺寸必须大于</comment>
+  </data>
+  <data name="MsgPreferenceSuccess" xml:space="preserve">
+    <value>Your preference has been successfully updated.</value>
+    <comment>Account消息提示，偏好更新成功</comment>
+  </data>
+  <data name="TipCurrencyNoPun" xml:space="preserve">
+    <value>Currency</value>
+    <comment>Account文字提示，币种</comment>
+  </data>
+  <data name="TipLinearMeasure" xml:space="preserve">
+    <value>Linear Measure</value>
+    <comment>Account文字提示，尺寸单位</comment>
+  </data>
+  <data name="TipMyPreference" xml:space="preserve">
+    <value>My Preference</value>
+    <comment>Account文字提示，我的偏好</comment>
+  </data>
+  <data name="TipPageAs" xml:space="preserve">
+    <value>Page as</value>
+    <comment>Account文字提示，展示类型</comment>
+  </data>
+  <data name="TipPerPage" xml:space="preserve">
+    <value>Products per Page</value>
+    <comment>Account文字提示，每页产品数</comment>
+  </data>
+  <data name="TipWeight" xml:space="preserve">
+    <value>Weight</value>
+    <comment>Account文字提示，重量</comment>
+  </data>
+  <data name="MsgNewsletterSuccess" xml:space="preserve">
+    <value>Your newsletter subscription has been successfully updated.</value>
+    <comment>Newsletter消息提示，订阅成功</comment>
+  </data>
+  <data name="TipGeneralNewsletter" xml:space="preserve">
+    <value>General Newsletter</value>
+    <comment>Newsletter文字提示，一般通讯</comment>
+  </data>
+  <data name="TipNewsletterNews" xml:space="preserve">
+    <value>Including store news, new products, special offers and other promotional announcements.</value>
+    <comment>Newsletter文字提示，包括店面新闻，新产品，特别优惠等促销公告</comment>
+  </data>
+  <data name="TipNewsletterSubscription" xml:space="preserve">
+    <value>Newsletter Subscription</value>
+    <comment>Newsletter文字提示，订阅</comment>
+  </data>
+  <data name="TipPaymentNameBankOfChina" xml:space="preserve">
+    <value>Bank Wire Transfer(Bank of China)</value>
+    <comment>支付方式名称文字显示</comment>
+  </data>
+  <data name="TipPaymentNameCash" xml:space="preserve">
+    <value>Cash</value>
+    <comment>支付方式名称文字显示</comment>
+  </data>
+  <data name="TipPaymentNameGc" xml:space="preserve">
+    <value>Credit Card</value>
+    <comment>支付方式名称文字显示</comment>
+  </data>
+  <data name="TipPaymentNameHsbc" xml:space="preserve">
+    <value>Bank Wire Transfer(HSBC)</value>
+    <comment>支付方式名称文字显示</comment>
+  </data>
+  <data name="TipPaymentNameMoneyGram" xml:space="preserve">
+    <value>Money Gram</value>
+    <comment>支付方式名称文字显示</comment>
+  </data>
+  <data name="TipPaymentNameOceanCreditCard" xml:space="preserve">
+    <value>OceanCreditCard</value>
+    <comment>支付方式名称文字显示</comment>
+  </data>
+  <data name="TipPaymentNamePaypal" xml:space="preserve">
+    <value>Checkout with PayPal</value>
+    <comment>支付方式名称文字显示</comment>
+  </data>
+  <data name="TipPaymentNameQiWi" xml:space="preserve">
+    <value>QIWI Wallet</value>
+    <comment>支付方式名称文字显示</comment>
+  </data>
+  <data name="TipPaymentNameWebmoney" xml:space="preserve">
+    <value>WebMoney</value>
+    <comment>支付方式名称文字显示</comment>
+  </data>
+  <data name="TipPaymentNameWesternUnion" xml:space="preserve">
+    <value>Western Union Money Transfer</value>
+    <comment>支付方式名称文字显示</comment>
+  </data>
+  <data name="TipPaymentNameYandex" xml:space="preserve">
+    <value>Yandex</value>
+    <comment>支付方式名称文字显示</comment>
+  </data>
+  <data name="TipAccountService" xml:space="preserve">
+    <value>Account Service</value>
+    <comment>MyAccount文字提示，帐户服务</comment>
+  </data>
+  <data name="TipAddressBookUp" xml:space="preserve">
+    <value>Address Book</value>
+    <comment>MyAccount文字提示，地址簿</comment>
+  </data>
+  <data name="TipAllOrders" xml:space="preserve">
+    <value>All Orders</value>
+    <comment>MyAccount文字提示，所有订单</comment>
+  </data>
+  <data name="TipCreditBalance" xml:space="preserve">
+    <value>Credit Balance</value>
+    <comment>MyAccount文字提示，信用余额</comment>
+  </data>
+  <data name="TipMyCoupon" xml:space="preserve">
+    <value>My Coupon</value>
+    <comment>MyAccount文字提示，我的优惠券</comment>
+  </data>
+  <data name="TipMyPrivilege" xml:space="preserve">
+    <value>My Privilege</value>
+    <comment>MyAccount文字提示，我的特权</comment>
+  </data>
+  <data name="TipMyProducts" xml:space="preserve">
+    <value>My Products</value>
+    <comment>MyAccount文字提示，我的产品</comment>
+  </data>
+  <data name="TipPackingSlip" xml:space="preserve">
+    <value>Packing Slip</value>
+    <comment>MyAccount文字提示，装箱单</comment>
+  </data>
+  <data name="TipDiscountPrefix" xml:space="preserve">
+    <value />
+    <comment>折扣提示文字前缀</comment>
+  </data>
+  <data name="TipDiscountSubfix" xml:space="preserve">
+    <value>% off</value>
+    <comment>折扣提示文字后缀</comment>
+  </data>
+  <data name="MsgEnterRegisterEmail" xml:space="preserve">
+    <value>Enter your register email address and we will send you an email with instructions on resetting your password.</value>
+    <comment>Account文字提示，输入注册邮箱</comment>
+  </data>
+  <data name="MsgGoTo" xml:space="preserve">
+    <value> Go to </value>
+    <comment>Account文字提示，go to</comment>
+  </data>
+  <data name="MsgRequiredInfo" xml:space="preserve">
+    <value>(* Required Information)</value>
+    <comment>Account文字提示，所需的信息</comment>
+  </data>
+  <data name="MsgSetAccountSuccess" xml:space="preserve">
+    <value>Your account has been successfully updated.</value>
+    <comment>Account消息提示，账户设置成功</comment>
+  </data>
+  <data name="TipBussinessWebsite" xml:space="preserve">
+    <value>Your Business Website:</value>
+    <comment>Account文字提示，你的商业网站</comment>
+  </data>
+  <data name="TipCantChangedEmail" xml:space="preserve">
+    <value>There is no function to change your email by yourself. Please contact us via &lt;a href="mailto:service@8seasons.com"&gt;service@8seasons.com&lt;/a&gt;. </value>
+    <comment>Account文字提示，目前邮箱不能自己改变，如有需求请联系xxxxxxx@8season.com</comment>
+  </data>
+  <data name="TipCellPhone" xml:space="preserve">
+    <value>Cell Phone:</value>
+    <comment>Account文字提示，手机号码</comment>
+  </data>
+  <data name="TipCrop" xml:space="preserve">
+    <value>Crop</value>
+    <comment>Account文字提示，切割</comment>
+  </data>
+  <data name="TipDateOfBirth" xml:space="preserve">
+    <value>Date of Birth:</value>
+    <comment>Account文字提示，出生日期</comment>
+  </data>
+  <data name="TipFreeCoupon" xml:space="preserve">
+    <value>Free &lt;strong class="forange_mid"&gt;$15&lt;/strong&gt; Coupon</value>
+    <comment>Account文字提示，15Coupon</comment>
+  </data>
+  <data name="TipFullName" xml:space="preserve">
+    <value>Full Name:</value>
+    <comment>Account文字提示，全名</comment>
+  </data>
+  <data name="TipGender" xml:space="preserve">
+    <value>Gender:</value>
+    <comment>Account文字提示，性别</comment>
+  </data>
+  <data name="TipGuaranteedRefunds" xml:space="preserve">
+    <value>100% Guaranteed Refunds</value>
+    <comment>Account文字提示，保证退款</comment>
+  </data>
+  <data name="TipImageApproved" xml:space="preserve">
+    <value>Image have been approved. Thank you!</value>
+    <comment>Account文字提示，图片已经提供</comment>
+  </data>
+  <data name="TipLearnMore" xml:space="preserve">
+    <value>learn more &gt;&gt;</value>
+    <comment>Account文字提示，学习更多</comment>
+  </data>
+  <data name="TipOEMSourceing" xml:space="preserve">
+    <value>OEM &amp; Sourcing </value>
+    <comment>Account文字提示，原始设备制造商采购</comment>
+  </data>
+  <data name="TipOrderUpDiscount" xml:space="preserve">
+    <value>Up to &lt;strong class="forange_mid"&gt;18%&lt;/strong&gt; Off Order Discount</value>
+    <comment>Account文字提示，订单折扣</comment>
+  </data>
+  <data name="TipPhoneNumber" xml:space="preserve">
+    <value>Phone Number:</value>
+    <comment>Account文字提示，电话号码</comment>
+  </data>
+  <data name="TipPro" xml:space="preserve">
+    <value>Pro</value>
+    <comment>Account文字提示，专业</comment>
+  </data>
+  <data name="TipPwdLinkInvalid" xml:space="preserve">
+    <value>Sorry, the link is invalid now. Please request a new link to reset your password.</value>
+    <comment>Account文字提示，修改密码链接无效</comment>
+  </data>
+  <data name="TipSecurePayment" xml:space="preserve">
+    <value>100% Secure Payment</value>
+    <comment>Account文字提示，安全支付</comment>
+  </data>
+  <data name="TipShips48Hours" xml:space="preserve">
+    <value>Ships in 48 Hours</value>
+    <comment>Account文字提示，48小时发货</comment>
+  </data>
+  <data name="TipShopConfidence" xml:space="preserve">
+    <value>Shop with Confidence</value>
+    <comment>Account文字提示，放心购物</comment>
+  </data>
+  <data name="TipSkype" xml:space="preserve">
+    <value>Skype:</value>
+    <comment>Account文字提示，Skype</comment>
+  </data>
+  <data name="TipSpecialOffers" xml:space="preserve">
+    <value>Special Offers</value>
+    <comment>Account文字提示，特殊优惠</comment>
+  </data>
+  <data name="TipSystemImage" xml:space="preserve">
+    <value>Choose image from system base</value>
+    <comment>Account文字提示，请选择系统图片</comment>
+  </data>
+  <data name="TipUploadMedia" xml:space="preserve">
+    <value>Upload media files from your computer</value>
+    <comment>Account文字提示，从你的电脑上传媒体文件</comment>
+  </data>
+  <data name="TipVipPrice" xml:space="preserve">
+    <value>Your Price of VIP Discount</value>
+    <comment>Product文字提示，VIP折扣价</comment>
+  </data>
+  <data name="TipVipUpDiscount" xml:space="preserve">
+    <value>VIP Discount Up to &lt;strong class="forange_mid"&gt;20%&lt;/strong&gt; Off</value>
+    <comment>Account文字提示，订单折扣</comment>
+  </data>
+  <data name="TipYourCountry" xml:space="preserve">
+    <value>Your Country:</value>
+    <comment>Account文字提示，你的国家</comment>
+  </data>
+  <data name="Tip8SeasonsClubWithPun" xml:space="preserve">
+    <value>8Seasons Club:</value>
+    <comment>Account文字提示，8Seasons Club:</comment>
+  </data>
+  <data name="TipAddNoPun" xml:space="preserve">
+    <value>Add</value>
+    <comment>添加</comment>
+  </data>
+  <data name="TipBack" xml:space="preserve">
+    <value>Back</value>
+    <comment>返回</comment>
+  </data>
+  <data name="TipClubMemberTime" xml:space="preserve">
+    <value>Your Club Membership time:</value>
+    <comment>Account文字提示，club会员时间</comment>
+  </data>
+  <data name="TipCreditBalanceWithPun" xml:space="preserve">
+    <value>Credit Balance:</value>
+    <comment>Account文字提示，贷方金额</comment>
+  </data>
+  <data name="TipCustomNo" xml:space="preserve">
+    <value>Custom No.:</value>
+    <comment>Account文字提示，关号</comment>
+  </data>
+  <data name="TipEnjoyFreeShip" xml:space="preserve">
+    <value>Join 8Seasons Club to enjoy full year Free Shipping. </value>
+    <comment>Account文字提示，加入club会员享受全年免运费</comment>
+  </data>
+  <data name="TipForDetail" xml:space="preserve">
+    <value>For details &gt;&gt;</value>
+    <comment>Account文字提示，详细</comment>
+  </data>
+  <data name="TipForgetEmailContact" xml:space="preserve">
+    <value>If you also forgot your register email address, please &lt;a class="fblue_mid font_underline"&gt;contact us&lt;/a&gt;.</value>
+    <comment>Account文字提示，忘记邮箱，联系我们</comment>
+  </data>
+  <data name="TipJoinClubSave" xml:space="preserve">
+    <value>You have already save {0} shipping fee since {1}</value>
+    <comment>Account文字提示，自动加入会员后节约,{0}:金额，{1}结束日期</comment>
+  </data>
+  <data name="TipMyVipLevel" xml:space="preserve">
+    <value>My VIP Level:</value>
+    <comment>Account文字提示，我的VIP等级</comment>
+  </data>
+  <data name="TipQuickOrder" xml:space="preserve">
+    <value>Quick Add By Part No.</value>
+    <comment>Account文字提示，快速下单</comment>
+  </data>
+  <data name="TipTotalConsumption" xml:space="preserve">
+    <value>Total Consumption:</value>
+    <comment>Account文字提示，总消费</comment>
+  </data>
+  <data name="TipTotalShipFee" xml:space="preserve">
+    <value>Total Shipping fee for last year:</value>
+    <comment>Account文字提示，最后一年总运费</comment>
+  </data>
+  <data name="TipUseBalance" xml:space="preserve">
+    <value>(You could use your credit balance after you confirm order during checkout process.)</value>
+    <comment>Account文字提示，使用贷方金额</comment>
+  </data>
+  <data name="TipActiveCoupon" xml:space="preserve">
+    <value>Active Coupon</value>
+    <comment>MyCoupon文字提示，活跃优惠券</comment>
+  </data>
+  <data name="TipActuallySave" xml:space="preserve">
+    <value>Actually $ave: {0}&lt;span&gt; {1}&lt;/span&gt;</value>
+    <comment>WelcomeInClub文字提示，实际节约，{0}：币种符号，{1}：金额</comment>
+  </data>
+  <data name="TipActuallySpent" xml:space="preserve">
+    <value>Actually Spent</value>
+    <comment>WelcomeInClub文字提示，实际花费</comment>
+  </data>
+  <data name="TipAddCoupon" xml:space="preserve">
+    <value>Add Coupon</value>
+    <comment>Account文字提示，添加优惠券</comment>
+  </data>
+  <data name="TipAddShipAddressWithRail" xml:space="preserve">
+    <value>-  Add Shipping Address</value>
+    <comment>RegisterSuccess文字提示，添加货运地址</comment>
+  </data>
+  <data name="TipAfterYouPlaced" xml:space="preserve">
+    <value>After you placed an order, you could download pictures without watermark of the products you bought.</value>
+    <comment>Account文字提示，下载没有水印的产品</comment>
+  </data>
+  <data name="TipBalance" xml:space="preserve">
+    <value>Balance:</value>
+    <comment>Payment文字提示，余额</comment>
+  </data>
+  <data name="TipBefore" xml:space="preserve">
+    <value>Before</value>
+    <comment>WelcomeInClub文字提示，Before</comment>
+  </data>
+  <data name="TipCheckMyTotal" xml:space="preserve">
+    <value>&gt;&gt;&lt;a href="#"&gt; Check my total shipping fee for last year&lt;/a&gt;</value>
+    <comment>WelcomeInClub文字提示，一年的总运费</comment>
+  </data>
+  <data name="TipCheckoutAuto" xml:space="preserve">
+    <value>Just place your orders freely; the discount will be taken at checkout automatically.</value>
+    <comment>Account文字提示，结账时自动打折</comment>
+  </data>
+  <data name="TipCheckShippingAddress" xml:space="preserve">
+    <value>Please kindly check your shipping address to confirm its correctness. Normally upon receiving your payment, we will dispatch your parcel in 1-2 days. Therefore, if you notice that your shipping address is not correct, please contact us as soon as possible within 24 hours.</value>
+    <comment>Payment文字提示，确认送货地址</comment>
+  </data>
+  <data name="TipClubCouponValid" xml:space="preserve">
+    <value>Your 8Seasons Club coupon ({0}) is valid until {1}</value>
+    <comment>Account文字提示，club会员优惠券到期,{0}</comment>
+  </data>
+  <data name="TipClubForExample" xml:space="preserve">
+    <value> For example, for a parcel of 4.3kg ,  the handling fee will be US$ 2.49 * 5 = 12.45USD. </value>
+    <comment>WelcomeInClub文字提示，club运费举例</comment>
+  </data>
+  <data name="TipClubYearFee" xml:space="preserve">
+    <value>{0} &lt;span&gt;{1}&lt;/span&gt;/year</value>
+    <comment>WelcomeInClub文字提示，club年费，{0}：币种符号，{1}：金额</comment>
+  </data>
+  <data name="TipConfirm" xml:space="preserve">
+    <value>Confirm</value>
+    <comment>Payment文字提示，确认</comment>
+  </data>
+  <data name="TipCouponCode" xml:space="preserve">
+    <value>Coupon Code</value>
+    <comment>MyCoupon文字提示，优惠券编号</comment>
+  </data>
+  <data name="TipCouponTerCon" xml:space="preserve">
+    <value>Coupon Terms &amp; Conditions</value>
+    <comment>Account文字提示，优惠券关系和条件</comment>
+  </data>
+  <data name="TipCreditAccountBalance" xml:space="preserve">
+    <value>Credit Account Balance</value>
+    <comment>Payment文字提示，信用账户余额</comment>
+  </data>
+  <data name="TipDeadline" xml:space="preserve">
+    <value>Deadline(PST)</value>
+    <comment>MyCoupon文字提示，截止日期</comment>
+  </data>
+  <data name="TipDiscount" xml:space="preserve">
+    <value>Discount</value>
+    <comment>Account文字提示，折扣</comment>
+  </data>
+  <data name="TipDownPackList" xml:space="preserve">
+    <value>Download Packing list</value>
+    <comment>Payment文字提示，下载包裹单</comment>
+  </data>
+  <data name="TipExclusiveCoupon" xml:space="preserve">
+    <value>Exclusive Coupon</value>
+    <comment>WelcomeInClub文字提示，专属优惠</comment>
+  </data>
+  <data name="TipExcPromItems" xml:space="preserve">
+    <value>(Exclude Promotion Items)</value>
+    <comment>Account文字提示，排除推广产品</comment>
+  </data>
+  <data name="TipFeaturedProWithRail" xml:space="preserve">
+    <value>-  Featured Products</value>
+    <comment>RegisterSuccess文字提示，主打产品</comment>
+  </data>
+  <data name="TipForMembership" xml:space="preserve">
+    <value>(for the membership)</value>
+    <comment>WelcomeInClub文字提示，于会员</comment>
+  </data>
+  <data name="TipGrandTotal" xml:space="preserve">
+    <value>Grand Total:</value>
+    <comment>Payment文字提示，总计</comment>
+  </data>
+  <data name="TipHandFeeAppr" xml:space="preserve">
+    <value>Handling Fee:  Appr.{0}&lt;span&gt; {1}&lt;/span&gt;</value>
+    <comment>WelcomeInClub文字提示，手续费本币，{0}：币种符号，{1}：金额</comment>
+  </data>
+  <data name="TipHomeWithRail" xml:space="preserve">
+    <value>-  Homepage</value>
+    <comment>RegisterSuccess文字提示，主页</comment>
+  </data>
+  <data name="TipInactiveCoupon" xml:space="preserve">
+    <value>Inactive Coupon</value>
+    <comment>MyCoupon文字提示，不活跃优惠券</comment>
+  </data>
+  <data name="TipJoinClubPrompt" xml:space="preserve">
+    <value>Please kindly note that the service now is only available to customers whose address belongs to the United States, United Kingdom, Germany, France, Norway, Luxembourg, Japan, Australia, Singapore, Mexico, Slovakia, Puerto Rico, Ireland, Italy, Belgium, Netherlands, Sweden, South Korea, Malaysia, India, Poland, Hungary, Canada, Austria, Spain, Denmark, Switzerland, Finland, Thailand, Philippines, Indonesia, Czech Republic, Portugal and Russia. Please make sure your country is in the list.</value>
+    <comment>WelcomeInClub文字提示，加入Club会员提示</comment>
+  </data>
+  <data name="TipMembership" xml:space="preserve">
+    <value>Membership</value>
+    <comment>WelcomeInClub文字提示，会员</comment>
+  </data>
+  <data name="TipMembershipOnly" xml:space="preserve">
+    <value>Membership Only {0}&lt;span&gt; {1}&lt;/span&gt;/year</value>
+    <comment>WelcomeInClub文字提示，成员运费只要,{0}：币种符号，{1}：会员金额</comment>
+  </data>
+  <data name="TipMemo" xml:space="preserve">
+    <value>Memo</value>
+    <comment>MyCoupon文字提示，备注</comment>
+  </data>
+  <data name="TipMontantMinimun" xml:space="preserve">
+    <value>Minimum Amount</value>
+    <comment>MyCoupon文字提示，订购单的最低金额</comment>
+  </data>
+  <data name="TipMoreThan" xml:space="preserve">
+    <value>More than {0} {1}</value>
+    <comment>Account文字提示，大于，多于,{0}：币种符号，{1}：数额</comment>
+  </data>
+  <data name="TipMyAccountWithRail" xml:space="preserve">
+    <value>-  My Account</value>
+    <comment>RegisterSuccess文字提示，我的账户</comment>
+  </data>
+  <data name="TipNewArrivalsWithRail" xml:space="preserve">
+    <value>-  New Arrivals</value>
+    <comment>RegisterSuccess文字提示，新品</comment>
+  </data>
+  <data name="TipNone" xml:space="preserve">
+    <value>none</value>
+    <comment>WelcomeInClub文字提示，无</comment>
+  </data>
+  <data name="TipNoRecord" xml:space="preserve">
+    <value>No Record!</value>
+    <comment>MyCoupon文字提示，没有记录</comment>
+  </data>
+  <data name="TipOnlySpent" xml:space="preserve">
+    <value>Only {0}&lt;span&gt; {1}&lt;/span&gt;</value>
+    <comment>WelcomeInClub文字提示，实际花费，{0}：币种符号，{1}：金额</comment>
+  </data>
+  <data name="TipOrderConfirmed" xml:space="preserve">
+    <value>Your order has been confirmed. Pay for your order to get it dispatched earlier.</value>
+    <comment>Payment文字提示，你的订单已确认，请尽快付款</comment>
+  </data>
+  <data name="TipOrderDiscount" xml:space="preserve">
+    <value>Get Single Order Discount</value>
+    <comment>Account文字提示，获取订单折扣</comment>
+  </data>
+  <data name="TipOrderNo" xml:space="preserve">
+    <value>Order No.</value>
+    <comment>MyCoupon文字提示，订单号</comment>
+  </data>
+  <data name="TipOrderNumber" xml:space="preserve">
+    <value>Order Number: </value>
+    <comment>Payment文字提示，订单号</comment>
+  </data>
+  <data name="TipParValue" xml:space="preserve">
+    <value>Par Value</value>
+    <comment>MyCoupon文字提示，面值</comment>
+  </data>
+  <data name="TipPayForOrder" xml:space="preserve">
+    <value>Pay for Order</value>
+    <comment>Payment文字提示，订单付款</comment>
+  </data>
+  <data name="TipPaymentMethods" xml:space="preserve">
+    <value>Payment Methods</value>
+    <comment>Payment文字提示，支付方式</comment>
+  </data>
+  <data name="TipShippingFeeBefore" xml:space="preserve">
+    <value>{0}/year</value>
+    <comment>WelcomeInClub文字提示，成为CLub之前多少一年，{0}：金额</comment>
+  </data>
+  <data name="TipStatus" xml:space="preserve">
+    <value>Status</value>
+    <comment>MyCoupon文字提示，状态</comment>
+  </data>
+  <data name="TipSysAddVipGroup" xml:space="preserve">
+    <value />
+    <comment>Account文字提示，系统自动添加到vip组，{0}：MyAccount首页</comment>
+  </data>
+  <data name="TipTheAboveShipping" xml:space="preserve">
+    <value>  The above {0} {1} shipping fee and {2} {3} handling fee are estimated.</value>
+    <comment>WelcomeInClub文字提示，xx运费需要xx手续费估计，{0}：运费，{1}：手续费</comment>
+  </data>
+  <data name="TipTotalCoupon" xml:space="preserve">
+    <value>total {0}&lt;span&gt; {1}&lt;/span&gt;</value>
+    <comment>WelcomeInClub文字提示，专属coupon总额，{0}：币种符号，{1}：金额</comment>
+  </data>
+  <data name="TipTotProPrice" xml:space="preserve">
+    <value>Total Product Price</value>
+    <comment>Account文字提示，产品总价格</comment>
+  </data>
+  <data name="TipUseBalanceOrder" xml:space="preserve">
+    <value>I want to use it in this order.</value>
+    <comment>Payment文字提示，使用余额付款</comment>
+  </data>
+  <data name="TipViewLink" xml:space="preserve">
+    <value>View &gt;&gt;</value>
+    <comment>Account文字提示，显示链接</comment>
+  </data>
+  <data name="TipVipPolicyWithRail" xml:space="preserve">
+    <value>-  View VIP Policy</value>
+    <comment>RegisterSuccess文字提示，显示vip价格</comment>
+  </data>
+  <data name="TipWeChargePacking" xml:space="preserve">
+    <value> We charge US$ 2.49 per Kilogram for warehouse handling and packing. </value>
+    <comment>WelcomeInClub文字提示，手续费</comment>
+  </data>
+  <data name="TipWellThenWay" xml:space="preserve">
+    <value>Well then, you can totally $ave like this way:</value>
+    <comment>WelcomeInClub文字提示，节省方法</comment>
+  </data>
+  <data name="TipAddress" xml:space="preserve">
+    <value>Address:</value>
+    <comment>Payment文字提示，地址</comment>
+  </data>
+  <data name="TipBankAccountName" xml:space="preserve">
+    <value>Bank Account Holder's Name:</value>
+    <comment>Payment文字提示，银行户口名称</comment>
+  </data>
+  <data name="TipBankAccountNum" xml:space="preserve">
+    <value>Bank Account Number:</value>
+    <comment>Payment文字提示，银行账号</comment>
+  </data>
+  <data name="TipBankAccountPhone" xml:space="preserve">
+    <value>Bank Account Holder's Phone:</value>
+    <comment>Payment文字提示，银行账户持有人电话</comment>
+  </data>
+  <data name="TipBankAddress" xml:space="preserve">
+    <value>Bank Address:</value>
+    <comment>Payment文字提示，银行地址</comment>
+  </data>
+  <data name="TipBeneficiary" xml:space="preserve">
+    <value>Beneficiary:</value>
+    <comment>Payment文字提示，受益人</comment>
+  </data>
+  <data name="TipBeneficiaryBank" xml:space="preserve">
+    <value>Beneficiary's Bank:</value>
+    <comment>Payment文字提示，受益人银行</comment>
+  </data>
+  <data name="TipBeSureTo" xml:space="preserve">
+    <value>Be sure to email us your order No. after you make the bank transfer.</value>
+    <comment>Payment文字提示，银行转账后一定以邮件形式给我们发订单号</comment>
+  </data>
+  <data name="TipBuyerResponsibility" xml:space="preserve">
+    <value>It's buyers' responsibility to pay the commission fee for Bank Wire Transfer(HSBC / Bank of China).</value>
+    <comment>Payment文字提示，支付银行电汇的佣金是购买者的责任</comment>
+  </data>
+  <data name="TipCardNo" xml:space="preserve">
+    <value>Card No.:</value>
+    <comment>Payment文字提示，信用卡号</comment>
+  </data>
+  <data name="TipChinaBankAccount" xml:space="preserve">
+    <value>Our Bank Account (Bank of China)</value>
+    <comment>Payment文字提示，我们的中国银行账号</comment>
+  </data>
+  <data name="TipCity" xml:space="preserve">
+    <value>City:</value>
+    <comment>Payment文字提示，城市</comment>
+  </data>
+  <data name="TipClickDetail" xml:space="preserve">
+    <value>Click here for detail&gt;&gt;</value>
+    <comment>Payment文字提示，点击查看详细</comment>
+  </data>
+  <data name="TipContinue" xml:space="preserve">
+    <value>continue</value>
+    <comment>Payment文字提示，继续</comment>
+  </data>
+  <data name="TipCountry" xml:space="preserve">
+    <value>Country:</value>
+    <comment>Payment文字提示，国家</comment>
+  </data>
+  <data name="TipCreditCardPayPal" xml:space="preserve">
+    <value>Credit Card via PayPal</value>
+    <comment>Payment文字提示，通过PayPal平台（使用）信用卡支付</comment>
+  </data>
+  <data name="TipEnterTelNum" xml:space="preserve">
+    <value>Please enter your telephone number below:</value>
+    <comment>Payment文字提示，输入您的电话号码</comment>
+  </data>
+  <data name="TipExceptionalOffers" xml:space="preserve">
+    <value>Exceptional Offers</value>
+    <comment>MyPreference文字提示，提别提供</comment>
+  </data>
+  <data name="TipExpirationDate" xml:space="preserve">
+    <value>Expiration Date:</value>
+    <comment>Payment文字提示，有效日期</comment>
+  </data>
+  <data name="TipFirstName" xml:space="preserve">
+    <value>First Name:</value>
+    <comment>Payment文字提示，First Name</comment>
+  </data>
+  <data name="TipForPaymentMethods" xml:space="preserve">
+    <value>For payment methods: HSBC, BANK OF CHINA, WESTERN UNION MONEY TRANSFER, MONEY GRAM, 2% discount will be offered if total amount reach to 2000 US$, commission fee should be paid by payer.</value>
+    <comment>Payment文字提示，支付方式</comment>
+  </data>
+  <data name="TipGallery" xml:space="preserve">
+    <value>Gallery</value>
+    <comment>MyPreference文字提示，画廊展示</comment>
+  </data>
+  <data name="TipHSBCBankAccount" xml:space="preserve">
+    <value>Our Bank Account(HSBC)</value>
+    <comment>Payment文字提示，汇丰银行账号</comment>
+  </data>
+  <data name="TipImperialSizeUnits" xml:space="preserve">
+    <value>(Such as inch、foot)</value>
+    <comment>MyPreference文字提示，英制尺寸单位</comment>
+  </data>
+  <data name="TipImperialUnits" xml:space="preserve">
+    <value>Imperial units </value>
+    <comment>MyPreference文字提示，英制单位</comment>
+  </data>
+  <data name="TipImperialWeightUnits" xml:space="preserve">
+    <value>(Such as dram、ounce)</value>
+    <comment>MyPreference文字提示，英制重量单位</comment>
+  </data>
+  <data name="TipLastName" xml:space="preserve">
+    <value>Last Name:</value>
+    <comment>Payment文字提示，Last Name</comment>
+  </data>
+  <data name="TipList" xml:space="preserve">
+    <value>List</value>
+    <comment>MyPreference文字提示，列表展示</comment>
+  </data>
+  <data name="TipMasterCard" xml:space="preserve">
+    <value>Master Card</value>
+    <comment>Payment文字提示，Master Card</comment>
+  </data>
+  <data name="TipMetricSizeUnites" xml:space="preserve">
+    <value>(Such as mm、cm、m)</value>
+    <comment>MyPreference文字提示，公制尺寸单位</comment>
+  </data>
+  <data name="TipMetricUnits" xml:space="preserve">
+    <value>Metric units </value>
+    <comment>MyPreference文字提示，公制单位</comment>
+  </data>
+  <data name="TipMetricWeightUnites" xml:space="preserve">
+    <value>(Such as kg、g)</value>
+    <comment>MyPreference文字提示，公制重量单位</comment>
+  </data>
+  <data name="TipMGBankAccount" xml:space="preserve">
+    <value>Our Bank Account (&lt;a href="#" class="fblue"&gt;Money Gram&lt;/a&gt;)</value>
+    <comment>Payment文字提示，Moenygram账号</comment>
+  </data>
+  <data name="TipMonth" xml:space="preserve">
+    <value>Month</value>
+    <comment>Payment文字提示，月</comment>
+  </data>
+  <data name="TipMultifunlPayment" xml:space="preserve">
+    <value>It is a multifunctional payment tool that provides secure and immediate transactions online.</value>
+    <comment>Payment文字提示，提供了安全直接在线交易的多功能支付工具</comment>
+  </data>
+  <data name="TipMyChoices" xml:space="preserve">
+    <value>My Choices</value>
+    <comment>MyPreference文字提示，我的选择</comment>
+  </data>
+  <data name="TipNoPayPalStillPay" xml:space="preserve">
+    <value>If you have no PayPal account, you can still pay us.</value>
+    <comment>Payment文字提示，没有paypal账号，您仍然可以支付</comment>
+  </data>
+  <data name="TipPaymentDetails" xml:space="preserve">
+    <value>Payment details:</value>
+    <comment>Payment文字提示，支付详细</comment>
+  </data>
+  <data name="TipPayNow" xml:space="preserve">
+    <value>Pay Now</value>
+    <comment>Payment文字提示，现在支付</comment>
+  </data>
+  <data name="TipPaypalPayment" xml:space="preserve">
+    <value>Or you can directly login &lt;a href="https://www.paypal.com" class="fblue font_underline"&gt;www.paypal.com&lt;/a&gt; and send us the payment.&lt;br /&gt;Our paypal is: &lt;a href="javascript:void(0)" class="fblue"&gt;{0}&lt;/a&gt;. Both are safe to you.</value>
+    <comment>Payment文字提示，Paypal支付,{0}：公司paypal账号</comment>
+  </data>
+  <data name="TipPayPalWebsite" xml:space="preserve">
+    <value>You can pay us with your credit card via PayPal website.</value>
+    <comment>Payment文字提示，您可以通过PayPal平台（使用）信用卡支付</comment>
+  </data>
+  <data name="TipPhone" xml:space="preserve">
+    <value>Phone:</value>
+    <comment>Payment文字提示，电话</comment>
+  </data>
+  <data name="TipSecurityCode" xml:space="preserve">
+    <value>Security Code:</value>
+    <comment>Payment文字提示，安全码</comment>
+  </data>
+  <data name="TipSmartSolution" xml:space="preserve">
+    <value>Smart solution for internet business.</value>
+    <comment>Payment文字提示，网络业务智能解决方案</comment>
+  </data>
+  <data name="TipSWIFTCode" xml:space="preserve">
+    <value>SWIFT Code:</value>
+    <comment>Payment文字提示，银行代码</comment>
+  </data>
+  <data name="TipTelephone" xml:space="preserve">
+    <value>Telephone:</value>
+    <comment>Payment文字提示，电话</comment>
+  </data>
+  <data name="TipViewHow" xml:space="preserve">
+    <value>View how?</value>
+    <comment>Payment文字提示，View how</comment>
+  </data>
+  <data name="TipVisa" xml:space="preserve">
+    <value>Visa</value>
+    <comment>Payment文字提示，Visa</comment>
+  </data>
+  <data name="TipWebMoneySupports" xml:space="preserve">
+    <value>WebMoney supports curencies RUB, USD, EUR.</value>
+    <comment>Payment文字提示，webmoney支持币种</comment>
+  </data>
+  <data name="TipWesternBankAccount" xml:space="preserve">
+    <value>Our Bank Account (Western Union)</value>
+    <comment>Payment文字提示，我们的西联银行账号</comment>
+  </data>
+  <data name="TipWhatSecurityCode" xml:space="preserve">
+    <value>What is a security code?</value>
+    <comment>Payment文字提示，什么是安全码</comment>
+  </data>
+  <data name="TipWhenTransMoney" xml:space="preserve">
+    <value>When transferring money to us, please write down your order No. in the remarks column of the bank transfer form.</value>
+    <comment>Payment文字提示，以银行转账形式打钱给我们的时候，请在备注栏填写你的订单号</comment>
+  </data>
+  <data name="TipYear" xml:space="preserve">
+    <value>Year</value>
+    <comment>Payment文字提示，年</comment>
+  </data>
+  <data name="TipZipCode" xml:space="preserve">
+    <value>Zip Code:</value>
+    <comment>Payment文字提示，邮编号码</comment>
+  </data>
+  <data name="ErrorFullNameTooLong" xml:space="preserve">
+    <value>Your full name should not more than 32 characters.</value>
+    <comment>Customer错误提示，全名必须小于32位字符</comment>
+  </data>
+  <data name="TipFgtSendEmail" xml:space="preserve">
+    <value>We have sent an email to your email address: &lt;strong&gt;{0}&lt;/strong&gt;. Please reset your password ASAP.</value>
+    <comment>ForgetPwd文字提示，已经发送邮箱</comment>
+  </data>
+  <data name="MsgTestimonialSuccess" xml:space="preserve">
+    <value>&lt;em&gt;Your comment has been added successfully.&lt;/em&gt;Thank you very much for your support and attention to our website.</value>
+    <comment>Testimonial消息提示，评论成功</comment>
+  </data>
+  <data name="TipBrowseBy" xml:space="preserve">
+    <value>Browse by all categories</value>
+  </data>
+  <data name="TipYouCantReview" xml:space="preserve">
+    <value>You could not write a review for it before purchase.</value>
+    <comment>ProductDetail文字提示，没有下单不能评论</comment>
+  </data>
+  <data name="TipDiscountPolicyWithRail" xml:space="preserve">
+    <value>- Discount Policy</value>
+    <comment>RegisterSuccess文字提示，折扣策略</comment>
+  </data>
+  <data name="ErrorSuggestionRequired" xml:space="preserve">
+    <value>Please kindly tell us your opinion in the Suggestions &amp; Wishes. Thanks!</value>
+    <comment>Suggestion错误提示，建议内容不能为空</comment>
+  </data>
+  <data name="ErrorEmailTooShort" xml:space="preserve">
+    <value>Your email should contain a minimum of 5 characters.</value>
+    <comment>ContactUs文字提示，邮箱长度至少5个字符</comment>
+  </data>
+  <data name="ErrorMessageEmpty" xml:space="preserve">
+    <value>Your message is required.</value>
+    <comment>ContactUs错误图示,消息内容为空</comment>
+  </data>
+  <data name="MsgClassConSuccess" xml:space="preserve">
+    <value>Classification confirmed successfully!</value>
+    <comment>WishList消息提示，分类确认成功</comment>
+  </data>
+  <data name="Tip250Characters" xml:space="preserve">
+    <value>&lt;i class="fred"&gt;*&lt;/i&gt;&lt;i id='cartprodremark_remain_@item.ProductId'&gt;250&lt;/i&gt; characters remaining</value>
+    <comment>ShoppingCart文字提示，剩余字符</comment>
+  </data>
+  <data name="TipAddedTime" xml:space="preserve">
+    <value>Added Time</value>
+    <comment>ShoppingCart文字提示，添加时间</comment>
+  </data>
+  <data name="TipAddMoreItems" xml:space="preserve">
+    <value>Add more items</value>
+    <comment>Share文字提示，添加更多物品</comment>
+  </data>
+  <data name="TipAddRemark" xml:space="preserve">
+    <value>Add remark</value>
+    <comment>ShoppingCart文字提示，添加备注</comment>
+  </data>
+  <data name="TipAddSelToCart" xml:space="preserve">
+    <value>Add Selected to Cart</value>
+    <comment>WishList文字提示，将选中的添加到购物车</comment>
+  </data>
+  <data name="TipAddWithinYear" xml:space="preserve">
+    <value>Added within one year</value>
+    <comment>WishList文字提示，一年内添加的</comment>
+  </data>
+  <data name="TipAddYearAge" xml:space="preserve">
+    <value>Added one year ago</value>
+    <comment>WishList文字提示，一年前添加的</comment>
+  </data>
+  <data name="TipAll" xml:space="preserve">
+    <value>All</value>
+    <comment>WishList文字提示，所有</comment>
+  </data>
+  <data name="TipAvbPaymentMethod" xml:space="preserve">
+    <value>Available Payment Methods:</value>
+    <comment>ShoppingCart文字提示，可用的副官方式</comment>
+  </data>
+  <data name="TipBackToTop" xml:space="preserve">
+    <value>Back to Top</value>
+    <comment>Share文字提示，返回顶部</comment>
+  </data>
+  <data name="TipBulkPack" xml:space="preserve">
+    <value>Bulk Pack</value>
+    <comment>ShoppingCart文字提示，大包装</comment>
+  </data>
+  <data name="TipCalculate" xml:space="preserve">
+    <value>Calculate</value>
+    <comment>ShoppingCart文字提示，计算</comment>
+  </data>
+  <data name="TipCancel" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>ShoppingCart文字提示，取消</comment>
+  </data>
+  <data name="TipCartUp" xml:space="preserve">
+    <value>CART</value>
+    <comment>ShoppingCart文字提示，汽车运载</comment>
+  </data>
+  <data name="TipCategory" xml:space="preserve">
+    <value>Category:</value>
+    <comment>WishList文字提示，类别</comment>
+  </data>
+  <data name="TipChangeShipping" xml:space="preserve">
+    <value>Change Shipping</value>
+    <comment>ShoppingCart文字提示，改变运送方式</comment>
+  </data>
+  <data name="TipCharRemain" xml:space="preserve">
+    <value>{0} characters remaining</value>
+    <comment>Share文字提示，剩余1000字符;{0}，代表最大字符数</comment>
+  </data>
+  <data name="TipCheckout" xml:space="preserve">
+    <value>Checkout</value>
+    <comment>ShoppingCart文字提示，结账</comment>
+  </data>
+  <data name="TipClassification" xml:space="preserve">
+    <value>Classification:</value>
+    <comment>WishList文字提示，分类</comment>
+  </data>
+  <data name="TipConfirmClass" xml:space="preserve">
+    <value>Confirm Classification</value>
+    <comment>WishList文字提示，确认分类</comment>
+  </data>
+  <data name="TipDateAdded" xml:space="preserve">
+    <value>Date Added</value>
+    <comment>WishList文字提示，添加日期</comment>
+  </data>
+  <data name="TipDateNewToOld" xml:space="preserve">
+    <value>Date Added - New to Old</value>
+    <comment>WishList文字提示，添加日期，由新到旧</comment>
+  </data>
+  <data name="TipDateOldToNew" xml:space="preserve">
+    <value>Date Added - Old to New</value>
+    <comment>WishList文字提示，添加日期，由旧到新</comment>
+  </data>
+  <data name="TipDays" xml:space="preserve">
+    <value>Days</value>
+    <comment>ShoppingCart文字提示，天数</comment>
+  </data>
+  <data name="TipDelete" xml:space="preserve">
+    <value>Delete</value>
+    <comment>ShoppingCart文字提示，删除</comment>
+  </data>
+  <data name="TipDiscountedItem" xml:space="preserve">
+    <value>Discounted item:</value>
+    <comment>ShoppingCart文字提示，折扣物品</comment>
+  </data>
+  <data name="TipDisplayTof" xml:space="preserve">
+    <value>Display {0} to {1}(of {2} products)</value>
+    <comment>WishList文字提示，显示n~m的产品有数，0：开始编号，1：结束编号，2：总数</comment>
+  </data>
+  <data name="TipEditRemark" xml:space="preserve">
+    <value>Edit remark</value>
+    <comment>ShoppingCart文字提示，编辑备注</comment>
+  </data>
+  <data name="TipEmailAddress" xml:space="preserve">
+    <value>Email Address:</value>
+    <comment>Share文字提示，邮箱地址</comment>
+  </data>
+  <data name="TipEmptyShoppingCart" xml:space="preserve">
+    <value>Empty Shopping Cart</value>
+    <comment>ShoppingCart文字提示，清空购物车</comment>
+  </data>
+  <data name="TipEstShippingCost" xml:space="preserve">
+    <value>Est. Shipping Cost:</value>
+    <comment>ShoppingCart文字提示，美国东部运送费用</comment>
+  </data>
+  <data name="TipEstShippingTime" xml:space="preserve">
+    <value>Est. Shipping Time</value>
+    <comment>ShoppingCart文字提示，美国东部运送时间</comment>
+  </data>
+  <data name="TipFilter" xml:space="preserve">
+    <value>Filter</value>
+    <comment>WishList文字提示，筛选</comment>
+  </data>
+  <data name="TipFirst" xml:space="preserve">
+    <value>First</value>
+    <comment>Share文字提示，第一</comment>
+  </data>
+  <data name="TipFirstPage" xml:space="preserve">
+    <value>First Page</value>
+    <comment>Share文字提示，第一页</comment>
+  </data>
+  <data name="TipFollowItemRemove" xml:space="preserve">
+    <value>Following items have been removed from our website and will be deleted automatically in 90 days since be removed.</value>
+    <comment>WishList文字提示，一下产品已经从我们网站移除，将会在90天内自动删除</comment>
+  </data>
+  <data name="TipFreeShipping" xml:space="preserve">
+    <value>Free Shipping</value>
+    <comment>ShoppingCart文字提示，免运费</comment>
+  </data>
+  <data name="TipHandlingFee" xml:space="preserve">
+    <value>Handling Fee:</value>
+    <comment>ShoppingCart文字提示，手续费</comment>
+  </data>
+  <data name="TipHaveBeenSold" xml:space="preserve">
+    <value>&lt;i id='lbltip_{0}'&gt;{1}&lt;/i&gt; {2} have been sold, so the quantity is changed to &lt;i id="lblqty_{0}"&gt;{3}&lt;/i&gt; automatically.</value>
+    <comment>ShoppingCart文字提示，已卖完</comment>
+  </data>
+  <data name="TipHighlyAppreciated" xml:space="preserve">
+    <value>Your suggestions are highly appreciated for us; just freely express what you think of the description, of the translation, of the naming, of the website use, of the shipping problem, etc.</value>
+    <comment>Share文字提示，你的建议对我们高度赞赏,只是自由表达你的想法的描述,翻译,命名,网站的使用,运输问题等</comment>
+  </data>
+  <data name="TipHighToLow" xml:space="preserve">
+    <value>high to low</value>
+    <comment>ShoppingCart文字提示，由高到低</comment>
+  </data>
+  <data name="TipImage" xml:space="preserve">
+    <value>Image</value>
+    <comment>ShoppingCart文字提示，图片</comment>
+  </data>
+  <data name="TipImproveExperience" xml:space="preserve">
+    <value>We have always been trying to improve the shopping experience of 8seasons.com. Please spare few minutes to tell us how we can do better. Thank you very much!</value>
+    <comment>Share文字提示，我们一直试图提高网站的购物体验,请空闲几分钟告诉我们如何做的更好,非常感谢</comment>
+  </data>
+  <data name="TipItem" xml:space="preserve">
+    <value>Item</value>
+    <comment>WishList文字提示，项</comment>
+  </data>
+  <data name="TipJoinNow" xml:space="preserve">
+    <value>Join Now</value>
+    <comment>Share文字提示，现在加入</comment>
+  </data>
+  <data name="TipLast" xml:space="preserve">
+    <value>Last</value>
+    <comment>Share文字提示，最后</comment>
+  </data>
+  <data name="TipLimitedStock" xml:space="preserve">
+    <value>Limited&lt;br /&gt;Stock</value>
+    <comment>ShoppingCart文字提示，限制库存</comment>
+  </data>
+  <data name="TipltBulkPackgt" xml:space="preserve">
+    <value>&amp;lt;Bulk Pack&amp;gt;</value>
+    <comment>ShoppingCart文字提示，大包装</comment>
+  </data>
+  <data name="TipltSmallPackgt" xml:space="preserve">
+    <value>&amp;lt;Small Pack&amp;gt;</value>
+    <comment>ShoppingCart文字提示，小包装</comment>
+  </data>
+  <data name="TipMoveAllToWishlist" xml:space="preserve">
+    <value>Move all to Wishlist</value>
+    <comment>ShoppingCart文字提示，移到心愿单</comment>
+  </data>
+  <data name="TipMoveToWishlist" xml:space="preserve">
+    <value>Move to Wishlist</value>
+    <comment>ShoppingCart文字提示，移到心愿单</comment>
+  </data>
+  <data name="TipMyWishlist" xml:space="preserve">
+    <value>My Wishlist</value>
+    <comment>WishList文字提示，我的心愿单</comment>
+  </data>
+  <data name="TipNewToOld" xml:space="preserve">
+    <value>new to old</value>
+    <comment>ShoppingCart文字提示，由新到久</comment>
+  </data>
+  <data name="TipNext" xml:space="preserve">
+    <value>Next</value>
+    <comment>Share文字提示，下一页</comment>
+  </data>
+  <data name="TipNo" xml:space="preserve">
+    <value>No</value>
+    <comment>Share文字提示，否</comment>
+  </data>
+  <data name="TipNoFavFile" xml:space="preserve">
+    <value>You have no favorite on file.</value>
+    <comment>WishList文字提示，你没有喜欢的在文件夹里面</comment>
+  </data>
+  <data name="TipNoItemFound" xml:space="preserve">
+    <value>No item found, please reset your information.</value>
+    <comment>WishList文字提示，未找到产品，请重新设置条件</comment>
+  </data>
+  <data name="TipNoteAccept" xml:space="preserve">
+    <value>Note: Only accept txt, xls, xlsx, doc, docx, png, jpg, gif.</value>
+    <comment>Share文字提示，注意：只接受txt, xls, xlsx, doc, docx, png, jpg, gif.</comment>
+  </data>
+  <data name="TipNothingInList" xml:space="preserve">
+    <value>Nothing is in your list.</value>
+    <comment>WishList文字提示，列表里面没有产品</comment>
+  </data>
+  <data name="TipNToMDays" xml:space="preserve">
+    <value>{0} - {1} days</value>
+    <comment>ShoppingCart文字提示，多少到多少天</comment>
+  </data>
+  <data name="TipOldToNew" xml:space="preserve">
+    <value>old to new</value>
+    <comment>ShoppingCart文字提示，由久到新</comment>
+  </data>
+  <data name="TipOnceSuggestion" xml:space="preserve">
+    <value>By the way, once your suggestion has been accepted, we will credit appropriate amount &lt;font color="#FF0000"&gt;(1USD-5USD)&lt;/font&gt; into your account as reward.</value>
+    <comment>Share文字提示，此外,如果您的建议呗我们采纳,我们将适量的返回$1~$5到您的账户</comment>
+  </data>
+  <data name="TipOnlyTwoStocks" xml:space="preserve">
+    <value>Currently only two stocks, the number of goods have been automatically added by 5 changed to two.</value>
+    <comment>ShoppingCart文字提示，目前库存只有2个，添加5个商品自动改为2个</comment>
+  </data>
+  <data name="TipOrderDiscountPun" xml:space="preserve">
+    <value>Order Discount:</value>
+    <comment>ShoppingCart文字提示，订单折扣</comment>
+  </data>
+  <data name="TipOrderPriceDetail" xml:space="preserve">
+    <value>Order Price Detail</value>
+    <comment>ShoppingCart文字提示，订单价格详情</comment>
+  </data>
+  <data name="TipOrLoginViewProduct" xml:space="preserve">
+    <value>Or &lt;a href="javascript:void(0)" onclick="logincap()" class="fblue"&gt;login&lt;/a&gt; to view the products you have previously added to your Shopping Cart.</value>
+    <comment>ShoppingCart文字提示，或则登录显示以前添加的产品</comment>
+  </data>
+  <data name="TipPackageBoxWeight" xml:space="preserve">
+    <value>Package Box Weight:</value>
+    <comment>ShoppingCart文字提示，包装箱重量</comment>
+  </data>
+  <data name="TipPagerItems" xml:space="preserve">
+    <value>&lt;strong&gt;{0}items&lt;/strong&gt;&amp;nbsp;&amp;nbsp;{1}/{2}</value>
+    <comment>Share文字提示，0：分页一页的数量，1：当前页码，2：总数</comment>
+  </data>
+  <data name="TipPartNoPun" xml:space="preserve">
+    <value>Part No.</value>
+    <comment>Share文字提示，零件号码</comment>
+  </data>
+  <data name="TipPayUp" xml:space="preserve">
+    <value>PAY</value>
+    <comment>ShoppingCart文字提示，付款</comment>
+  </data>
+  <data name="TipPlaceOrderUp" xml:space="preserve">
+    <value>PLACE ORDER</value>
+    <comment>ShoppingCart文字提示，下单</comment>
+  </data>
+  <data name="TipPostZipCode" xml:space="preserve">
+    <value>Post/Zip Code:</value>
+    <comment>ShoppingCart文字提示，岗位或者邮编</comment>
+  </data>
+  <data name="TipPrevious" xml:space="preserve">
+    <value>Previous</value>
+    <comment>Share文字提示，上一页</comment>
+  </data>
+  <data name="TipPriceHighToLow" xml:space="preserve">
+    <value>Price high to low</value>
+    <comment>ShoppingCart文字提示，价格从高到低</comment>
+  </data>
+  <data name="TipPriceLowToHigh" xml:space="preserve">
+    <value>Price low to high</value>
+    <comment>ShoppingCart文字提示，价格从低到高</comment>
+  </data>
+  <data name="TipProductDiscount" xml:space="preserve">
+    <value>Product Discount:</value>
+    <comment>ShoppingCart文字提示，产品折扣</comment>
+  </data>
+  <data name="TipProductNo" xml:space="preserve">
+    <value>Product No.:</value>
+    <comment>ShoppingCart文字提示，产品编号</comment>
+  </data>
+  <data name="TipProducWeight" xml:space="preserve">
+    <value>Product Weight:</value>
+    <comment>ShoppingCart文字提示，产品重量</comment>
+  </data>
+  <data name="TipQtyNoPun" xml:space="preserve">
+    <value>QTY</value>
+    <comment>WishList文字提示，数量</comment>
+  </data>
+  <data name="TipQuantityNoPun" xml:space="preserve">
+    <value>Quantity</value>
+    <comment>Share文字提示，数量</comment>
+  </data>
+  <data name="TipQuickAdd" xml:space="preserve">
+    <value>Quick Add by Part No.</value>
+    <comment>ShoppingCart文字提示，快速添加</comment>
+  </data>
+  <data name="TipRegistergt" xml:space="preserve">
+    <value>Register &gt;</value>
+    <comment>Share文字提示，注册</comment>
+  </data>
+  <data name="TipRegularPriceItem" xml:space="preserve">
+    <value>Regular-priced item:</value>
+    <comment>ShoppingCart文字提示，固定价格物品</comment>
+  </data>
+  <data name="TipRemove" xml:space="preserve">
+    <value>Remove</value>
+    <comment>WishList文字提示，移除</comment>
+  </data>
+  <data name="TipRemovedProducts" xml:space="preserve">
+    <value>Removed Products</value>
+    <comment>WishList文字提示，移除产品</comment>
+  </data>
+  <data name="TipRemoveSel" xml:space="preserve">
+    <value>Remove Selected</value>
+    <comment>WishList文字提示，删除选中</comment>
+  </data>
+  <data name="TipRestockingCycle" xml:space="preserve">
+    <value>Restocking Cycle: &lt;i id="lblRestockTime"&gt;15 days&lt;/i&gt;.</value>
+    <comment>Share文字提示，15天补货周期</comment>
+  </data>
+  <data name="TipSalesProducts" xml:space="preserve">
+    <value>Sale products</value>
+    <comment>ShoppingCart文字提示，热销</comment>
+  </data>
+  <data name="TipShippingCost" xml:space="preserve">
+    <value>Shipping Cost</value>
+    <comment>ShoppingCart文字提示，运费</comment>
+  </data>
+  <data name="TipShippingDescription" xml:space="preserve">
+    <value>Shipping Description</value>
+    <comment>ShoppingCart文字提示，运送描述</comment>
+  </data>
+  <data name="TipShippingFeeCalculate" xml:space="preserve">
+    <value>Shipping Fee is calculated by Product Weight plus Package Box Weight.</value>
+    <comment>ShoppingCart文字提示，运费是通过产品重量加上包装盒重量计算</comment>
+  </data>
+  <data name="TipShippingMethod" xml:space="preserve">
+    <value>Shipping Methods</value>
+    <comment>ShoppingCart文字提示，运送模式</comment>
+  </data>
+  <data name="TipShopCartEmpty" xml:space="preserve">
+    <value>Your Shopping Cart is &lt;strong&gt;empty&lt;/strong&gt;.</value>
+    <comment>ShoppingCart文字提示，购物车为空</comment>
+  </data>
+  <data name="TipSmallPack" xml:space="preserve">
+    <value>Small Pack</value>
+    <comment>ShoppingCart文字提示，小包装</comment>
+  </data>
+  <data name="TipSortBy" xml:space="preserve">
+    <value>Sort By:</value>
+    <comment>WishList文字提示，排序</comment>
+  </data>
+  <data name="TipStartShop" xml:space="preserve">
+    <value>Start shopping now</value>
+    <comment>ShoppingCart文字提示，现在开始购物</comment>
+  </data>
+  <data name="TipSubtoal" xml:space="preserve">
+    <value>Subtoal</value>
+    <comment>ShoppingCart文字提示，小计</comment>
+  </data>
+  <data name="TipSucceedUp" xml:space="preserve">
+    <value>SUCCEED</value>
+    <comment>ShoppingCart文字提示，成功</comment>
+  </data>
+  <data name="TipSuccessSubmitted" xml:space="preserve">
+    <value>Successfully submitted. Thank you so much for sharing with us your opinion!</value>
+    <comment>Share文字提示，成功提交，非常感谢你的建议</comment>
+  </data>
+  <data name="TipSuggestion" xml:space="preserve">
+    <value>Suggestion</value>
+    <comment>Share文字提示，建议</comment>
+  </data>
+  <data name="TipSuggestionMatters" xml:space="preserve">
+    <value>Your &lt;span class="fgreen"&gt;Suggestion&lt;/span&gt; Matters A Lot to Us!</value>
+    <comment>Share文字提示，你的建议对我们很重要</comment>
+  </data>
+  <data name="TipSuggestionsWishes" xml:space="preserve">
+    <value>Suggestions &amp; Wishes:</value>
+    <comment>Share文字提示，建议和希望</comment>
+  </data>
+  <data name="TipTemporarilySending" xml:space="preserve">
+    <value>This item is temporarily out of stock. But you could preorder it. We will send it to you once it is restocked. Our policy is that earlier purchase, earlier sending.</value>
+    <comment>Share文字提示，缺货，一旦进货给你发过去</comment>
+  </data>
+  <data name="TipTimeForShop" xml:space="preserve">
+    <value>It’s time for shopping!</value>
+    <comment>WishList文字提示，去购物</comment>
+  </data>
+  <data name="TipTimeToShop" xml:space="preserve">
+    <value>It's time to do some shopping...</value>
+    <comment>WishList文字提示，去购物</comment>
+  </data>
+  <data name="TipTotGrossWght" xml:space="preserve">
+    <value>Total Gross Weight:</value>
+    <comment>ShoppingCart文字提示，总净重</comment>
+  </data>
+  <data name="TipVipAndRcd" xml:space="preserve">
+    <value>VIP&amp;amp;RCD:</value>
+    <comment>ShoppingCart文字提示，VIP和RCD</comment>
+  </data>
+  <data name="TipVipDiscount" xml:space="preserve">
+    <value>VIP Discount:</value>
+    <comment>ShoppingCart文字提示，VIP折扣</comment>
+  </data>
+  <data name="TipVolumetricWeight" xml:space="preserve">
+    <value>Volume Weight:</value>
+    <comment>ShoppingCart文字提示，体积重</comment>
+  </data>
+  <data name="TipVolumeWeightUp" xml:space="preserve">
+    <value>Volume Weight:</value>
+    <comment>ShoppingCart文字提示，体积重</comment>
+  </data>
+  <data name="TipYes" xml:space="preserve">
+    <value>Yes</value>
+    <comment>Share文字提示，是</comment>
+  </data>
+  <data name="TipYouCanNowEnjoy" xml:space="preserve">
+    <value>You can now enjoy &lt;strong class="forange_mid"&gt;{0}&lt;/strong&gt;</value>
+    <comment>ShoppingCart文字提示，你可以享受xxx折扣，0：折扣信息</comment>
+  </data>
+  <data name="TipYouCanNowEnjoyAnd" xml:space="preserve">
+    <value>You can now enjoy &lt;strong class="forange_mid"&gt;{0}&lt;/strong&gt;, and just &lt;strong class="forange_mid"&gt;{1}&lt;/strong&gt; away form &lt;strong class="forange_mid"&gt;{2}&lt;/strong&gt;</value>
+    <comment>ShoppingCart文字提示，你可以享受xxx折扣，0：折扣信息</comment>
+  </data>
+  <data name="Tip1000Chars" xml:space="preserve">
+    <value>(&lt;i id="{0}"&gt;1000&lt;/i&gt; characters remaining)</value>
+    <comment>Review文字提示，以前个字符，0：id</comment>
+  </data>
+  <data name="TipAddRevOneByOne" xml:space="preserve">
+    <value>Add Reviews one by one: &lt;span class="fgrey"&gt;( A maximum of 1000 characters for each )&lt;/span&gt;</value>
+    <comment>Review文字提示，一个个添加评论</comment>
+  </data>
+  <data name="TipBatchAddRev" xml:space="preserve">
+    <value>Add Reviews in batch:</value>
+    <comment>Review文字提示，批量添加评论</comment>
+  </data>
+  <data name="TipBeadsJewelryMaking" xml:space="preserve">
+    <value>Beads, Jewelry Making Supplies &amp; Crafts Wholesaler</value>
+    <comment>Share文字提示，珠子,珠宝制作用品和工艺品批发商</comment>
+  </data>
+  <data name="TipChinaBank" xml:space="preserve">
+    <value>Bank of China</value>
+    <comment>Share文字提示，中国银行</comment>
+  </data>
+  <data name="TipContinueWrite" xml:space="preserve">
+    <value>Continue to write &gt;&gt;</value>
+    <comment>Review文字提示，继续写评论</comment>
+  </data>
+  <data name="TipCustomersTestimonials" xml:space="preserve">
+    <value>Customers' Testimonials</value>
+    <comment>Review文字提示，客户的Testimonial</comment>
+  </data>
+  <data name="TipDearFriendRev" xml:space="preserve">
+    <value>Dear friend, you are cordially invited to write Product Reviews.</value>
+    <comment>Review文字提示，亲爱的朋友，诚恳的邀请您填写评论</comment>
+  </data>
+  <data name="TipDhl" xml:space="preserve">
+    <value>DHL</value>
+    <comment>Share文字提示，dhl</comment>
+  </data>
+  <data name="TipEms" xml:space="preserve">
+    <value>EMS</value>
+    <comment>Share文字提示，EMS</comment>
+  </data>
+  <data name="TipFedex" xml:space="preserve">
+    <value>FedEx</value>
+    <comment>Share文字提示，fedex</comment>
+  </data>
+  <data name="TipHistoryProRev" xml:space="preserve">
+    <value>Product Reviews History</value>
+    <comment>Review文字提示，历史评论</comment>
+  </data>
+  <data name="TipIpCheckErrorMsg" xml:space="preserve">
+    <value>&lt;h1&gt;the web site cannot be found&lt;/h1&gt;
+            the web site you are trying to access has an ip address that is configured not to accept requests that specify a port number.
+            &lt;hr&gt;
+            &lt;p&gt;please try the following:&lt;/p&gt;
+            &lt;ul&gt;
+                &lt;li&gt;make sure that the web site address displayed in the address bar of your browser is spelled and formatted correctly.&lt;/li&gt;
+                &lt;li&gt;If you reached this page by clicking a link, contact
+                    the web site administrator to alert them that the link is incorrectly formatted.
+                &lt;/li&gt;
+                &lt;li&gt;click the &lt;a href="javascript:history.go(-1)"&gt;back&lt;/a&gt; button to try another link.&lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;h2&gt;http error 404.1 - file or directory not found: web site not accessible on the requested port.&lt;br&gt;internet information services (iis)&lt;/h2&gt;
+            &lt;hr&gt;
+            &lt;p&gt;technical information (for support personnel)&lt;/p&gt;
+            &lt;ul&gt;
+                &lt;li&gt;go to &lt;a href="http://go.microsoft.com/fwlink/?linkid=8180"&gt;microsoft product support services&lt;/a&gt; and perform a title search for the words &lt;b&gt;http&lt;/b&gt; and &lt;b&gt;404&lt;/b&gt;.&lt;/li&gt;
+                &lt;li&gt;open &lt;b&gt;iis help&lt;/b&gt;, which is accessible in iis manager (inetmgr),
+                    and search for topics titled &lt;b&gt;hosting multiple web sites on a single server&lt;/b&gt;, &lt;b&gt;port assignments for internet services&lt;/b&gt;, and &lt;b&gt;about custom error messages&lt;/b&gt;.&lt;/li&gt;
+            &lt;/ul&gt;</value>
+    <comment>Share文字提示，IpChekcError页面内容</comment>
+  </data>
+  <data name="TipLanguageDown" xml:space="preserve">
+    <value>Language:</value>
+    <comment>Review文字提示，语言</comment>
+  </data>
+  <data name="TipLogOut" xml:space="preserve">
+    <value>Log out</value>
+    <comment>Share文字提示，登出</comment>
+  </data>
+  <data name="TipMoreNoSym" xml:space="preserve">
+    <value>More</value>
+    <comment>Share文字提示，更多</comment>
+  </data>
+  <data name="TipPaypal" xml:space="preserve">
+    <value>paypal</value>
+    <comment>Share文字提示，apypal</comment>
+  </data>
+  <data name="TipProductReviews" xml:space="preserve">
+    <value>Product Reviews</value>
+    <comment>Review文字提示，产品品评论</comment>
+  </data>
+  <data name="TipReply" xml:space="preserve">
+    <value>Reply:</value>
+    <comment>Review文字提示，答复</comment>
+  </data>
+  <data name="TipSearchForOver" xml:space="preserve">
+    <value>Search For Over 30,000+ Findings</value>
+    <comment>Share文字提示，搜索结果超过30000发现</comment>
+  </data>
+  <data name="TipShareFaceback" xml:space="preserve">
+    <value>We are proud to share with all dear friends the feedbacks from our customers and we are so grateful for those who warmly share your experience here. All the valued testimonials are highly appreciated at 8seasons. Thank you very much for your friendly attention!</value>
+    <comment>Review文字提示</comment>
+  </data>
+  <data name="TipThankFeedback" xml:space="preserve">
+    <value>Thank you very much for your feedback. You could find your reviews in the Product Reviews History.</value>
+    <comment>Review文字提示，感谢您的反馈，您可以在历史产品评论中找到您的评论</comment>
+  </data>
+  <data name="TipUnitedStates" xml:space="preserve">
+    <value>United States Postal Service</value>
+    <comment>Share文字提示，美国邮政</comment>
+  </data>
+  <data name="TipUps" xml:space="preserve">
+    <value>UPS</value>
+    <comment>Share文字提示，ups</comment>
+  </data>
+  <data name="TipWesternUnion" xml:space="preserve">
+    <value>Western Union</value>
+    <comment>Share文字提示，西联</comment>
+  </data>
+  <data name="TipWriteATestimonial" xml:space="preserve">
+    <value>Write a Testimonial</value>
+    <comment>Review文字提示，Write a Testimonial</comment>
+  </data>
+  <data name="TipWriteReviews" xml:space="preserve">
+    <value>Write Reviews</value>
+    <comment>Review文字提示，填写评论</comment>
+  </data>
+  <data name="ErrorFormatAccept" xml:space="preserve">
+    <value>Format only Accept:png, jpg, jpeg, bmp, gif, doc, docx.</value>
+    <comment>Product文字提示，只接受xxxx格式</comment>
+  </data>
+  <data name="Tip8seasons" xml:space="preserve">
+    <value>8seasons</value>
+    <comment>Product文字提示，8seasons</comment>
+  </data>
+  <data name="TipAddOtherSourcing" xml:space="preserve">
+    <value>&lt;strong&gt;Now you can:&lt;/strong&gt;&lt;a class="fblue" href="{0}"&gt;&lt;i&gt;-&lt;/i&gt; Add another Sourcing&lt;/a&gt;&lt;br/&gt;&lt;a class="fblue" href="/"&gt;&lt;i&gt;-&lt;/i&gt; Go Shopping&lt;/a&gt;</value>
+    <comment>Product文字提示</comment>
+  </data>
+  <data name="TipAddressFirm" xml:space="preserve">
+    <value>Address of Company /Firm</value>
+    <comment>Privilege文字提示，公司地址</comment>
+  </data>
+  <data name="TipAddressFirmHtml" xml:space="preserve">
+    <value>Hongsheng Xie&lt;br /&gt;
+                            Buliding 3 (Panduo)&lt;br /&gt;
+                            #718 South Chengdian Road&lt;br /&gt;
+                            322000 Yiwu&lt;br /&gt;
+                            Zhejiang China</value>
+    <comment>Privilege文字提示，公司地址</comment>
+  </data>
+  <data name="TipAddSuccShopCart" xml:space="preserve">
+    <value>Item(s) Added Successfully into Your Shopping Cart!</value>
+    <comment>Product文字提示，物品成功添加到购物车</comment>
+  </data>
+  <data name="TipAnyQuesConatctUs" xml:space="preserve">
+    <value>No product available. Any question, please contact us via &lt;a href="maito:service@8seasons.com"/&gt;service@8seasons.com&lt;/a/&gt;.</value>
+    <comment>Privilege文字提示，没有有效产品，有任何问题请联系我们</comment>
+  </data>
+  <data name="TipAsLowAsN" xml:space="preserve">
+    <value>As low as: {0}</value>
+    <comment>Product文字提示，低至多少几个，0：价格</comment>
+  </data>
+  <data name="TipAvailableWait" xml:space="preserve">
+    <value>If all the items will be available within 5 days after payment, I would like to wait.</value>
+    <comment>PlaceOreder文字提示</comment>
+  </data>
+  <data name="TipBuyNow" xml:space="preserve">
+    <value>buy now &gt;</value>
+    <comment>Product文字提示，现在去购买</comment>
+  </data>
+  <data name="TipCertificate" xml:space="preserve">
+    <value>Certificate</value>
+    <comment>Product文字提示，证书</comment>
+  </data>
+  <data name="TipChange" xml:space="preserve">
+    <value>change</value>
+    <comment>Product文字提示，改变</comment>
+  </data>
+  <data name="TipClubAlreadySave" xml:space="preserve">
+    <value>You have already save {0}{1} shipping fee since {2}</value>
+    <comment>Privilege文字提示，您已经节省</comment>
+  </data>
+  <data name="TipCluberInfo" xml:space="preserve">
+    <value>8seasons Club member information:</value>
+    <comment>Privilege文字提示，club会员信息</comment>
+  </data>
+  <data name="TipClubHtml" xml:space="preserve">
+    <value>&lt;li&gt;
+                &lt;ins&gt;&lt;/ins&gt;As an 8Seasons Club member, now you enjoy:
+                &lt;ol&gt;
+                    &lt;li&gt;
+                        &lt;p&gt;FREE Express Delivery for full year&lt;/p&gt;
+                        &lt;p class="fgrey"&gt;(&lt;i class="fred"&gt;* &lt;/i&gt;We charge US$ 2.49 per kilogram for warehouse handling and packing. )&lt;/p&gt;
+                    &lt;/li&gt;
+                    &lt;li&gt;FREE Sample and FREE Catalog&lt;/li&gt;
+                    &lt;li&gt;VIP Product Sourcing Service&lt;/li&gt;
+                    &lt;li&gt;Exclusive Customer Service Manager&lt;/li&gt;
+                    &lt;li&gt;&lt;strong&gt;A US$ 15 coupon each month, and a US$ 20 coupon on your birthday. Total US$ 200. &lt;a href="#" class="fblue_mid"&gt;Click here for details &gt;&gt;&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
+                &lt;/ol&gt;
+            &lt;/li&gt;
+            &lt;li&gt;&lt;ins&gt;&lt;/ins&gt;If you want to know more about the policy for 8Seasons Club, please &lt;a href="#" class="fblue_mid"&gt;click here.&lt;/a&gt;&lt;/li&gt;</value>
+    <comment>Privilege文字提示</comment>
+  </data>
+  <data name="TipClubManagerInfo" xml:space="preserve">
+    <value>Information of your exclusive customer service manager is listed below. If you have any question, please contact her. She will be always at your service.</value>
+    <comment>Privilege文字提示</comment>
+  </data>
+  <data name="TipCommerceCoLtd" xml:space="preserve">
+    <value>8seasons e-Commerce co,ltd</value>
+    <comment>Privilege文字提示，公司名称</comment>
+  </data>
+  <data name="TipCommercialInvoice" xml:space="preserve">
+    <value>Commercial Invoice</value>
+    <comment>Privilege文字提示，商业发票</comment>
+  </data>
+  <data name="TipCoupon" xml:space="preserve">
+    <value>Coupon:</value>
+    <comment>PlaceOreder文字提示，优惠券</comment>
+  </data>
+  <data name="TipCustomerEmail" xml:space="preserve">
+    <value>Customer email:</value>
+    <comment>Privilege文字提示，客户邮箱</comment>
+  </data>
+  <data name="TipCustomerID" xml:space="preserve">
+    <value>Customer ID:</value>
+    <comment>Privilege文字提示，客户Id</comment>
+  </data>
+  <data name="TipDailyDeal" xml:space="preserve">
+    <value>daily deal</value>
+    <comment>Product文字提示，一口价</comment>
+  </data>
+  <data name="TipDetails" xml:space="preserve">
+    <value>Details:</value>
+    <comment>Product文字提示，详情</comment>
+  </data>
+  <data name="TipDisplayingReviews" xml:space="preserve">
+    <value>Displaying &lt;strong&gt;{0}
+    &lt;/strong&gt;to &lt;strong&gt;{1}&lt;/strong&gt; (of &lt;strong&gt;{2}&lt;/strong&gt; reviews)</value>
+    <comment>Product文字提示，显示n~m的评论</comment>
+  </data>
+  <data name="TipEmailUs" xml:space="preserve">
+    <value>Email Us</value>
+    <comment>Product文字提示，邮件我们</comment>
+  </data>
+  <data name="TipExcPriceNoChar" xml:space="preserve">
+    <value>Exclusive Price</value>
+    <comment>Product文字提示，独有的价格</comment>
+  </data>
+  <data name="TipExpDateString" xml:space="preserve">
+    <value>{0} {1} (Expiration Date:{2} , {3}</value>
+    <comment>PlaceOreder文字提示</comment>
+  </data>
+  <data name="TipFax" xml:space="preserve">
+    <value>Fax</value>
+    <comment>Privilege文字提示，传真</comment>
+  </data>
+  <data name="TipForCustomsDest" xml:space="preserve">
+    <value>FOR CUSTOMS OF DESTINATION</value>
+    <comment>Privilege文字提示，目的地海关</comment>
+  </data>
+  <data name="TipGalleryDown" xml:space="preserve">
+    <value>Gallery</value>
+    <comment>Product文字提示，Gallery</comment>
+  </data>
+  <data name="TipGetQuotation" xml:space="preserve">
+    <value>Get quotation within 1-3 working days</value>
+    <comment>Product文字提示，1~3个工作人内得到报价</comment>
+  </data>
+  <data name="TipGetQuotationUp" xml:space="preserve">
+    <value>Get Quotation</value>
+    <comment>Product文字提示，获取报价单</comment>
+  </data>
+  <data name="TipGrossGrams" xml:space="preserve">
+    <value>Gross Weight: {0} g</value>
+    <comment>Privilege文字提示，净重</comment>
+  </data>
+  <data name="TipHappenPrefer" xml:space="preserve">
+    <value>If one or a few items happen to be out of stock, please choose a package way you prefer.</value>
+    <comment>PlaceOreder文字提示</comment>
+  </data>
+  <data name="TipHOT" xml:space="preserve">
+    <value>HOT</value>
+    <comment>Product文字提示，热卖</comment>
+  </data>
+  <data name="TipInputNewCode" xml:space="preserve">
+    <value>Input a new coupon code</value>
+    <comment>PlaceOreder文字提示</comment>
+  </data>
+  <data name="TipItemReviewHtmlF" xml:space="preserve">
+    <value>&lt;th class="item_img"&gt;Picture&lt;/th&gt;
+&lt;th class="item_num"&gt;Part No.&lt;/th&gt;
+&lt;th class="item_weight"&gt;Weight&lt;/th&gt;
+&lt;th class="item_name"&gt;Product Name&lt;/th&gt;
+&lt;th class="item_time"&gt;Ready Time&lt;/th&gt;
+&lt;th class="item_stock"&gt;Available Stock&lt;/th&gt;
+&lt;th class="item_qty"&gt;Purchase Qty&lt;/th&gt;
+&lt;th class="item_unit_price"&gt;Unit Price&lt;/th&gt;
+&lt;th class="item_subtotal"&gt;Subtotal&lt;/th&gt;</value>
+    <comment>PlaceOreder文字提示</comment>
+  </data>
+  <data name="TipItemsReview" xml:space="preserve">
+    <value>Items Review</value>
+    <comment>PlaceOreder文字提示，产品评论</comment>
+  </data>
+  <data name="TipKeyTerms" xml:space="preserve">
+    <value>Key Terms for Club member:</value>
+    <comment>Privilege文字提示，club会员关键术语</comment>
+  </data>
+  <data name="TipKeyTermsHtml" xml:space="preserve">
+    <value>&lt;li&gt;Free shipping for assigned shipping methods when total product price for single order reaches $99.&lt;/li&gt;
+                            &lt;li&gt;8seasons will charge US$ 2.49 per Kilogram for warehouse handling and packing.&lt;/li&gt;
+                            &lt;li&gt;Club member can enjoy total $200 coupons, including 12 coupons of US$ 15 and a coupon of US$20.&lt;/li&gt;
+                            &lt;li&gt;This service now is only available for certain specific countries rather than all countries worldwide.&lt;/li&gt;</value>
+    <comment>Privilege文字提示，club会员关键术语</comment>
+  </data>
+  <data name="TipMembershipFee" xml:space="preserve">
+    <value>Membership fee:</value>
+    <comment>Privilege文字提示，会费</comment>
+  </data>
+  <data name="TipMsgDoCoupon" xml:space="preserve">
+    <value>Do not use coupon</value>
+    <comment>PlaceOreder文字提示</comment>
+  </data>
+  <data name="TipNameFirm" xml:space="preserve">
+    <value>Name of Company/Firm</value>
+    <comment>Privilege文字提示，公司名称</comment>
+  </data>
+  <data name="TipNoProReviews" xml:space="preserve">
+    <value>There are currently no product review.</value>
+    <comment>Product文字提示，没有评论</comment>
+  </data>
+  <data name="TipNoRevResults" xml:space="preserve">
+    <value>No Results! Please &lt;a href="{0}" class="fblue_mid"&gt;write your review&lt;/a&gt;.</value>
+    <comment>Review文字提示，评论提示，0：写评论url</comment>
+  </data>
+  <data name="TipNormallyButUs" xml:space="preserve">
+    <value>Normally the remaining items will be shipped via airmail once being available. But if you need some kind of express delivery, please contact us.</value>
+    <comment>PlaceOreder文字提示</comment>
+  </data>
+  <data name="TipNowOnly" xml:space="preserve">
+    <value>Now Only</value>
+    <comment>Product文字提示，现在只需</comment>
+  </data>
+  <data name="TipNStockAvailable" xml:space="preserve">
+    <value>{0} Stock Available</value>
+    <comment>Product文字提示，可用库存</comment>
+  </data>
+  <data name="TipOEMSourcingPro" xml:space="preserve">
+    <value>OEM &amp; Sourcing Pro</value>
+    <comment>Product文字提示，OEM和专业采购</comment>
+  </data>
+  <data name="TipPaymentASAP" xml:space="preserve">
+    <value>The Available Stock may decrease after order confirmation. Please make payment ASAP.</value>
+    <comment>PlaceOreder文字提示</comment>
+  </data>
+  <data name="TipPaypalID" xml:space="preserve">
+    <value>Paypal Transaction ID:</value>
+    <comment>Privilege文字提示，paypal交易Id</comment>
+  </data>
+  <data name="TipPayRemaining" xml:space="preserve">
+    <value>(We will pay the shipping fee of the remaining items)</value>
+    <comment>PlaceOreder文字提示</comment>
+  </data>
+  <data name="TipPlaceOrder" xml:space="preserve">
+    <value>Place Order</value>
+    <comment>PlaceOreder文字提示，下单</comment>
+  </data>
+  <data name="TipPostRequest" xml:space="preserve">
+    <value>Post Buying Request in just 1 minute</value>
+    <comment>Product文字提示，在一分钟后提交购买请求</comment>
+  </data>
+  <data name="TipProBulkPack" xml:space="preserve">
+    <value>Products in Bulk Pack</value>
+    <comment>Product文字提示，大包装产品</comment>
+  </data>
+  <data name="TipProcessing" xml:space="preserve">
+    <value>Processing</value>
+    <comment>PlaceOreder文字提示，处理中</comment>
+  </data>
+  <data name="TipProduct" xml:space="preserve">
+    <value>Product</value>
+    <comment>Product文字提示，产品</comment>
+  </data>
+  <data name="TipProductNameLink" xml:space="preserve">
+    <value>Product Name/Link:</value>
+    <comment>Product文字提示，产品名称和链接</comment>
+  </data>
+  <data name="TipPromotion" xml:space="preserve">
+    <value>Promotion</value>
+    <comment>Product文字提示，促销</comment>
+  </data>
+  <data name="TipProRegularPack" xml:space="preserve">
+    <value>Products in Regular Pack</value>
+    <comment>Product文字提示，正常装产品</comment>
+  </data>
+  <data name="TipProSmallPack" xml:space="preserve">
+    <value>Products in Small Pack</value>
+    <comment>Product文字提示，小包装产品</comment>
+  </data>
+  <data name="TipRemoved" xml:space="preserve">
+    <value>Removed</value>
+    <comment>Product文字提示，移除</comment>
+  </data>
+  <data name="TipRenewalsLink" xml:space="preserve">
+    <value>"&lt;a href={0} class='btn_orange btn_p30 rt' target='_blank'&gt;Renewals&lt;/a&gt;"</value>
+    <comment>Privilege文字提示，重新加入club会员，0：url</comment>
+  </data>
+  <data name="TipResetYourInfo" xml:space="preserve">
+    <value>No item found, please reset your information.</value>
+    <comment>Privilege文字提示，没有找到产品，请重置你的信息</comment>
+  </data>
+  <data name="TipSafeMaterial" xml:space="preserve">
+    <value>Safe Material</value>
+    <comment>Product文字提示，安全素材</comment>
+  </data>
+  <data name="TipSamplesAndDeals" xml:space="preserve">
+    <value>Samples and Deals</value>
+    <comment>Product文字提示，样品和交易</comment>
+  </data>
+  <data name="TipSendOutFirst" xml:space="preserve">
+    <value>Send out available items first.</value>
+    <comment>PlaceOreder文字提示</comment>
+  </data>
+  <data name="TipShippingCostPun" xml:space="preserve">
+    <value>Shipping Cost:</value>
+    <comment>PlaceOreder文字提示，运费</comment>
+  </data>
+  <data name="TipShoppingCart" xml:space="preserve">
+    <value>Shopping Cart</value>
+    <comment>PlaceOreder文字提示，购物车</comment>
+  </data>
+  <data name="TipSignatureSea" xml:space="preserve">
+    <value>Signature, Seal of Company/Firm</value>
+    <comment>Privilege文字提示，公司签名盖章</comment>
+  </data>
+  <data name="TipSold" xml:space="preserve">
+    <value>Sold</value>
+    <comment>Product文字提示，卖</comment>
+  </data>
+  <data name="TipSouncingUplMsg" xml:space="preserve">
+    <value>Upload photos, drawings, existing specification sheets, or other relevant documents to let us understand your requirements better. 
+Format only Accept: png、jpg、jpeg、bmp、gif、doc、docx. One file should be no more than 2MB.</value>
+    <comment>Product文字提示，上传文件限制说明</comment>
+  </data>
+  <data name="TipSourcingFieldHtml" xml:space="preserve">
+    <value>&lt;li&gt;1. Material:&lt;span&gt;e.g.copper&lt;/span&gt;&lt;br/&gt;&lt;/li&gt;
+                                    &lt;li&gt;2. Color:&lt;span&gt;e.g. purple&lt;/span&gt;&lt;/li&gt;
+                                    &lt;li&gt;3. Size:&lt;span&gt;e.g. 4mm long, 3mm wide, Hole size 0.8mm, 0.7 Dia, etc.&lt;/span&gt;&lt;/li&gt;
+                                    &lt;li&gt;4. Demand Quantity:&lt;span&gt;e.g. 300 PCs&lt;/span&gt;&lt;/li&gt;
+                                    &lt;li&gt;5. Expected Delivery Time:&lt;span&gt;e.g. I want to receive the product before July 30th, 2015&lt;/span&gt;&lt;/li&gt;
+                                    &lt;li&gt;6. Other Requirements:&lt;span&gt;e.g. target price&lt;/span&gt;&lt;/li&gt;</value>
+    <comment>Product文字提示</comment>
+  </data>
+  <data name="TipSourcingFieldMsg" xml:space="preserve">
+    <value>1. Material:
+2. Color:
+3. Size:
+4. Demand Quantity:
+5. Expected Delivery Time:
+6. Other Requirements:</value>
+    <comment>Product文字提示</comment>
+  </data>
+  <data name="TipSubmitSuccess" xml:space="preserve">
+    <value>&lt;strong&gt;Submitted successfully!&lt;/strong&gt;&lt;span&gt;Thank you for your inquiry. We will contact you within 48 hours.&lt;/span&gt;&lt;span&gt;If you have any questions, feel free to contact us at &lt;a class="fblue" href="mailto:service@8seasons.com"&gt;service@8seasons.com&lt;/a&gt;.&lt;/span&gt;</value>
+    <comment>Product文字提示，提交成功</comment>
+  </data>
+  <data name="TipSuccess" xml:space="preserve">
+    <value>Success</value>
+    <comment>Product文字提示，成功</comment>
+  </data>
+  <data name="TipTelephoneNoPun" xml:space="preserve">
+    <value>Telephone</value>
+    <comment>Privilege文字提示，电话</comment>
+  </data>
+  <data name="TipTheIfOff" xml:space="preserve">
+    <value>&lt;strong&gt;Tips:&lt;/strong&gt; The total price of original priced items has reached&lt;i&gt; {0} 620.62&lt;/i&gt;. If the total price reaches &lt;i&gt;{1} 999.00&lt;/i&gt;, you could &lt;i&gt;enjoy 8%&lt;/i&gt; off.</value>
+    <comment>PlaceOreder文字提示</comment>
+  </data>
+  <data name="TipTheInputOder" xml:space="preserve">
+    <value>The coupon you input could not be used in this order.</value>
+    <comment>PlaceOreder文字提示</comment>
+  </data>
+  <data name="TipTimeLeftBuy" xml:space="preserve">
+    <value>(Time left to buy)</value>
+    <comment>Product文字提示，剩余购买时间</comment>
+  </data>
+  <data name="TipTmpRef" xml:space="preserve">
+    <value>The template above is only for your reference. You can delete it and write in your way.</value>
+    <comment>Product文字提示，上面模板仅供参考，你可以写</comment>
+  </data>
+  <data name="TipTotalItems" xml:space="preserve">
+    <value>Total:&lt;strong class="fred"&gt;{0}&lt;/strong&gt;items</value>
+    <comment>PlaceOreder文字提示，总共多少产品，0：产品数</comment>
+  </data>
+  <data name="TipUseCoupon" xml:space="preserve">
+    <value>Use Coupon</value>
+    <comment>PlaceOreder文字提示，使用coupon</comment>
+  </data>
+  <data name="TipValidPeriod" xml:space="preserve">
+    <value>Valid period:</value>
+    <comment>Privilege文字提示，有效期限</comment>
+  </data>
+  <data name="TipValue" xml:space="preserve">
+    <value>Value</value>
+    <comment>Product文字提示，价值</comment>
+  </data>
+  <data name="TipViewInvoiceLink" xml:space="preserve">
+    <value>&lt;a href={0} class='fblue_mid rt' target=_blank&gt;View Invoice&gt;&gt;&lt;/a&gt;</value>
+    <comment>Privilege文字提示，查看发票，0：url</comment>
+  </data>
+  <data name="TipViewShopCart" xml:space="preserve">
+    <value>View Shopping Cart</value>
+    <comment>Product文字提示，显示购物车</comment>
+  </data>
+  <data name="TipVip" xml:space="preserve">
+    <value>VIP:</value>
+    <comment>PlaceOreder文字提示，VIP</comment>
+  </data>
+  <data name="TipWhatUBuy" xml:space="preserve">
+    <value>What do you want to buy?</value>
+    <comment>Product文字提示，你想要买什么</comment>
+  </data>
+  <data name="TipYouReview" xml:space="preserve">
+    <value>Your Review:</value>
+    <comment>Product文字提示，你的评论</comment>
+  </data>
+  <data name="TipYourName" xml:space="preserve">
+    <value>Your Name:</value>
+    <comment>Product文字提示，你的名字</comment>
+  </data>
+  <data name="TipYouSave" xml:space="preserve">
+    <value>You save</value>
+    <comment>Product文字提示，您节省</comment>
+  </data>
+  <data name="TipActions" xml:space="preserve">
+    <value>Actions</value>
+    <comment>Oder文字提示，行动</comment>
+  </data>
+  <data name="TipAddNewAddress" xml:space="preserve">
+    <value>Add a new address</value>
+    <comment>PlaceOrder文字提示，添加一个新地址</comment>
+  </data>
+  <data name="TipAddressLine1" xml:space="preserve">
+    <value>Address Line 1:</value>
+    <comment>PlaceOrder文字提示，地址栏1</comment>
+  </data>
+  <data name="TipAddressLine2" xml:space="preserve">
+    <value>Address Line 2:</value>
+    <comment>PlaceOrder文字提示，地址栏2</comment>
+  </data>
+  <data name="TipArrYourDoor" xml:space="preserve">
+    <value>Arrive at your door</value>
+    <comment>Payment文字提示，送货上门</comment>
+  </data>
+  <data name="TipBackToCart" xml:space="preserve">
+    <value>Back to cart &gt;</value>
+    <comment>Payment文字提示，退回购物车</comment>
+  </data>
+  <data name="TipBoughtQty" xml:space="preserve">
+    <value>Bought Qty.</value>
+    <comment>Order文字提示，购买数量</comment>
+  </data>
+  <data name="TipCheckOutHtmlF" xml:space="preserve">
+    <value>It is a cost-efficient shipping way which is faster than airmail normally.&lt;br /&gt;
+                            The parcel could be tracked here http://www.bpostinternational.com/en/e-shipper/track_and_trace.html until it reaches the post office of destination country. That's to say, after it arrives at the local post office, the tracking information won't be updated any more.&lt;br /&gt;
+                            Advantages:
+                            &lt;ol&gt;
+                                &lt;li&gt;High transportation speed: 9-12 business days;&lt;/li&gt;
+                                &lt;li&gt;Free of tax problem;&lt;/li&gt;
+                                &lt;li&gt;No remote area;&lt;/li&gt;
+                                &lt;li&gt;The tracking No. could be generated on the same day that the parcel is shipped out.&lt;/li&gt;
+                            &lt;/ol&gt;</value>
+    <comment>PlaceOrder文字提示</comment>
+  </data>
+  <data name="TipCheckOutHtmlFo" xml:space="preserve">
+    <value>Have any question about Shipping Methods to Russia, &lt;a href="javascript:void(0)" class="fblue_mid"&gt;click here for details&gt;&gt;&lt;/a&gt;.</value>
+    <comment>PlaceOrder文字提示</comment>
+  </data>
+  <data name="TipCheckOutHtmlS" xml:space="preserve">
+    <value>It is a cost-efficient shipping way which is faster than airmail normally.&lt;br /&gt;
+                            The parcel could be tracked here http://www.bpostinternational.com/en/e-shipper/track_and_trace.html until it reaches the post office of destination country. That's to say, after it arrives at the local post office, the tracking information won't be updated any more.&lt;br /&gt;
+                            Advantages:
+                            &lt;ol&gt;
+                                &lt;li&gt;High transportation speed: 9-12 business days;&lt;/li&gt;
+                                &lt;li&gt;Free of tax problem;&lt;/li&gt;
+                                &lt;li&gt;No remote area;&lt;/li&gt;
+                                &lt;li&gt;The tracking No. could be generated on the same day that the parcel is shipped out.&lt;/li&gt;
+                            &lt;/ol&gt;</value>
+    <comment>PlaceOrder文字提示</comment>
+  </data>
+  <data name="TipCheckOutHtmlT" xml:space="preserve">
+    <value>It is a cost-efficient shipping way which is faster than airmail normally.&lt;br /&gt;
+                            The parcel could be tracked here http://www.bpostinternational.com/en/e-shipper/track_and_trace.html until it reaches the post office of destination country. That's to say, after it arrives at the local post office, the tracking information won't be updated any more.&lt;br /&gt;
+                            Advantages:
+                            &lt;ol&gt;
+                                &lt;li&gt;High transportation speed: 9-12 business days;&lt;/li&gt;
+                                &lt;li&gt;Free of tax problem;&lt;/li&gt;
+                                &lt;li&gt;No remote area;&lt;/li&gt;
+                                &lt;li&gt;The tracking No. could be generated on the same day that the parcel is shipped out.&lt;/li&gt;
+                            &lt;/ol&gt;</value>
+    <comment>PlaceOrder文字提示</comment>
+  </data>
+  <data name="TipCityNoPun" xml:space="preserve">
+    <value>City</value>
+    <comment>PlaceOrder文字提示，城市</comment>
+  </data>
+  <data name="TipCorrPrec" xml:space="preserve">
+    <value>OR: Corresponding Percentage:</value>
+    <comment>Payment文字提示</comment>
+  </data>
+  <data name="TipCustomsComments" xml:space="preserve">
+    <value>Customs &amp; Comments</value>
+    <comment>Payment文字提示，海关和评论</comment>
+  </data>
+  <data name="TipCustomsDeclaration" xml:space="preserve">
+    <value>Customs Declaration:</value>
+    <comment>Payment文字提示，报关单</comment>
+  </data>
+  <data name="TipCustomsNo" xml:space="preserve">
+    <value>Customs No.:</value>
+    <comment>Payment文字提示，海关号</comment>
+  </data>
+  <data name="TipDefaShipAddress" xml:space="preserve">
+    <value>(Default Shipping Address)</value>
+    <comment>PlaceOrder文字提示，默认货运地址</comment>
+  </data>
+  <data name="TipDieDerBest" xml:space="preserve">
+    <value>Order Information</value>
+    <comment>Oder文字提示</comment>
+  </data>
+  <data name="TipDisplayToOrder" xml:space="preserve">
+    <value>Displaying {0} to {1} (of {2} orders)</value>
+    <comment>Oder文字提示</comment>
+  </data>
+  <data name="TipDownload" xml:space="preserve">
+    <value>Download</value>
+    <comment>Order文字提示，下载</comment>
+  </data>
+  <data name="TipDownPackSlip" xml:space="preserve">
+    <value>Download Packing Slip</value>
+    <comment>Oder文字提示，下载包裹单</comment>
+  </data>
+  <data name="TipEstShippingTimePun" xml:space="preserve">
+    <value>Est. Shipping Time:</value>
+    <comment>Order文字提示，东部运送时间</comment>
+  </data>
+  <data name="TipEstShipTime" xml:space="preserve">
+    <value>Estimated Shipping Time</value>
+    <comment>PlaceOrder文字提示，美国东部货运时间</comment>
+  </data>
+  <data name="TipForFeeDetail" xml:space="preserve">
+    <value>For payment methods: HSBC, BANK OF CHINA, WESTERN UNION MONEY TRANSFER, MONEY GRAM, 2% discount will be offered if total amount reach to 2000 US$, commission fee should be paid by payer. &lt;a href="#" class="font_underline fblue"&gt;Click here for detail&gt;&gt;&lt;/a&gt;</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipGoodsValue" xml:space="preserve">
+    <value>Goods'Value:</value>
+    <comment>Payment文字提示，商品价格</comment>
+  </data>
+  <data name="TipGrandTotalNoPun" xml:space="preserve">
+    <value>Grand Total</value>
+    <comment>Oder文字提示，总计</comment>
+  </data>
+  <data name="TipIfSkipDecl" xml:space="preserve">
+    <value>If you have specail requirements for customs declaration, just choose the second option and input the declared value. If not, just skip this step and we will put a suitable value which is better for custom declaration.</value>
+    <comment>Payment文字提示</comment>
+  </data>
+  <data name="TipImptAndTans" xml:space="preserve">
+    <value>Important news about airmail and BY air transportation.</value>
+    <comment>PlaceOrder文字提示，关于航运和航空的重要消息</comment>
+  </data>
+  <data name="TipItemCount" xml:space="preserve">
+    <value>Item-Count:</value>
+    <comment>Oder文字提示，物品数</comment>
+  </data>
+  <data name="TipLeaveWare" xml:space="preserve">
+    <value>Leave the warehouse</value>
+    <comment>Payment文字提示</comment>
+  </data>
+  <data name="TipLetDoMySelf" xml:space="preserve">
+    <value>Let me do this myself.</value>
+    <comment>Payment文字提示，让我这样做自己</comment>
+  </data>
+  <data name="TipLevaeToTeam" xml:space="preserve">
+    <value>Leave this to 8Seasons' professional team.</value>
+    <comment>Payment文字提示</comment>
+  </data>
+  <data name="TipMakePayment" xml:space="preserve">
+    <value>Make Payment</value>
+    <comment>Oder文字提示，付款</comment>
+  </data>
+  <data name="TipModify" xml:space="preserve">
+    <value>Modify</value>
+    <comment>PlaceOrder文字提示，修改</comment>
+  </data>
+  <data name="TipMoneyYouOwe" xml:space="preserve">
+    <value>The money you owe :</value>
+    <comment>Order文字提示，你拥有的钱</comment>
+  </data>
+  <data name="TipMsgLangTitle" xml:space="preserve">
+    <value>LANG_TITLE {0}</value>
+    <comment>Payment文字提示</comment>
+  </data>
+  <data name="TipMsgLangTitlePun" xml:space="preserve">
+    <value>LANG_TITLE {0}:</value>
+    <comment>Payment文字提示</comment>
+  </data>
+  <data name="TipNeedToPay" xml:space="preserve">
+    <value>Need to Pay:</value>
+    <comment>Order文字提示，需要支付</comment>
+  </data>
+  <data name="TipNoOrderInfo" xml:space="preserve">
+    <value>No Order Exists. Please reset your information.</value>
+    <comment>Oder文字提示，没有订单存在</comment>
+  </data>
+  <data name="TipNoRestInfo" xml:space="preserve">
+    <value>No Results! Please reset your information.</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipNoteNoPun" xml:space="preserve">
+    <value>Note</value>
+    <comment>Payment文字提示，通知</comment>
+  </data>
+  <data name="TipNoteSinceBox" xml:space="preserve">
+    <value>&lt;strong class="fred"&gt;NOTE:&lt;/strong&gt; Please fill in your detailed postal address since some shipping company (such as DHL) do not ship to P.O.BOX.</value>
+    <comment>PlaceOrder文字提示</comment>
+  </data>
+  <data name="TipNoteStateDeliv" xml:space="preserve">
+    <value>&lt;strong class="fred"&gt;NOTE:&lt;/strong&gt; It is better to fulfill complete name of State/Province instead of Abbreviation to smooth the delivery.</value>
+    <comment>PlaceOrder文字提示</comment>
+  </data>
+  <data name="TipOrdDisAmount" xml:space="preserve">
+    <value>Order Discount Amount:</value>
+    <comment>Order文字提示，订单折扣金额</comment>
+  </data>
+  <data name="TipOrderComments" xml:space="preserve">
+    <value>Order Comments:</value>
+    <comment>Payment文字提示</comment>
+  </data>
+  <data name="TipOrderDate" xml:space="preserve">
+    <value>Order Date:</value>
+    <comment>Oder文字提示，订单日期</comment>
+  </data>
+  <data name="TipOrderDateNoPun" xml:space="preserve">
+    <value>Order Date</value>
+    <comment>Oder文字提示，订单日期</comment>
+  </data>
+  <data name="TipOrderDetails" xml:space="preserve">
+    <value>Order Details</value>
+    <comment>Order文字提示，订单详细</comment>
+  </data>
+  <data name="TipOrderInvoice" xml:space="preserve">
+    <value>Order Invoice</value>
+    <comment>Oder文字提示，订单发票</comment>
+  </data>
+  <data name="TipOrderNoPun" xml:space="preserve">
+    <value>Order No.:</value>
+    <comment>Order文字提示，订单号</comment>
+  </data>
+  <data name="TipOrderQty" xml:space="preserve">
+    <value>Order Qty.:</value>
+    <comment>Oder文字提示，订单数量</comment>
+  </data>
+  <data name="TipOrderStatus" xml:space="preserve">
+    <value>Order Status:</value>
+    <comment>Oder文字提示，订单状态</comment>
+  </data>
+  <data name="TipOrSendYou" xml:space="preserve">
+    <value>Or you can directly login &lt;a href="//www.paypal.com" class="fblue font_underline"&gt;www.paypal.com&lt;/a&gt; and send us the payment.&lt;br /&gt;
+                                            Our paypal is: &lt;a href="javascript:void(0)" class="fblue"&gt;{0}&lt;/a&gt;. Both are safe to you.</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipOurBankAccount" xml:space="preserve">
+    <value>Our Bank Account (Money Gram)</value>
+    <comment>Payment文字提示，我们银行账号</comment>
+  </data>
+  <data name="TipPackBoxWeight" xml:space="preserve">
+    <value>Package Box Weight</value>
+    <comment>PlaceOrder文字提示，包裹总量</comment>
+  </data>
+  <data name="TipPackingNumPun" xml:space="preserve">
+    <value>Packing No.:</value>
+    <comment>Order文字提示，包裹号</comment>
+  </data>
+  <data name="TipPackingSlipHtmlF" xml:space="preserve">
+    <value>&lt;p&gt; •You can search for packing slip within 1 year. Please fill in required information and click "Search" button.
+	            (Note:  Because of the system function, only the Packing Slip after xxx could be searched)
+	        &lt;/p&gt; 
+	        &lt;p&gt; •If you need the details of the unshipped items, please &lt;a class="fblue" href="{0}"&gt;click here&lt;/a&gt; to find the order you want in the order list, and view on the order detail page.
+	        &lt;/p&gt;</value>
+    <comment>Order文字提示，0：url</comment>
+  </data>
+  <data name="TipPayClickBelow" xml:space="preserve">
+    <value>Pay us by clicking the button below.</value>
+    <comment>Order文字提示，点击下面的按钮付款给我们</comment>
+  </data>
+  <data name="TipPayForOrderFmt" xml:space="preserve">
+    <value>Pay For Order - {0}</value>
+    <comment>Payment文字提示，支付订单</comment>
+  </data>
+  <data name="TipPaymentDetailsUp" xml:space="preserve">
+    <value>Payment Details</value>
+    <comment>Order文字提示，支付详细</comment>
+  </data>
+  <data name="TipPaymentMethodPun" xml:space="preserve">
+    <value>Payment Method:</value>
+    <comment>Oder文字提示，支付模式</comment>
+  </data>
+  <data name="TipPelSomeBox" xml:space="preserve">
+    <value>Please fill in your detailed postal address since some shipping company (such as DHL) do not ship to P.O.BOX.</value>
+    <comment>Payment文字提示</comment>
+  </data>
+  <data name="TipPhoneToDeliv" xml:space="preserve">
+    <value>Phone number is required here to facilitate the parcel delivery.</value>
+    <comment>PlaceOrder文字提示</comment>
+  </data>
+  <data name="TipPleaseSelect" xml:space="preserve">
+    <value>Please select ...</value>
+    <comment>PlaceOrder文字提示，请选择</comment>
+  </data>
+  <data name="TipPleaseSolutionUnder" xml:space="preserve">
+    <value>Please contact us at &lt;a href="mailto:service@8seasons.com" class="fblue"&gt;service@8seasons.com&lt;/a&gt; to get quick solution. Thank you for your patience and kind understanding.</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipPleaseWatchMenth" xml:space="preserve">
+    <value>Please be sure to read the news about watch product before choosing shipping method.</value>
+    <comment>PlaceOrder文字提示</comment>
+  </data>
+  <data name="TipPleSelPro" xml:space="preserve">
+    <value>Please select a State/Province/Region.</value>
+    <comment>Payment文字提示，请选择省份</comment>
+  </data>
+  <data name="TipPrecentOff" xml:space="preserve">
+    <value>({0}% off)</value>
+    <comment>Oder文字提示，折扣</comment>
+  </data>
+  <data name="TipPrint" xml:space="preserve">
+    <value>Print</value>
+    <comment>Oder文字提示，打印</comment>
+  </data>
+  <data name="TipProceTimeHtml" xml:space="preserve">
+    <value>&lt;strong&gt;Processing Time:&lt;/strong&gt;The time it takes to prepare your order before shipping, including quality checks and packing. Shipment arranged in &lt;span class="fred"&gt;1-2&lt;/span&gt; days.</value>
+    <comment>Payment文字提示，处理时间</comment>
+  </data>
+  <data name="TipProductCategory" xml:space="preserve">
+    <value>Product Category:</value>
+    <comment>Oder文字提示，产品类别</comment>
+  </data>
+  <data name="TipQuickReorder" xml:space="preserve">
+    <value>Quick Reorder</value>
+    <comment>Oder文字提示，快速重新下单</comment>
+  </data>
+  <data name="TipReadReviews" xml:space="preserve">
+    <value>Read Reviews</value>
+    <comment>Oder文字提示，查看评论</comment>
+  </data>
+  <data name="TipSecCheckoutFmt" xml:space="preserve">
+    <value>Securely Connecting to PayPal Checkout... &lt;br /&gt; You may also &lt;a href="javascript:void(0);" onclick="submitToPaypal();" style="color: #003399; text-decoration: underline;"&gt;click here&lt;/a&gt; to continue.</value>
+    <comment>Payment文字提示</comment>
+  </data>
+  <data name="TipSetShipAddress" xml:space="preserve">
+    <value>Set as Default Shipping Address</value>
+    <comment>PlaceOrder文字提示，设置货运地址</comment>
+  </data>
+  <data name="TipShipByWegiht" xml:space="preserve">
+    <value>Shipping Cost is calculated by Product Weight plus Package Box Weight.</value>
+    <comment>PlaceOrder文字提示</comment>
+  </data>
+  <data name="TipShipKindlySolution" xml:space="preserve">
+    <value>10736 Shipping Address Invalid City State Postal Code - A match of the Shipping Address City, State, and Postal Code failed. Please kindly check your shipping address again and edit(correct） it or contact us at &lt;a href="mailto:service@8seasons.com" class="fblue"&gt;service@8seasons.com&lt;/a&gt; to get quick solution.</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipShippedQty" xml:space="preserve">
+    <value>Shipped Qty.</value>
+    <comment>Order文字提示，运送数量</comment>
+  </data>
+  <data name="TipShippingAddress" xml:space="preserve">
+    <value>Shipping Address</value>
+    <comment>PlaceOrder文字提示，货运地址</comment>
+  </data>
+  <data name="TipShippingAddressPun" xml:space="preserve">
+    <value>Shipping Address:</value>
+    <comment>Order文字提示，货运地址</comment>
+  </data>
+  <data name="TipShippingInfo" xml:space="preserve">
+    <value>Shipping Information</value>
+    <comment>Order文字提示，运送信息</comment>
+  </data>
+  <data name="TipShippingMethodsPun" xml:space="preserve">
+    <value>Shipping Methods:</value>
+    <comment>Order文字提示，运输模式</comment>
+  </data>
+  <data name="TipShipTimeHtml" xml:space="preserve">
+    <value>&lt;strong&gt;Shipping Time: &lt;/strong&gt;The time for your item(s) to travel from our warehouse to your destination.</value>
+    <comment>Payment文字提示，运送时间</comment>
+  </data>
+  <data name="TipShipTo" xml:space="preserve">
+    <value>SHIP TO:</value>
+    <comment>Oder文字提示，送到</comment>
+  </data>
+  <data name="TipShipToAddress" xml:space="preserve">
+    <value>Ship to this address</value>
+    <comment>PlaceOrder文字提示，运送到这个地址</comment>
+  </data>
+  <data name="TipStateProReg" xml:space="preserve">
+    <value>State/Province/Region:</value>
+    <comment>PlaceOrder文字提示，州省地区</comment>
+  </data>
+  <data name="TipStatusPun" xml:space="preserve">
+    <value>Status:</value>
+    <comment>Oder文字提示，状态</comment>
+  </data>
+  <data name="TipSubtotal" xml:space="preserve">
+    <value>Subtotal</value>
+    <comment>Oder文字提示，几乎全部</comment>
+  </data>
+  <data name="TipSuitePRC" xml:space="preserve">
+    <value>Suite 502, Hengxin Building, 588 Jiangnan Road, Binjiang District, Hangzhou, Zhejiang 310051 &lt;br /&gt;P.R.C.</value>
+    <comment>Oder文字提示，公司地址</comment>
+  </data>
+  <data name="TipTelphone" xml:space="preserve">
+    <value>Telephone:</value>
+    <comment>Payment文字提示，电话号码</comment>
+  </data>
+  <data name="TipTheWebSiteCom" xml:space="preserve">
+    <value>The product is out of stock now and will not be available soon. So it has been removed from our website. If you need it, please contact us via&lt;a href="mailto:service@8seasons.com" class="fblue_mid"&gt;service@8seasons.com&lt;/a&gt;.</value>
+    <comment>Oder文字提示</comment>
+  </data>
+  <data name="TipThisIsText" xml:space="preserve">
+    <value>This text is a tip text.</value>
+    <comment>PlaceOrder文字提示，这是提示文本</comment>
+  </data>
+  <data name="TipThisOfOrder" xml:space="preserve">
+    <value>This page is the Snapshot of the item in your order.</value>
+    <comment>Order文字提示，这个页面的快照是你的订单详细</comment>
+  </data>
+  <data name="TipTo" xml:space="preserve">
+    <value>to</value>
+    <comment>Oder文字提示，到</comment>
+  </data>
+  <data name="TipTotalProWeight" xml:space="preserve">
+    <value>Total Product Weight</value>
+    <comment>PlaceOrder文字提示，总产品重量</comment>
+  </data>
+  <data name="TipTotalShipped" xml:space="preserve">
+    <value>Total Shipped</value>
+    <comment>Order文字提示，总运输重量</comment>
+  </data>
+  <data name="TipTotalShipWeight" xml:space="preserve">
+    <value>Total Shipping Weight:</value>
+    <comment>PlaceOrder文字提示，运输总重</comment>
+  </data>
+  <data name="TipTotalShipWeightNoPun" xml:space="preserve">
+    <value>Total Shipping Weight</value>
+    <comment>PlaceOrder文字提示，总运输重量</comment>
+  </data>
+  <data name="TipTotalToOrder" xml:space="preserve">
+    <value>Total time to receive your order</value>
+    <comment>Payment文字提示，订单到达总时间</comment>
+  </data>
+  <data name="TipTotalVolWeight" xml:space="preserve">
+    <value>Total Volume Weight</value>
+    <comment>PlaceOrder文字提示，总体积重量</comment>
+  </data>
+  <data name="TipTrackingNum" xml:space="preserve">
+    <value>Tracking Number</value>
+    <comment>Order文字提示，查询号码</comment>
+  </data>
+  <data name="TipTrackingNumPun" xml:space="preserve">
+    <value>Tracking Number:</value>
+    <comment>Order文字提示，查询号码</comment>
+  </data>
+  <data name="TipUnitPrice" xml:space="preserve">
+    <value>Unit Price</value>
+    <comment>Oder文字提示，单位价格</comment>
+  </data>
+  <data name="TipUnshippedQty" xml:space="preserve">
+    <value>Unshipped Qty.</value>
+    <comment>Order文字提示，为运送数量</comment>
+  </data>
+  <data name="TipUpdateAddressInfo" xml:space="preserve">
+    <value>Update Address Information</value>
+    <comment>Payment文字提示，更新地址信息</comment>
+  </data>
+  <data name="TipViewDetails" xml:space="preserve">
+    <value>View Details</value>
+    <comment>PlaceOrder文字提示，显示详细</comment>
+  </data>
+  <data name="TipViewInvoice" xml:space="preserve">
+    <value>View Invoice</value>
+    <comment>Oder文字提示，查看发票</comment>
+  </data>
+  <data name="TipViewItemDetail" xml:space="preserve">
+    <value>View current item detail.</value>
+    <comment>Order文字提示，显示当前产品详细</comment>
+  </data>
+  <data name="TipVipDiscountRcd" xml:space="preserve">
+    <value>VIP Discount/VIP&amp;RCD:</value>
+    <comment>Order文字提示，vip折扣或者vip和rcd</comment>
+  </data>
+  <data name="TipWeFillEnglish" xml:space="preserve">
+    <value>We suggest you to fill your shipping address in English.</value>
+    <comment>PlaceOrder文字提示，我们建议你使用英语填写货运地址</comment>
+  </data>
+  <data name="TipWorkdays" xml:space="preserve">
+    <value>workdays</value>
+    <comment>Order文字提示，工作日</comment>
+  </data>
+  <data name="TipYouNeedPay" xml:space="preserve">
+    <value>You need to pay:</value>
+    <comment>Payment文字提示，你需要支付</comment>
+  </data>
+  <data name="TipYourPricePun" xml:space="preserve">
+    <value>Your Price:</value>
+    <comment>Oder文字提示，你的价格</comment>
+  </data>
+  <data name="TipAmount" xml:space="preserve">
+    <value>Amount:</value>
+    <comment>Order文字提示，金额</comment>
+  </data>
+  <data name="TipAmountNumType" xml:space="preserve">
+    <value>The Amount must be number type.</value>
+    <comment>Order文字提示，金额必须是数字类型</comment>
+  </data>
+  <data name="TipEnterAmount" xml:space="preserve">
+    <value>Please enter the Amount.</value>
+    <comment>Order文字提示，请输入金额</comment>
+  </data>
+  <data name="TipFillCurrencyUsed" xml:space="preserve">
+    <value>Please fill in the currency you used.</value>
+    <comment>Order文字提示，请填入你使用的币种</comment>
+  </data>
+  <data name="TipFillWeInfo" xml:space="preserve">
+    <value>Fill out the following information if you've sent out your payment. We will check within 1-2 days after receiving your information.</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipOthers" xml:space="preserve">
+    <value>Others</value>
+    <comment>Order文字提示，其他</comment>
+  </data>
+  <data name="TipYourCurrency" xml:space="preserve">
+    <value>(Your Currency)</value>
+    <comment>Order文字提示，你的币种</comment>
+  </data>
+  <data name="ErrorGrossIsReq" xml:space="preserve">
+    <value>Gross Weight is required</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="MsgSelectState" xml:space="preserve">
+    <value>Please select a State/Province/Region.</value>
+    <comment>Account文字提示</comment>
+  </data>
+  <data name="RipEcoExpDelDuty" xml:space="preserve">
+    <value>Economic Express Delivery(By Agent)(free duty)</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="Tip8seasonChooseUs" xml:space="preserve">
+    <value>8Reasons to choose us</value>
+    <comment>Account文字提示</comment>
+  </data>
+  <data name="Tip8SeasonSitemap" xml:space="preserve">
+    <value>8Seasons.com Sitemap</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipAction" xml:space="preserve">
+    <value>Action</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipAirMailLarge" xml:space="preserve">
+    <value>Air Mail(Large-size Parcel)</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipAirMailSmall" xml:space="preserve">
+    <value>Air Mail(small-size parcel)</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipAusLineDuty" xml:space="preserve">
+    <value>Australia Express Line (free duty)</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipAusUBIDuty" xml:space="preserve">
+    <value>Australia UBI Line (free duty)</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipBackArrow" xml:space="preserve">
+    <value>&lt;&lt; Back</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipBadnExistingAccount" xml:space="preserve">
+    <value>Bind your existing account</value>
+    <comment>Account文字提示</comment>
+  </data>
+  <data name="TipBandYourAccount" xml:space="preserve">
+    <value>Band your 8seasons Account</value>
+    <comment>Account文字提示</comment>
+  </data>
+  <data name="TipBeAirDuty" xml:space="preserve">
+    <value>BE air transportation (free duty)</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipByAdrTran" xml:space="preserve">
+    <value>BY air transportation</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipByStartChat" xml:space="preserve">
+    <value>By clicking LiveHelp on each page, our instant reply will be served if we are online. &lt;a class="fblue" href="javascript:void(0)"&gt;Start Chat.&lt;/a&gt;</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipCEO" xml:space="preserve">
+    <value>CEO:</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipClickUnitCon" xml:space="preserve">
+    <value>Click here for details of weight unit convertion.</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipCNEEurExpDuty" xml:space="preserve">
+    <value>CNE Europe Express(free duty)</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipCNEGlobalDuty" xml:space="preserve">
+    <value>CNE Global Express(free duty)</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipComments" xml:space="preserve">
+    <value>Comments</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipContactUsHtmlF" xml:space="preserve">
+    <value>&lt;strong&gt;Additional information kindly note:&lt;/strong&gt;
+        &lt;p&gt;
+            Sometimes email communication is not reliable (emails will be lost on the way or be blocked by ISP filter), therefore 
+
+if you do not get our reply within 48 hours, we suggest you to:&lt;br /&gt;
+            1) Check the junk or spam folder in your email inbox (sometimes your ISP filter will regard our reply email as spam in 
+
+mistake)&lt;br /&gt;
+            2) Try to contact us again, you can click &amp;quot;Live Chat&amp;quot; or send email to contact us again.
+        &lt;/p&gt;</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipContactUsHtmlS" xml:space="preserve">
+    <value>Thank you!
+            &lt;br /&gt;
+            Your email has been sent to us successfully.
+            &lt;br /&gt;
+            We will reply you within 24 hours in our business days
+</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipCOntactUsVia" xml:space="preserve">
+    <value>Contact us via</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipControlnNum" xml:space="preserve">
+    <value>Control No. must be {0} numbers.</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipControlNum" xml:space="preserve">
+    <value>Control No.:</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipControlNumType" xml:space="preserve">
+    <value>Control No. must be number type.</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipCouponIntoAccount" xml:space="preserve">
+    <value>Coupon has been added into your account automatically.</value>
+    <comment>Account文字提示</comment>
+  </data>
+  <data name="TipCreateAccountFacebook" xml:space="preserve">
+    <value>Create your 8seasons account and connect with Facebook</value>
+    <comment>Account文字提示</comment>
+  </data>
+  <data name="TipCustomerServiceUp" xml:space="preserve">
+    <value>Customer Service:</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipDate" xml:space="preserve">
+    <value>Date</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipDefaultShipAddress" xml:space="preserve">
+    <value>Default Shipping Address</value>
+    <comment>Account文字提示</comment>
+  </data>
+  <data name="TipDHLAgent" xml:space="preserve">
+    <value>DHL (by Agent) &lt;a title="Transported by agency, then shipped from HongKong DHL company."&gt;[?]&lt;/a&gt;</value>
+    <comment>Help文字提示，a标签title内容也需要翻译</comment>
+  </data>
+  <data name="TipDHLDir" xml:space="preserve">
+    <value>DHL (Direct) &lt;a title="DHL Express, shipped from local DHL company."&gt;[?]&lt;/a&gt;</value>
+    <comment>Help文字提示，a标签title内容也需要翻译</comment>
+  </data>
+  <data name="TipDigitsConNum" xml:space="preserve">
+    <value>{0}–digits Money Instant Transfer Control Number</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipDownloadAllPic" xml:space="preserve">
+    <value>Download all Pictures</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipDownloadPic" xml:space="preserve">
+    <value>Download Pic.</value>
+    <comment>Order文字提示，下载图片</comment>
+  </data>
+  <data name="TipEmailNoPun" xml:space="preserve">
+    <value>Email</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipEMSExpress" xml:space="preserve">
+    <value>EMS Express</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipEnterControlNum" xml:space="preserve">
+    <value>Please enter Control No..</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipEnterCouponCode" xml:space="preserve">
+    <value>enter a coupon code</value>
+    <comment>Account文字提示</comment>
+  </data>
+  <data name="TipEnterKeyTopic" xml:space="preserve">
+    <value>Enter a keyword or topic</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipEnterPayDate" xml:space="preserve">
+    <value>Please enter the Payment Date.</value>
+    <comment>Order文字提示，请输入支付日期</comment>
+  </data>
+  <data name="TipEntFullOfRem" xml:space="preserve">
+    <value>Please enter the Full Name of Remitter.</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipEurMailDuty" xml:space="preserve">
+    <value>Europe Mail(free duty)</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipExpressPost" xml:space="preserve">
+    <value>Express Post</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipFaceboolBinSucess" xml:space="preserve">
+    <value>Bind your Account Successfully
+			&lt;em class="fgrey_mid font12"&gt;Thank you for binding your Facebook account to 8seasons Now you can login to 8seasons by using your Facebook account.&lt;/em&gt;</value>
+    <comment>Account文字提示</comment>
+  </data>
+  <data name="TipFedExIE" xml:space="preserve">
+    <value>FedEx-IE(Direct) &lt;a title="Express Fedex International Economy, shipped from local Fedex Company."&gt;[?]&lt;/a&gt;</value>
+    <comment>Help文字提示，a标签title内容也需要翻译</comment>
+  </data>
+  <data name="TipFedExIP" xml:space="preserve">
+    <value>Fedex-IP(Direct) &lt;a title="Express Fedex International Priority, shipped from local Fedex Company."&gt;[?]&lt;/a&gt;</value>
+    <comment>Help文字提示，a标签title内容也需要翻译</comment>
+  </data>
+  <data name="TipFullOfRem" xml:space="preserve">
+    <value>Full Name of Remitter:</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipFullRemChar" xml:space="preserve">
+    <value>The Full Name of Remitter should contain a minimum of 2 characters.</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipGoShopping" xml:space="preserve">
+    <value>Go Shopping</value>
+    <comment>Account文字提示</comment>
+  </data>
+  <data name="TipHelpCenter" xml:space="preserve">
+    <value>Help Center</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipIfContactWays" xml:space="preserve">
+    <value>If there is anything you would like us to help you, please feel free to contact us through the following ways:</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipItemsReviews" xml:space="preserve">
+    <value>Items Reviews</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipItToolOnline" xml:space="preserve">
+    <value>It is a multifunctional payment tool that provides secure and immediate transactions online.</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipJustAwayFrom" xml:space="preserve">
+    <value>(Just {0} {1} away from {2}% off)</value>
+    <comment>Account文字提示，just $10 away from 20% off</comment>
+  </data>
+  <data name="TipLessThan2M" xml:space="preserve">
+    <value>(.gif/.png/.jpeg /.jpg/.bmp/.pdf), less than 2M.)</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipMessage" xml:space="preserve">
+    <value>Message:</value>
+    <comment>Help文字提示，消息</comment>
+  </data>
+  <data name="TipNameOneY" xml:space="preserve">
+    <value>Name of Remitter should contain at least one vowel (A, E, I, O, U) or Y.</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipNewProducts" xml:space="preserve">
+    <value>New Products</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipNewTo8Seasons" xml:space="preserve">
+    <value>New to 8Seasons?</value>
+    <comment>Account文字提示</comment>
+  </data>
+  <data name="TipNextPun" xml:space="preserve">
+    <value>Next:</value>
+    <comment>Help文字提示，下一个</comment>
+  </data>
+  <data name="TipNoProVia" xml:space="preserve">
+    <value>No product available. any question, please contact us via &lt;a href="maito:service@8seasons.com"&gt;service@8seasons.com&lt;/a&gt;.</value>
+    <comment>Account文字提示</comment>
+  </data>
+  <data name="TipOderDtlPayHtml" xml:space="preserve">
+    <value>&lt;li&gt;When transferring money to us, please write down your order No. in the remarks column of the bank transfer form.&lt;/li&gt;
+                                        &lt;li&gt;Be sure to email us your order No. after you make the bank transfer.&lt;/li&gt;
+                                        &lt;li&gt;It's buyers' responsibility to pay the commission fee for Bank Wire Transfer(HSBC / Bank of China).&lt;/li&gt;</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipOkIKnow" xml:space="preserve">
+    <value>OK,I Know</value>
+    <comment>Account文字提示</comment>
+  </data>
+  <data name="TipOrderGetAgain" xml:space="preserve">
+    <value>Order has been shipped out, please get ready to receive parcel. Looking forward to see you again.</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipOtherHelpInfo" xml:space="preserve">
+    <value>Other Helpful Information</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipPack" xml:space="preserve">
+    <value>Pack</value>
+    <comment>Order文字提示，包</comment>
+  </data>
+  <data name="TipPackageNum" xml:space="preserve">
+    <value>Package Number</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipPayIsCheck" xml:space="preserve">
+    <value>Payment is under checking...</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipPaymentDate" xml:space="preserve">
+    <value>Payment Date:</value>
+    <comment>Order文字提示，支付日期</comment>
+  </data>
+  <data name="TipPaymentRec" xml:space="preserve">
+    <value>Payment Receipt:</value>
+    <comment>Order文字提示，付款收据</comment>
+  </data>
+  <data name="TipPending" xml:space="preserve">
+    <value>Pending</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipPicture" xml:space="preserve">
+    <value>Picture</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipPopularSearch" xml:space="preserve">
+    <value>Popular Search</value>
+    <comment>CheckOut文字提示</comment>
+  </data>
+  <data name="TipPre" xml:space="preserve">
+    <value>Pre.:</value>
+    <comment>Help文字提示，前一个</comment>
+  </data>
+  <data name="TipPrivacyNotice" xml:space="preserve">
+    <value>Privacy Notice</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipProductsForCon" xml:space="preserve">
+    <value>Products for your consideration</value>
+    <comment>CheckOut文字提示</comment>
+  </data>
+  <data name="TipReset" xml:space="preserve">
+    <value>Reset</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipSalesManager" xml:space="preserve">
+    <value>Sales Manager:</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipSearchHelpCenter" xml:space="preserve">
+    <value>Search in Help Center</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipSendDirectly" xml:space="preserve">
+    <value>Send Message Directly</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipSetAsDefault" xml:space="preserve">
+    <value>Set as Default</value>
+    <comment>Account文字提示</comment>
+  </data>
+  <data name="TipSFHAirDuty" xml:space="preserve">
+    <value>SFH air transportation (free duty)</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipSFHCarDuty" xml:space="preserve">
+    <value>SFH car transportation (free duty)</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipShipMaxAllow" xml:space="preserve">
+    <value>Shipping Address &lt;span class="fred"&gt;(A maximum of {0}allowed)&lt;/span&gt;</value>
+    <comment>Account文字提示</comment>
+  </data>
+  <data name="TipShipped" xml:space="preserve">
+    <value>Shipped</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipShippingCalculator" xml:space="preserve">
+    <value>Shipping Calculator</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipShippingComments" xml:space="preserve">
+    <value>Shipping &amp; Comments</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipShippinpReturn" xml:space="preserve">
+    <value>Shipping &amp;amp; Return</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipSkypeNoPun" xml:space="preserve">
+    <value>Skype</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipSmartIntBus" xml:space="preserve">
+    <value>Smart solution for internet business.</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipStatusComments" xml:space="preserve">
+    <value>Status History &amp; Comments</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipTelephoneNum" xml:space="preserve">
+    <value>Telephone No.:</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipTelphoneNoPun" xml:space="preserve">
+    <value>Telephone</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipThankOderShip" xml:space="preserve">
+    <value>Thank you for your payment, normally your order will be shipped in 1-2 days, after that order status will be changed to Shipped.</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipThisPlaceNeed" xml:space="preserve">
+    <value>This order has been cancelled; you can place a new order if needed.</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipTips" xml:space="preserve">
+    <value>Tips:</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipTotal" xml:space="preserve">
+    <value>Total:</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipTotalWeight" xml:space="preserve">
+    <value>Total Weight:</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipTranAirDuty" xml:space="preserve">
+    <value>Transportation to Russia by Air (free duty)</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipTranCarDuty" xml:space="preserve">
+    <value>Transportation to Moscow by Car (free duty)</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipTranRusCarDuty" xml:space="preserve">
+    <value>Transportation to Russia by Car (free duty)</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipUnitConversion" xml:space="preserve">
+    <value>Unit Conversion</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipUPSExpedited" xml:space="preserve">
+    <value>UPS Expedited</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipUPSExpSaver" xml:space="preserve">
+    <value>UPS Express Saver</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipUserName" xml:space="preserve">
+    <value>Username:</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipUSPSDUty" xml:space="preserve">
+    <value>USPS(free duty)</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipViewInfo" xml:space="preserve">
+    <value>View Info.</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipViewMore" xml:space="preserve">
+    <value>View More &gt;&gt;</value>
+    <comment>Help文字提示</comment>
+  </data>
+  <data name="TipWebCurEur" xml:space="preserve">
+    <value>WebMoney supports curencies RUB, USD, EUR.</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipWriteRemEn" xml:space="preserve">
+    <value>Please write the "Full name of Remitter" in English.</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipYouEnjoyBen" xml:space="preserve">
+    <value>You can enjoy the following benefits:</value>
+    <comment>Account文字提示</comment>
+  </data>
+  <data name="TipYouMadePay" xml:space="preserve">
+    <value>You’ve made payment</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipYourExpirePossible" xml:space="preserve">
+    <value>Your coupon is about to expire. The coupon code is {0}. The deadline is {1}. &lt;a href="{2}"&gt;View more&lt;/a&gt;&lt;br /&gt;
+                                You are sincerely advised to use it as early as possible.</value>
+    <comment>Account文字提示</comment>
+  </data>
+  <data name="TipYourTimeOrder" xml:space="preserve">
+    <value>Your order has been placed successfully. But we are still in the process of confirming payment details. Please note that Western Union and Wire Transfer may take additional time. If you have made the payment off-line, please submit payment ASAP for us to confirm detail and then ship your order.</value>
+    <comment>Order文字提示</comment>
+  </data>
+  <data name="TipYouValidUntil" xml:space="preserve">
+    <value>Your 8Seasons Club coupon ({0}) is valid until {1}</value>
+    <comment>Account文字提示，Coupon到期提醒</comment>
+  </data>
+  <data name="ErrorCouCodeAlrAdd" xml:space="preserve">
+    <value>The coupon code you entered has already been added.</value>
+    <comment>Account错误提示，你输入的优惠券编号已经添加</comment>
+  </data>
+  <data name="ErrorCouponExpired" xml:space="preserve">
+    <value>This coupon has expired.</value>
+    <comment>Account错误提示，优惠券已经过期</comment>
+  </data>
+  <data name="ErrorCusNotExist" xml:space="preserve">
+    <value>Customer does not exist.</value>
+    <comment>Account错误提示，客户不存在</comment>
+  </data>
+  <data name="ErrorWrongCouCode" xml:space="preserve">
+    <value>You entered a wrong coupon code.</value>
+    <comment>Account错误提示，你输入了错误的优惠券编号</comment>
+  </data>
+  <data name="MsgAddCartFail" xml:space="preserve">
+    <value>Failed to add to cart.</value>
+    <comment>ShippingCart消息提示</comment>
+  </data>
+  <data name="MsgCartNotExist" xml:space="preserve">
+    <value>The product does not exist.</value>
+    <comment>ShippingCart消息提示</comment>
+  </data>
+  <data name="MsgCustomerNotExist" xml:space="preserve">
+    <value>Customer does not exist.</value>
+    <comment>ShippingCart消息提示，客户不存在</comment>
+  </data>
+  <data name="MsgItemBeenRemoved" xml:space="preserve">
+    <value>This item has been removed.</value>
+    <comment>ShippingCart消息提示，这个物品已经被移除</comment>
+  </data>
+  <data name="MsgItemNoStock" xml:space="preserve">
+    <value>Item {0} have no stock</value>
+    <comment>ShippingCart消息提示，xxx物品没有库存</comment>
+  </data>
+  <data name="MsgNothing" xml:space="preserve">
+    <value>nothing</value>
+    <comment>ShippingCart消息提示，什么都没有</comment>
+  </data>
+  <data name="MsgPleaseLogin" xml:space="preserve">
+    <value>Please login.</value>
+    <comment>ShippingCart消息提示</comment>
+  </data>
+  <data name="MsgPresenceProducts" xml:space="preserve">
+    <value>The presence id 0 products</value>
+    <comment>ShippingCart消息提示</comment>
+  </data>
+  <data name="TipDoorToDoor" xml:space="preserve">
+    <value>Door to Door</value>
+    <comment>HelpCenter文字提示</comment>
+  </data>
+  <data name="TipLinkPsdBefore" xml:space="preserve">
+    <value>The link of resetting password is invalid now and you could login with the password before.</value>
+    <comment>Account文字提示，重置密码连接失效，你可以使用原先密码登陆</comment>
+  </data>
+  <data name="TipNoDoToDof" xml:space="preserve">
+    <value>Not Door to Door (ship to local post office)</value>
+    <comment>HelpCenter文字提示</comment>
+  </data>
+  <data name="TipNoDoToDoMo" xml:space="preserve">
+    <value>Not Door to Door(ship to Moscow)</value>
+    <comment>HelpCenter文字提示</comment>
+  </data>
+  <data name="TipNoDoToDoMS" xml:space="preserve">
+    <value>Not Door to Door&amp;nbsp;&lt;a title="Moscow, St. Petersburg, Krasnoyarsk, Novosibirsk, Ekaterinburg, Irkutsk, Omsk, Kamchatka, Sakhalin, Yakutsk."&gt;&lt;font size="1" color="#c89469"&gt;[?]&lt;/font&gt;&lt;/a&gt;</value>
+    <comment>HelpCenter文字提示</comment>
+  </data>
+  <data name="TipNoDoToDoSK" xml:space="preserve">
+    <value>Not Door to Door&amp;nbsp;&lt;a title="St. Petersburg, Krasnoyarsk, Novosibirsk, Ekaterinburg, Irkutsk, Omsk, Yakutsk, Ussuri, Khabarovsk, Tyumen, Vladivostok, Yakutsk."&gt;&lt;font size="1" color="#c89469"&gt;[?]&lt;/font&gt;&lt;/a&gt;</value>
+    <comment>HelpCenter文字提示</comment>
+  </data>
+  <data name="TipWeResetPassword" xml:space="preserve">
+    <value>We have sent an email to your email address: &lt;strong&gt;{0}&lt;/strong&gt;. Please reset your password ASAP.</value>
+    <comment>Account文字提示，我们已经发送一封邮件到你的地址，请重置你的密码。</comment>
+  </data>
+  <data name="TipUpdate" xml:space="preserve">
+    <value>Update</value>
+    <comment>AccountSetting文字提示，更新</comment>
+  </data>
+</root>

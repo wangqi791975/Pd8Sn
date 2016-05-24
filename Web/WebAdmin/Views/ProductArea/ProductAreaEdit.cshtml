@@ -1,0 +1,175 @@
+﻿@using System.Globalization
+@using Com.Panduo.Service.Product.ProductArea
+@model ProductArea
+@{
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+    var productArea = Model;//(Com.Panduo.Service.Product.ProductArea.productArea)ViewBag.productArea;
+    ViewBag.Title = productArea.AreaId > 0 ? "商品专区设置 > 编辑" : "商品专区设置 > 新建";
+
+}
+@section HtmlHead
+{
+    @Html.JsFor("productArea.js", "~/Js/bootstrap-formhelpers.js,~/Js/Marketing/Marketing.js", fileVersion: "1.4")
+    @Html.CssFor("productArea.css", "~/Css/bootstrap-formhelpers.min.css", fileVersion: "1.0")
+}
+
+<p>
+    <h3>商品专区编辑</h3>
+</p>
+<div class="alert alert-error hide"><a class="close" data-dismiss="alert">&times;</a><span>@ViewBag.ErrorMsg</span></div>
+@*<p><code>说明：时间为北京时间</code></p>*@
+<form class="form-horizontal" id="productAreaForm" name="productAreaForm" action="@Url.Content("~/ProductArea/ProductAreaSave")" method="post" onsubmit="return false;">
+    <div class="well tab-content">
+        <input type="hidden" name="productAreaId" id="productAreaId" value="@productArea.AreaId"/>
+
+        <div class="control-group">
+            <label class="control-label">名称：</label>
+            <div class="controls">
+                @Html.TextBoxFor(area => area.AreaName, new { @class = "input-xlarge" }) @{@:(该名称只用于在后台显示)
+                }
+            </div>
+            @foreach (var item in ViewBag.AllLanguage)
+            {
+                var productAreaDesc = productArea.ProductAreaLanguages.IsNullOrEmpty() ? new ProductAreaLanguage() : productArea.ProductAreaLanguages.Find(x => x.LanguageId == item.LanguageId);
+                <div class="controls">
+                    <input class="input-xlarge" id="txtProductAreaName_@item.LanguageId" name="txtProductAreaName_@item.LanguageId" type="text" value="@(productAreaDesc.IsNullOrEmpty() ? "" : productAreaDesc.AreaName)">
+                    @{ @:(@item.LanguageCode) 
+                    }
+                </div>
+            }
+        </div>
+        <div class="control-group">
+            <label class="control-label">启用/禁用：</label>
+            <div class="controls">
+                <label class="radio inline">
+                    @Html.RadioButtonFor(area => area.IsValid, true)启用
+                </label>
+                <label class="radio inline">
+                    @Html.RadioButtonFor(area => area.IsValid, false)禁用
+                </label>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">是否设置首页：</label>
+            <div class="controls">
+                <label class="radio inline">
+                    @Html.RadioButtonFor(m => m.IsShowHome, true, new { @onchange = "fnChangeIsShowHome(this)" })是
+                </label>
+                <label class="radio inline">
+                    @Html.RadioButtonFor(m => m.IsShowHome, false, new { @onchange = "fnChangeIsShowHome(this)" })否
+                </label>
+            </div>
+            <div class="controls @(Model.IsShowHome ? "" : "hide")" id="div_sethometab">
+                <div class="tab-content">
+                    <ul class="nav nav-tabs">
+                        @for (var i = 0; i < ViewBag.AllLanguage.Count; i++)
+                        {
+                            var className = "";
+                            if (i == 0)
+                            {
+                                className = "active";
+                            }
+                            <li class="@className"><a data-toggle="tab" href="javascript:void(0)" data-target="#tab_language_description_@ViewBag.AllLanguage[i].LanguageId">@ViewBag.AllLanguage[i].ChineseName</a></li>
+                        }
+                    </ul>
+
+                    @for (var i = 0; i < ViewBag.AllLanguage.Count; i++)
+                    {
+                        var item = ViewBag.AllLanguage[i];
+                        var className = "tab-pane";
+                        if (i == 0)
+                        {
+                            className = "tab-pane active";
+                        }
+                        var productAreaLanguage = productArea.ProductAreaLanguages.IsNullOrEmpty() ? new ProductAreaLanguage() : productArea.ProductAreaLanguages.Find(x => x.LanguageId == item.LanguageId);
+                        <div class="@className" id="tab_language_description_@item.LanguageId">
+                            <textarea name="txtProductAreaHome_@item.LanguageId" rows="8" id="txtProductAreaHome_@item.LanguageId" style="width:800px;">@(!productAreaLanguage.IsNullOrEmpty() ? productAreaLanguage.Home : "")</textarea>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <a class="btn btn-primary" id="btnSave" href="javascript:void(0)">保存</a>
+            <a class="btn" href="@Url.Content("~/ProductArea/ProductArea")">取消</a>
+        </div>
+    </div>
+</form>
+
+<p>
+    <h3>导入商品到该产品专区</h3>
+</p>
+<div class="alert alert-error hide"><a class="close" data-dismiss="alert">&times;</a><span>请选择上传的文件.</span></div>
+<form class="form-horizontal" id="uploadimportfile_Form" name="uploadimportfile_Form" action="@Url.Content("~/ProductArea/ImportProductAreaProduct")" method="post" onsubmit="return false;">
+    <div class="well tab-content">
+        <div class="control-group">
+            <label class="control-label">导入文件：</label>
+            <div class="controls">
+                <span class="help-inline">
+                    <input type="hidden" name="txtproductAreaId" id="txtproductAreaId" value="@productArea.AreaId"/>
+                    <input type="file" id="file_areaproducts" name="file_areaproducts" /></span> @{@:(.xls/.xlsx)
+                    }<a href="~/ImportModelFiles/ProductArea/subject_area_products.xls">下载模板</a>
+            </div>
+        </div>
+        <div class="form-actions">
+            <a class="btn btn-primary" id="btnuploadfile" href="javascript:void(0)">导入</a>
+            <a class="btn" href="javascript:void(0)" onclick="$('#uploadimportfile_Form').reset();">取消</a>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    $(function () {
+        //导入
+        $("#btnuploadfile").click(function () {
+            if ($("#txtproductAreaId").val() > 0) {
+                if ($("#file_productAreaproducts").val().trim() == "") {
+                    $("#uploadimportfile_Form").prev().show().delay(2000).hide(200).find("span").text("请选择上传的文件.");
+                } else {
+                    var msg = "";
+                    $("#uploadimportfile_Form").ajaxSubmit({
+                        success: function (responseText) {
+                            switch (responseText.result) {
+                                case "success":
+                                    msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作成功!' : responseText.msg;
+                                    $("#file_productAreaproducts").val('');
+                                    break;
+                                case "error":
+                                case "failing":
+                                    msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作失败!' : responseText.msg;
+                                    break;
+                            }
+                            $("#uploadimportfile_Form").prev().show().delay(2000).hide(200).find("span").text(msg);
+                        }
+                    });
+                }
+            } else
+                $("#uploadimportfile_Form").prev().show().delay(2000).hide(200).find("span").text("请先保存产品专区.");
+        });
+        $("#btnSave").click(function () {
+            var msg = "";
+            $("#productAreaForm").ajaxSubmit({
+                success: function (responseText) {
+                    switch (responseText.result) {
+                        case "success":
+                            msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作成功!' : responseText.msg;
+                            $("#txtproductAreaId").val(responseText.productAreaId);
+                            $("#productAreaId").val(responseText.productAreaId);
+                            break;
+                        case "error":
+                        case "failing":
+                            msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作失败!' : responseText.msg;
+                            break;
+                    }
+                    $("#productAreaForm").prev().show().delay(2000).hide(200).find("span").text(msg);
+                }
+            });
+        });
+    });
+
+    function fnChangeIsShowHome(obj) {
+        if ($(obj).val() == "True") $("#div_sethometab").show(); else $("#div_sethometab").hide();
+    }
+</script>

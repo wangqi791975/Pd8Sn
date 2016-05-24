@@ -1,0 +1,39 @@
+﻿@{
+    Layout = null;
+}
+
+@using Resources
+@model  Com.Panduo.Service.PageData<Com.Panduo.Service.Review.ReviewWebsiteCustomerView>
+
+<div id="divtestimonialist">
+    @foreach (var review in Model.Data)
+    {
+        <dl>
+            <dt class="lf">
+                <span class="lf"></span>
+                <p class="lf">
+                    @review.Content
+                    <br />
+                    <i>@review.DateCreated.ToString("MM/dd/yyyy")</i>
+                </p>
+                <div class="clearfix"></div>
+                @if (!review.RepContent.IsNullOrEmpty())
+                {
+                    <ins class="fgrey_mid"><strong>@Lang.TipReply</strong>@review.RepContent</ins>
+                }
+            </dt>
+            <dd class="rt">
+                <p>
+                    <img src="@review.Avatar" /><strong>@review.Name</strong><br />
+                    @review.CountryName
+                </p>
+            </dd>
+        </dl>
+    }
+    <!-- 底部翻页开始 -->
+    <div class="ajax-pagination" data-target="#divtestimonialist" data-mode="replace">
+        @Html.Partial("~/Views/Shared/Partial/_Ajax_Pager.cshtml", @Model.Pager)
+    </div>
+    <!-- 底部翻页结束 -->
+</div>
+

@@ -1,0 +1,64 @@
+﻿@using Com.Panduo.Service
+@using Resources
+<div class="index_sidebar font14">
+    <ul id="categories_sub_ul">
+        @{
+            int page = ViewBag.Page ?? Request["page"].ParseTo(1);
+            int rootIndex = 0;
+            string ul = "</ul><ul>";
+        }
+        @foreach (var rootData in ViewBag.CategoryTree.CategoryRelatedDatas as List<Com.Panduo.Service.RelatedData<Com.Panduo.Service.Product.Category.CategoryLanguage>>)
+        {
+            if (rootIndex < 10)
+            {
+            <li><a href="@UrlRewriteHelper.GetCategoryDefaultUrl(rootData.Data.CategoryId, rootData.Data.CategoryEnglishName)" title="@rootData.Data.CategoryLanguageName"><ins class="@rootData.Data.CssName"></ins>@rootData.Data.CategoryLanguageName</a></li>
+            }
+            rootIndex++;
+        }
+        <li class="all_categories"><a href="#">@Lang.TipAllCategories</a></li>
+    </ul>
+    @foreach (var rootData in ViewBag.CategoryTree.CategoryRelatedDatas as List<Com.Panduo.Service.RelatedData<Com.Panduo.Service.Product.Category.CategoryLanguage>>)
+    //for (int rootReference = 0; rootReference < ViewBag.CategoryTree.CategoryRelatedDatas.Count; rootReference++)
+    {
+        int indexChild = 0;
+        <div class="categories_sub_list">
+            <ul>
+                @foreach (var secondData in rootData.SubDataList as List<Com.Panduo.Service.RelatedData<Com.Panduo.Service.Product.Category.CategoryLanguage>>)
+                {
+                    int indexThird = 0;
+                    if (indexChild % 17 == 0 && indexChild != 0)
+                    {
+                    @Html.Raw(ul)
+                    }
+                    <li><strong><a href="@UrlRewriteHelper.GetProductListUrl(secondData.Data.CategoryId, secondData.Data.CategoryEnglishName, page)">@secondData.Data.CategoryLanguageName</a></strong></li>
+                    indexChild++;
+                    foreach (var thirdData in secondData.SubDataList as List<Com.Panduo.Service.RelatedData<Com.Panduo.Service.Product.Category.CategoryLanguage>>)
+                    {
+                        if (indexThird <= 6)
+                        {
+                            if (indexChild < 85)
+                            {
+                    <li><a href="@UrlRewriteHelper.GetProductListUrl(thirdData.Data.CategoryId, thirdData.Data.CategoryEnglishName, page)">@thirdData.Data.CategoryLanguageName</a></li>
+                            }
+                            indexChild++;
+                        }
+                        indexThird++;
+                    }
+                    if (indexThird > 5)
+                    {
+                    <li><a href="@UrlRewriteHelper.GetProductListUrl(secondData.Data.CategoryId, secondData.Data.CategoryEnglishName, page)" class="forange">@Lang.TipViewAll</a></li>
+                        indexChild++;
+                    }
+                }
+            </ul>
+            @if (@indexChild >= 85)
+            {
+                <div class="clearfix">
+                    <p>
+                        <a href="@UrlRewriteHelper.GetCategoryDefaultUrl(rootData.Data.CategoryId, rootData.Data.CategoryEnglishName)" class="forange">@Lang.TipViewAllCategories</a>
+                    </p>
+                </div>
+            }
+        </div>
+    }
+</div>

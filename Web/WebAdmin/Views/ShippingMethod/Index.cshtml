@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "运送方式管理";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<div class="pull-right">
+    <form method="post" action="@Url.Content("~/ShippingMethod/List")" id="searchForm" name="searchForm" class="form-search">
+        运送方式：<input type="text" onkeyup=" $(this).val($(this).val().replace(/\//g, '')); " placeholder="运送方式名称" name="keyword" />
+        @*排序：<select id="sorter" name="sorter" onchange="$(this).next().click();">
+            <option value="@MarketingSorterCriteria.IdDesc">编号从大到小</option>
+            <option value="@MarketingSorterCriteria.IdAsc">编号从小到大</option>
+            <option value="@MarketingSorterCriteria.EffectiveBeginDesc">开始时间从近到远</option>
+            <option value="@MarketingSorterCriteria.EffectiveBeginAsc">开始时间从远到近</option>
+        </select>*@
+        <button class="btn" type="submit">搜索</button>
+    </form>
+</div>
+<a class="btn" href="@Url.Content("~/ShippingMethod/Edit/0")"><i class="icon-plus"></i>新建</a>
+<a class="btn" href="@Url.Content("~/ShippingMethod/UpdateShippingMethod")"><i class="icon-plus"></i>更新运费数据</a>
+<code>说明：时间为北京时间</code>
+<div class="clearboth"></div>
+
+<div id="main" class="ajax-list" data-url="@Url.Content("~/ShippingMethod/List")"></div>

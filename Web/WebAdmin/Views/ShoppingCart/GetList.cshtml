@@ -1,0 +1,70 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Common
+
+@model PageData< Com.Panduo.Service.Customer.Customer>
+@{
+    ViewBag.Title = "GetList";
+    Layout = null;
+    var language = ServiceFactory.ConfigureService.GetAllValidLanguage();
+}
+@if (Model.Pager.TotalRowCount > 0)
+{
+    <a class="btn" id="topSendEmail" href="javascript:void(0)"><i class="icon-edit"></i> 发送邮件</a>
+}
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th width="5%"><input id="ck_customer_all" name="ck_customer_all" type="checkbox" value=""/></th>
+        <th width="10%">客户ID</th>
+        <th width="15%">客户姓名</th>
+        <th width="20%">客户邮箱</th>
+        <th width="5%">注册语种</th>
+        <th width="15%">最新操作时间</th>
+        <th width="10%">VIP等级</th>
+        <th width="20%">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var customer in Model.Data)
+    {
+        <tr>
+            <td>
+                <input name="ckb" type="checkbox" data-email="@customer.Email" value="@customer.CustomerId"/>
+            </td>
+            <td>
+                @customer.CustomerId
+            </td>
+            <td>
+                @customer.FullName
+            </td>
+            <td>
+                @customer.Email
+            </td>
+            <td>
+                @{
+                    var lg = language.Where(x => x.LanguageId == customer.RegisterLanguageId).ToList();
+                    if (!lg.IsNullOrEmpty())
+                    {
+                        @lg[0].ChineseName
+                    }
+                }
+            </td>
+            <td>
+                @customer.LastLoginDateTime
+            </td>
+
+            <td>
+                @customer.CustomerGroupId
+            </td>
+            <td>
+                <a class="btn btn-mini" href="/ShoppingCart/Detail?customerId=@customer.CustomerId">查看购物车商品</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+@if (Model.Pager.TotalRowCount > 0)
+{
+    <a class="btn" id="bottomSendEmail" href="javascript:void(0)"><i class="icon-edit"></i> 发送邮件</a>
+}
+@Html.Partial("~/Views/Shared/Partial/_Page_Bottom.cshtml", @Model.Pager)

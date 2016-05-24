@@ -1,0 +1,122 @@
+﻿@using Com.Panduo.Service.SiteConfigure
+@{
+    ViewBag.Title = "Email Logo管理";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+<script type="text/javascript">
+
+    function f(obj) {
+        var p = $(obj).parent();
+        var link = $(obj).attr('data-link');
+        var id = $(obj).attr('data-id');
+        p.hide();
+        p.parent().append("<div><a class=\"btn btn-mini btn-info btn-link\" data-id=" + id + ">提交</a> <a class=\"btn btn-mini btn-info\" onclick=\"btnclear(this)\" data-link=" + link + ">取消</a></div>");
+        p.parent().prev().html("<input type=\"text\" name=\"link_url\" id=\"link_url\" value=" + link + ">");
+       
+    }
+
+    function usef(obj) {
+        var p = $(obj).parent();
+        var link = $(obj).attr('data-link');
+        var id = $(obj).attr('data-id');
+        p.hide();
+        p.parent().append("<div><a class=\"btn btn-mini btn-info btn-use\" data-id=" + id + ">提交</a> <a class=\"btn btn-mini btn-info\" onclick=\"btnclear(this)\" data-link=" + link + ">取消</a></div>");
+        p.parent().prev().html("<input type=\"text\" name=\"link_url\" id=\"link_url\" value=" + link + ">");
+
+    }
+
+    //清除，取消
+    function btnclear(obj) {
+        var p = $(obj).parent();
+        var link = $(obj).attr('data-link');
+        p.prev().show();
+        p.parent().prev().html(link);
+        p.remove();
+    }
+
+    //更新link
+    function UpdateMailLogoLink(obj) {
+        var self = $(obj);
+        var link_url=self.parent().parent().prev().find("[name='link_url']").val();
+        var logoid = self.data("id");
+        $.post('/MailLogo/UpdateMailLogo', { 'logoid': logoid, 'linkurl': link_url }, function (data) {
+            if (data.error === false) {
+                window.location.reload();
+            }
+        });
+    }
+
+    $('body').on("click", ".btn-link", function() { UpdateMailLogoLink(this); });
+
+
+
+    //use link
+    function UseMailLogoLink(obj) {
+        var self = $(obj);
+        var link_url = self.parent().parent().prev().find("[name='link_url']").val();
+        var logoid = self.data("id");
+        $.post('/MailLogo/Use', { 'logoid': logoid, 'linkurl': link_url }, function (data) {
+            if (data.error === false) {
+                window.location.reload();
+            }
+        });
+    }
+
+    $('body').on("click", ".btn-use", function () { UseMailLogoLink(this); });
+
+
+    $(function() {
+        $('.nav.nav-tabs a').on('click', function () {
+            $(this).tab('show');
+            $this = $(this);
+            var idx = $this.parent().index();
+            var pageUrl = '';
+            pageUrl = $this.attr('data-url');
+            if (pageUrl == '' || typeof (pageUrl) == 'undefined')
+                pageUrl = $this.attr('href');
+            if (pageUrl == '' || typeof (pageUrl) == 'undefined') return false;
+            $.get(pageUrl, function(data) {
+                $('.ajax-list:eq('+idx+')').filter(':first').html(data);
+            });
+            return false;
+        });
+    });
+</script>
+<div class="ajax_detail">
+    <div class="ajax_info">
+        <h4>Email Logo管理</h4>
+            <div class="tabbable">
+                <ul class="nav nav-tabs">
+                    @{
+                        var loop = 0;
+                    }
+                    @foreach (Language lang in ViewBag.Languages)
+                    {
+                        <li class="@(loop++ == 0 ? "active" : "")"><a data-target="#tab-@lang.LanguageId" data-url="@Url.Content("~/MailLogo/GetList?page=" + ViewBag.Page+"&languageId="+@lang.LanguageId)" href="javascript:void(0)" data-toggle="tab">@lang.ChineseName</a></li>
+                    }
+                </ul>
+                <div class="tab-content">
+                    @{
+                        loop = 0;
+                    }
+                    @foreach (Language lang in ViewBag.Languages)
+                    {
+                        <div class="tab-pane @(loop++ == 0 ? "active" : "")" id="tab-@lang.LanguageId">
+                            @{
+                                <div class="ajax_detail">
+                                    <div class="ajax_info">
+                                        <form method="post" action="@Url.Content("/MailLogo/UploadLogo")" enctype="multipart/form-data" id="uploadlogoForm" name="uploadlogoForm" class="form-upload" onsubmit="return false;">
+                                            <input type="hidden" name="HID_languageId" id="HID_languageId" value="@lang.LanguageId"/>
+                                             上传Email logo：<input type="file" id="maillogofile" name="maillogofile">
+                                            <input type="submit" value="上传" class="btn btn-primary ajax_update">
+                                        </form>
+                                    </div>
+                                </div>
+                            }
+                            <div id="main" class="ajax-list" data-url="@Url.Content("~/MailLogo/GetList?page=" + ViewBag.Page+"&languageId="+@lang.LanguageId)"></div>
+                        </div>
+                    }
+                </div>
+            </div>
+    </div>
+</div>

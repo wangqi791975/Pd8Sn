@@ -1,0 +1,51 @@
+﻿@using Com.Panduo.Service
+@using Resources
+@{
+    ViewBag.Title = "Help Center";
+    Layout = "~/Views/Shared/Layout/_Layout_NoLeft.cshtml";
+    var rootHelpCategories = ServiceFactory.HelpService.GetRootHelpCategories(ServiceFactory.ConfigureService.SiteLanguageId);
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnSearchArticle").off("click").on("click", function () {
+            var keyword = $("#txtSearchKeyword").val();
+            window.location.href = '/helpsearch.html?keyword=' + keyword;
+        });
+    });
+
+</script>
+<div id="sidebar">
+    <div class="sidebar_wrap">
+        <div class="sidebar_title font14">@Lang.TipHelpCenter</div>
+        <div class="help_sidebar">
+            <ul>
+                @foreach (var helpCategory in rootHelpCategories)
+                {
+                    <li><a href="@UrlRewriteHelper.GetHelpCenterListUrl(helpCategory.HelpCategoryId, helpCategory.EnCategoryName, 1)" @(helpCategory.HelpCategoryId == ViewBag.CurrentHelpCategoryId ? "class=current" : "")>@helpCategory.CategoryName</a></li>
+                }
+            </ul>
+        </div>
+
+    </div>
+    <div class="sidebar_wrap">
+        <div class="sidebar_title font14">@Lang.TipContactUs</div>
+        <p class="contact">
+            @Lang.TipCOntactUsVia<br />
+            <a href="mailto:service@8seasons.com" class="fblue_mid">service@8seasons.com</a>
+        </p>
+    </div>
+</div>
+<div id="main">
+    <div class="help_center_search">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tr>
+                <td><strong>@Lang.TipSearchHelpCenter</strong></td>
+                <td width="62%">
+                    <input type="text" id="txtSearchKeyword" class="input_text_wrap fgrey lf" placeholder="@Lang.TipEnterKeyTopic" value="@(ViewBag.HelpSearchKeyword ?? "")" /></td>
+                <td width="11%"><a class="btn_grey btn_p10 rt" href="javascript:void(0)" id="btnSearchArticle">@Lang.TipSearch</a></td>
+            </tr>
+        </table>
+    </div>
+    @RenderBody()
+</div>
+<div class="clearfix"></div>

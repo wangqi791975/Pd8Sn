@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "PaymentAmountLog";
+    Layout = null;
+}
+@model IList<Com.Panduo.Service.Order.OrderPaymentAmountLog>
+@if (!Model.IsNullOrEmpty())
+{
+    <table class="table">
+ <thead>
+                  <tr>
+                      <th>操作时间</th>
+                      <th>操作人</th>
+                      <th>当次改前金额</th>
+                      <th>当次改后金额</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+
+                      @foreach (var log in Model)
+                      {
+                          <tr>
+                              <td>@log.CreateTime</td>
+                              <td>@log.CreatorEmail</td>
+                              <td>@log.OriginalAmount</td>
+                              <td>@log.NewAmount</td>
+                          </tr>
+                      }
+                  </tbody>
+      
+    </table>
+}
+

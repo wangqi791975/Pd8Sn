@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Coupon";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@section HtmlHead
+{
+    @Html.JsFor("marketing.js", "~/Js/Marketing/Marketing.js", fileVersion: "1.11")
+}
+
+<div id="main" class="ajax-list" data-url="/Coupon/CouponSetList">
+</div>

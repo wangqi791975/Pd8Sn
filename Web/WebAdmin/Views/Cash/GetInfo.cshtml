@@ -1,0 +1,47 @@
+﻿@using Com.Panduo.Service.SiteConfigure
+@{
+    Layout = null;
+}
+<form name="updateForm" action="@Url.Content("~/Cash/Submit")" method="post" onsubmit="return false;">
+    <input type="hidden" id="current_url" name="current_url" value="@Url.Content("~/Cash/Index")" />
+    <table class="table table-striped">
+        <tr>
+            <td width="30%">客户邮箱：</td>
+            <td><input type="text" name="customer_email" required="required" maxlength="64" /></td>
+        </tr>
+        <tr>
+            <td>类型：</td>
+            <td>
+                <select class="input-medium" name="cash_type" required="required">
+                    <option value="">请选择</option>
+                    <option value="10">收入</option>
+                    <option value="20">支出</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>币种：</td>
+            <td>
+                <select class="input-medium" name="currency_code" required="required">
+                    <option value="">请选择</option>
+                    @foreach (Currency currency in ViewBag.Currencies)
+                    {
+                        <option value="@currency.CurrencyCode">@currency.CurrencyCode</option>
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>金额：</td>
+            <td><input class="input-medium" type="text" name="amount" required="required" maxlength="8" datetype="f1" /></td>
+        </tr>
+        <tr>
+            <td>备注：</td>
+            <td><textarea rows="5" name="comment" required="required" maxlength="512"></textarea></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input id="notify_customer" name="notify_customer" type="checkbox" value="true">通知客户</td>
+        </tr>
+    </table>
+</form>

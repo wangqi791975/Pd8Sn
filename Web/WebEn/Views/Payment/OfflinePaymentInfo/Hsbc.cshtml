@@ -1,0 +1,21 @@
+﻿@using Resources
+@model Com.Panduo.Web.Models.Payment.OfflinePaymentInfo<Com.Panduo.Service.Payment.PayConfig.HsbcConfig>
+
+Order Number: # @Model.OrderNo
+@if (Model.HasCash)
+{ 
+<text>@Lang.TipGrandTotal @Model.Amount</text>
+}
+else
+{
+<text>@Lang.TipYouNeedPay @Model.Amount</text>
+}
+
+@Lang.TipHSBCBankAccount - 8seasons.com
+
+@Lang.TipBeneficiaryBank @Model.PaymentInfo.BankName
+@Lang.TipSWIFTCode @Model.PaymentInfo.SwiftCode
+@Lang.TipBankAddress @Model.PaymentInfo.Address
+
+@Lang.TipBankAccountNum @Model.PaymentInfo.AccountNumber
+@Lang.TipBeneficiary @Model.PaymentInfo.Beneficiary

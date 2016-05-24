@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "基础信息 / Currency管理";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<div id="main" class="ajax-list" data-url="@Url.Content("~/Currency/GetList?remote=" + ViewBag.Remote)"></div>
+
+@if (ViewBag.Remote <= 0)
+{
+    <button onclick="window.location = '@Url.Content("~/Currency/Index/1")';" class="btn"><i class="icon-search"></i>获取最新汇率</button>
+}
+else
+{
+    <form method="post" action="/Currency/Submit" class="form-horizontal" target="_self">
+        <input type="hidden" id="datas" name="datas" value="" />
+        <button type="submit" class="btn btn-primary">确认更新汇率</button>
+        <button type="button" onclick="window.location = '@Url.Content("~/Currency/Index")';" class="btn">取消</button>
+    </form>
+    <div>
+        汇率参考：<a href="http://www.boc.cn/sourcedb/whpj/" target="_blank">http://www.boc.cn/sourcedb/whpj/</a>  &nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.cngold.org/fx/huansuan.html" target="_blank">http://www.cngold.org/fx/huansuan.html</a><br />
+        备注：自动获取汇率参考的是<a href="http://www.boc.cn/sourcedb/whpj/" target="_blank"><span class="badge badge-important">中国银行外汇牌价</span></a>，由于中国银行外汇牌价不提供【乌克兰赫夫米UAH】，故不支持该币种的自动获取！
+    </div>
+}
+
+<script language="javascript">
+    $(".btn-primary").live("click", function () {
+        $("#datas").val($("#currencies").val());
+    });
+</script>

@@ -1,0 +1,59 @@
+﻿@using Com.Panduo.Service
+@{
+    Layout = null;
+}
+@model PageData<Com.Panduo.Service.Marketing.Coupon.VMarketingCoupon>
+<a class="btn" href="/Marketing/CouponMarketingEdit"><i class="icon-edit"></i>新建</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th width="10%">活动名称</th>
+            <th width="10%">场景</th>
+            <th width="10%">客户对象</th>
+            <th width="10%">开始时间</th>
+            <th width="15%">结束时间</th>
+            <th width="15%">时间状态</th>
+            <th width="10%">启用状态</th>
+            <th width="10%">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ var now = DateTime.Now;}
+        @foreach (var couponMarketing in Model.Data)
+        {
+            <tr>
+                <td>
+                    @couponMarketing.Name
+                </td>
+                <td>
+                    @couponMarketing.MarketingType
+                </td>
+                <td>
+                    @couponMarketing.CustomerType
+                </td>
+                <td>
+                    @couponMarketing.EffectiveBegin
+                </td>
+                <td>
+                    @couponMarketing.EffectiveEnd
+                </td>
+                <td>
+                    @(now < couponMarketing.EffectiveBegin ? "未开启" : (now <= couponMarketing.EffectiveEnd ? "活动" : "关闭"))
+                </td>
+                <td>
+                    @((now >= couponMarketing.EffectiveBegin && now <= couponMarketing.EffectiveEnd) ?
+                    (couponMarketing.Status ? Html.Raw("<button id=\"" + couponMarketing.Id + "\" onclick=\"changestatus(" + couponMarketing.Id + ")\" value=\"" + Convert.ToInt32(couponMarketing.Status) + "\" class=\"btn btn-mini btn-success\">启用</button>")
+                    : Html.Raw("<button id=\"" + couponMarketing.Id + "\" onclick=\"changestatus(" + couponMarketing.Id + ")\"  value=\"" + Convert.ToInt32(couponMarketing.Status) + "\" class=\"btn btn-mini btn-danger\">禁用</button>"))
+                    : (couponMarketing.Status ? Html.Raw("启用") : Html.Raw("禁用")))
+                </td>
+                <td>
+                    @(now < couponMarketing.EffectiveBegin ?
+                    Html.Raw("<a class=\"btn btn-mini btn-primary\" href=\"/Marketing/CouponMarketingEdit/" + couponMarketing.Id + "?" + ViewBag.Page + "\">编辑</a><a class=\"btn btn-mini btn-delete btn-primary\" onclick=\"coumardel(" + couponMarketing.Id + ")\" href=\"jacascript:void(0)\">删除</a>")
+                    : Html.Raw("<a class=\"btn btn-mini btn-primary\" href=\"/Marketing/CouponMarketingDetail/" + couponMarketing.Id + "?page=" + ViewBag.Page + "\">查看</a>"))
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a class="btn" href="/Marketing/CouponMarketingEdit"><i class="icon-edit"></i>新建</a>
+@Html.Partial("~/Views/Shared/Partial/_Page_Bottom.cshtml", @Model.Pager)

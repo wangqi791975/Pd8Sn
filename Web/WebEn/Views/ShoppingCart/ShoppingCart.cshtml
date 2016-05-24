@@ -1,0 +1,617 @@
+﻿@using Com.Panduo.Common
+@using Com.Panduo.Service
+@using Com.Panduo.Service.Order.ShoppingCart
+@using Resources
+@{
+	ViewBag.Title = "My Cart";
+	Layout = "~/Views/Shared/Layout/_Layout_ShoppingCart.cshtml";
+	var currentCustomer = SessionHelper.CurrentCustomer;//当前登录客户
+	PageData<VShoppingCartItem> normalPager = Model;
+}
+@section HtmlHead
+{
+	@Html.JsFor("scrollloading.js", "~/Js/jquery.scrollLoading.min.js", fileVersion: "1.0")
+}
+
+@* 购物车头部开始 *@
+@Html.Partial("Partial/_Header", 1)
+@* 购物车头部结束 *@
+@{
+	if (ViewBag.ShoppingCartItemCount == 0)//空购物车
+	{
+	<div class="cart_empty">
+		<ins></ins>
+		<h4 class="font16">@Html.Raw(Lang.TipShopCartEmpty). 
+				<br />
+			<span>-</span> <a href="/" class="fblue">@Lang.TipStartShop</a><span>-</span> <a href="javascript:void(0)" onclick="$('#quickadd').modal('show')" class="fblue">@Lang.TipQuickAdd</a></h4>
+		@if (currentCustomer.IsNullOrEmpty())
+		{
+			<p class="font14">@Html.Raw(Lang.TipOrLoginViewProduct)</p>
+		}
+	</div>
+	}
+	else
+	{
+	<div class="cart_tip">
+		<p class="lf"><a href="@SessionHelper.LastShoppingUrl" class="fgrey">&lt; @Lang.TipContinueShopping</a></p>
+		@if (!currentCustomer.IsNullOrEmpty())
+		{
+			//针对渠道商客户VIP折扣为25%，直接显示“You can now enjoy 25% off”即可（渠道商客户在网站后台直接设置，相关功能逻辑后期提供）
+			//针对VIP等级最高的客户，即VIP为20%的客户，直接显示“You can now enjoy 20% off
+			var vipDiscount = currentCustomer.VipDiscount == 100 ? 0 : currentCustomer.VipDiscount;
+			if (vipDiscount <= 0.8M)
+			{
+			<p class="rt">@Html.Raw(string.Format(Lang.TipYouCanNowEnjoy,PageHelper.GetShowDiscount(vipDiscount)))</p>
+			}
+			else
+			{
+				var nextCustomerGroup = ServiceFactory.CustomerService.GetNextCustomerGroup(currentCustomer.CustomerGroupId.HasValue ? currentCustomer.CustomerGroupId.Value : 0);
+				if (!nextCustomerGroup.IsNullOrEmpty())
+				{
+					var justAmount = nextCustomerGroup.MinAmount - (currentCustomer.HistoryAmount.HasValue ? currentCustomer.HistoryAmount.Value : 0);
+			<p class="rt">@Html.Raw(string.Format(Lang.TipYouCanNowEnjoyAnd,PageHelper.GetShowDiscount(vipDiscount),justAmount.ToExchangeCurrencyMoneyString(PageHelper.GetCurrentCurrency()),PageHelper.GetShowDiscount(nextCustomerGroup.Discount)))</p>
+				}
+			}
+		}
+
+	</div>
+	<div id="cart_main" class="lf">
+		@if (ViewBag.UnAvailableProductCount > 0)
+		{
+			<div class="cart_title_tab nav-tabs">
+				<h3 class="font13 current tab" data-toggle="tab" data-target="#tab_normal_product">@Lang.TipSalesProducts</h3>
+
+				<h3 class="font13 nostock tab-click" data-toggle="tab" data-target="#tab_abnormal_product" data-url="/ShoppingCart/GetUnAvailableProductList" data-loaded="false">@Lang.TipRemovedProducts</h3>
+
+			</div>
+		}
+@* 在售商品开始 *@
+		<div class="cart_order tab-pane current" id="tab_normal_product" data-url="/ShoppingCart/ShoppingCartList">
+			@Html.Partial("Partial/ShoppingCartList", normalPager)
+		</div>
+		@* 在售商品结束 *@
+		@* 下架商品开始 *@
+		<div class="cart_order2 tab-pane" id="tab_abnormal_product">
+			<img class="loading" src="@Url.Content("~/Images/loading.gif")" />
+		</div>
+		@* 下架商品结束 *@
+		<a href="@SessionHelper.LastShoppingUrl" class="fgrey">&lt; @Lang.TipContinueShopping</a>
+		<div class="cart_payment_methods">
+			<div class="lf">
+				<h5>@Lang.TipAvbPaymentMethod</h5>
+				<ul>
+					<li class="paypal"></li>
+					<li class="china"></li>
+					<li class="western"></li>
+					<li class="webmoney"></li>
+					<li class="hsbc"></li>
+					<li class="moneygram"></li>
+				</ul>
+			</div>
+			<div class="rt img_paypal"></div>
+		</div>
+
+		@*推荐产品容器*@
+		<div class="recommend_cont scrollLoading" data-url="/Product/ProductDetailRecentViewed?productId=-1">
+			<img class="loading" src="@Url.Content("~/Images/loading.gif")" />
+		</div>
+		@* 推荐产品容器*@
+	</div>
+	
+	<div id="cart_sidebar" class="rt">
+		<div class="cart_order_price">
+			<h2 class="font_verdana">@Lang.TipOrderPriceDetail</h2>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<th scope="row">@Lang.TipDiscountedItem</th>
+					<td><span>(+)<i id="lblpromotionamount"><img src="@Url.Content("~/Images/loading.gif")" /></i></span></td>
+				</tr>
+				<tr>
+					<th scope="row">@Lang.TipProductDiscount</th>
+					<td><span>(-)<i id="lblpromotiondiscount"><img src="@Url.Content("~/Images/loading.gif")" /></i></span></td>
+				</tr>
+				<tr>
+					<th scope="row">@Lang.TipRegularPriceItem</th>
+					<td><span>(+)<i id="lblnodiscount"><img src="@Url.Content("~/Images/loading.gif")" /></i></span></td>
+				</tr>
+				<tr style="display: none">
+					@if (!currentCustomer.IsNullOrEmpty() && currentCustomer.IsRcd)
+					{
+						<th scope="row">@Lang.TipVipAndRcd</th> 
+					}
+					else
+					{
+						<th scope="row">@Lang.TipVipDiscount</th>
+					}
+					<td><span>(-)<i id="lblvipandrcddiscount"><img src="@Url.Content("~/Images/loading.gif")" /></i></span></td>
+				</tr>
+				<tr style="display: none">
+					<th scope="row">@Lang.TipOrderDiscountPun</th>
+					<td><span>(-)<i id="lblorderdiscount"><img src="@Url.Content("~/Images/loading.gif")" /></i></span></td>
+				</tr>
+				<tr style="display: none">
+					<th colspan="2" scope="row" class="price_tip"><i id="lblcurrentdiscount">
+						<img src="@Url.Content("~/Images/loading.gif")" /></i></th>
+				</tr>
+				<tr>
+					<th scope="row">@Lang.TipHandlingFee</th>
+					<td><span>(+)<i id="lblhandlingfee"><img src="@Url.Content("~/Images/loading.gif")" /></i></span></td>
+				</tr>
+				<tr>
+					<th scope="row">@Lang.TipEstShippingCost</th>
+					<td><span>(+)<i id="lblshippingcost"><img src="@Url.Content("~/Images/loading.gif")" /></i></span></td>
+					@* Est.Shipping Cost的三种状态，此处为默认状态*@
+				</tr>
+				<tr style="display: none">
+					<th scope="row">@Lang.TipEstShippingCost</th>
+					<td>@Lang.TipFreeShipping<br />
+						+ <i id="lblfreeshippingcost">
+							<img src="@Url.Content("~/Images/loading.gif")" /></i></td>
+					@* Est.Shipping Cost的三种状态，此处为免运费状态*@
+				</tr>
+				<tr>
+					<th colspan="2" scope="row" class="price_tip"><i id="lblshippingname">
+						<img src="@Url.Content("~/Images/loading.gif")" /></i></th>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div class="shipping_type"><ins class="change"></ins><a href="javascript:void(0)" onclick="$('#div_change_shipping').modal('show')" class="fblue_mid">@Lang.TipChangeShipping</a></div>
+					</td>
+				</tr>
+				<tr>
+					<th class="font14" scope="row">@Lang.TipGrandTotal</th>
+					<td class="font14"><span><strong><i id="lblgrandtotal">
+						<img src="@Url.Content("~/Images/loading.gif")" /></i></strong></span></td>
+				</tr>
+			</table>
+			<div class="pay_button">
+				<a href="javascript:void(0)" class="fblue_mid" style="display: none"><i id="lblpiecingordertip"></i></a>
+				<a href="javascript:void(0)" class="btn_orange btn_w250" id="btn_checkout">@Lang.TipCheckout</a>
+				<div class="btn_paypal">
+					<ins>or</ins>
+					<a href="javascript:void(0)" onclick="fnCheckOut(true)" class="btn_paypal_en" id="btn_paypal"></a>
+					@* 切换语种时，对应的class名称后缀变为相应小语种，如换俄语时class名为btn_paypal_ru*@
+				</div>
+			</div>
+		</div>
+		<div class="cart_add_order">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<th scope="row">@Lang.TipQuickOrder</th>
+					<td><a href="javascript:void(0)" class="btn_orange btn_w60" onclick="$('#quickadd').modal('show');">@Lang.TipAddNoPun</a></td>
+				</tr>
+			</table>
+		</div>
+		<a class="club_img club_img_en" rel="nofollow" href="@UrlRewriteHelper.GetClubJoinUrl()"></a>
+		@* 切换语种时，club_img_en对应的class名称后缀变为相应小语种，如换俄语时class名为club_img_ru*@
+	</div>
+	}
+}
+@* 购物车结束 *@
+<div class="clearfix"></div>
+<script type="text/javascript">
+	function checkoutloginsuccess() {
+		location.href = "@UrlRewriteHelper.GetCheckoutUrl()";
+	}
+
+	//页面加载完成后立即执行代码
+	$(document).ready(function () {
+		$("#btn_checkout").off("click").on("click", function () {
+			successfun = checkoutloginsuccess;
+			fnCheckOut(false);
+			$(this).toggleClass("btn_grey").unbind("click").delay(5000).bind("click", function () {
+				fnCheckOut(false);
+			});
+		});
+
+		$('.cart_cont_btn .btn_add_remark').unbind('click').bind('click', function () { fnChangeRemark(this); });
+		$('.cart_cont_btn .btn_edit_remark').unbind('click').bind('click', function () { fnChangeRemark(this); }).bind('mouseover', function () { fnRemarkMouseover(this); });
+		$('.pro_qty .btn_minus_qty').unbind('click').bind('click', function () { fnChangeItemQty(this, "minus"); });
+		$('.pro_qty .btn_plus_qty').unbind('click').bind('click', function () { fnChangeItemQty(this, "plus"); });
+		$('.pro_qty .txtqty').unbind('change').bind('change', function () { fnSaveQty(this); });
+		$('.cart_cont_btn .btn_del').unbind('click').bind('click', function () { DivOs.showConfirmModal("Do you confirm to delete this item?", fnDeleteItem, this); });
+		$('.cart_cont_btn .btn_movetowithlist').unbind('click').bind('click', function () { DivOs.showConfirmModal("Do you confirm to delete this item?", fnMoveToWithlist, this); });
+
+		setTimeout(function () { GetSummary(); fnCalculateShippingCost(); }, 500);
+		$('.scrollLoading').scrollLoading(); //图片自动加载  
+	});
+
+
+	function fnRemarkMouseover(obj) {
+		var editdiv = $(obj).next();
+		editdiv.show();
+		$(obj).bind('mouseout', function () { editdiv.hide(); });
+	}
+
+	function fnChangeRemark(obj) {
+		var adddiv = $(obj).next().next();
+		var productid = $(obj).data("productid");
+		adddiv.toggle();
+		adddiv.find("#btn_cancel_" + productid).unbind('click').bind('click', function () { adddiv.toggle(false); });
+		adddiv.find("#btn_submit_" + productid).unbind('click').bind('click', function () { fnSaveRemark(this, productid); });
+	}
+
+	function fnSaveRemark(obj, productid) {
+		var adddiv = $(obj).parents(".pop_remark");
+		var remark = adddiv.find("#txtremark_" + productid).val();
+		remark = $.trim(remark);
+		if (remark.length > 0) {
+			$.post('/ShoppingCart/SaveRemark', { 'productId': productid, 'remark': remark }, function (data) {
+				switch (data.result) {
+				case "success":
+					adddiv.prev().find("#lblshowremark_" + productid).html(adddiv.find("#txtremark_" + productid).val());
+					adddiv.prev().prev().html("Edit remark");
+					adddiv.prev().prev().removeClass("btn_add_remark");
+					adddiv.prev().prev().addClass("btn_edit_remark");
+					adddiv.prev().prev().bind('mouseover', function () { fnRemarkMouseover(this); });
+					break;
+				}
+			});
+			adddiv.hide();
+		}
+		return false;
+	}
+
+	function fnChangeItemQty(obj, operate) {
+		var qtydiv = $(obj).parents(".pro_qty");
+		var qtyinput = qtydiv.find(".txtqty");
+		var qty = parseInt(qtyinput.val());
+		switch (operate) {
+		case "minus":
+			qtyinput.val(qty - 1);
+			break;
+		case "plus":
+			qtyinput.val(qty + 1);
+			break;
+		}
+		fnSaveQty(qtyinput);
+	}
+
+	function fnSaveQty(obj) {
+		var productid = $(obj).data("productid");
+		var qty = parseInt($(obj).val());
+		if ((isNaN(qty) || qty <= 0) && !confirm('Do you confirm to remove this item?')) {
+			qty = -5;
+		}
+		$.post('/ShoppingCart/SaveQuantity', { 'productId': productid, "qty": qty }, function (data) {
+			switch (data.result) {
+			case "warning":
+				var msg = data.msg == "" ? "Update successfully!" : "Only " + data.msg + " packs are available now, and they have been added into your cart successfully.";
+				$(obj).prev().prev().find(".qty_cont_msg").html(msg);
+				$(obj).prev().prev().show().delay(2000).hide(0);
+				fnRefreshItem(obj, productid);
+				break;
+			case "nothing":
+				fnRefreshItem(obj, productid);
+				break;
+			case "success":
+			    $(obj).parents('.cart_content').remove();
+				GetSummary();
+				break;
+			case "refresh":
+				window.location.reload();
+				break;
+			case "failing":
+				if (data.msg != "") alert(data.msg);
+				window.location.reload();
+				break;
+			}
+		});
+		return false;
+	}
+
+	function fnRefresh() {
+		var $this = $('[data-toggle="pagination"].current'),
+			$parent = $this.parents(".ajax-pagination").filter(":first"),
+			href = $this.attr("href"),
+			url = $this.data("url") || (href && href.replace(/.*(?=#[^\s]+$)/, "")),
+			$target = $($parent.data("target")),
+			mode = $parent.data("mode") || "replace",
+			extra = $parent.data("extra");
+		if (typeof (extra) === "string" && extra !== "") {
+			var fn = window[extra];
+			if (typeof (fn) === "function") {
+				var extraParams = fn();
+				if (typeof (extraParams) != "undefined")
+					$.each(extraParams, function (k, v) {
+						url = url.urlReplaceParmeter(k, v);
+					});
+			} else {
+				var extraParams = extra.split("&");
+				if (extraParams.length)
+					for (var i in extraParams) {
+						var extraParam = extraParams[i].split("=");
+						if (extraParam.length === 2) {
+							url = url.urlReplaceParmeter(extraParam[0], extraParam[1]);
+						}
+					}
+			}
+		}
+		$.get(url, function (data) { mode === "replace" ? $target.filter(':first').html(data) : $target.filter(':first').append(data); });
+		GetSummary();
+		return false;
+	}
+
+	function fnEmptyShoppingCart() {
+		$.post('/ShoppingCart/CleanShoppingCart', function (rdata) {
+			if (rdata.result == "success") location.reload();
+		});
+		return false;
+	}
+
+	function fnDeleteItem(obj) {
+		var productid = $(obj).data("productid");
+		$.post('/ShoppingCart/DeleteItem', { 'productId': productid }, function (rdata) {
+			switch (rdata.result) {
+			case "success":
+				$(obj).parents('.cart_content').remove();
+				GetSummary();
+				break;
+			case "refresh":
+				window.location.reload();
+				break;
+			}
+		});
+		return false;
+	}
+
+	function fnMoveToWithlist(obj) {
+		var productid = $(obj).data("productid");
+		$.post('/ShoppingCart/MoveToWishlist', { 'productId': productid }, function (rdata) {
+			switch (rdata.result) {
+			case "success":
+			    $(obj).parents('.cart_content').remove();
+				GetSummary();
+				break;
+			case "refresh":
+				window.location.reload();
+				break;
+			}
+		});
+		return false;
+	}
+
+	function fnMoveAllToWishlist() {
+		$.post('/ShoppingCart/MoveAllToWishlist', function (rdata) {
+			if (rdata.result == "success") location.reload();
+		});
+		return false;
+	}
+
+	//产品添加到购物车重新计算金额
+	function GetSummary() {
+		var countryId = $("#countryId").val();
+		var posatlCode = $("#txtPosatlCode").val();
+		var shippingitem = $("input[name='shipping_id'][checked]");
+		$.post('/ShoppingCart/GetSummary', { 'countryId': countryId, "posatlCode": posatlCode, 'shippingid': shippingitem.data("shippingid"), 'couponCustomerId': 0 }, function (data) {
+			$("#lblpromotionamount").text(data.PromotionBeforeAmount);
+			$("#lblpromotiondiscount").text(data.PromotionDiscountAmount);
+			if (data.IsShowPromotionAmount) {
+				$("#lblpromotionamount").parents("tr").show();
+				$("#lblpromotiondiscount").parents("tr").show();
+			} else {
+				$("#lblpromotionamount").parents("tr").hide();
+				$("#lblpromotiondiscount").parents("tr").hide();
+			}
+			$("#lblnodiscount").text(data.NoDiscountProductAmount);
+			if (data.IsShowNoDiscountProductAmount)
+				$("#lblnodiscount").parents("tr").show();
+			else $("#lblnodiscount").parents("tr").hide();
+			$("#lblvipandrcddiscount").text(data.VipAndRcdDiscountAmount);
+			if (data.IsShowVipAndRcdDiscountAmount)
+				$("#lblvipandrcddiscount").parents("tr").show();
+			else $("#lblvipandrcddiscount").parents("tr").hide();
+			$("#lblorderdiscount").text(data.OrderDiscountAmount);
+			if (data.IsShowOrderDiscountAmount) {
+				$("#lblorderdiscount").parents("tr").show();
+			} else $("#lblorderdiscount").parents("tr").hide();
+			$("#lblgrandtotal").text(data.GrandTotal);
+			$("#lblTotalGrossWeight").text(data.ShippingWeight);
+			$("#lblshippingcost").text(data.ShippingCost);
+			$("#lblfreeshippingcost").text(data.FreeShippingCost);
+			$("#lblhandlingfee").text(data.HandlingFee);
+			if (data.IsShowHandlingFee)
+				$("#lblhandlingfee").parents("tr").show();
+			else $("#lblhandlingfee").parents("tr").hide();
+			if (data.IsFreeShipping)
+				$("#lblfreeshippingcost").parents("tr").show();
+			else $("#lblfreeshippingcost").parents("tr").hide();
+			$("#lblshippingname").html(data.ShippingName);
+			if (data.ShippingId == 999) //运费计算存储过程默认是999
+			    $("#lblshippingname").text(Message.TipShipParcel);
+			if (data.HasCurrentDiscountTip) {
+				var currentordertip = "";
+				//当前匹配折扣提醒
+				switch (data.CurrentDiscountType) {
+				case "orderdiscount":
+				    currentordertip = Message.TipReplacingOfVip.format(data.CurrentDiscount,data.ReplacingDiscount,data.IsRcd ? Message.TipAndRcd : "",data.ReplacingDiscountAmount);
+					break;
+				case "vipdiscount":
+				    currentordertip = Message.TipReplacingOfOrder.format(data.CurrentDiscount,data.ReplacingDiscount,data.ReplacingDiscountAmount);
+					break;
+				}
+				$("#lblcurrentdiscount").html(currentordertip).parents("tr").show();
+			} else $("#lblcurrentdiscount").parents("tr").hide();
+			//凑单提醒
+			if (data.HasPiecingOrderTip) {
+				var piecingordertip = "";
+				if (data.IsClubFreeShipping)
+				    piecingordertip = Message.TipFreeClub.format(data.PiecingOrderDiscountLackOrderAmount);
+				else
+				    piecingordertip = Message.TipEnjoyOrder.format(data.PiecingOrderDiscountLackOrderAmount,data.PiecingOrderDiscount);
+				$("#lblpiecingordertip").text(piecingordertip).parent().show();
+			} else $("#lblpiecingordertip").parent().hide();
+		});
+		return false;
+	};
+
+	function fnRefreshItem(obj, productId) {
+		$.post('/ShoppingCart/GetShoppingCartItem', { 'productId': productId }, function (data) {
+			if (data) {
+			    var cartItem = $(obj).parents('.cart_content');
+				cartItem.find("#lblshowremark_" + productId).html(data.remark);
+				cartItem.find("#txtremark_" + productId).val(data.remark);
+				cartItem.find("#lbloriginalprice_" + productId).html(data.originalpriceformat); //.toFixed(2)
+				cartItem.find("#lblprice_" + productId).html(data.priceformat); //.toFixed(2)
+				if (data.originalprice != data.price)
+					cartItem.find("#lbloriginalprice_" + productId).parent().show();
+				else
+					cartItem.find("#lbloriginalprice_" + productId).parent().hide();
+				cartItem.find("#lblsubtotal_" + productId).html(data.productsubtotalformat);
+				$(obj).val(data.quantity);
+				GetSummary();
+				if (data.tip > 0) {
+					cartItem.find("#lbltip_" + productId).html(data.tip);
+					cartItem.find("#lblqty_" + productId).html(data.quantity);
+					cartItem.find(".cart_order_tip").show();
+				} else
+					cartItem.find(".cart_order_tip").hide();
+			}
+		});
+		return false;
+	}
+
+	function fnCheckOut(isQuick) {
+		//alert(isQuick);  
+		$.post('/PlaceOrder/CheckShoppingCart', { 'countryId': 0, 'posatlCode': "" }, function (data) {
+			if (data.result == "success") {
+				//alert(data.totalAmount);
+				var totalAmount = data.totalAmount;
+				var shippingAmount = data.shippingAmount;
+				var productCount = data.productCount;
+				if (isQuick) {
+					$.post('/Payment/SetPaypalExpressCheckout', { 'totalAmount': totalAmount, 'shippingAmount': shippingAmount, 'productCount': productCount }, function (paymentdata) {
+						if (paymentdata.Succeed) {
+							location.href = paymentdata.Data; //跳转到Paypal
+						} else {
+							alert(paymentdata.Message);
+						} //else {alert("Sorry, it's failed to connect to paypal.com for some network bug. Please try later.");}
+
+					});
+				} else {
+					location.href = data.checkouturl; //'UrlRewriteHelper.GetCheckoutUrl()';
+				}
+			} else {
+				alert(data.msg);
+				location.reload();
+			}
+		}); //.error(function () { location.reload(); });
+		return false;
+	}
+
+	/***shipping methods start***/
+	function fnSaveChangeShippingMethod() {
+		var countryId = $("#countryId").val();
+		var posatlCode = $("#txtPosatlCode").val();
+		var shippingid = $('.shipping_item input:radio:checked').data("shippingid");
+		//alert(shippingid);
+		$.post('/ShoppingCart/ChangeShippingMethod', { 'countryId': countryId, "posatlCode": posatlCode, 'shippingid': shippingid }, function (data) {
+			if (data.result == "success") {
+				$('#div_change_shipping').modal('hide');
+				location.reload();
+			}
+		});
+	}
+
+	function fnShippingItemSort(sort) {
+		$("#txtSort").val(sort);
+		fnCalculateShippingCost();
+	}
+
+	function fnCalculateShippingCost() {
+		var countryId = $("#countryId").val();
+		var posatlCode = $("#txtPosatlCode").val();
+		var sort = $("#txtSort").val();
+		$(".shipping_item").html('<img src="@Url.Content("~/Images/loading.gif")" />');
+		$.post('/ShoppingCart/GetShippingItems', { 'countryId': countryId, "posatlCode": posatlCode, "sort": sort }, function (data) {
+			$(".shipping_cont").html(data);
+			$(".shipping_item table tr").unbind('click').bind('click', function () {
+				$(".shipping_item table tr").removeClass("current");
+				$(this).addClass("current");
+				$(this).find("input:radio").attr("checked", "checked");
+			});
+		});
+	}
+	/***shipping methods sort start***/
+	var aCont;
+	$(".sp_price a").live("click", function () {
+		var ins = $(this).find("ins");
+		var className = $(ins).attr("class");
+		if (className == "sort_arrow" || className == "sort_arrow_dec") {
+			clickFun($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+			fSort(compare_down);
+			setTrIndex($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+
+			$(ins).attr("class", "sort_arrow_asc");
+		} else {
+			clickFun($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+			fSort(compare_up);
+			setTrIndex($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+			$(ins).attr("class", "sort_arrow_dec");
+		}
+
+		$(".sp_time ins").attr("class", "sort_arrow");
+	});
+
+	$(".sp_time a").live("click", function () {
+		var ins = $(this).find("ins");
+		var className = $(ins).attr("class");
+		if (className == "sort_arrow" || className == "sort_arrow_dec") {
+			clickFun($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+			fSort(compare_down);
+			setTrIndex($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+
+			$(ins).attr("class", "sort_arrow_asc");
+		} else {
+			clickFun($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+			fSort(compare_up);
+			setTrIndex($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+			$(ins).attr("class", "sort_arrow_dec");
+		}
+
+		$(".sp_price ins").attr("class", "sort_arrow");
+	});
+
+	var clickFun = function (first, second) {
+		aCont = [];
+		fSetDivCont(first, second);
+	};
+	var fSetDivCont = function (first, second) {
+		//$('.showallmethods tr:not(:first)').each(function () {
+		$('.showallmethods tr').each(function () {
+			var trCont = parseFloat($(this).find('.' + first).val() * 10000) + parseFloat($(this).find('.' + second).val());
+			aCont.push(trCont);
+		});
+	}
+	var compare_down = function (a, b) {
+		return a - b;
+	};
+
+	var compare_up = function (a, b) {
+		return b - a;
+	};
+
+	var fSort = function (compare) {
+		aCont.sort(compare);
+	};
+	var setTrIndex = function (sortby, sortby1) {
+		for (i = 0; i < aCont.length; i++) {
+			var trCont = aCont[i];
+			//$('.showallmethods tr:not(:first)').each(function () {
+			$('.showallmethods tr').each(function () {
+				var thisText = parseFloat($(this).find('.' + sortby).val() * 10000) + parseFloat($(this).find('.' + sortby1).val());
+				if (thisText == trCont) {
+					$('.showallmethods').append($(this));
+				}
+			});
+		}
+	};
+/***shipping methods sort end***/
+</script>
+@section HtmlFooter
+{
+	@*变换运输方式开始*@
+	@{ Html.RenderAction("ShippingModal", "ShoppingCart");}
+	@*变换运输方式结束*@
+	@Html.Partial("~/Views/Shared/Partial/_QuickAddToCart.cshtml")
+}

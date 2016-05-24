@@ -1,0 +1,77 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Web.Models.Customer
+@using Resources
+@model PageData<WishListProductInfoVo>  
+@{
+    Layout = null;
+}
+@if (Model.Data.Count > 0)
+{
+    <h4>@Lang.TipNoFavFile<br/><a href="#" class="forange font_underline">@Lang.TipTimeToShop</a></h4>
+    <div class="warning_wrap">@Lang.TipFollowItemRemove</div>
+    <div class="title">
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th class="td_w15"></th>
+                <th class="td_w130"></th>
+                <th class="td_w220">@Lang.TipItem</th>
+                <th class="td_w140">@Lang.TipPrice</th>
+                <th class="td_w140">@Lang.TipDateAdded</th>
+                <th class="td_w140">@Lang.TipQtyNoPun</th>
+            </tr>
+        </table>
+    </div>
+       <form onsubmit=" return false; " method="post" action="" name="WishListRemovedForm" id="WishListRemovedForm" data-target="#wl_removed">
+       <div class="list_cont">
+           <table cellpadding="0" cellspacing="0">
+               @foreach (var m in Model.Data)
+               {
+                   <tr>
+                       <td class="td_w15"></td>
+                       <td class="td_w130"><img src="@ImageHelper.GetImageUrl(m.ProductInfo.Product.MainImage, 130)"/></td>
+                       <td class="td_w220"><h5>@m.ProductInfo.ProductName</h5>
+                           <p class="fgrey">@Lang.TipPartNo@m.ProductInfo.Product.ProductCode</p></td>
+                       <td class="td_w140">@Lang.TipAsLowAsNoPun<br/>
+                           @{ var stepPrice = m.ProductInfo.ProductPrice.StepPrice; }
+                           @if (stepPrice.Count > 0)
+                           {
+                               var discount = PageHelper.GetDiscount(m.ProductInfo.ProductPrice);
+                               if (discount > 0 && discount < 1)
+                               {
+                                   <del class="fgrey">@PageHelper.GetCurrentCurrency().Format(PageHelper.ExchangeMoneyByUsd(stepPrice[stepPrice.Count - 1].OriginalPrice))</del>
+                                   <br/>
+                               }
+                               @PageHelper.GetCurrentCurrency().Format(PageHelper.ExchangeMoneyByUsd(stepPrice[stepPrice.Count - 1].GetDiscountPrice(discount)))<p><ins class="pro_vip"></ins>
+                               </p>
+                           }
+
+                       </td>
+                       <td class="td_w140">@PageHelper.ToCurrentShortDate(m.WishListInfo.AddDateTime)</td>
+                       <td class="td_w140">@m.WishListInfo.Count @if (m.WishListInfo.Count > 1)
+                                                                 {
+                                                                     @Html.Raw("Packs")
+                                                                 }
+                                                                 else
+                                                                 {
+                                                                     @Html.Raw("Pack")
+                                                                 }
+                           <br/>
+                           <a  rel="nofollow" href="javascript:void(0)" data-productid="@m.ProductInfo.Product.ProductId" data-removed="@(m.WishListInfo.IsHistory?1:0)" class="fblue_mid hm">@Lang.TipRemove</a>
+                       </td>
+                   </tr>
+               }
+           </table>
+       </div>
+      </form>
+			@*底部翻页开始*@
+    <div class="ajax-pagination" data-target="#wl_removed" data-mode="replace">
+        @Html.Partial("~/Views/Shared/Partial/_Ajax_Pager.cshtml", @Model.Pager)
+    </div>
+    <div class="clearfix"></div>
+			@*底部翻页结束*@
+}
+<script type="text/javascript">
+    $(function() {
+        $("body,html").animate({ scrollTop: 0 }, 500);
+    });
+</script>

@@ -1,0 +1,63 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Web.Models.Order
+@using Resources
+@model PageData<PackageDetailInfoItemVo>
+@{
+    Layout = null;
+}
+@if (Model.Data.Count > 0)
+{
+    <a href="javascript:void(0)" target="_blank" class="btn_orange btn_p30" id="topdownload"><ins class="download"></ins>@Lang.TipDownload</a>
+    <div class="clearfix"></div>
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <th class="td_w80"></th>
+            <th class="td_w116">@Lang.TipItem</th>
+            <th class="td_w80">@Lang.TipBoughtQty</th>
+            <th class="td_w80">@Lang.TipTotalShipped</th>
+            <th class="td_w80">@Lang.TipShippedQty</th>
+            <th class="td_w80">@Lang.TipUnshippedQty</th>
+            <th class="td_w116">@Lang.TipOrderNo</th>
+            <th class="td_w145">@Lang.TipTrackingNum</th>
+        </tr>
+    </table>
+    <table cellpadding="0" cellspacing="0">
+        @foreach (var item in Model.Data) { 
+            <tr>
+                <td class="td_w80"><a href="@UrlRewriteHelper.GetProductDetailUrl(item.ProductInfo.Product.ProductId,item.ProductInfo.ProductEnName)"><img src="@ImageHelper.GetImageUrl(item.ProductInfo.Product.MainImage,80)" /></a></td>
+                <td class="td_w116"><a href="#" class="fblue_mid">@item.PackageDetail.ProductModel</a><p class="pack">@if (item.ProductInfo.Product.GroupQuantity.HasValue) { @item.ProductInfo.Product.GroupQuantity.Value @item.ProductInfo.UnitName @Html.Raw("/Pack")}</p></td>
+                <td class="td_w80">@item.PackageDetail.ProductQty</td>
+                <td class="td_w80">@item.PackageDetail.TotalShipped</td>
+                <td class="td_w80">@item.PackageDetail.ShippedQty</td>
+                <td class="td_w80">@(item.PackageDetail.ProductQty-item.PackageDetail.TotalShipped-item.PackageDetail.ShippedQty)</td>
+                <td class="td_w116"><a href="#" class="fblue_mid"></a><p>@if (item.PackageList.Count > 0)
+                                                                         {
+                                                                             @item.PackageList[0].OrderNumber
+                                                                         }</p></td>
+                <td class="td_w145">               
+                                  @if (!item.PackageList.IsNullOrEmpty())
+                                        {
+                                            foreach (var p in item.PackageList)
+                                            {
+                                                var shipping=CacheHelper.GetShippingById(p.ShippingId);
+                                                <a href="@(shipping.IsNullOrEmpty()?"":shipping.TrackUrl)" class="fblue_mid">@p.TrackingNumber</a>
+                                                @Html.Raw("  <br />" )
+                                            }
+                                        }
+                    @if (item.PackageList.Count > 0)
+                    {
+                        <p>@PageHelper.ToCurrentShortDate(item.PackageList[0].ShippedDate)</p>
+                    }
+                </td>
+            </tr>
+            }
+    </table>
+    <a href="javascript:void(0)"  target="_blank" class="btn_orange btn_p30" id="bottomdownload"><ins class="download"></ins>@Lang.TipDownload</a>
+
+        @*底部翻页开始*@
+    <div class="ajax-pagination" data-target="#divsliplist" data-mode="replace">
+        @Html.Partial("~/Views/Shared/Partial/_Ajax_Pager.cshtml", @Model.Pager)
+    </div>
+    <div class="clearfix"></div>
+        @*底部翻页结束*@
+}

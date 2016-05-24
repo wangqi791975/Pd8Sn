@@ -1,0 +1,472 @@
+﻿@using Com.Panduo.Service.Order
+@using Com.Panduo.Web.Models.Order
+@using Resources
+@model OrderDetailVo
+@{
+    ViewBag.Title = "OrderDetail";
+    Layout = "~/Views/Shared/Layout/_Layout_NoLeft.cshtml";
+}
+@section HtmlHead
+{
+    <script type="text/javascript">
+        jQuery.download = function(url, data, method, target) {
+            // 获取url和data 
+            if (url && data) {
+                // data 是 string 或者 array/object 
+                data = typeof data == 'string' ? data : jQuery.param(data);
+                // 把参数组装成 form的 input 
+                var inputs = '';
+                jQuery.each(data.split('&'), function() {
+                    var pair = this.split('=');
+                    inputs += '<input type="hidden" name="' + pair[0] + '" value="' + pair[1] + '" />';
+                });
+                // request发送请求 
+                jQuery('<form action="' + url + '" method="' + (method || 'post') + ' " target="' + (target || '_blank') + ' ">' + inputs + '</form>')
+                    .appendTo('body').submit().remove();
+            };
+        };
+
+        function GetDownloadImageUrl(obj) {
+            var self = $(obj);
+            var detailId = self.data("detailid");
+            var name = self.data("name");
+            $.ajax({
+                type: "POST",
+                url: "/Order/RequestDownloadImage",
+                data: { 'orderDetailId': detailId, 'imageName': name },
+                dataType: "json",
+                cache: false,
+                timeout: 600000,
+                success: function(json) {
+                    if (json == null || json == undefined) {
+                        return;
+                    }
+                    if (json.Succeed) {
+                        $.download('/Order/DownloadImageFile', 'fileName=' + self.data("name") + '&imageFilePath=' + json.Data + '&isAjax=true', 'post', "_blank");
+                    } else {
+                        alert(json.Message);
+                    }
+                },
+                error: function(msg) {
+                    return;
+                }
+            });
+        }
+
+        function DisplayBtn(isShowBtn, isShowImg, isDownZip) {
+            var downImgBtn = $("#downloadBtn");
+            //显示下载图片按钮
+            if (isShowBtn)
+                downImgBtn.show();
+            else
+                downImgBtn.hide();
+            //显示Loading图片
+            if (isShowImg) {
+                if ($(".down_loading", $("#loading")).size() < 1) {
+                    $("#loading").append("<img class='down_loading' src='/Images/down.gif' />");
+                }
+            } else {
+                $(".down_loading").remove();
+            }
+            //显示下载图片
+            if (isDownZip) {
+                $("#downloadImgZip").show();
+
+            } else {
+                $("#downloadImgZip").hide();
+            }
+        }
+
+        var downTimer;
+        function GetDownloadCompressedImageUrl(obj) {
+            DisplayBtn(false, true);
+            var self = $(obj);
+            var orderid = self.data("orderid");
+            $.ajax({
+                type: "POST",
+                url: "/Order/RequestDownloadImageBatch",
+                data: { 'order_id': orderid },
+                dataType: "json",
+                cache: false,
+                timeout: 600000,
+                success: function(json) {
+                    if (json == null || json == undefined) {
+                        return;
+                    }
+                    if (json.Succeed) {
+                        $(".DownloadImgZip").attr("href", "/Order/DownloadImageFile?fileName=" + self.data("name") + "&imageFilePath=" + json.Data);
+                        DisplayBtn(false, false,true);
+                        clearInterval(window.downTimer);
+                    } else {
+                        clearInterval(window.downTimer);//递归前先之前的清除
+                        window.downTimer = setInterval(function () {
+                            GetDownloadCompressedImageUrl(obj);
+                            DisplayBtn(false, true,false);
+                        }, 3000);
+                    }
+                },
+                error: function(msg) {
+                    clearInterval(window.downTimer);
+                }
+            });
+        }
+    </script>
+}
+@Html.Partial("~/Views/Account/Partial/_Account_Siderbar_Menu.cshtml")
+	<div id="main" class="account_wrap">    	
+	    <h2 class="font14 account_title">
+	        @Lang.TipOrderNumber<span>@Model.Order.OrderNo</span><span>@PageHelper.ToCurrentShortDate(Model.Order.OrderTime)</span>
+	    </h2>
+        @if (Model.Order.OrderStatus == OrderStatusType.Canceled)
+        {
+            <div class="warning_wrap">@Lang.TipThisPlaceNeed</div>
+        }
+        else
+        {
+            <div class="order_step">
+                <ul>
+                    <li @if (Model.Order.OrderStatus == OrderStatusType.Pending)
+                        {
+                                               @Html.Raw("class=\"current\"")
+                        }
+                        else
+                        {
+                                                @Html.Raw("class=\"off\"")
+                        }>
+                        <div class="step1">@Lang.TipPending
+                            <ins class="question">
+                                <div class="poptip poptip_w350" >
+                                    <i class="top"></i><em class="top"></em>
+                                    @Lang.TipYourTimeOrder
+                                </div>
+                            </ins>
+                        </div>
+                    </li>
+                    <li @if (Model.Order.OrderStatus == OrderStatusType.Processing)
+                        {
+                                               @Html.Raw("class=\"current\"")
+                        }
+                        else
+                        {
+                            if (Model.Order.OrderStatus != OrderStatusType.Pending)
+                            {
+                                                   @Html.Raw("class=\"off\"")
+                            }
+                        }
+                        >
+                        <div class="step2">@Lang.TipProcessing
+                            <ins class="question">
+                                <div class="poptip poptip_w350">
+                                    <i class="top"></i><em class="top"></em>
+                                    @Lang.TipThankOderShip
+                                </div>
+                            </ins>
+                        </div>
+                    </li>
+                    <li @if (Model.Order.OrderStatus == OrderStatusType.Shipped)
+                        {
+                                               @Html.Raw("class=\"current\"")
+                        }
+                        else
+                        {
+                            if (Model.Order.OrderStatus != OrderStatusType.Processing)
+                            {
+                                                   @Html.Raw("class=\"off\"")
+                            }
+                        }
+                        >
+                        <div class="step3">@Lang.TipShipped
+                            <ins class="question">
+                                <div class="poptip poptip_w350">
+                                    <i class="top"></i><em class="top"></em>
+                                    @Lang.TipOrderGetAgain
+                                </div>
+                            </ins>
+                        </div>
+                    </li>
+                    <div class="clearfix"></div>
+                </ul>
+            </div>
+        }
+        @*订单明细确认开始*@ 
+        <div class="order_show_cont">
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <th><span class="font14">@Lang.TipPaymentDetailsUp</span></th>
+                    <th><span class="font14">@Lang.TipShippingComments</span></th>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="pay_info">
+                            <table cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <th>@Lang.TipPaymentMethodPun</th>
+                                    <td><strong>@Model.PaymentName</strong></td>
+                                </tr>
+                            </table>
+                            @if (!Model.Order.OrderCost.IsNullOrEmpty())
+                            { 
+							<table cellpadding="0" cellspacing="0">
+							    <tr>
+							        <th>@Lang.TipDiscountedItem</th>
+
+							        <td><span>(+)<i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.OriginalProductAmount * Model.Order.ExchangeRate, Model.Order.Currency)</span></td>
+							    </tr>
+                                @if (Model.Order.OrderCost.DiscountProductAmount > 0)
+                                {
+                                    <tr>
+                                        <th>@Lang.TipProductDiscount</th>
+                                        <td><span>(-)<i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.DiscountProductAmount * Model.Order.ExchangeRate, Model.Order.Currency)</span></td>
+                                    </tr>
+                                }
+							    <tr>
+							        <th>@Lang.TipRegularPriceItem</th>
+							        <td><span>(+)<i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.NoDiscountProductAmount * Model.Order.ExchangeRate, Model.Order.Currency)</span></td>
+							    </tr>
+                                @if (Model.Order.OrderCost.VipLessAmount > 0)
+                                {
+                                    <tr>
+                                        <th>@Lang.TipVipDiscountRcd</th>
+                                        <td><span>(-)<i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.VipLessAmount * Model.Order.ExchangeRate, Model.Order.Currency)</span></td>
+                                    </tr>
+                                }
+
+                                @if (Model.Order.OrderCost.OrderDiscountLessAmount > 0)
+                                {
+                                    <tr>
+                                        <th>@Lang.TipOrdDisAmount</th>
+                                        <td><span>(-)<i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.OrderDiscountLessAmount * Model.Order.ExchangeRate, Model.Order.Currency)<br /><em>(@(Model.Order.OrderCost.OrderDiscount * 100)% off)</em></span></td>
+                                    </tr>
+                                }
+                                   @if (Model.Order.OrderCost.FreeShippingFee > 0 || Model.Order.OrderCost.ClubFee > 0)
+                                   {
+                                       <tr>
+
+                                           <th>@Lang.TipHandlingFee</th>
+                                           <td><span>(+)<i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.FreeShippingFee > 0 ? Model.Order.OrderCost.FreeShippingFee * Model.Order.ExchangeRate : Model.Order.OrderCost.ClubFee * Model.Order.ExchangeRate, Model.Order.Currency)</span></td>
+                                       </tr>
+                                   }
+                                @if (Model.Order.OrderCost.TotalShippingCost > 0)
+                                {
+                                    <tr>
+                                        <th>@Lang.TipEstShippingCost</th>
+                                        <td><span>(+)<i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.TotalShippingCost * Model.Order.ExchangeRate, Model.Order.Currency)</span></td>
+                                    </tr>
+                                }
+                                @if (Model.Order.OrderCost.CouponAmt > 0)
+                                {
+                                    <tr>
+                                        <th>@Lang.TipCoupon</th>
+                                        <td><span>(-)<i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.CouponAmt * Model.Order.ExchangeRate, Model.Order.Currency)</span></td>
+                                    </tr>
+                                }
+							</table>
+                                <table cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <th><strong>@Lang.TipGrandTotal</strong></th>
+                                        <td><span><strong class="fred">(+)<i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.TotalOrderAmt * Model.Order.ExchangeRate, Model.Order.Currency)</strong></span></td>
+                                    </tr>
+                                    @if (Model.Order.OrderCost.CashAmt > 0)
+                                    {
+                                        <tr>
+                                            <th><strong>@Lang.TipBalance</strong></th>
+                                            <td><span><strong class="fred">(-)<i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.CashAmt * Model.Order.ExchangeRate, Model.Order.Currency)</strong></span></td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <th><strong>@Lang.TipNeedToPay</strong></th>
+                                        <td><span><strong class="fred"><i>@Model.Order.Currency</i>@PageHelper.MoneyFormat(Model.Order.OrderCost.NeedToPayAmt * Model.Order.ExchangeRate, Model.Order.Currency)</strong></span></td>
+                                    </tr>
+                                </table>
+                                    if (Model.Order.OrderStatus == OrderStatusType.Pending)
+                                    {
+                                        if (Model.Order.PaidStatus == PaidStatusType.NotPay && PageHelper.MoneyFormat(Model.Order.OrderCost.NeedToPayAmt * Model.Order.ExchangeRate, Model.Order.Currency) > 0)
+                                        {
+                                      <div class="action_cont">
+                                         <a href="@UrlRewriteHelper.GetOrderDetailPayment(Model.Order.OrderNo)" class="btn_orange btn_p30">@Lang.TipMakePayment</a>
+                                      </div>
+                                        }
+                                        else if (Model.Order.PaidStatus == PaidStatusType.Submit)
+                                        { 
+                                        <div class="action_cont">
+                                            <p class="forange">@Lang.TipPayIsCheck</p>
+                                            <a href="javascript:void(0)" class="btn_orange btn_p30" data-toggle="modal" data-target="#divviewinfo" data-remote="/Order/ViewInfo?orderno=@(Model.Order.OrderNo)">@Lang.TipViewInfo</a>
+                                        </div>
+                                        }
+                                    }
+
+                                    else if (Model.Order.OrderStatus == OrderStatusType.Processing || Model.Order.OrderStatus == OrderStatusType.Shipped)
+                                    {
+                                    <div class="action_cont">
+                                        @if (Model.Order.PaidStatus == PaidStatusType.PartPay || Model.Order.PaidStatus == PaidStatusType.FullPay)
+                                        {
+                                            <p class="forange">@Lang.TipYouMadePay</p>
+                                            <a href="@UrlRewriteHelper.GetViewInvoiceUrl(Model.Order.OrderNo)" class="btn_orange btn_p30">@Lang.TipViewInvoice</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="javascript:void(0)" class="btn_orange btn_p30">View Invoice</a>
+                                            <a href="javascript:void(0)" class="btn_orange btn_p30" data-toggle="modal" data-target="#divviewinfo" data-remote="/Order/ViewInfo?orderno=@(Model.Order.OrderNo)">@Lang.TipViewInfo</a>
+                                        }
+                                    </div>
+                                    }
+                                    else if (Model.Order.OrderStatus == OrderStatusType.Canceled)
+                                    {
+
+                                    }
+                            }
+                        </div>
+                    </td>
+                    <td>
+                        <div class="shipping_info">
+                            <table cellpadding="0" cellspacing="0" >
+                                <tr>
+                                    <th>@Lang.TipShippingAddress</th>
+                                    <td>
+                                        @if (!Model.OrderShippingAddress.IsNullOrEmpty())
+                                        {
+                                        <strong>@Model.OrderShippingAddress.FullName</strong>
+                                        <p>@Model.OrderShippingAddress.Street1</p>
+                                            if (!Model.OrderShippingAddress.Street2.IsNullOrEmpty())
+                                            { 
+                                        <p>@Model.OrderShippingAddress.Street2</p>
+                                            }
+                                        <p>@(Model.OrderShippingAddress.City),@Model.OrderShippingAddress.Province @Model.OrderShippingAddress.ZipCode</p>
+                                        <p>@Model.OrderShippingAddress.CountryName</p>
+                                        <p>Phone:@Model.OrderShippingAddress.Telphone</p>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>@Lang.TipShippingMethodsPun</th>
+                                    <td>@Html.Raw(Model.ShippingName) @*(Total Box Number: 1)*@</td>
+                                </tr>
+                                   @if (!Model.ShippingDay.IsNullOrEmpty())
+                                   {
+                                        <tr>
+                                            <th>@Lang.TipEstShippingTimePun</th>
+                                            <td>@Model.ShippingDay.DayLow-@Model.ShippingDay.DayHigh @Lang.TipWorkdays</td>
+                                        </tr>
+                                   }
+                                <tr>
+                                    <th>@Lang.TipTrackingNumPun</th>
+                                    <td>
+                                        @if (!Model.PackageList.IsNullOrEmpty())
+                                        {
+                                            int i = 0, count = Model.PackageList.Count;
+                                            foreach (var p in Model.PackageList)
+                                            {
+                                                i++;
+                                                var shipping = CacheHelper.GetShippingById(p.ShippingId);
+                                                <a href="@(shipping.IsNullOrEmpty() ? "" : shipping.TrackUrl)" class="fblue">@p.TrackingNumber</a>
+                                                if (i != count)
+                                                {
+                                                    @Html.Raw(" , <br />")
+                                                }
+
+                                            }
+                                        }
+                                    </td>
+                                </tr>
+                            </table>
+                            <table cellpadding="0" cellspacing="0" class="border" >
+                                <tr>
+                                    <th>@Lang.TipOrderComments</th>
+                                    <td>
+                                        @(Model.Order.OrderRemark.IsNullOrEmpty() ? "/" : Model.Order.OrderRemark)
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>        
+        @*订单明细确认结束*@
+		@*商品列表开始*@	
+		<h2 class="font14 account_title">
+        	@Lang.TipItemsReviews
+		    <div class="action_cont">
+		          @if (Model.Order.OrderStatus == OrderStatusType.Processing || Model.Order.OrderStatus == OrderStatusType.Shipped)
+            {
+		        <span id="loading">
+                </span>
+		        <span id="downloadImgZip" style="display: none" >
+		        <a href="javascript:void(0)" class="down_rar fblue DownloadImgZip" target="_blank">Order Pics_@(Model.Order.OrderNo).zip</a>
+                </span>
+		        <span id="downloadBtn">
+		        <a href="javascript:void(0)" class="btn_orange btn_p30" data-orderid="@Model.Order.OrderId" data-name="Order Pics_@(Model.Order.OrderNo).zip" onclick=" GetDownloadCompressedImageUrl(this) "><ins class="download"></ins>@Lang.TipDownloadAllPic</a>
+		        </span> 
+            }
+		        <a href="@UrlRewriteHelper.GetQuickReorder(Model.Order.OrderNo)" class="btn_orange btn_p30">@Lang.TipQuickReorder</a>
+		    </div>
+           
+        </h2>
+        <div class="account_order_text">
+        	<p class="lf">@Html.Raw(string.Format(Lang.TipTotalItems, Model.OrderDetailList.Pager.TotalRowCount))</p>
+            <p class="rt"><strong>@Lang.TipTotal <span class="fred">@Model.Order.Currency @(Model.Order.OrderCost.IsNullOrEmpty() ? 0.0M : PageHelper.MoneyFormat(Model.Order.OrderCost.TotalProductAmt * Model.Order.ExchangeRate, Model.Order.Currency))</span></strong></p>
+        </div>
+        <div class="item_title_cont">
+        	<table cellpadding="0" cellspacing="0">
+            	<tr>
+                	<th class="item_img">@Lang.TipPicture</th>
+                    <th class="item_name">@Lang.TipDescription</th>
+                    <th class="item_price">@Lang.TipPrice</th>
+                    <th class="item_qty">@Lang.TipQTY</th>
+                    <th class="item_qty">@Lang.TipShippedQty</th>
+                    <th class="item_subtotal">@Lang.TipSubtotal</th>
+                    <th class="item_action">@Lang.TipAction</th>
+                </tr>
+            </table>
+        </div>
+        <div class="item_content_cont" id="OrderDetailItemList">
+        	 @Html.Partial("~/Views/Order/OrderDetailList.cshtml", @Model)
+		</div>
+		@*商品列表结束*@
+		<h2 class="font14 account_title">
+        	@Lang.TipStatusComments
+        </h2>
+		<div class="item_title_cont">
+        	<table cellpadding="0" cellspacing="0">
+            	<tr>
+                	<th class="td_w150">@Lang.TipDate</th>
+                    <th class="td_w150">@Lang.TipStatus</th>
+                    <th class="td_w483">@Lang.TipComments</th>
+                </tr>
+            </table>
+        </div>
+        <div class="item_content_cont">	
+            <table cellpadding="0" cellspacing="0">
+                @foreach (var orderStatusHistory in Model.OrderStatusHistoryList)
+                { 
+                    <tr>
+                        <td class="td_w150">@PageHelper.ToCurrentShortDate(orderStatusHistory.ChangeDate)</td>
+                        <td class="td_w150">@orderStatusHistory.StatusName</td>
+                        <td class="td_w483">@orderStatusHistory.Comments</td>
+                    </tr>
+                }
+            </table>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+<div class="clearfix"></div>
+@section HtmlFooter
+{
+    @using (Html.BeginForm("DownloadImageFile", "Order", FormMethod.Get, new { target = "_blank", id = "DownLoadPic" }))
+    {
+        @Html.Hidden("fileName", "")
+        @Html.Hidden("imageFilePath", "")
+    }
+
+   
+    @*view infor弹窗开始*@
+    <div class="popup_wrap popup_w400" id="divviewinfo">
+        <div class="close" data-dismiss="modal">
+            <a href="javascript:void(0)"></a>
+        </div>
+        <h2 class="font14">@Lang.TipViewInfo</h2>
+        <div class="view_infor_cont modal-body">
+        </div>
+    </div>
+    @*view infor弹窗结束*@
+}

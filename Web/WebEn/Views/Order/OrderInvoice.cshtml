@@ -1,0 +1,201 @@
+﻿@using Com.Panduo.Web.Models.Order
+@using Resources
+@model OrderInvoiceVo
+@{
+    ViewBag.Title = "OrderInvoice";
+    Layout = null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>@ViewBag.Title</title>
+     @Html.CssFor("invoice.css", "~/Css/invoice.css", fileVersion: "1.0")
+    <style media="print" type="text/css">
+        .Noprint
+        {
+            display: none;
+        }
+        .PageNext
+        {
+            page-break-after: always;
+        }
+    </style>
+    <script type="text/javascript">
+        function btnPrintClick() {
+            //bdhtml = window.document.body.innerHTML;
+            //sprnstr = "<!--startprint-->";
+            //eprnstr = "<!--endprint-->";
+            //prnhtml = bdhtml.substring(bdhtml.indexOf(sprnstr) + 17);
+            //prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr));
+            //window.document.body.innerHTML = prnhtml;
+            window.print();
+        }
+    </script> 
+
+</head>
+<body>
+<div id="invoice_wrap">
+	<div class="action">
+		<a href="@UrlRewriteHelper.GetInvoiceDownload(Model.Order.OrderNo)" class="Noprint">@Lang.TipDownload</a><a href="javascript:void(0)" class="Noprint" onclick="btnPrintClick();">@Lang.TipPrint </a>
+	</div>
+	<div class="cont">
+		<h2>@Lang.TipOrderInvoice</h2>
+		<div class="head">
+			<h1><img src="~/Images/invoice_logo.gif" /></h1>
+			<p>@Html.Raw(Lang.TipSuitePRC)</p>
+			<div class="clearfix"></div>
+		</div>
+		<div class="ship_address">
+		    <h3>@Lang.TipShipTo</h3>
+             @if (!Model.OrderShippingAddress.IsNullOrEmpty())
+             {
+                 <p>@Model.OrderShippingAddress.FullName<br/>
+                     @Model.OrderShippingAddress.Street1<br/>
+                     @if (!Model.OrderShippingAddress.Street2.IsNullOrEmpty())
+                     {
+                         @Model.OrderShippingAddress.Street2<br/>
+                     }
+                     @Model.OrderShippingAddress.City, @Model.OrderShippingAddress.Province @Model.OrderShippingAddress.ZipCode<br/>
+                     @Model.OrderShippingAddress.CountryName<br/>
+                     @Model.OrderShippingAddress.Telphone</p>
+             }
+		</div>
+		<div class="order_info">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<th scope="row">@Lang.TipOrderNoPun</th>
+				    <td>
+				        @Model.Order.OrderNo
+				    </td>
+				</tr>
+				<tr>
+					<th scope="row">@Lang.TipOrderDate</th>
+					<td> @PageHelper.ToCurrentShortDate(Model.Order.OrderTime)</td>
+				</tr>
+				<tr>
+					<th scope="row">@Lang.TipPaymentMethodPun</th>
+					<td>@Model.PaymentName</td>
+				</tr>
+			</table>
+		</div>		
+		<div class="clearfix"></div>
+		<div class="pro_info">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			    <thead>
+			    <tr>
+			        <th colspan="3" scope="col">@Lang.TipItem</th>
+			        <th scope="col" width="70">@Lang.TipPartNo</th>
+			        <th scope="col" width="70">@Lang.TipWeight</th>
+			        <th scope="col" width="90">@Lang.TipUnitPrice</th>
+			        <th scope="col" width="110">@Lang.TipSubtotal</th>
+			    </tr>
+			    </thead>
+                @foreach (var d in Model.OrderDetailList)
+                {
+                    <tr>
+                        <td width="20">@d.OrderDetail.Quantity</td>
+                        <td width="15">x</td>
+                        <td>@d.ProductInfo.ProductName</td>
+                        <td align="center">@d.OrderDetail.ProductNo</td>
+                        @if (Model.Order.ShippingWeight == Model.Order.Weight)
+                        {
+                            <td align="center">@PageHelper.GetRoundValue(d.OrderDetail.Weight,2)</td>
+                        }
+                        else
+                        {
+                            <td align="center">@PageHelper.GetRoundValue(d.OrderDetail.VolumeWeight,2)</td>
+                        }
+                        
+                        <td align="center">@Model.Order.Currency @PageHelper.MoneyFormat(d.OrderDetail.Price*Model.Order.ExchangeRate,Model.Order.Currency)</td>
+                        <td align="center"><strong>@Model.Order.Currency @(d.OrderDetail.Quantity*PageHelper.MoneyFormat(d.OrderDetail.Price*Model.Order.ExchangeRate,Model.Order.Currency))</strong></td>
+                    </tr>
+                }
+			</table>
+		</div>
+		<table width="45%" border="0" cellspacing="0" cellpadding="0" class="pro_weight">
+			<tr>
+				<th scope="row"><strong>@Lang.TipItemCount</strong></th>
+				<td><strong>@Model.OrderDetailList.Count</strong></td>@*明细个数*@
+			</tr>
+			<tr>
+				<th scope="row">@Lang.TipTotGrossWght</th>
+				<td>@PageHelper.GetRoundValue(Model.Order.Weight, 2)g</td>
+			</tr>
+			<tr>
+				<th scope="row">@Lang.TipPackageBoxWeight</th>
+				<td>@PageHelper.GetRoundValue(Model.Order.Weight, 2)g</td>
+			</tr>
+			<tr>
+				<th scope="row">@Lang.TipShippingWeight</th>
+				<td>@PageHelper.GetRoundValue(Model.Order.ShippingWeight, 2)g</td>
+			</tr>
+		</table>
+		<table width="55%" border="0" cellspacing="0" cellpadding="0" class="pro_price">
+		    <tr>
+		        <th scope="row">@Lang.TipDiscountedItem</th>
+		        <td>(+) @Model.Order.Currency @PageHelper.MoneyFormat(Model.Order.OrderCost.OriginalProductAmount * Model.Order.ExchangeRate, Model.Order.Currency)</td>
+		    </tr>
+            @if (Model.Order.OrderCost.DiscountProductAmount > 0)
+            {
+                <tr>
+                    <th scope="row">@Lang.TipProductDiscount</th>
+                    <td>(-) @Model.Order.Currency @PageHelper.MoneyFormat(Model.Order.OrderCost.DiscountProductAmount * Model.Order.ExchangeRate, Model.Order.Currency)</td>
+                </tr>
+            }
+		    <tr>
+		        <th scope="row">@Lang.TipRegularPriceItem</th>
+		        <td>(+) @Model.Order.Currency @PageHelper.MoneyFormat(Model.Order.OrderCost.NoDiscountProductAmount * Model.Order.ExchangeRate, Model.Order.Currency)</td>
+		    </tr>
+            @if (Model.Order.OrderCost.VipLessAmount > 0)
+            {
+                <tr>
+                    <th scope="row">@Lang.TipVipDiscount</th>
+                    <td>(-) @Model.Order.Currency @PageHelper.MoneyFormat(Model.Order.OrderCost.VipLessAmount * Model.Order.ExchangeRate, Model.Order.Currency)<br/>
+                        <span>@string.Format(Lang.TipPrecentOff,(Model.Order.OrderCost.OrderDiscount * 100))</span>
+                    </td>
+                </tr>
+            }
+            @if (Model.Order.OrderCost.FreeShippingFee > 0 || Model.Order.OrderCost.ClubFee > 0)
+            {
+                <tr>
+                    <th scope="row">@Lang.TipHandlingFee
+                    </th>
+                    <td>(+) @Model.Order.Currency @PageHelper.MoneyFormat(Model.Order.OrderCost.FreeShippingFee > 0 ? Model.Order.OrderCost.FreeShippingFee * Model.Order.ExchangeRate : Model.Order.OrderCost.ClubFee * Model.Order.ExchangeRate, Model.Order.Currency)</td>
+                </tr>
+            }
+		    <tr>
+		        <th scope="row">@Html.Raw(Model.ShippingName) (4 boxes):</th>
+		        <td>@Lang.TipFreeShipping<br/>+ @Model.Order.Currency @PageHelper.MoneyFormat(Model.Order.OrderCost.TotalShippingCost * Model.Order.ExchangeRate, Model.Order.Currency)</td>
+		    </tr>
+                 @if (Model.Order.OrderCost.CouponAmt > 0)
+                 {
+                     <tr>
+                         <th scope="row">@Lang.TipCoupon</th>
+                         <td>(-) @Model.Order.Currency @PageHelper.MoneyFormat(Model.Order.OrderCost.CouponAmt * Model.Order.ExchangeRate, Model.Order.Currency)</td>
+                     </tr>
+                 }
+		    <tr>
+		        <th scope="row"><strong>@Lang.TipGrandTotal</strong></th>
+		        <td><em><strong>(+) @Model.Order.Currency @PageHelper.MoneyFormat(Model.Order.OrderCost.TotalOrderAmt * Model.Order.ExchangeRate, Model.Order.Currency)</strong></em></td>
+		    </tr>
+             @if (Model.Order.OrderCost.CashAmt > 0)
+             {
+                 <tr>
+                     <th scope="row"><strong>@Lang.TipBalance</strong></th>
+                     <td><em><strong>(-) @Model.Order.Currency @PageHelper.MoneyFormat(Model.Order.OrderCost.CashAmt * Model.Order.ExchangeRate, Model.Order.Currency)</strong></em></td>
+                 </tr>
+             }
+			<tr>
+				<th scope="row"><strong>@Lang.TipYouNeedPay</strong></th>
+				<td><em><strong>@Model.Order.Currency @PageHelper.MoneyFormat(Model.Order.OrderCost.NeedToPayAmt*Model.Order.ExchangeRate,Model.Order.Currency)</strong></em></td>
+			</tr>
+		</table>
+		<div class="clearfix"></div>
+	</div>
+	<div class="action">
+		<a href="@UrlRewriteHelper.GetInvoiceDownload(Model.Order.OrderNo)" class="Noprint">@Lang.TipDownload</a><a href="javascript:void(0)" class="Noprint" onclick="btnPrintClick();">@Lang.TipPrint </a>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+﻿@using Com.Panduo.Service.Review
+@{
+    Layout = null;
+    var webSiteReview = (ReviewWebsiteCustomerView)ViewBag.WebSiteReview;
+}
+
+<form name="updateForm" action="@Url.Content("~/Review/TestimonialsEdit")" method="post" onsubmit="return false;">
+    <input type="hidden" name="id" value="@webSiteReview.Id" />
+    <input type="hidden" id="current_url" name="current_url" value="@Url.Content("~/Review/TestimonialsList")" />
+    <table class="table table-striped">
+        <tr>
+            <td width="20%">客户Email：</td>
+            <td>
+                @webSiteReview.Email</td>
+        </tr>
+        <tr>
+            <td width="20%">客户姓名：</td>
+            <td>
+                @webSiteReview.Name</td>
+        </tr>
+        <tr>
+            <td width="20%">提交日期：</td>
+            <td>
+                @webSiteReview.DateCreated</td>
+        </tr>
+        <tr>
+            <td width="20%">语言：</td>
+            <td>
+                @webSiteReview.LanguageChName</td>
+        </tr>
+        <tr>
+            <td width="20%">是否推荐到首页：</td>
+            <td>
+                <input type="radio" name="recommend" @(webSiteReview.Recommend ? "checked" : "") value="1" />是
+                <input type="radio" name="recommend" @(webSiteReview.Recommend ? "" : "checked") value="0" />否
+            </td>
+        </tr>
+        <tr>
+            <td width="20%">客户评论：</td>
+            <td>
+                @webSiteReview.Content</td>
+        </tr>
+        <tr>
+            <td width="20%">答复内容：</td>
+            <td>
+                <textarea name="replycontent">@webSiteReview.RepContent</textarea></td>
+        </tr>
+    </table>
+</form>

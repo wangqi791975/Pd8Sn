@@ -1,0 +1,214 @@
+﻿@using Resources
+@model Com.Panduo.Service.Product.ProductInfo
+@{
+   Layout =null;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>8seasons首页</title>
+ 
+     @Html.CssFor("8seasons.css", new[] {"~/Css/layout.css", "~/Css/form.css", "~/Css/public.css", "~/Css/main.css"}, fileVersion: "1.4")
+     @Html.JsFor("uploadify.js", "~/Js/jquery-1.8.3.min.js,~/Js/jquery.form.min.js,~/Js/uploadify/jquery.uploadify.js,~/Js/Base/message.js", fileVersion: "1.2")
+       @Html.JsFor("2323.js", "~/Js/Base/bootstrap.js,~/Js/Base/common.js,~/Js/Base/main.js", fileVersion: "1.0")
+     @Html.CssFor("uploadify.css", new[] { "~/Css/uploadify.css" }, fileVersion: "1.6")
+    <script type="text/javascript">
+        function change() {
+            $("#productinfo").parent().html(Message.TipSourcingHtml);
+            $("#productinfo").remove();
+        }
+
+        $(function() {
+            $("#btnSouring").on("click", function() {
+                $("#email").next(".fred").html("");
+                $("#fullname").next(".fred").html("");
+                $("#iframe_content_tip").html("");
+                $("#ProductName").next(".fred").html("");
+                var ss = $(window.frames["iframe_a"].document).find("#content");
+                $("#SourceForm").ajaxSubmit({
+                    data:{content: $(window.frames["iframe_a"].document).find("#content").val()},
+                    beforeSubmit: function() {
+                        var flag = true;
+                        if ($("#email").length > 0) {
+                            if ($("#email").val().length < 1) {
+                                $("#email").next(".fred").text(Message.ErrorEmailEmpty);
+                                flag = false;
+                            }
+                            if (!DataType.isEmail($("#email").val())) {
+                                $("#email").next(".fred").text(Message.ErrorEmailFormat);
+                                flag = false;
+                            }
+                        }
+                        if ($("#fullname").length > 0) {
+                            if ($("#fullname").val().length < 1) {
+                                $("#fullname").next(".fred").text(Message.ErrorSourcingName);
+                                flag = false;
+                            }
+                        }
+                        if ($("#ProductName").val().length < 1) {
+                            $("#ProductName").next(".fred").text(Message.ErrorProductLink);
+                            flag = false;
+                        }
+                        if ($(window.frames["iframe_a"].document).find("#content").length < 1) {
+                            $("#iframe_content_tip").text(Message.ErrorDetailsProduct);
+                            flag = false;
+                        }
+
+                        if ($(window.frames["iframe_a"].document).find("#content").val() <1) {
+                            $("#iframe_content_tip").text(Message.ErrorDetailsProduct);
+                            flag = false;
+                        }
+                        if (!flag) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+
+                    },
+                    success: function(responseText) {
+                        window.location = "/product/SouringSuccess";
+                    }
+                });
+            });
+
+            $("#souringattachment").uploadify({
+                'uploader': '/Product/SouringUpload', // 服务器端处理地址
+                'swf': '/Js/uploadify/uploadify.swf', // 上传使用的 Flash
+                'width': 248, // 按钮的宽度
+                'height': 30, // 按钮的高度
+                'buttonText': Message.TipAdd, // 按钮上的文字
+                'buttonCursor': 'hand', // 按钮的鼠标图标
+                'fileObjName': 'Filedata', // 上传参数名称
+                // 两个配套使用
+                'fileTypeExts': "*.png;*.jpg;*.jpeg;*.bmp;*.gif;*.doc;*.docx;", // 扩展名
+                'fileTypeDesc': Message.MsgSourcingUploadFile, // 文件说明
+                'removeCompleted': false,
+                'auto': true, // 选择之后，自动开始上传
+                'multi': true, // 是否支持同时上传多个文件
+                'queueSizeLimit': 3, // 允许多文件上传的时候，同时上传文件的个数
+                'uploadLimit': 3,
+                'onUploadSuccess': function(file, data, response) {
+                    if (response) {
+                        $("#souringattachment").after("<input id='input_" + file.id + "' type='hidden' name='attachmentfile' value='" + data + "|" + file.name + "' />");
+                        var cancel = $("#" + file.id + " .cancel a"); //事件
+                        if (cancel) {
+                            cancel.on("click", function() {
+                                $("input#input_" + file.id).remove();
+                            });
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="wrap sourcing">
+    <!-- 头部开始 -->
+    <div id="header">
+        <h1 class="lf"><a href="/" title="8seasons">@Lang.TipChineseJewelry</a>
+        </h1>
+        <div class="clearfix"></div>
+    </div>
+    <!-- 头部结束 -->
+    <div class="sourcing_header">
+        <h2>@Lang.TipOEMSourcingPro</h2>
+        <ul>
+            <li class="simple"><i></i>@Lang.TipPostRequest</li>
+            <li class="efficient"><i></i>@Lang.TipGetQuotation</li>
+            <li class="deal"><i></i>@Lang.TipSamplesAndDeals</li>
+            <div class="clearfix"></div>
+        </ul>
+    </div>
+
+    <div class="sourcing_detail">
+        <form onsubmit=" return false; " method="POST" action="/Product/AddSouring" name="SourceForm" id="SourceForm">
+            <table cellpadding="0" cellspacing="0">
+                @if (ViewBag.Source && !Model.IsNullOrEmpty())
+                {
+                    <tr>
+                        <th><span class="fred">*</span>@Lang.TipProductNameLink</th>
+                        <td>
+                            <table cellpadding="0" cellspacing="0" width="100%" id="productinfo">
+                                <tr class="pro_details">
+                                    <td class="pro_img"><img src="@ImageHelper.GetImageUrl(@Model.Product.MainImage, 80)"/></td>
+                                    <td class="pro_name"><input type="hidden" id="ProductName" name="ProductName" value="@Model.ProductName"/>@Model.ProductName</td>
+                                    <td class="pro_change"><a class="fblue_mid" href="javascript:void(0)" onclick=" change() "><ins></ins>@Lang.TipChange</a></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <th><span class="fred">*</span>@Lang.TipProductNameLink</th>
+                        <td><input class="input_text_wrap inputw715" type="text" id="ProductName" name="ProductName" value="" placeholder="@Lang.TipWhatUBuy"/>
+                            <div class="fred"></div></td>
+                    </tr>
+                }
+                <tr>
+                    <th><span class="fred">*</span>@Lang.TipDetails</th>
+                    <td>
+                        <div class="pro_info">
+                            <iframe name="iframe_a" frameborder="0" style="width: 700px; height: 100%; border: none;" scrolling="no"></iframe>
+                            <a href="/Product/SouringField" target="iframe_a" class="info_temple" onclick=" this.className = 'show_iframe' ">
+                                <ul>
+                                    @Html.Raw(Lang.TipSourcingFieldHtml)
+                                </ul>
+                            </a>
+                            <p class="info_warning">@Lang.TipTmpRef</p>
+                        </div>
+                        <div class="fred" id="iframe_content_tip"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="fred"></span>@Lang.TipAttachment</th>
+                    <td>
+                        <input type="file" name="souringattachment" id="souringattachment"/>
+                        <span id="uploadify"></span>
+                        <ins class="upload_notice">
+                            <div class="pop_note_tip">
+                                <i class="top"></i><em class="top"></em>
+                                @Lang.TipSouncingUplMsg
+                            </div>
+                        </ins>
+                        <div class="clearfix"></div>
+                        <p class="edit_warning fred">@Lang.ErrorFormatAccept</p>
+                    </td>
+                </tr>
+                @if (SessionHelper.CurrentCustomer.IsNullOrEmpty())
+                {
+                    <tr>
+                        <th><span class="fred">*</span>@Lang.TipEmail</th>
+                        <td><input class="input_text_wrap inputw290" type="text" name="email" required="required" id="email"/>
+                            <div class="fred"></div></td>
+                    </tr>
+                    <tr>
+                        <th><span class="fred">*</span>@Lang.TipYourName</th>
+                        <td><input class="input_text_wrap inputw290" type="text" name="fullname" required="required" id="fullname"/>
+                            <div class="fred"></div></td>
+                    </tr>
+                }
+                <tr>
+                    <th></th>
+                    <td><a class="btn_orange btn_p30" id="btnSouring" href="javascript:void(0)">@Lang.TipGetQuotationUp</a></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+</div>
+      @*底部开始*@
+    <div id="foot">
+@Html.Partial("~/Views/Shared/Partial/_Footer.cshtml")
+</div>
+    @*弹窗开始*@
+    @Html.Partial("~/Views/Shared/Partial/_Popup.cshtml")
+    @*弹窗结束*@
+        @*小耳朵开始*@
+    @Html.Partial("~/Views/Shared/Partial/_ToolBar.cshtml")
+    @*小耳朵结束*@
+    </body>
+</html>

@@ -1,0 +1,56 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Suggestion
+@{
+    ViewBag.Title = "建议";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<div class="pull-right">
+    <form method="post" action="@Url.Content("~/Review/SuggestionList")" id="searchForm" name="searchForm" class="form-search">
+        搜索：<input type="text" onkeyup="$(this).val($(this).val().replace(/\//g,''));" placeholder="搜索" name="keyword">
+        <button type="submit" class="btn">搜索</button><br>
+        <em style="float: right; color: #d14">(搜索的范围限于客户姓名或者Email)</em>
+        <table>
+            <tr>
+                <td>语言筛选：</td>
+                <td>
+                    <select id="selang" name="lang">
+                        <option value="0">All</option>
+                        @foreach (var lang in ServiceFactory.ConfigureService.GetAllValidLanguage())
+                        {
+                            <option value="@lang.LanguageId">@lang.ChineseName</option>
+                        }
+                        <option value="999">/</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>排序:</td>
+                <td>
+                    <select id="sorter" name="sorter">
+                        <option value="@SuggestionContentSorterCriteria.DateCreated" isasc="false">提交日期从近到远</option>
+                        <option value="@SuggestionContentSorterCriteria.DateCreated" isasc="true">提交日期从远到近</option>
+                        <option value="@SuggestionContentSorterCriteria.Name" isasc="true">客户姓名a-z</option>
+                        <option value="@SuggestionContentSorterCriteria.Name" isasc="false">客户姓名z-a</option>
+                    </select>
+                    <input id="isasc" name="isasc" type="hidden" value="false" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div class="clearboth"></div>
+
+<div id="main" class="ajax-list" data-url="/Review/SuggestionList">
+</div>
+<script>
+    $("#selang").change(function () {
+        $(".btn[type='submit']").click();
+    });
+    
+    $("#sorter").change(function () {
+        $("#isasc").val($("#sorter :selected").attr("isasc"));
+        $(".btn[type='submit']").click();
+    });
+</script>

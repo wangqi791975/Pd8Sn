@@ -1,0 +1,31 @@
+﻿@using Com.Panduo.Service.Product
+@using Resources
+@model ProductInfo
+@{
+    var ifstocklimit = Model.ProductStock.JudgeStocklimit();
+    int days = Model.ProductStock.GetProductStockDay();
+ }
+<div class="lf list_icon">
+            @if (Model.Product.Status == ProductStatus.BackOrder)
+            {
+                <a class="btn_orange btn_w144" href="javascript:void(0)" data-productid="@Model.Product.ProductId" data-restocktime="@days" onclick="fnBackorderAddToCart(this)"><ins class="btn_backorder"></ins><span>@Lang.TipBackorder</span></a>
+            }
+            else
+            {   <div class="list_input"><em>@Lang.TipAdd</em><input class="inputw98 input_text_wrap" type="text" value="1" name="input_qty_@Model.Product.ProductId"/></div>
+                               if(ifstocklimit && Model.ProductStock.StockNumber > 0)
+                               {<p class="text_center">@Model.ProductStock.StockNumber @Lang.TipStockAvailable</p> }
+                <a class="btn_orange btn_w144 cart_btn_add" href="javascript:void(0)" data-productid="@Model.Product.ProductId" data-pagesource="productlist"><ins class="btn_cart"></ins><span>@Lang.TipAddCart</span></a>
+            }
+    <a class="btn_grey btn_w144 wishlist_btn_add" href="javascript:void(0)" data-productid="@Model.Product.ProductId" data-pagesource="productlist"><ins class="btn_wishlist"></ins><span>@Lang.TipAddWishlist</span></a>
+     @if (Model.Product.Status == ProductStatus.BackOrder)
+            {              
+                if (days > 0)
+                {
+                    @Html.Raw("<p class=\"fgrey_mid\">" + @days + " days </p>")
+                }
+                else
+                {
+                    @Html.Raw("<p class=\"fgrey_mid\">in 15 days </p>")
+                }
+            }
+</div>

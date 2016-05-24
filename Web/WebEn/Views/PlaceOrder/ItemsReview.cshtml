@@ -1,0 +1,299 @@
+﻿@using System.Web.Services.Description
+@using Com.Panduo.Service
+@using Com.Panduo.Service.Order.ShippingOption
+@using Com.Panduo.Service.Order.ShoppingCart
+@using Com.Panduo.Service.Payment.PayConfig
+@using Com.Panduo.Service.ServiceConst
+@using Resources
+@model Dictionary<string, object>
+@{
+    ViewBag.Title = "Items Review";
+    Layout = "~/Views/Shared/Layout/_Layout_ShoppingCart.cshtml";
+    PageData<VShoppingCartItem> normalPager = ViewBag.PageData;
+
+    int couponCustomerId = 0;
+}
+
+@Html.Partial("~/Views/ShoppingCart/Partial/_Header.cshtml", 2)
+
+<div class="order_cont">
+    <!-- 商品列表开始 -->
+    <h3>@Lang.TipItemsReview</h3>
+    <div class="item_info_cont">
+        <p class="lf">@Html.Raw(string.Format(Lang.TipTotalItems,ViewBag.PageData.Pager.TotalRowCount))</p>
+        <p class="rt"><span class="fred">*</span>@Lang.TipPaymentASAP<ins></ins></p>
+    </div>
+    <div class="item_title_cont">
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                @Html.Raw(Lang.TipItemReviewHtmlF)
+            </tr>
+        </table>
+    </div>
+    <div class="item_content_cont" id="tab_normal_product">
+        @Html.Partial("Partial/ShoppingCartList", normalPager)
+    </div>
+    <!-- 商品列表结束 -->
+    <div class="item_order_cont">
+        <form action="@Url.Content("~/PlaceOrder/Submit")" method="POST">
+            <div class="note_cont">
+                <div class="rt">
+                    <span class="fred">*</span>
+                    <p>@Lang.TipHappenPrefer</p>
+                    <div class="clearfix"></div>
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <th><input type="radio" id="out_of_stock_wait_type1" name="out_of_stock_wait_type" value="1" checked="checked" /></th>
+                            <td><label for="out_of_stock_wait_type1">@Lang.TipAvailableWait</label></td>
+                        </tr>
+                        <tr>
+                            <th><input type="radio" id="out_of_stock_wait_type2" name="out_of_stock_wait_type" value="2" /></th>
+                            <td><label for="out_of_stock_wait_type2">@Lang.TipSendOutFirst</label></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td class="fblue_mid">
+                                <i>@Lang.TipPayRemaining</i>
+                                <div class="pop_note" style="display:none">
+                                    <div>
+                                        <i class="top"></i><em class="top"></em>
+                                        <span class="fgrey_mid">@Lang.TipNormallyButUs</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="coupon_cont">
+                <div class="select_cont select_w430 rt">
+                    <input type="hidden" id="coupon_customer_id" name="coupon_customer_id" value="@couponCustomerId" />
+                    @{
+                        if (ViewBag.CouponOrders.Count > 0)
+                        {
+                            var couponDefault = ViewBag.CouponOrders[0];
+                            couponCustomerId = couponDefault.CouponCustomer.Id;
+
+                            @Html.Raw("<span class='select_cont_span'>" + couponDefault.SymbolLeft + " " + couponDefault.CouponCustomer.Amount + " (Expiration Date:" + couponDefault.CurrentShortDate + ") , " + couponDefault.CouponCustomer.CouponCode + "</span>")
+                            ;
+                        }
+                        else
+                        {
+                            @Html.Raw(Lang.TipMsgDoCoupon);
+                        }
+                    }
+                    <div class="pop_select_cont">
+                        <ul>
+                            <li class="list_item" data="0">@Lang.TipMsgDoCoupon</li>
+                            @for (int index = 0; index < ViewBag.CouponOrders.Count; index++)
+                            {
+                                var coupon = ViewBag.CouponOrders[index];
+                                string first = string.Empty;
+                                if (index == 0)
+                                {
+                                    first = " active";
+                                }
+                                <li class="list_item @first" data="@coupon.CouponCustomer.Id">@string.Format(Lang.TipExpDateString,coupon.SymbolLeft,coupon.CouponCustomer.Amount,coupon.CurrentShortDate,coupon.CouponCustomer.CouponCode)</li>
+                            }
+                            <li class="new_coupon" data-search="false">
+                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                    <tr>
+                                        <td><input type="text" class="input_text_wrap fgrey lf js_no_search" id="couponcode" name="couponcode" placeholder="@Lang.TipInputNewCode" /></td>
+                                        <td width="10%"><a id="addcoupon" class="btn_orange btn_p10 rt js_no_search" href="javascript:void(0);">@Lang.TipAdd</a></td>
+                                    </tr>
+                                    <tr id="idvmsg" style="display: none;">
+                                        <td colspan="2">
+                                            <span class="fred">
+                                                @Lang.TipTheInputOder
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <strong class="rt">@Lang.TipUseCoupon</strong>
+                <div class="clearfix"></div>
+            </div>
+
+
+            <div class="price_cont">
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th width="848">@Lang.TipDiscountedItem</th>
+                        <td width="150"><span class="fred">(+)<i id="lblpromotionamount"><img src="@Url.Content("~/Images/loading.gif")" /></i></span></td>
+                    </tr>
+                    <tr>
+                        <th>@Lang.TipProductDiscount</th>
+                        <td><span class="fred">(-)<i id="lblpromotiondiscount"><img src="@Url.Content("~/Images/loading.gif")" /></i></span></td>
+                    </tr>
+                    <tr>
+                        <th>@Lang.TipRegularPriceItem</th>
+                        <td><span class="fred">(-)<i id="lblnodiscount"><img src="@Url.Content("~/Images/loading.gif")" /></i></span></td>
+                    </tr>
+                    <tr>
+                        <th>@Lang.TipVip:</th>
+                        <td><span class="fred">(-)<i id="lblvipandrcddiscount"><img src="@Url.Content("~/Images/loading.gif")" /></i></span></td>
+                    </tr>
+                    <tr>
+                        <th>@Lang.TipOrderDiscountPun</th>
+                        <td><span class="fred">(-)<i id="lblorderdiscount"><img src="@Url.Content("~/Images/loading.gif")" /></i></span></td>
+                    </tr>
+                    <tr style="display:none;">
+                        <td colspan="2" class="fgrey">(7% off , instead of Order Discout - 6% off - US $1.32)</td>
+                    </tr>
+                    <tr>
+                        <th>@Lang.TipHandlingFee</th>
+                        <td><span class="fred">(+)<i id="lblhandlingfee"><img src="@Url.Content("~/Images/loading.gif")" /></i></span></td>
+                    </tr>
+                    <tr>
+                        <th>@Lang.TipShippingCostPun</th>
+                        <td><span class="fred">(+)<i id="lblshippingcost"><img src="@Url.Content("~/Images/loading.gif")" /></i></span></td>
+                    </tr>
+                    <tr>
+                        <th>@Lang.TipCoupon</th>
+                        <td><span class="fred">(-)<i id="lblcouponamount"><img src="@Url.Content("~/Images/loading.gif")" /></i></span></td>
+                    </tr>
+                    <tr>
+                        <th><strong>@Lang.TipGrandTotal</strong></th>
+                        <td><span><strong class="fred"><i id="lblgrandtotal"><img src="@Url.Content("~/Images/loading.gif")" /></i></strong></span></td>
+                    </tr>
+                </table>
+            </div>
+            @{
+                var checkoutUrl = UrlRewriteHelper.GetCheckoutUrl();
+                if (ViewBag.ReportType == 1)
+                {
+                    checkoutUrl += string.Format("?report_type={0}&report_currency_code={1}&report_product_money={2}&report_shipping_money={3}", ViewBag.ReportType, ViewBag.ReportCurrencyCode, ViewBag.ReportProductMoney, ViewBag.ReportShippingMoney);
+                }
+            }
+            <div class="action_cont">
+                <a class="fblue_mid" href="@UrlRewriteHelper.GetShoppingCartUrl()">@Lang.TipShoppingCart</a><a class="fblue_mid" href="@checkoutUrl">@Lang.TipBack</a><label class="btn_border"><input id="btn_place_order" type="submit" class="btn_orange btn_p30_input" value="@Lang.TipPlaceOrder" /></label><!-- 点击该按钮后，变为灰色按钮，文字改为Processing ... --><a class="btn_grey btn_p30 fgrey">@Lang.TipProcessing ...</a>
+                <div class="pop_note_tip" style="display:none">
+                    <i class="top"></i><em class="top"></em>
+                    <div class="close"><a href="javascript:void(0)"></a></div>
+                    <span class="fgrey_mid">@Html.Raw(string.Format(Lang.TipTheIfOff,PageHelper.GetCurrentCurrency().Format(),PageHelper.GetCurrentCurrency().Format()))</span>
+                </div>
+
+            </div>
+
+            <input type="hidden" name="address_id" value="@ViewBag.AddressId" />
+            <input type="hidden" id="shipping_id" name="shipping_id" value="@ViewBag.ShippingId" />
+            <input type="hidden" id="country_id" name="country_id" value="@ViewBag.CountryId" />
+            <input type="hidden" name="report_type" value="@ViewBag.ReportType" />
+            <input type="hidden" name="report_currency_code" value="@ViewBag.ReportCurrencyCode" />
+            <input type="hidden" name="report_product_money" value="@ViewBag.ReportProductMoney" />
+            <input type="hidden" name="report_shipping_money" value="@ViewBag.ReportShippingMoney" />
+            <input type="hidden" name="customs_no_number" value="@ViewBag.CustomsNoNumber" />
+            <input type="hidden" name="order_remark" value="@ViewBag.OrderRemark" />
+        </form>
+    </div>
+</div>
+<div class="clearfix"></div>
+<script language="javascript">
+    $(function () {
+        $("#btn_place_order").bind("click", function () {
+            $(this).hide().delay(5000).show(0);
+        });
+
+        $(".fblue_mid i").hover(function () {
+            $(".pop_note").css("display", "block");
+        },
+            function () {
+                $(".pop_note").css("display", "none");
+            }
+        );
+        $(".pop_note_tip div a").click(function () {
+            $(".pop_note_tip").hide(1000);
+        });
+
+        $(".select_w430 div ul li").live("click", function () {
+            $("#coupon_customer_id").val(($(this).attr("data")));
+            GetSummary();
+        });
+        
+        $("#addcoupon").click(function () {
+            $("#idvmsg").hide();
+            var couponcode = $("#couponcode").val();
+            var countryId = $("#country_id").val();
+            $.post("/Account/AddCoupon", { "couponcode": couponcode }, function (result) {
+                if (!result.error) {
+                    //refresh coupon
+                    $.post("/PlaceOrder/GetUserCoupons", { "country_id": countryId }, function (data) {
+                        if (!data.error) {
+                            var couponHtml = "<li class='list_item active' data='0'>" + $(".pop_select_cont ul li").filter(":first").html() + "</li>";
+                            $(".pop_select_cont ul li").each(function() {
+                                if ($(this).attr("class") != "new_coupon") {
+                                    $(this).remove();
+                                }
+                            });
+                            for (var index = 0; index < data.msg.length; index++) {
+                                couponHtml += Message.TipMsgExpirationDate.format(data.msg[index].CouponCustomer.Id,data.msg[index].SymbolLeft,parseFloat(data.msg[index].CouponCustomer.Amount),data.msg[index].CurrentShortDate,data.msg[index].CouponCustomer.CouponCode);
+                            }
+                            $(".pop_select_cont ul").prepend(couponHtml);
+                        } else {
+                            $("#idvmsg .fred").html(data.msg);
+                            $("#idvmsg").show();
+                        }
+                    });
+                } else {
+                    $("#idvmsg .fred").html(result.msg);
+                    $("#idvmsg").show();
+                }
+            });
+        });
+
+        GetSummary();
+    });
+
+    function GetSummary() {
+        var shippingId = $("#shipping_id").val() || 0;
+        var countryId = $("#country_id").val() || 0;
+        var couponCustomerId = $("#coupon_customer_id").val() || 0;
+        $.ajax({
+            url: '/ShoppingCart/GetSummary',
+            data: { "shippingId": shippingId, "countryId": countryId, "couponCustomerId": couponCustomerId },
+            dataType: 'json',
+            type: 'POST',
+            success: function (data) {
+                $("#lblpromotionamount").text(data.PromotionBeforeAmount);
+                $("#lblpromotiondiscount").text(data.PromotionDiscountAmount);
+                $("#lblnodiscount").text(data.NoDiscountProductAmount);
+                $("#lblvipandrcddiscount").text(data.VipAndRcdDiscountAmount);
+                $("#lblorderdiscount").text(data.OrderDiscountAmount);
+                if (data.OrderDiscountAmount > 0) {
+                    $("#lblorderdiscount").parents("tr").show();
+                    $("#lblorderdiscount").parents("tr").prev().show();
+                }
+                else $("#lblorderdiscount").parents("tr").remove();
+                $("#lblcouponamount").text(data.CouponAmount);
+                $("#lblgrandtotal").text(data.GrandTotal);
+                $("#lblTotalGrossWeight").text(data.ShippingWeight);
+                $("#lblhandlingfee").text(data.HandlingFee);
+                $("#lblshippingcost").text(data.ShippingCost);
+                $("#lblfreeshippingcost").text(data.FreeShippingCost);
+                if (data.IsFreeShipping)
+                    $("#lblfreeshippingcost").parents("tr").show();
+                else $("#lblfreeshippingcost").parents("tr").remove();
+
+                //凑单提醒
+                if (data.HasPiecingOrderTip) {
+                    var piecingordertip = "";
+                    if (data.IsClubFreeShipping)
+                        piecingordertip = Message.TipJustFreeClub.format(data.PiecingOrderDiscountLackOrderAmount);
+                    else
+                        piecingordertip = Message.TipJustEnjoyOrder.format(data.PiecingOrderDiscountLackOrderAmount,data.PiecingOrderDiscount);
+                    $(".pop_note_tip .fgrey_mid").text(piecingordertip).parent().show();
+                }
+            },
+            error: function (msg) {
+                //http://diaosbook.com/Post/2012/8/1/invoking-jsonresult-and-return-error-message-in-aspnet-mvc-ajax
+                //异常信息处理 请参考上面链接
+            }
+        });
+    };
+</script>

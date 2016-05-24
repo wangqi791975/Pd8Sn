@@ -1,0 +1,132 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Product.Category
+@using Com.Panduo.Service.Product.Property
+@using Com.Panduo.Service.ServiceConst
+@using Com.Panduo.Web.Models.Product
+@model string
+
+<div class="categories_cont tab-pane @Model">
+    
+    @if(ViewBag.CategoryTree.TreeType == CategoryTreeVo.CategoryTreeType.ProductSearch)
+    {
+        IList<CategoryLanguage> allCategoryLanguages = ServiceFactory.CategoryService.GetAllCategoryLanguagesByLanguageId(ServiceFactory.ConfigureService.SiteLanguageId);
+        IList<CategoryLanguage> categoryLanguages = null;
+        foreach (var rootData in ViewBag.ProductCategories as List<SearchProductCategory>)
+        {
+            string rootClass = "";
+            string havaChild = "";
+            string leafClass = "";
+
+            categoryLanguages = allCategoryLanguages.Where(x => x.CategoryId == rootData.Category.CategoryId).ToList();
+            if (!categoryLanguages.IsNullOrEmpty())
+            {
+                <h3 class="@rootClass"><strong><a href="@UrlFuncitonHelper.SetParam(UrlParameterKey.CategoryId, rootData.Category.CategoryId.ToString())" title="@categoryLanguages[0].CategoryLanguageName">@categoryLanguages[0].CategoryLanguageName</a></strong></h3>
+            }
+            
+            <ul>
+                @foreach (var secondData in rootData.SubSearchProductCategorys as List<SearchProductCategory>)
+                {
+                    categoryLanguages = allCategoryLanguages.Where(x => x.CategoryId == secondData.Category.CategoryId).ToList();
+                    if (@secondData.SubSearchProductCategorys.Count() > 0)
+                    {
+                        if (secondData.Category.CategoryId == ViewBag.CategoryTree.CurrentParentCategoryId)
+                        {
+                            havaChild = "categories_have_sub2";
+                        }
+                        else
+                        {
+                            havaChild = "categories_have_sub";
+                        }
+                    }
+                    else
+                    {
+                        havaChild = "";
+                    }
+
+                    if (secondData.Category.CategoryId == ViewBag.CategoryTree.CurrentCategoryId)
+                    {
+                        havaChild += " current";
+                    }
+                
+                    <li class="@havaChild">
+                        @if (!categoryLanguages.IsNullOrEmpty())
+                        {
+                            <span><a href="@UrlFuncitonHelper.SetParam(UrlParameterKey.CategoryId, secondData.Category.CategoryId.ToString())">@(categoryLanguages[0].CategoryLanguageName)<i>(@(secondData.Qty))</i></a></span>
+                        }
+                        <ul>
+                            @foreach (var thirdData in secondData.SubSearchProductCategorys)
+                            {
+                                categoryLanguages = allCategoryLanguages.Where(x => x.CategoryId == thirdData.Category.CategoryId).ToList();
+                                leafClass = "";
+                                if (thirdData.Category.CategoryId == ViewBag.CategoryTree.CurrentCategoryId)
+                                {
+                                    leafClass = " class=current";
+                                }
+                                if (!categoryLanguages.IsNullOrEmpty())
+                                {
+                                    <li @leafClass><a href="@UrlFuncitonHelper.SetParam(UrlParameterKey.CategoryId, thirdData.Category.CategoryId.ToString())">@(categoryLanguages[0].CategoryLanguageName)<i>(@(thirdData.Qty))</i></a></li>
+                                }
+                            }
+                        </ul>
+                    </li>
+                }
+            </ul>
+        }
+    }
+    else
+    {
+        foreach (var rootData in ViewBag.CategoryTree.CategoryRelatedDatas as List<Com.Panduo.Service.RelatedData<Com.Panduo.Service.Product.Category.CategoryLanguage>>)
+        {
+            string rootClass = "";
+            string havaChild = "";
+            string leafClass = "";
+
+            if (rootData.Data.CategoryId == ViewBag.CategoryTree.CurrentCategoryId)
+            {
+                rootClass += " current";
+            }
+            <h3 class="@rootClass"><strong><a href="@UrlRewriteHelper.GetCategoryDefaultUrl(rootData.Data.CategoryId, rootData.Data.CategoryEnglishName)" title="@rootData.Data.CategoryLanguageName">@rootData.Data.CategoryLanguageName</a></strong></h3>
+            <ul>
+                @foreach (var secondData in rootData.SubDataList as List<Com.Panduo.Service.RelatedData<Com.Panduo.Service.Product.Category.CategoryLanguage>>)
+                {
+                    if (@secondData.SubDataList.Count() > 0)
+                    {
+                        if (secondData.Data.CategoryId == ViewBag.CategoryTree.CurrentParentCategoryId)
+                        {
+                            havaChild = "categories_have_sub2";
+                        }
+                        else
+                        {
+                            havaChild = "categories_have_sub";
+                        }
+                    }
+                    else
+                    {
+                        havaChild = "";
+                    }
+
+                    if (secondData.Data.CategoryId == ViewBag.CategoryTree.CurrentCategoryId)
+                    {
+                        havaChild += " current";
+                    }
+                    <li class="@havaChild">
+                        <span><a href="@UrlRewriteHelper.GetProductListUrl(secondData.Data.CategoryId, secondData.Data.CategoryEnglishName, 1)">@secondData.Data.CategoryLanguageName</a></span>
+                        <ul>
+                            @foreach (var thirdData in secondData.SubDataList as List<Com.Panduo.Service.RelatedData<Com.Panduo.Service.Product.Category.CategoryLanguage>>)
+                            {
+                                leafClass = "";
+                                if (thirdData.Data.CategoryId == ViewBag.CategoryTree.CurrentCategoryId)
+                                {
+                                    leafClass = " class=current";
+                                }
+                                <li @leafClass><a href="@UrlRewriteHelper.GetProductListUrl(thirdData.Data.CategoryId, thirdData.Data.CategoryEnglishName, 1)">@thirdData.Data.CategoryLanguageName</a></li>
+                            }
+
+                        </ul>
+                    </li>
+                }
+            </ul>
+        }
+    }
+    
+</div>

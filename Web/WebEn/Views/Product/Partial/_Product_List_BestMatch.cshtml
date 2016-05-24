@@ -1,0 +1,31 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Product
+@model PageData<ProductInfo>
+@{
+    var pager = @Model.Pager ?? new Pager(0, 1, 30);
+}
+@Html.Partial("~/Views/Product/Partial/_Product_Page_Top.cshtml", pager)
+@*@if (Model.Pager.TotalRowCount > 0)
+{
+    
+}*@
+@if (!@Model.Data.IsNullOrEmpty())
+{ 
+    @* 产品列表开始*@
+    if (!ViewBag.ShowMode)
+    {
+    <div class="products_list">
+        <ul>
+            @Html.Partial("~/Views/Product/Partial/_Product_Item_List.cshtml", @Model.Data)
+        </ul>
+    </div>
+    }
+    else
+    { 
+    <div class="products_gallery">
+        @Html.Partial("~/Views/Product/Partial/_Product_Item_Grid_View.cshtml", @Model.Data)
+    </div>
+    }
+   @*产品列表结束*@
+}
+@Html.Partial("~/Views/Product/Partial/_Product_Page_Bottom.cshtml",pager)

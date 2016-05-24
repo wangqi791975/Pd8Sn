@@ -1,0 +1,176 @@
+﻿@using System.Globalization
+@using Com.Panduo.Service.SiteConfigure
+@model IList<Com.Panduo.Service.Marketing.Banner.BannerInfo>
+@{
+    ViewBag.Title = "倒计时管理";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@section HtmlHead
+{
+    @Html.JsFor("Banner.js", "~/Js/bootstrap-formhelpers.js", fileVersion: "1.00")
+    @Html.CssFor("Banner.css", "~/Css/bootstrap-formhelpers.min.css", fileVersion: "1.0")
+}
+<div class="ajax_detail">
+    <div class="ajax_info">
+        <form class="form-horizontal" id="updateBannerForm" name="updateBannerForm" action="@Url.Content("~/Banner/SetBanner")" method="post" onsubmit=" return false; ">
+            <div class="tabbable">
+                <ul class="nav nav-tabs">
+                    @{
+                        var loop = 0;
+                    }
+                    @foreach (Language lang in ViewBag.Languages)
+                    {
+                        <li class="@(loop++ == 0 ? "active" : "")"><a data-target="#tab-@lang.LanguageId" href="javascript:void(0)" data-toggle="tab">@lang.ChineseName</a></li>
+                    }
+                </ul>
+                <div class="tab-content">
+                     <input type="hidden" name="HID_IsCountdown" value="true"/>
+                    @{
+                        loop = 0;
+                    }
+                    @foreach (Language lang in ViewBag.Languages)
+                    {
+                        if (!Model.IsNullOrEmpty() && Model.Any(x => x.LanguageId == lang.LanguageId))
+                        {
+                            var banner = Model.First(x => x.LanguageId == lang.LanguageId);
+                            var bannerBeginDate = banner.IsNullOrEmpty() ? DateTime.Now.ToString(CultureInfo.InvariantCulture).Split(' ').First() : banner.BannerStartTime.ToString(CultureInfo.InvariantCulture).Split(' ').First();
+                            var bannerBeginTime = banner.IsNullOrEmpty() ? "" : banner.BannerStartTime.ToString(CultureInfo.InvariantCulture).Split(' ').LastOrDefault();
+                            var bannerEndDate = banner.IsNullOrEmpty() ? DateTime.Now.AddMonths(1).ToString(CultureInfo.InvariantCulture).Split(' ').First() : banner.BannerEndTime.ToString(CultureInfo.InvariantCulture).Split(' ').First();
+                            var bannerEndTime = banner.IsNullOrEmpty() ? "" : banner.BannerEndTime.ToString(CultureInfo.InvariantCulture).Split(' ').LastOrDefault();
+                            <div class="ajax_detail tab-pane @(loop++ == 0 ? "active" : "")" id="tab-@lang.LanguageId">
+                                <div class="control-group">
+                                    <label class="control-label">倒计时图片代码：</label>
+                                    <div class="controls">
+                                        <input type="hidden" name="HID_languageId" value="@lang.LanguageId"/>
+                                        <textarea name="banner_language_content_@lang.LanguageId" rows='8' name='subject' id='subject' style='width: 800px;'>@banner.Content</textarea>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">开始时间：</label>
+                                    <div class="controls">
+                                        <div class="bfh-datepicker" data-format="m/d/y" data-date="@(bannerBeginDate ?? string.Empty)" data-icon="icon-calendar" data-name="limitBeginDate_@lang.LanguageId" data-placeholder="开始时间"></div>
+                                        <div class="bfh-timepicker" data-icon="icon-time" data-name="limitBeginTime_@lang.LanguageId" data-time="@(bannerBeginTime ?? string.Empty)"></div>
+                                        <code>（北京时间）</code>
+                                        <em id="beginerror" class="inline error"></em>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">结束时间：</label>
+                                    <div class="controls">
+                                        <div class="bfh-datepicker" data-format="m/d/y" data-date="@(bannerEndDate ?? string.Empty)" data-icon="icon-calendar" data-name="limitEndDate_@lang.LanguageId" data-placeholder="开始时间"></div>
+                                        <div class="bfh-timepicker" data-icon="icon-time" data-name="limitEndTime_@lang.LanguageId" data-time="@(bannerEndTime ?? string.Empty)"></div>
+                                        <code>（北京时间）(*不填写表示无结束日期)</code>
+                                        <em id="enderror" class="inline error"></em>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">首页显示：</label>
+                                    <div class="controls">
+                                            @if (banner.IsShowHome)
+                                            {
+                                                <label class="radio inline">
+                                                    <input id="IsShowHome_@lang.LanguageId" name="IsShowHome_@lang.LanguageId" checked type="radio" value="True">是
+                                                </label>
+                                                <label class="radio inline">
+                                                    <input id="IsShowHome_@lang.LanguageId" name="IsShowHome_@lang.LanguageId"  type="radio" value="false">否
+                                                </label>
+                                            }
+                                            else
+                                            {
+                                                <label class="radio inline">
+                                                    <input id="IsShowHome_@lang.LanguageId" name="IsShowHome_@lang.LanguageId"  type="radio" value="True">是
+                                                </label>
+                                                <label class="radio inline">
+                                                    <input id="IsShowHome_@lang.LanguageId" name="IsShowHome_@lang.LanguageId"  checked type="radio" value="false">否
+                                                </label>
+                                            }
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">状态：</label>
+                                    <div class="controls">
+                                        @if (banner.IsValid)
+                                        {
+                                            <label class="radio inline">
+                                                <input id="IsValid_@lang.LanguageId" name="IsValid_@lang.LanguageId"  checked type="radio" value="True">开启
+                                           </label>
+                                            <label class="radio inline">
+                                              <input id="IsValid_@lang.LanguageId" name="IsValid_@lang.LanguageId"  type="radio" value="false">关闭
+                                            </label>
+                                        }
+                                        else
+                                        {
+                                           <label class="radio inline">
+                                               <input id="IsValid_@lang.LanguageId" name="IsValid_@lang.LanguageId"  type="radio" value="True">开启
+                                          </label>
+                                            <label class="radio inline">
+                                              <input id="IsValid_@lang.LanguageId" name="IsValid_@lang.LanguageId" checked type="radio" value="false">关闭
+                                            </label>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="ajax_detail tab-pane @(loop++ == 0 ? "active" : "")" id="tab-@lang.LanguageId">
+                                <div class="control-group">
+                                    <label class="control-label">倒计时图片代码：</label>
+                                    <div class="controls">
+                                        <input type="hidden" name="HID_languageId" value="@lang.LanguageId"/>
+                                        <textarea name="banner_language_content_@lang.LanguageId" rows='8' name='subject' id='subject' style='width: 800px;'></textarea>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">开始时间：</label>
+                                    <div class="controls">
+                                        <div class="bfh-datepicker" data-format="m/d/y" data-date="" data-icon="icon-calendar" data-name="limitBeginDate_@lang.LanguageId" data-placeholder="开始时间"></div>
+                                        <div class="bfh-timepicker" data-icon="icon-time" data-name="limitBeginTime_@lang.LanguageId" data-time=""></div>
+                                        <code>（北京时间）</code>
+                                        <em id="beginerror" class="inline error"></em>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">结束时间：</label>
+                                    <div class="controls">
+                                        <div class="bfh-datepicker" data-format="m/d/y" data-date="" data-icon="icon-calendar" data-name="limitEndDate_@lang.LanguageId" data-placeholder="开始时间"></div>
+                                        <div class="bfh-timepicker" data-icon="icon-time" data-name="limitEndTime_@lang.LanguageId" data-time=""></div>
+                                        <code>（北京时间）(*不填写表示无结束日期)</code>
+                                        <em id="enderror" class="inline error"></em>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">首页显示：</label>
+                                    <div class="controls">
+                                        <label class="radio inline">
+                                            <input id="IsShowHome_@lang.LanguageId" name="IsShowHome_@lang.LanguageId" checked type="radio" value="True">是
+                                        </label>
+                                        <label class="radio inline">
+                                            <input id="IsShowHome_@lang.LanguageId" name="IsShowHome_@lang.LanguageId" type="radio" value="false">否
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">状态：</label>
+                                    <div class="controls">
+                                        <label class="radio inline">
+                                            <input id="IsValid_@lang.LanguageId" name="IsValid_@lang.LanguageId" type="radio" checked value="True">开启
+                                        </label>
+                                        <label class="radio inline">
+                                            <input id="IsValid_@lang.LanguageId" name="IsValid_@lang.LanguageId" type="radio" value="false">关闭
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <div class="form-actions">
+                    <a class="btn btn-primary ajax_update" href="javascript:void(0)" id="jj">保存修改</a>
+                    <a class="btn" href="@Url.Content("~/Banner/Index")">取消</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

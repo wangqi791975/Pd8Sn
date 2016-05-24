@@ -1,0 +1,14 @@
+﻿@using Resources
+<div class="fixed_pane">
+    @if (ViewBag.IsFromDetail != null)
+    {
+        <a rel="nofollow" href="@UrlRewriteHelper.GetProductSouringUrl(1)&productid=@ViewBag.IsFromDetail" class="fix_oem" title="@Lang.TipSourcing"></a>
+    }
+    else
+    {
+        <a rel="nofollow" href="@UrlRewriteHelper.GetProductSouringUrl()" class="fix_oem" title="@Lang.TipSourcing"></a>
+    }
+
+    <a rel="nofollow" href="javascript:void(0)" onclick=" $('#SuggestionDiv').modal('show'); " class="fix_suggest" title="@Lang.TipSuggestion"></a>
+    <a rel="nofollow" href="javascript:void(0)" class="fix_backtop" id="fix_backtop" title="@Lang.TipBackToTop"></a>
+</div>

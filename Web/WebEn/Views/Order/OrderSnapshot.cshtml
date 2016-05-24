@@ -1,0 +1,120 @@
+﻿@using Com.Panduo.Service.Product
+@using Resources
+@model Com.Panduo.Web.Models.Order.OrderItemSnapshotVo
+@{
+    ViewBag.Title = "OrderSnapshot";
+    Layout = "~/Views/Shared/Layout/_Layout_NoLeft.cshtml";
+}
+<div class="pro_photo_cont">
+    @*    @foreach (var img in Model.OrderSnapshot.ProductImages)
+    {
+        if (img.StartsWith("http"))
+        {
+            <img src="@img" />
+        }
+        else
+        {
+            <img src="@ImageHelper.GetImageUrl(img, 310)" />
+        }
+         break;
+    }*@
+    <img src="@ImageHelper.GetImageUrl(Model.OrderDetail.MainImage, 310)" />
+    <div class="lf pro_info_cont">
+        <h5>@Model.OrderSnapshot.ProductName</h5>
+        <div class="bacic_info_cont">
+            <div class="lf">
+                <div class="pro_notice">
+                    @Lang.TipThisOfOrder
+                    @if (Model.ProductInfo.Product.Status != ProductStatus.OffLine) { 
+                        <a href="@UrlRewriteHelper.GetProductDetailUrl(Model.ProductInfo.Product.ProductId,Model.ProductInfo.ProductEnName)" class="fblue">@Lang.TipViewItemDetail</a>
+                    }
+                </div>
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th>@Lang.TipPartNo</th>
+                        <td>@Model.OrderDetail.ProductNo</td>
+                    </tr>
+                    <tr>
+                        <th>@Lang.TipYourPricePun</th>
+                        <td>@Model.Order.Currency @PageHelper.MoneyFormat(Model.OrderDetail.Price,Model.Order.Currency)</td>
+                    </tr>
+                    <tr>
+                        <th>@Lang.TipGrossWeightUp</th>
+                        <td>@PageHelper.MoneyFormat(Model.OrderDetail.Weight)</td>
+                    </tr>
+                    @if (Model.OrderDetail.VolumeWeight > 0)
+                    {
+                      <tr>
+                          <th>Volume Weight</th>
+                          <td>@PageHelper.MoneyFormat(Model.OrderDetail.VolumeWeight)</td>
+                      </tr>
+                    }
+                    <tr>
+                        <th>@Lang.TipOrderQty</th>
+                        <td>@{
+                                var qty = Model.OrderDetail.Quantity;
+                                if (qty == 1)
+                                {
+                                    @qty
+                                    @Html.Raw(" Pack")
+                                }
+                                else
+                                {
+                                    @qty
+                                    @Html.Raw(" Packs")
+                                }
+                            }</td>
+                    </tr>
+                    <tr>
+                        <th>@Lang.TipProductCategory</th>
+                        <td><a href="@UrlRewriteHelper.GetProductListUrl(Model.OrderSnapshot.CategoryId,Model.OrderSnapshot.CategoryName, 1)" class="fblue_mid">@Model.OrderSnapshot.CategoryName</a></td>
+                    </tr>
+                </table>
+            </div>
+        	
+            <div class="rt">
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th class="info_title" colspan="2">@Lang.TipDieDerBest</th>
+                    </tr>
+                    <tr>
+                        <th>@Lang.TipPartNo</th>
+                        <td>@Model.Order.OrderNo</td>
+                    </tr>
+                    <tr>
+                        <th>@Lang.TipOrderDate</th>
+                        <td>@PageHelper.ToCurrentShortDate(Model.Order.OrderTime)</td>
+                    </tr>
+                    <tr>
+                        <th>@Lang.TipOrderStatus</th>
+                        <td>@Model.Order.OrderStatus.ToString()</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="clearfix"></div>
+            <div class="pro_description_cont">
+                <h4>Description</h4>
+                <table cellpadding="0" cellspacing="0">
+                    @foreach (var p in Model.OrderSnapshot.ProductPropertyStr)
+                    {
+                        <tr>
+                            <th>@p.Key </th>
+                            <td>@p.Value</td>
+                        </tr>
+                    }
+                    <tr>
+                        <th>@Lang.TipNoteNoPun  </th>
+                        <td>@Model.OrderSnapshot.Description</td>
+                    </tr>
+                </table>
+            </div>
+            @if (Model.ProductInfo.Product.Status == ProductStatus.OffLine)
+            {
+                <div class="pro_note">
+                    <strong class="fred">@Lang.TipNote</strong> @Html.Raw(Lang.TipTheWebSiteCom)
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

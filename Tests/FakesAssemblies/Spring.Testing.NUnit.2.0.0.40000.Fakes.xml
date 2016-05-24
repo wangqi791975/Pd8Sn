@@ -1,0 +1,872 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Spring.Testing.NUnit.2.0.0.40000.Fakes</name>
+    </assembly>
+    <members>
+        <member name="T:Spring.Testing.Ado.Fakes.ShimSimpleAdoTestUtils">
+            <summary>Spring.Testing.Ado.SimpleAdoTestUtils 的填充码类型</summary>
+        </member>
+        <member name="M:Spring.Testing.Ado.Fakes.ShimSimpleAdoTestUtils.#ctor">
+            <summary>初始化新的填充码实例</summary>
+        </member>
+        <member name="M:Spring.Testing.Ado.Fakes.ShimSimpleAdoTestUtils.#ctor(Spring.Testing.Ado.SimpleAdoTestUtils)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="M:Spring.Testing.Ado.Fakes.ShimSimpleAdoTestUtils.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:Spring.Testing.Ado.Fakes.ShimSimpleAdoTestUtils.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:Spring.Testing.Ado.Fakes.ShimSimpleAdoTestUtils.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:Spring.Testing.Ado.Fakes.ShimSimpleAdoTestUtils.Constructor">
+            <summary>设置 SimpleAdoTestUtils.SimpleAdoTestUtils() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.Ado.Fakes.ShimSimpleAdoTestUtils.CreateTransactionIDbProviderITransactionDefinition">
+            <summary>设置 SimpleAdoTestUtils.CreateTransaction(IDbProvider dbProvider, ITransactionDefinition txDefinition) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.Ado.Fakes.ShimSimpleAdoTestUtils.ExecuteSqlScriptIAdoOperationsEncodedResourceBooleanRegexArray">
+            <summary>设置 SimpleAdoTestUtils.ExecuteSqlScript(IAdoOperations adoTemplate, EncodedResource resource, Boolean continueOnError, Regex[] blockDelimiter) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.Ado.Fakes.ShimSimpleAdoTestUtils.ExecuteSqlScriptIAdoOperationsIResourceBooleanRegexArray">
+            <summary>设置 SimpleAdoTestUtils.ExecuteSqlScript(IAdoOperations adoTemplate, IResource resource, Boolean continueOnError, Regex[] blockDelimiter) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.Ado.Fakes.ShimSimpleAdoTestUtils.ExecuteSqlScriptIAdoOperationsIResourceLoaderStringBooleanRegexArray">
+            <summary>设置 SimpleAdoTestUtils.ExecuteSqlScript(IAdoOperations adoTemplate, IResourceLoader resourceLoader, String scriptResourcePath, Boolean continueOnError, Regex[] blockDelimiter) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.Ado.Fakes.ShimSimpleAdoTestUtils.ExecuteSqlScriptIAdoOperationsIResourceRegexArray">
+            <summary>设置 SimpleAdoTestUtils.ExecuteSqlScript(IAdoOperations adoTemplate, IResource resource, Regex[] blockDelimiter) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.Ado.Fakes.ShimSimpleAdoTestUtils.ExecuteSqlScriptIAdoOperationsStringBooleanRegexArray">
+            <summary>设置 SimpleAdoTestUtils.ExecuteSqlScript(IAdoOperations adoTemplate, String script, Boolean continueOnError, Regex[] blockDelimiter) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.Ado.Fakes.ShimSimpleAdoTestUtils.ExecuteSqlScriptIAdoOperationsStringRegexArray">
+            <summary>设置 SimpleAdoTestUtils.ExecuteSqlScript(IAdoOperations adoTemplate, String script, Regex[] blockDelimiter) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.Ado.Fakes.ShimSimpleAdoTestUtils.ExecuteSqlScriptInternalIAdoOperationsEncodedResourceBooleanRegexArray">
+            <summary>设置 SimpleAdoTestUtils.ExecuteSqlScriptInternal(IAdoOperations adoTemplate, EncodedResource resource, Boolean continueOnError, Regex[] blockDelimiter) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.Ado.Fakes.ShimSimpleAdoTestUtils.GetScriptBlocksEncodedResourceIListOfStringRegexArray">
+            <summary>设置 SimpleAdoTestUtils.GetScriptBlocks(EncodedResource encodedResource, IList`1&lt;String&gt; blockCollector, Regex[] blockDelimiterPatterns) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.Ado.Fakes.ShimSimpleAdoTestUtils.SplitStringRegexIListOfString">
+            <summary>设置 SimpleAdoTestUtils.Split(String text, Regex exp, IList`1&lt;String&gt; blockCollector) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.Ado.Fakes.ShimSimpleAdoTestUtils.StaticConstructor">
+            <summary>设置 SimpleAdoTestUtils.SimpleAdoTestUtils() 的 填充码</summary>
+        </member>
+        <member name="T:Spring.Testing.Ado.Fakes.ShimSimpleAdoTestUtils.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="T:Spring.Testing.Ado.Fakes.StubIPlatformTransaction">
+            <summary>Spring.Testing.Ado.IPlatformTransaction 的存根类型</summary>
+        </member>
+        <member name="M:Spring.Testing.Ado.Fakes.StubIPlatformTransaction.#ctor">
+            <summary>初始化 type StubIPlatformTransaction 的新实例</summary>
+        </member>
+        <member name="F:Spring.Testing.Ado.Fakes.StubIPlatformTransaction.Commit">
+            <summary>设置 IPlatformTransaction.Commit() 的 stub</summary>
+        </member>
+        <member name="F:Spring.Testing.Ado.Fakes.StubIPlatformTransaction.Dispose">
+            <summary>设置 IDisposable.Dispose() 的 stub</summary>
+        </member>
+        <member name="F:Spring.Testing.Ado.Fakes.StubIPlatformTransaction.Rollback">
+            <summary>设置 IPlatformTransaction.Rollback() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.Ado.Fakes.StubIPlatformTransaction.stnu::Spring#Testing#Ado#IPlatformTransaction#Commit">
+            <summary>设置 IPlatformTransaction.Commit() 的 存根</summary>
+        </member>
+        <member name="M:Spring.Testing.Ado.Fakes.StubIPlatformTransaction.stnu::Spring#Testing#Ado#IPlatformTransaction#Rollback">
+            <summary>设置 IPlatformTransaction.Rollback() 的 存根</summary>
+        </member>
+        <member name="M:Spring.Testing.Ado.Fakes.StubIPlatformTransaction.global::System#IDisposable#Dispose">
+            <summary>设置 IDisposable.Dispose() 的 存根</summary>
+        </member>
+        <member name="T:Spring.Testing.Ado.Fakes.StubSimpleAdoTestUtils">
+            <summary>Spring.Testing.Ado.SimpleAdoTestUtils 的存根类型</summary>
+        </member>
+        <member name="M:Spring.Testing.Ado.Fakes.StubSimpleAdoTestUtils.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="M:Spring.Testing.Ado.Fakes.StubSimpleAdoTestUtils.InitializeStub">
+            <summary>初始化 type StubSimpleAdoTestUtils 的新实例</summary>
+        </member>
+        <member name="P:Spring.Testing.Ado.Fakes.StubSimpleAdoTestUtils.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="P:Spring.Testing.Ado.Fakes.StubSimpleAdoTestUtils.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:Spring.Testing.Ado.Fakes.StubSimpleAdoTestUtils.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests">
+            <summary>Spring.Testing.NUnit.AbstractDependencyInjectionSpringContextTests 的填充码类型</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.#ctor(Spring.Testing.NUnit.AbstractDependencyInjectionSpringContextTests)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.AutowireModeGet">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_AutowireMode() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.AutowireModeSetAutoWiringMode">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.set_AutowireMode(AutoWiringMode value) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.BeforeProtectedVariableInjectionFieldInfo">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.BeforeProtectedVariableInjection(FieldInfo fieldInfo) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.Constructor">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.AbstractDependencyInjectionSpringContextTests() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.ContextKeyGet">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_ContextKey() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.DependencyCheckGet">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_DependencyCheck() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.DependencyCheckSetBoolean">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.set_DependencyCheck(Boolean value) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.InitManagedVariableNames">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InitManagedVariableNames() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.InjectDependencies">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InjectDependencies() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.InjectProtectedVariables">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InjectProtectedVariables() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.IsProtectedInstanceFieldFieldInfo">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.IsProtectedInstanceField(FieldInfo field) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.LoadContextLocationsStringArray">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.LoadContextLocations(String[] locations) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.LoadCountGet">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_LoadCount() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.OnSetUp">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.OnSetUp() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.OnTearDown">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.OnTearDown() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.PopulateProtectedVariablesGet">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_PopulateProtectedVariables() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.PopulateProtectedVariablesSetBoolean">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.set_PopulateProtectedVariables(Boolean value) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.SetDirty">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.SetDirty() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.SetUp">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.SetUp() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.TearDown">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.TearDown() 的 填充码</summary>
+        </member>
+        <member name="T:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.AllInstances.AutowireModeGet">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_AutowireMode() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.AllInstances.AutowireModeSetAutoWiringMode">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.set_AutowireMode(AutoWiringMode value) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.AllInstances.BeforeProtectedVariableInjectionFieldInfo">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.BeforeProtectedVariableInjection(FieldInfo fieldInfo) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.AllInstances.ContextKeyGet">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_ContextKey() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.AllInstances.DependencyCheckGet">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_DependencyCheck() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.AllInstances.DependencyCheckSetBoolean">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.set_DependencyCheck(Boolean value) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.AllInstances.InitManagedVariableNames">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InitManagedVariableNames() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.AllInstances.InjectDependencies">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InjectDependencies() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.AllInstances.InjectProtectedVariables">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InjectProtectedVariables() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.AllInstances.LoadContextLocationsStringArray">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.LoadContextLocations(String[] locations) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.AllInstances.LoadCountGet">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_LoadCount() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.AllInstances.OnSetUp">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.OnSetUp() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.AllInstances.OnTearDown">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.OnTearDown() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.AllInstances.PopulateProtectedVariablesGet">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_PopulateProtectedVariables() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.AllInstances.PopulateProtectedVariablesSetBoolean">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.set_PopulateProtectedVariables(Boolean value) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.AllInstances.SetDirty">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.SetDirty() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.AllInstances.SetUp">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.SetUp() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractDependencyInjectionSpringContextTests.AllInstances.TearDown">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.TearDown() 的 填充码</summary>
+        </member>
+        <member name="T:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests">
+            <summary>Spring.Testing.NUnit.AbstractSpringContextTests 的填充码类型</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.#ctor(Spring.Testing.NUnit.AbstractSpringContextTests)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.AddContextObjectIConfigurableApplicationContext">
+            <summary>设置 AbstractSpringContextTests.AddContext(Object key, IConfigurableApplicationContext context) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.ClearContextCache">
+            <summary>设置 AbstractSpringContextTests.ClearContextCache() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.Constructor">
+            <summary>设置 AbstractSpringContextTests.AbstractSpringContextTests() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.ContextKeyStringObject">
+            <summary>设置 AbstractSpringContextTests.ContextKeyString(Object contextKey) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.GetContextObject">
+            <summary>设置 AbstractSpringContextTests.GetContext(Object key) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.HasCachedContextObject">
+            <summary>设置 AbstractSpringContextTests.HasCachedContext(Object contextKey) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.LoadContextLocationsStringArray">
+            <summary>设置 AbstractSpringContextTests.LoadContextLocations(String[] locations) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.LoadContextObject">
+            <summary>设置 AbstractSpringContextTests.LoadContext(Object key) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.RegisterContextWithContextRegistryGet">
+            <summary>设置 AbstractSpringContextTests.get_RegisterContextWithContextRegistry() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.RegisterContextWithContextRegistrySetBoolean">
+            <summary>设置 AbstractSpringContextTests.set_RegisterContextWithContextRegistry(Boolean value) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.SetDirtyObject">
+            <summary>设置 AbstractSpringContextTests.SetDirty(Object contextKey) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.SetDirtyStringArray">
+            <summary>设置 AbstractSpringContextTests.SetDirty(String[] locations) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.StaticConstructor">
+            <summary>设置 AbstractSpringContextTests.AbstractSpringContextTests() 的 填充码</summary>
+        </member>
+        <member name="T:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.AllInstances.AddContextObjectIConfigurableApplicationContext">
+            <summary>设置 AbstractSpringContextTests.AddContext(Object key, IConfigurableApplicationContext context) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.AllInstances.ContextKeyStringObject">
+            <summary>设置 AbstractSpringContextTests.ContextKeyString(Object contextKey) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.AllInstances.GetContextObject">
+            <summary>设置 AbstractSpringContextTests.GetContext(Object key) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.AllInstances.HasCachedContextObject">
+            <summary>设置 AbstractSpringContextTests.HasCachedContext(Object contextKey) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.AllInstances.LoadContextLocationsStringArray">
+            <summary>设置 AbstractSpringContextTests.LoadContextLocations(String[] locations) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.AllInstances.LoadContextObject">
+            <summary>设置 AbstractSpringContextTests.LoadContext(Object key) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.AllInstances.RegisterContextWithContextRegistryGet">
+            <summary>设置 AbstractSpringContextTests.get_RegisterContextWithContextRegistry() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.AllInstances.RegisterContextWithContextRegistrySetBoolean">
+            <summary>设置 AbstractSpringContextTests.set_RegisterContextWithContextRegistry(Boolean value) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.AllInstances.SetDirtyObject">
+            <summary>设置 AbstractSpringContextTests.SetDirty(Object contextKey) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractSpringContextTests.AllInstances.SetDirtyStringArray">
+            <summary>设置 AbstractSpringContextTests.SetDirty(String[] locations) 的 填充码</summary>
+        </member>
+        <member name="T:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalDbProviderSpringContextTests">
+            <summary>Spring.Testing.NUnit.AbstractTransactionalDbProviderSpringContextTests 的填充码类型</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalDbProviderSpringContextTests.#ctor(Spring.Testing.NUnit.AbstractTransactionalDbProviderSpringContextTests)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalDbProviderSpringContextTests.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalDbProviderSpringContextTests.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalDbProviderSpringContextTests.AdoTemplateGet">
+            <summary>设置 AbstractTransactionalDbProviderSpringContextTests.get_AdoTemplate() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalDbProviderSpringContextTests.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalDbProviderSpringContextTests.Constructor">
+            <summary>设置 AbstractTransactionalDbProviderSpringContextTests.AbstractTransactionalDbProviderSpringContextTests() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalDbProviderSpringContextTests.CountRowsInTableString">
+            <summary>设置 AbstractTransactionalDbProviderSpringContextTests.CountRowsInTable(String tableName) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalDbProviderSpringContextTests.DbProviderSetIDbProvider">
+            <summary>设置 AbstractTransactionalDbProviderSpringContextTests.set_DbProvider(IDbProvider value) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalDbProviderSpringContextTests.DeleteFromTablesStringArray">
+            <summary>设置 AbstractTransactionalDbProviderSpringContextTests.DeleteFromTables(String[] names) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalDbProviderSpringContextTests.ExecuteSqlScriptStringBoolean">
+            <summary>设置 AbstractTransactionalDbProviderSpringContextTests.ExecuteSqlScript(String scriptResourcePath, Boolean continueOnError) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalDbProviderSpringContextTests.SetComplete">
+            <summary>设置 AbstractTransactionalDbProviderSpringContextTests.SetComplete() 的 填充码</summary>
+        </member>
+        <member name="T:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalDbProviderSpringContextTests.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalDbProviderSpringContextTests.AllInstances.AdoTemplateGet">
+            <summary>设置 AbstractTransactionalDbProviderSpringContextTests.get_AdoTemplate() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalDbProviderSpringContextTests.AllInstances.CountRowsInTableString">
+            <summary>设置 AbstractTransactionalDbProviderSpringContextTests.CountRowsInTable(String tableName) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalDbProviderSpringContextTests.AllInstances.DbProviderSetIDbProvider">
+            <summary>设置 AbstractTransactionalDbProviderSpringContextTests.set_DbProvider(IDbProvider value) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalDbProviderSpringContextTests.AllInstances.DeleteFromTablesStringArray">
+            <summary>设置 AbstractTransactionalDbProviderSpringContextTests.DeleteFromTables(String[] names) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalDbProviderSpringContextTests.AllInstances.ExecuteSqlScriptStringBoolean">
+            <summary>设置 AbstractTransactionalDbProviderSpringContextTests.ExecuteSqlScript(String scriptResourcePath, Boolean continueOnError) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalDbProviderSpringContextTests.AllInstances.SetComplete">
+            <summary>设置 AbstractTransactionalDbProviderSpringContextTests.SetComplete() 的 填充码</summary>
+        </member>
+        <member name="T:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests">
+            <summary>Spring.Testing.NUnit.AbstractTransactionalSpringContextTests 的填充码类型</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.#ctor(Spring.Testing.NUnit.AbstractTransactionalSpringContextTests)">
+            <summary>初始化给定实例的新填充码</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.BehaveAsCurrent">
+            <summary>为已填充的类型的所有方法分配“Current”行为</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.BehaveAsNotImplemented">
+            <summary>为已填充的类型的所有方法分配“NotImplemented”行为</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.Behavior">
+            <summary>为已填充的类型的所有方法分配行为</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.Constructor">
+            <summary>设置 AbstractTransactionalSpringContextTests.AbstractTransactionalSpringContextTests() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.DefaultRollbackSetBoolean">
+            <summary>设置 AbstractTransactionalSpringContextTests.set_DefaultRollback(Boolean value) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.EndTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.EndTransaction() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.OnSetUp">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnSetUp() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.OnSetUpBeforeTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnSetUpBeforeTransaction() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.OnSetUpInTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnSetUpInTransaction() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.OnTearDown">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnTearDown() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.OnTearDownAfterTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnTearDownAfterTransaction() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.OnTearDownInTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnTearDownInTransaction() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.PreventTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.PreventTransaction() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.SetComplete">
+            <summary>设置 AbstractTransactionalSpringContextTests.SetComplete() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.StartNewTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.StartNewTransaction() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.TransactionDefinitionSetITransactionDefinition">
+            <summary>设置 AbstractTransactionalSpringContextTests.set_TransactionDefinition(ITransactionDefinition value) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.TransactionManagerSetIPlatformTransactionManager">
+            <summary>设置 AbstractTransactionalSpringContextTests.set_TransactionManager(IPlatformTransactionManager value) 的 填充码</summary>
+        </member>
+        <member name="T:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.AllInstances">
+            <summary>为所有实例成员定义填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.AllInstances.DefaultRollbackSetBoolean">
+            <summary>设置 AbstractTransactionalSpringContextTests.set_DefaultRollback(Boolean value) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.AllInstances.EndTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.EndTransaction() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.AllInstances.OnSetUp">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnSetUp() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.AllInstances.OnSetUpBeforeTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnSetUpBeforeTransaction() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.AllInstances.OnSetUpInTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnSetUpInTransaction() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.AllInstances.OnTearDown">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnTearDown() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.AllInstances.OnTearDownAfterTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnTearDownAfterTransaction() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.AllInstances.OnTearDownInTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnTearDownInTransaction() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.AllInstances.PreventTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.PreventTransaction() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.AllInstances.SetComplete">
+            <summary>设置 AbstractTransactionalSpringContextTests.SetComplete() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.AllInstances.StartNewTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.StartNewTransaction() 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.AllInstances.TransactionDefinitionSetITransactionDefinition">
+            <summary>设置 AbstractTransactionalSpringContextTests.set_TransactionDefinition(ITransactionDefinition value) 的 填充码</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.ShimAbstractTransactionalSpringContextTests.AllInstances.TransactionManagerSetIPlatformTransactionManager">
+            <summary>设置 AbstractTransactionalSpringContextTests.set_TransactionManager(IPlatformTransactionManager value) 的 填充码</summary>
+        </member>
+        <member name="T:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests">
+            <summary>Spring.Testing.NUnit.AbstractDependencyInjectionSpringContextTests 的存根类型</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.BeforeProtectedVariableInjection(System.Reflection.FieldInfo)">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.BeforeProtectedVariableInjection(FieldInfo fieldInfo) 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.BeforeProtectedVariableInjectionFieldInfo">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.BeforeProtectedVariableInjection(FieldInfo fieldInfo) 的 stub</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.ConfigLocationsGet">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_ConfigLocations() 的 stub</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.ContextKeyGet">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_ContextKey() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.ContextKeyString(System.Object)">
+            <summary>设置 AbstractSpringContextTests.ContextKeyString(Object contextKey) 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.ContextKeyStringObject">
+            <summary>设置 AbstractSpringContextTests.ContextKeyString(Object contextKey) 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.InitManagedVariableNames">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InitManagedVariableNames() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.InitManagedVariableNames01">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InitManagedVariableNames() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.InitializeStub">
+            <summary>初始化 type StubAbstractDependencyInjectionSpringContextTests 的新实例</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.InjectDependencies">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InjectDependencies() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.InjectDependencies01">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InjectDependencies() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.InjectProtectedVariables">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InjectProtectedVariables() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.InjectProtectedVariables01">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InjectProtectedVariables() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.LoadContext(System.Object)">
+            <summary>设置 AbstractSpringContextTests.LoadContext(Object key) 的 存根</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.LoadContextLocations(System.String[])">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.LoadContextLocations(String[] locations) 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.LoadContextLocationsStringArray">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.LoadContextLocations(String[] locations) 的 stub</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.LoadContextObject">
+            <summary>设置 AbstractSpringContextTests.LoadContext(Object key) 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.OnSetUp">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.OnSetUp() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.OnSetUp01">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.OnSetUp() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.OnTearDown">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.OnTearDown() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.OnTearDown01">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.OnTearDown() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.SetUp">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.SetUp() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.SetUp01">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.SetUp() 的 stub</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.ConfigLocations">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_ConfigLocations() 的 stub</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.ContextKey">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_ContextKey() 的 stub</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.StubAbstractDependencyInjectionSpringContextTests.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:Spring.Testing.NUnit.Fakes.StubAbstractSpringContextTests">
+            <summary>Spring.Testing.NUnit.AbstractSpringContextTests 的存根类型</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractSpringContextTests.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractSpringContextTests.ContextKeyString(System.Object)">
+            <summary>设置 AbstractSpringContextTests.ContextKeyString(Object contextKey) 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractSpringContextTests.ContextKeyStringObject">
+            <summary>设置 AbstractSpringContextTests.ContextKeyString(Object contextKey) 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractSpringContextTests.InitializeStub">
+            <summary>初始化 type StubAbstractSpringContextTests 的新实例</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractSpringContextTests.LoadContext(System.Object)">
+            <summary>设置 AbstractSpringContextTests.LoadContext(Object key) 的 存根</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractSpringContextTests.LoadContextLocations(System.String[])">
+            <summary>设置 AbstractSpringContextTests.LoadContextLocations(String[] locations) 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractSpringContextTests.LoadContextLocationsStringArray">
+            <summary>设置 AbstractSpringContextTests.LoadContextLocations(String[] locations) 的 stub</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractSpringContextTests.LoadContextObject">
+            <summary>设置 AbstractSpringContextTests.LoadContext(Object key) 的 stub</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.StubAbstractSpringContextTests.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.StubAbstractSpringContextTests.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.StubAbstractSpringContextTests.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests">
+            <summary>Spring.Testing.NUnit.AbstractTransactionalDbProviderSpringContextTests 的存根类型</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.BeforeProtectedVariableInjection(System.Reflection.FieldInfo)">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.BeforeProtectedVariableInjection(FieldInfo fieldInfo) 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.BeforeProtectedVariableInjectionFieldInfo">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.BeforeProtectedVariableInjection(FieldInfo fieldInfo) 的 stub</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.ConfigLocationsGet">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_ConfigLocations() 的 stub</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.ContextKeyGet">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_ContextKey() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.ContextKeyString(System.Object)">
+            <summary>设置 AbstractSpringContextTests.ContextKeyString(Object contextKey) 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.ContextKeyStringObject">
+            <summary>设置 AbstractSpringContextTests.ContextKeyString(Object contextKey) 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.EndTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.EndTransaction() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.EndTransaction01">
+            <summary>设置 AbstractTransactionalSpringContextTests.EndTransaction() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.InitManagedVariableNames">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InitManagedVariableNames() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.InitManagedVariableNames01">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InitManagedVariableNames() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.InitializeStub">
+            <summary>初始化 type StubAbstractTransactionalDbProviderSpringContextTests 的新实例</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.InjectDependencies">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InjectDependencies() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.InjectDependencies01">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InjectDependencies() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.InjectProtectedVariables">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InjectProtectedVariables() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.InjectProtectedVariables01">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InjectProtectedVariables() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.LoadContext(System.Object)">
+            <summary>设置 AbstractSpringContextTests.LoadContext(Object key) 的 存根</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.LoadContextLocations(System.String[])">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.LoadContextLocations(String[] locations) 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.LoadContextLocationsStringArray">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.LoadContextLocations(String[] locations) 的 stub</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.LoadContextObject">
+            <summary>设置 AbstractSpringContextTests.LoadContext(Object key) 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.OnSetUp">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnSetUp() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.OnSetUp01">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnSetUp() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.OnSetUpBeforeTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnSetUpBeforeTransaction() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.OnSetUpBeforeTransaction01">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnSetUpBeforeTransaction() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.OnSetUpInTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnSetUpInTransaction() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.OnSetUpInTransaction01">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnSetUpInTransaction() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.OnTearDown">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnTearDown() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.OnTearDown01">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnTearDown() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.OnTearDownAfterTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnTearDownAfterTransaction() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.OnTearDownAfterTransaction01">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnTearDownAfterTransaction() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.OnTearDownInTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnTearDownInTransaction() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.OnTearDownInTransaction01">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnTearDownInTransaction() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.PreventTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.PreventTransaction() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.PreventTransaction01">
+            <summary>设置 AbstractTransactionalSpringContextTests.PreventTransaction() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.SetComplete">
+            <summary>设置 AbstractTransactionalDbProviderSpringContextTests.SetComplete() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.SetComplete01">
+            <summary>设置 AbstractTransactionalDbProviderSpringContextTests.SetComplete() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.SetUp">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.SetUp() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.SetUp01">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.SetUp() 的 stub</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.ConfigLocations">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_ConfigLocations() 的 stub</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.ContextKey">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_ContextKey() 的 stub</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalDbProviderSpringContextTests.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+        <member name="T:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests">
+            <summary>Spring.Testing.NUnit.AbstractTransactionalSpringContextTests 的存根类型</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.#ctor">
+            <summary>初始化新实例</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.BeforeProtectedVariableInjection(System.Reflection.FieldInfo)">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.BeforeProtectedVariableInjection(FieldInfo fieldInfo) 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.BeforeProtectedVariableInjectionFieldInfo">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.BeforeProtectedVariableInjection(FieldInfo fieldInfo) 的 stub</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.ConfigLocationsGet">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_ConfigLocations() 的 stub</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.ContextKeyGet">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_ContextKey() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.ContextKeyString(System.Object)">
+            <summary>设置 AbstractSpringContextTests.ContextKeyString(Object contextKey) 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.ContextKeyStringObject">
+            <summary>设置 AbstractSpringContextTests.ContextKeyString(Object contextKey) 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.EndTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.EndTransaction() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.EndTransaction01">
+            <summary>设置 AbstractTransactionalSpringContextTests.EndTransaction() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.InitManagedVariableNames">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InitManagedVariableNames() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.InitManagedVariableNames01">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InitManagedVariableNames() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.InitializeStub">
+            <summary>初始化 type StubAbstractTransactionalSpringContextTests 的新实例</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.InjectDependencies">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InjectDependencies() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.InjectDependencies01">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InjectDependencies() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.InjectProtectedVariables">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InjectProtectedVariables() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.InjectProtectedVariables01">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.InjectProtectedVariables() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.LoadContext(System.Object)">
+            <summary>设置 AbstractSpringContextTests.LoadContext(Object key) 的 存根</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.LoadContextLocations(System.String[])">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.LoadContextLocations(String[] locations) 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.LoadContextLocationsStringArray">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.LoadContextLocations(String[] locations) 的 stub</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.LoadContextObject">
+            <summary>设置 AbstractSpringContextTests.LoadContext(Object key) 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.OnSetUp">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnSetUp() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.OnSetUp01">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnSetUp() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.OnSetUpBeforeTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnSetUpBeforeTransaction() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.OnSetUpBeforeTransaction01">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnSetUpBeforeTransaction() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.OnSetUpInTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnSetUpInTransaction() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.OnSetUpInTransaction01">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnSetUpInTransaction() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.OnTearDown">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnTearDown() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.OnTearDown01">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnTearDown() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.OnTearDownAfterTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnTearDownAfterTransaction() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.OnTearDownAfterTransaction01">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnTearDownAfterTransaction() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.OnTearDownInTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnTearDownInTransaction() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.OnTearDownInTransaction01">
+            <summary>设置 AbstractTransactionalSpringContextTests.OnTearDownInTransaction() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.PreventTransaction">
+            <summary>设置 AbstractTransactionalSpringContextTests.PreventTransaction() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.PreventTransaction01">
+            <summary>设置 AbstractTransactionalSpringContextTests.PreventTransaction() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.SetComplete">
+            <summary>设置 AbstractTransactionalSpringContextTests.SetComplete() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.SetComplete01">
+            <summary>设置 AbstractTransactionalSpringContextTests.SetComplete() 的 stub</summary>
+        </member>
+        <member name="M:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.SetUp">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.SetUp() 的 存根</summary>
+        </member>
+        <member name="F:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.SetUp01">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.SetUp() 的 stub</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.CallBase">
+            <summary>获取或设置一个值，该值指示是否应调用基方法而不调用回退行为</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.ConfigLocations">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_ConfigLocations() 的 stub</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.ContextKey">
+            <summary>设置 AbstractDependencyInjectionSpringContextTests.get_ContextKey() 的 stub</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.InstanceBehavior">
+            <summary>获取或设置实例行为。</summary>
+        </member>
+        <member name="P:Spring.Testing.NUnit.Fakes.StubAbstractTransactionalSpringContextTests.InstanceObserver">
+            <summary>获取或设置实例观察者。</summary>
+        </member>
+    </members>
+</doc>

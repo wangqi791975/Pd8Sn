@@ -1,0 +1,66 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Web.Models.Order
+@using Resources
+@model PageData<PackageDetailInfoItemVo>
+@{
+    ViewBag.Title = "Packing Slip";
+    Layout = "~/Views/Shared/Layout/_Layout_NoLeft.cshtml";
+}
+
+@section HtmlHead
+{
+    @Html.JsFor("PackingSlip.js", "~/Js/Order/PackingSlip.js", fileVersion: "1.3.8")
+}
+
+@Html.Partial("~/Views/Account/Partial/_Account_Siderbar_Menu.cshtml")
+	<div id="main" class="account_wrap">    	
+		<h2 class="font14 account_title">
+        	@Lang.TipPackingSlip
+            <div class="cart_add_order">
+			<table width="100%" cellspacing="0" cellpadding="0" border="0">
+				<tr>
+					<th scope="row">@Lang.TipQuickOrder</th>
+					<td><a class="btn_orange btn_w60" href="javascript:void(0)" onclick="$('#quickadd').modal('show');" >@Lang.TipAddNoPun</a></td>
+				</tr>
+			</table>
+			</div>
+        </h2>
+	    <div class="text_cont">
+	        @Html.Raw(string.Format(Lang.TipPackingSlipHtmlF,UrlRewriteHelper.GetMyAccountOrderSearchUrl(-1)))
+	    </div>
+          <form onsubmit="return false;" method="post" action="/Order/PackingSlip" name="SlipSearchForm" id="SlipSearchForm">
+          <table cellpadding="0" cellspacing="0" class="slip_search_cont">
+              <tr>
+                  <th>@Lang.TipOrderNoPun</th>
+                  <td><input class="inputw248 input_text_wrap" type="text" name="orderno" /></td>
+                  <th>@Lang.TipPartNo</th>
+                  <td><input class="inputw248 input_text_wrap" type="text" name="partno" /></td>
+              </tr>
+              <tr>
+                  <th>@Lang.TipTrackingNumPun</th>
+                  <td>
+                      <input class="inputw248 input_text_wrap" type="text" name="trackingnumber" />
+                  </td>
+                  <th>@Lang.TipPackingNumPun</th>
+                  <td><input class="inputw248 input_text_wrap" type="text" name="packingno"  /></td>
+              </tr>
+              <tr>
+                  <th></th>
+                  <td colspan="3"><a href="javascript:void(0)" class="btn_orange btn_p30" id="PackingSlipFilter">@Lang.TipSearch</a></td>
+              </tr>
+          </table>
+         </form>
+        <!-- 搜索无结果提示 -->
+        <div class="warning_wrap error">@Lang.TipNoRestInfo</div>
+        <!-- 搜索结果列表开始 -->
+	    <div class="slip_list_cont" id="divsliplist">
+             @Html.Partial("~/Views/Order/PackingSlipList.cshtml",@Model)
+	    </div>
+        <!-- 搜索结果列表结束 -->
+	</div>
+	<div class="clearfix"></div>
+
+@section HtmlFooter
+{
+    @Html.Partial("~/Views/Shared/Partial/_QuickAddToCart.cshtml")
+}

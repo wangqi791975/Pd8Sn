@@ -1,0 +1,472 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Customer
+@using Resources
+@using CommonHelper = Com.Panduo.Web.PaymentCommon.Common.CommonHelper
+
+<script type="text/javascript" src="~/Js/jquery.pstrength.js"></script>
+<script type="text/javascript" src="~/Js/jquery.validate.min.js"></script>
+@Html.CssFor("avatar.css", new[] { "~/Css/avatar.css" }, fileVersion: "3.3")
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        "use strict";
+        $(':password#regpassword').pStrength({
+            'onPasswordStrengthChanged': function (passwordStrength, strengthPercentage) {
+                $(".bar_wrap .pwd_bar").removeClass("pwd_bar_weak").removeClass("pwd_bar_medium").removeClass("pwd_bar_strong");
+                if (strengthPercentage < 30) {
+                    $(".bar_wrap p.lf").html(Message.TipWeek);
+                    $(".bar_wrap .pwd_bar").addClass("pwd_bar_weak");
+                } else if (strengthPercentage < 70) {
+                    $(".bar_wrap p.lf").html(Message.TipMedium);
+                    $(".bar_wrap .pwd_bar").addClass("pwd_bar_medium");
+                } else {
+                    $(".bar_wrap p.lf").html(Message.TipStrong);
+                    $(".bar_wrap .pwd_bar").addClass("pwd_bar_strong");
+                }
+            }
+        });
+
+        //  密码校验显示隐藏
+        $("#regpassword").keyup(function () {
+            if ($("#regpassword").val() == "")
+                $(".bar_wrap").css("display", "none");
+            else
+                $(".bar_wrap").css("display", "block");
+        });
+    });
+</script>
+
+@*错误弹窗*@
+<div id="pop_error_modal" class="popup_wrap popup_w400 modal fade">
+    <div class="close" data-dismiss="modal"><a href="javascript:void(0)"></a></div>
+    <div class="popup_tip_cont tip_text_center">
+        <ins class="tip"></ins>
+        <p class="tip_info error_tip"></p>
+        <div class="clearfix"></div>
+        <div class="action_cont">
+            <a class="btn_orange btn_p30" data-dismiss="modal" href="javascript:void(0)">@Lang.TipYes</a>
+        </div>
+    </div>
+</div>
+
+@* Confirm 弹窗 *@
+<div id="pop_confirm_modal" class="popup_wrap popup_w400 modal fade">
+    <div class="close" data-dismiss="modal"><a href="javascript:void(0)"></a></div>
+    <div class="popup_tip_cont text_center">
+        <p class="confirm_tip"></p>
+        <div class="action_cont">
+            <a class="btn_orange btn_p30 confirm_yes" href="javascript:void(0)">@Lang.TipYes</a><a class="btn_grey btn_p30" data-dismiss="modal" href="javascript:void(0)">@Lang.TipNo</a>
+        </div>
+    </div>
+</div>
+
+@* testimonial弹窗开始 *@
+<div id="testimonialdiv" class="popup_wrap popup_w500 modal fade">
+    <div class="close" data-dismiss="modal"><a href="#"></a></div>
+    <h2 class="font14">@Lang.TipSubTestimonial</h2>
+    <div class="popup_testimonial">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td class="photo">
+                    <img src="@Url.Content("~/Images/snap.jpg")" />
+                    <a class="btn_grey" href="#"><ins class="btn_edit"></ins><span>@Lang.TipEdit</span></a>
+                </td>
+                <td>
+                    <p>
+                        @Lang.TipTestimonialsHint
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th scope="row">@Lang.TipName</th>
+                <td id="tdname">@(SessionHelper.CurrentCustomer.IsNullOrEmpty() ? "" : SessionHelper.CurrentCustomer.FullName)</td>
+            </tr>
+            <tr>
+                <th scope="row">@Lang.TipEmail</th>
+                <td id="tdemail">@(SessionHelper.CurrentCustomer.IsNullOrEmpty() ? "" : SessionHelper.CurrentCustomer.Email)</td>
+            </tr>
+            <tr>
+                <th scope="row">@Lang.TipTestimonials</th>
+                <td>
+                    <textarea id="testimonials" class="textarea_wrap" name="" cols="" rows="" data-toggle="remain" data-target="#testimonials_remain" data-maxlen="1000"></textarea><br />
+                    <em>(<span id="testimonials_remain">1000</span> @Lang.TipCharRemaining)</em></td>
+            </tr>
+            <tr>
+                <th scope="row">&nbsp;</th>
+                <td><a id="testimonialsub" class="btn_orange btn_p30" href="javascript:void(0)">@Lang.TipSubmit</a>
+
+                </td>
+            </tr>
+        </table>
+        <div class="success_wrap">
+            <ins class="btn_success_cart_big"></ins>
+            <p>@Html.Raw(Lang.MsgTestimonialSuccess)</p>
+        </div>
+    </div>
+</div>
+@*testimonial弹窗结束*@
+@*登录弹窗开始*@
+<div id="logindiv" class="popup_wrap popup_w500 modal fade">
+    <div class="close" data-dismiss="modal"><a href="#"></a></div>
+    <h2 class="font14">Login</h2>
+    <div class="popup_login">
+        <form>
+            <table border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th>@Lang.TipEmail</th>
+                    <td>
+                        <input id="loginemail" class="input_text_wrap inputw310" type="text" /><div class="fred"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>@Lang.TipPassword</th>
+                    <td>
+                        <input id="loginpassword" class="input_text_wrap inputw310" type="password" /><div class="fred"></div>
+                    </td>
+                </tr>
+                <tr style="display: none;">
+                    <th>@Lang.TipVerificationCode</th>
+                    <td>
+                        <input id="validatecodelo" class="inputw130 input_text_wrap lf" />
+                        <a href="javascript:void(0)" class="lf">
+                            <img id="valiCodeLo" style="cursor: pointer;" alt="@Lang.TipVerificationCode" />
+                        </a><ins id="iconcheckLo" class="icon_code_error"></ins>
+                        <!-- 输入正确时，ins标签的class名称变为icon_code_ok -->
+                        <div class="clearfix"></div>
+                        <div class="fred"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><a class="fblue_mid" href="@UrlRewriteHelper.GetForgetPwdUrl()">@Lang.TipForgetPassword</a></td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><a id="logindivbtn" onclick="loginsubmit()" class="btn_orange btn_p30" href="javascript:void(0)">@Lang.TipLogin</a><a class="fblue_mid" href="javascript:void(0)" onclick="$('#logindiv').modal('hide');registercap();">@Lang.TipRegistergt</a></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+@*登录弹窗结束*@
+@*注册弹窗开始*@
+<div id="registerdiv" class="popup_wrap popup_w500">
+    <div class="close" data-dismiss="modal"><a href="#"></a></div>
+    <h2 class="font20">@Lang.TipRegister</h2>
+    <div class="popup_register">
+        @Html.Raw(Lang.TipCapJoinCoupon)
+        <form>
+            <input id="regname" type="hidden" value="Customer" />
+            <table border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <th><i class="fred">*</i><em>@Lang.TipEmail</em></th>
+                    <td>
+                        <input id="regemail" class="input_text_wrap inputw270" type="text" /><div class="fred"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><i class="fred">*</i><em>@Lang.TipPassword</em></th>
+                    <td>
+                        <input id="regpassword" class="input_text_wrap inputw270" type="password" /><div class="fred"></div>
+                        <div class="bar_wrap">
+                            <div class="pwd_bar pwd_bar_weak lf"><span>&nbsp;</span></div>
+                            <p class="lf">@Lang.TipWeak</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><i class="fred">*</i><em>@Lang.TipConfPassword</em></th>
+                    <td>
+                        <input id="regcomfPassword" class="input_text_wrap inputw270" type="password" /><div class="fred"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><i class="fred">*</i><em>@Lang.TipDescribeYou</em></th>
+                    <td>
+                        <label>
+                            <input name="describes" type="radio" value="@CustomerType.Wholesaler" /><span>@Lang.TipWholesaler</span></label>
+                        <label>
+                            <input name="describes" type="radio" value="@CustomerType.Retailer" /><span>@Lang.TipRetailer</span></label>
+                        <label>
+                            <input name="describes" type="radio" value="@CustomerType.JewelryDiyFan" /><span>@Lang.TipDIYFan</span></label>
+                        <div class="fred"></div>
+                    </td>
+                </tr>
+                <tr style="display: none;">
+                    <th>@Lang.TipVerificationCode</th>
+                    <td>
+                        <input id="validatecodere" class="inputw130 input_text_wrap lf" />
+                        <a href="javascript:void(0)" class="lf">
+                            <img id="valiCodeRe" style="cursor: pointer;" alt="@Lang.TipVerificationCode" />
+                        </a><ins id="iconcheckre" class="icon_code_error"></ins>
+                        <!-- 输入正确时，ins标签的class名称变为icon_code_ok -->
+                        <div class="clearfix"></div>
+                        <div class="fred"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td class="popup_notice_checkbox">
+                        <label>
+                            <input id="newsletter" type="checkbox" checked="" /><span>@Lang.TipReceiveNewsletters</span></label>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><a id="registerdivbtn" onclick="registersubmit()" class="btn_orange btn_p30" href="javascript:void(0)">@Lang.TipJoinNow</a><a class="fblue_mid" href="javascript:void(0)" onclick="$('#registerdiv').modal('hide');logincap();">@Lang.TipLogin ></a></td>
+                </tr>
+            </table>
+        </form>
+        @Html.Raw(Lang.TipAgree8Seasons)
+    </div>
+</div>
+@*注册弹窗结束*@
+
+<!-- back order开始 -->
+<div class="popup_wrap popup_w400 modal fade" id="divBackorderAddToCart">
+    <div class="close" data-dismiss="modal"><a href="javascript:void(0)"></a></div>
+    <div class="popup_tip_cont">
+        <p>
+            @Html.Raw(Lang.TipRestockingCycle)<br />
+            @Lang.TipTemporarilySending
+        </p>
+        <div class="action_cont">
+            <p class="quantity">
+                @Lang.TipQuantity
+                <input type="text" class="input_text_wrap inputw108" id="input_qty" /><br />
+                <br />
+                <a class="btn_orange btn_p30 cart_btn_add" href="javascript:void(0)" data-pagesource="backorderaddtocart">@Lang.TipAddCart</a><a class="btn_grey btn_p30 close" href="javascript:void(0)" data-dismiss="modal">@Lang.TipCancel</a>
+            </p>
+        </div>
+    </div>
+</div>
+<!-- back order结束 -->
+<!-- Suggestion 弹窗开始 -->
+@{
+    var suggestionItems = ServiceFactory.SuggestionService.GetAllSuggestionItems(ServiceFactory.ConfigureService.SiteLanguageId);
+}
+<div class="popup_wrap popup_w650 avatar_success in" id="suggestionsuccess" aria-hidden="false" style="margin-top: -36px;">
+    <ins></ins>
+    <h4 class="font14 fgreen">@Lang.TipSuccessSubmitted</h4>
+</div>
+
+<div class="popup_wrap popup_w720" id="SuggestionDiv">
+    <div class="close" data-dismiss="modal"><a href="javascript:void(0)"></a></div>
+    <h2 class="font14">@Html.Raw(Lang.TipSuggestionMatters)</h2>
+    <div class="suggest_cont">
+        <p>@Lang.TipImproveExperience</p>
+        <form id="suggestionform" method="POST" action="/Suggestion/PostSuggestion" onsubmit="return false;">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td class="border">
+                        @foreach (var suggestionItem in suggestionItems)
+                        {
+                            <h3>@suggestionItem.Name</h3>
+                            if (suggestionItem.SuggestionObjects.Count > 0)
+                            {
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                @foreach (var suggestionObject in suggestionItem.SuggestionObjects)
+                                {
+                                    <tr>
+                                        <th scope="row">
+                                            <input type="hidden" value="@suggestionObject.Id" />@Html.Raw(((suggestionItem == suggestionItems.Last() &&suggestionObject == suggestionItem.SuggestionObjects.Last())?"<strong>" + suggestionObject.Name + ":</strong>":suggestionObject.Name + ":"))</th>
+                                        <td>
+                                            <input type="hidden" value="0" />
+                                            <ins class="star_grey star"></ins>
+                                            <ins class="star_grey star"></ins>
+                                            <ins class="star_grey star"></ins>
+                                            <ins class="star_grey star"></ins>
+                                            <ins class="star_grey star"></ins>
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                            }
+                        }
+                        <script>
+                            var attachments = "";//用于记录上传文件的路径集合
+                            function indexOf(arr, e) {
+                                for (var i = 0; i < arr.length; i++) {
+                                    if (arr[i] == e) {
+                                        return i + 1;
+                                    }
+                                }
+                            }
+
+                            $(function () {
+                                $("#suggestionsubtn").click(function () {
+                                    $('[name="email"]').nextAll(".fred").html("");
+                                    $('[name="content"]').nextAll(".fred").html("");
+                                    if ($.trim($('[name="email"]').val()) == "") {
+                                        $('[name="email"]').nextAll(".fred").html(Message.ErrorEmailEmpty);
+                                        return false;
+                                    }
+                                    if (!DataType.isEmail($.trim($('[name="email"]').val()))) {
+                                        $('[name="email"]').nextAll(".fred").html(Message.ErrorEmailFormat);
+                                        return false;
+                                    }
+                                    if ($.trim($('[name="email"]').val()) == "") {
+                                        $('[name="content"]').nextAll(".fred").html(Message.ErrorSuggestionEmpty);
+                                        return false;
+                                    }
+                                    if ($("#uploadifysug-queue").children().length == 0) {
+                                        submitsuggestion();
+                                    } else {
+                                        $('#uploadifysug').uploadify('upload', '*');
+                                    }
+                                });
+
+                                $(".star").hover(function () {
+                                    var stars = $(this).parent().children().filter(".star");
+                                    var index = indexOf(stars, this);
+                                    stars.each(function () {
+                                        var itemindex = indexOf(stars, this);
+                                        if (index >= itemindex) {
+                                            $(this).attr("class", "star_orange star");
+                                        }
+                                        else {
+                                            $(this).attr("class", "star_grey star");
+                                        }
+                                    });
+                                });
+
+                                $(".star").mouseleave(function () {
+                                    var localindex = $(this).parent().find(":hidden").val();
+                                    var stars = $(this).parent().children().filter(".star");
+                                    stars.each(function () {
+                                        var itemindex = indexOf(stars, this);
+                                        if (itemindex > localindex) {
+                                            $(this).attr("class", "star_grey star");
+                                        }
+                                        else {
+                                            $(this).attr("class", "star_orange star");
+                                        }
+                                    });
+                                });
+
+                                $(".star").click(function () {
+                                    var stars = $(this).parent().children().filter(".star");
+                                    $(this).parent().find(":hidden").val(indexOf(stars, this));
+                                });
+
+
+                                $('#uploadifysug').uploadify({
+                                    'uploader': '/Suggestion/UploadAttachment',           // 服务器端处理地址
+                                    'swf': '/Js/uploadify/uploadify.swf',    // 上传使用的 Flash
+                                    'buttonCursor': 'hand',               // 按钮的鼠标图标
+                                    'fileObjName': 'Filedata',            // 上传参数名称
+                                    'fileTypeExts': "*.txt;*.xls;*.xlsx;*.doc;*.docx;*.png;*.jpg;*.gif;",   // 扩展名
+                                    'fileTypeDesc': Message.MsgSuggestionUploadFile,     // 文件说明
+                                    'removeCompleted': false,
+                                    'auto': false,                // 选择之后，自动开始上传
+                                    'multi': true,
+                                    'width': 275,
+                                    'buttonText': Message.TipAdd,
+                                    'sizeLimit': 2097152,//2MB
+                                    'queueSizeLimit': 5,          // 允许多文件上传的时候，同时上传文件的个数
+                                    'uploadLimit': 5,
+                                    'onUploadSuccess': function (fileObj, response, event) {
+                                        if (response != "") {
+                                            attachments = attachments + response + "|";
+                                        }
+                                    },
+                                    'onQueueComplete': submitsuggestion
+                                });
+                            });
+                            function submitsuggestion() {
+                                var objects = "";
+                                $(".border").find("table tr").each(function () {
+                                    var objectid = $(this).find("th :hidden").val();
+                                    var number = $(this).find("td :hidden").val();
+                                    var object = objectid + "," + number;
+                                    objects = objects + object + ";";
+                                });
+                                if (objects.length > 0)
+                                    objects = objects.substr(0, objects.length - 1);
+                                if (attachments != "") {
+                                    attachments = attachments.substring(0, attachments.length - 1);
+                                }
+
+                                $("#suggestionform").ajaxSubmit({
+                                    data: { objects: objects, attachments: attachments },
+                                    dataType: "json",
+                                    success: function (response) {
+                                        if (response.emailerror) {
+                                            $('[name="email"]').nextAll(".fred").html(response.emailmsg);
+                                        } else if (response.suggerror) {
+                                            $('[name="content"]').nextAll(".fred").html(response.suggmsg);
+                                        } else {
+                                            $("#SuggestionDiv").modal("hide");
+                                            $("#suggestionsuccess").modal("show");
+                                            $("#suggestionform")[0].reset();
+                                            setTimeout(function () { $("#suggestionsuccess").modal("hide"); }, 3000);
+                                        }
+                                        attachments = ""; //提交成功后清空上传路径集合
+                                    }
+                                });
+                            }
+                        </script>
+                    </td>
+                    <td>
+                        @{
+                            var customer = SessionHelper.CurrentCustomer;
+                            string fullName = "";
+                            string email = "";
+                            if (!CommonHelper.IsNullOrEmpty(customer))
+                            {
+                                fullName = customer.FullName;
+                                email = customer.Email;
+                            }
+                        }
+                        <table border="0" cellspacing="0" cellpadding="0" class="suggest_form">
+                            <tr>
+                                <th scope="row">@Lang.TipName</th>
+                                <td>
+                                    <input class="input_text_wrap inputw270" name="fullname" type="text" value="@fullName" /></td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><span class="fred">*</span> @Lang.TipEmailAddress</th>
+                                <td>
+                                    <input class="input_text_wrap inputw270" name="email" type="text" value="@email" />
+                                    <div class="fred"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" scope="row"><span class="fred">*</span> @Lang.TipSuggestionsWishes
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" scope="row">
+                                    <textarea class="textarea_wrap" name="content" cols="" rows="" data-toggle="remain" data-target="#suggestion_remain" data-maxlen="1000"></textarea><br />
+                                    <em>(<span id="suggestion_remain">1000</span> @Lang.TipCharRemain)</em>
+                                    <div class="fred"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">@Lang.TipAttachment</th>
+                                <td>
+                                    <input type="file" class="uploadify uploadify_w295" id="uploadifysug" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" scope="row"><span class="forange_mid">@Lang.TipNoteAccept</span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">&nbsp;</th>
+                                <td align="right">
+                                    <label class="btn_border">
+                                        <input type="submit" id="suggestionsubtn" value="Submit" class="btn_orange btn_p30_input" /></label></td>
+                            </tr>
+                        </table>
+                        <i class="arrow"></i>
+                        <p>@Lang.TipHighlyAppreciated</p>
+                        <div class="clearfix"></div>
+                        <i class="arrow"></i>
+                        <p>@Lang.TipOnceSuggestion</p>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<!-- Suggestion 弹窗结束 -->

@@ -1,0 +1,37 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Web.Models.Review
+@model PageData<ReviewProductsProductInfoVo>
+@{
+    Layout = null;
+}
+<ul>
+    @foreach(var data in Model.Data)
+    {
+        <li>
+            <div class="pro_img lf"><a href="@UrlRewriteHelper.GetProductDetailUrl(data.ProductInfo.Product.ProductId, data.ProductInfo.ProductEnName)" target="_blank"><img src="@ImageHelper.GetImageUrl(data.ProductInfo.Product.MainImage,80)" /></a><br /><a class="fblue_mid" href="#">@data.ProductInfo.Product.ProductCode</a></div>
+            <div class="reviews_text lf">
+                <p>
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        if (i <= data.ProductReviewInfo.Rating)
+                        {
+                            <ins class="star_orange"></ins>
+                        }
+                        else
+                        {
+                            <ins class="star_grey_min"></ins>
+                        }
+                    }
+                </p>
+                <p>@data.ProductReviewInfo.ReviewContent</p>
+            </div>
+        </li>
+    }
+</ul>
+
+@*底部翻页开始*@
+<div class="ajax-pagination" data-target="#products_list" data-mode="replace">
+    @Html.Partial("~/Views/Shared/Partial/_Ajax_Pager.cshtml", @Model.Pager)
+</div>
+<div class="clearfix"></div>
+@*底部翻页结束*@

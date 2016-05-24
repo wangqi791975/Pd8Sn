@@ -1,0 +1,80 @@
+﻿@using Com.Panduo.Service.Product
+@using Resources
+@model ProductInfo
+@{
+    var discount = PageHelper.GetDiscount(Model.ProductPrice);
+}
+<li>
+    <div class="img_noborder">
+        <a href="@UrlRewriteHelper.GetProductDetailUrl(Model.Product.ProductId, Model.ProductEnName)">
+            @Html.Partial("~/Views/Product/Partial/__Promotion__Icon.cshtml", @Model)
+            <img src="@ImageHelper.GetImageUrl(Model.Product.MainImage, 130)" />
+        </a>
+    </div>
+    <div class="recommend_popup">
+        <div class="pro_popup_detail">
+            @* 飘窗右定位 pro_popup_detail *@
+            <h5>@(Model.ProductName) (@Model.Product.ProductCode)</h5>
+            @Html.Partial("~/Views/Product/Partial/_Price_Small.cshtml", @Model)
+            <p><span class="pro_popup_weight">@Lang.TipGrossWeightUp @(Model.Product.Weight)g</span>@if (SessionHelper.CurrentCustomer.IsNullOrEmpty())
+                                                                                           {<span class="pro_popup_logintip">@Lang.TipLoginViewVIPrice</span>}</p>
+        </div>
+    </div>
+    <div class="recommend_info">
+        <p class="recommend_pro_name"><a href="@UrlRewriteHelper.GetProductDetailUrl(Model.Product.ProductId, Model.ProductEnName)">@Model.ProductName.ToCutString(31, " ...")</a></p>
+        <div class="recommend_pro_price">
+            <p>@Lang.TipAsLowAs</p>
+            <p>@if(discount > 0 && discount < 1) {
+                   <del class="fgrey">@PageHelper.GetCurrentCurrency().Format(PageHelper.ExchangeMoneyByUsd(Model.ProductPrice.StepPrice[Model.ProductPrice.StepPrice.Count-1].OriginalPrice))</del><br />
+               }
+                <span class="fred">@PageHelper.GetProductAsLowAsPrice(Model.ProductPrice)</span>
+            </p>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div>
+
+        @if (Model.Product.Status == ProductStatus.OffLine)
+        {
+            <a rel="nofollow" class="lf btn_removed btn_w80">@Lang.TipRemoved</a>
+            <div class="clearfix"></div>
+        }
+
+        else
+        {
+            int days = Model.ProductStock.GetProductStockDay();
+            if (Model.Product.Status == ProductStatus.BackOrder)
+             {
+                 <a rel="nofollow" class="lf btn_orange btn_w80" href="javascript:void(0)" data-productid="@Model.Product.ProductId" data-restocktime="@days" onclick="fnBackorderAddToCart(this)">@Lang.TipBackorder</a>
+             }
+             else
+             {
+                 <label>
+                     <input class="lf inputw29 input_text_wrap" type="text" value="1" name="input_qty_@Model.Product.ProductId"/></label>
+                 <a rel="nofollow" class="lf btn_orange btn_w38 cart_btn_add" data-productid="@Model.Product.ProductId" data-pagesource="productrecommenditem" href="javascript:void(0)"><ins class="btn_cart"></ins></a>
+             }
+            <a rel="nofollow" class="rt btn_grey btn_w30 wishlist_btn_add" data-productid="@Model.Product.ProductId" data-pagesource="productrecommenditem" href="javascript:void(0)"><ins class="btn_wishlist"></ins></a>
+            <div class="clearfix"></div>
+            if (Model.ProductStock.JudgeStocklimit() && Model.ProductStock.StockNumber > 0)
+            {
+                <p>@Model.ProductStock.StockNumber @Lang.TipStockAvailable</p>
+            }
+            else if (Model.Product.Status == ProductStatus.BackOrder)
+            {
+
+                if (days > 0)
+                {
+                    @Html.Raw("<p class=\"fgrey_mid\">" + @days + " days </p>")
+                }
+                else
+                {
+                    @Html.Raw("<p class=\"fgrey_mid\">in 15 days </p>")
+                }
+            }
+            else
+            {
+                @Html.Raw("<p class=\"fgrey_mid\">&nbsp;</p>")
+            }
+        }
+    </div>
+</li>

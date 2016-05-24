@@ -1,0 +1,563 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7F6ADBE8-AD68-4497-997B-C5F57CB90274}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Com.Panduo.Web</RootNamespace>
+    <AssemblyName>WebAdmin</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\Tool\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\..\RefDLL\NPOI\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML">
+      <HintPath>..\..\RefDLL\NPOI\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net">
+      <HintPath>..\..\RefDLL\NPOI\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats">
+      <HintPath>..\..\RefDLL\NPOI\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
+    <Reference Include="Panduo.Com.Email.SaveXml, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\Panduo\Panduo.Com.Email.SaveXml.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Aop, Version=2.0.0.40000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\SpringNet\Spring.Aop.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core, Version=2.0.0.40000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\SpringNet\Spring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Web, Version=2.0.0.40000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\SpringNet\Spring.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Web.Extensions, Version=2.0.0.40000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\SpringNet\Spring.Web.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Web.Mvc4, Version=2.0.0.40000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\SpringNet\Spring.Web.Mvc4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\MVC4\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Mvc.FixedDisplayModes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.0\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20715.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\CacheHelper.cs" />
+    <Compile Include="Common\ConfigHelper.cs" />
+    <Compile Include="Common\ControllerHelper.cs" />
+    <Compile Include="Common\CookieHelper.cs" />
+    <Compile Include="Common\DisplayHelper.cs" />
+    <Compile Include="Common\ExcelHelper.cs" />
+    <Compile Include="Common\Filters\ExceptionFilter.cs" />
+    <Compile Include="Common\Filters\LoginFilter.cs" />
+    <Compile Include="Common\Filters\UrlFilter.cs" />
+    <Compile Include="Common\ImageHelper.cs" />
+    <Compile Include="Common\Config\LoginFilterConfig.cs" />
+    <Compile Include="Common\PageHelper.cs" />
+    <Compile Include="Common\SessionHelper.cs" />
+    <Compile Include="Common\SiteConst.cs" />
+    <Compile Include="Common\ToolHelper.cs" />
+    <Compile Include="Common\UrlFuncitonHelper.cs" />
+    <Compile Include="Common\UrlRewriteHelper.cs" />
+    <Compile Include="Controllers\AdminUserController.cs" />
+    <Compile Include="Controllers\BannerController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CacheController.cs" />
+    <Compile Include="Controllers\ClubProductController.cs" />
+    <Compile Include="Controllers\CountryHighRiskController.cs" />
+    <Compile Include="Controllers\CustomerHighRiskController.cs" />
+    <Compile Include="Controllers\HelpCenterController.cs" />
+    <Compile Include="Controllers\IpWhiteBlackController.cs" />
+    <Compile Include="Controllers\CashSectionController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\ChannelController.cs" />
+    <Compile Include="Controllers\ClubController.cs" />
+    <Compile Include="Controllers\CouponController.cs" />
+    <Compile Include="Controllers\CashController.cs" />
+    <Compile Include="Controllers\GlobalCollectDisabledCountryController.cs" />
+    <Compile Include="Controllers\MailLogoController.cs" />
+    <Compile Include="Controllers\ProductPriceRiseController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\DailydealController.cs" />
+    <Compile Include="Controllers\HomeAreaController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MarketingController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\CurrencyController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\PromotionController.cs" />
+    <Compile Include="Controllers\PropertyController.cs" />
+    <Compile Include="Controllers\PropertyValueController.cs" />
+    <Compile Include="Controllers\RemoteController.cs" />
+    <Compile Include="Controllers\ReviewController.cs" />
+    <Compile Include="Controllers\ShoppingCartController.cs" />
+    <Compile Include="Controllers\ShippingMethodController.cs" />
+    <Compile Include="Controllers\SomeArticleController.cs" />
+    <Compile Include="Controllers\TopKeywordController.cs" />
+    <Compile Include="Controllers\MetaController.cs" />
+    <Compile Include="Controllers\ProductAreaController.cs" />
+    <Compile Include="Controllers\WishListController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Article\SomeArticleVo.cs" />
+    <Compile Include="Models\BaseViewModel.cs" />
+    <Compile Include="Common\MyTreeViewItem.cs" />
+    <Compile Include="Models\Dailydeal\DailydealModel.cs" />
+    <Compile Include="Models\Home\HomeAreaVo.cs" />
+    <Compile Include="Models\Order\OrderDetailItemVo.cs" />
+    <Compile Include="Models\Order\OrderDetailVo.cs" />
+    <Compile Include="Models\Order\OrderInvoiceVo.cs" />
+    <Compile Include="Models\Order\OrderSearchVo.cs" />
+    <Compile Include="Models\SEO\TopKeyword\TopKeywordVo.cs" />
+    <Compile Include="Models\SEO\TopKeyword\TopKeywordSubjectVo.cs" />
+    <Compile Include="Models\ShoppingCart\MailVo.cs" />
+    <Compile Include="Models\WishList\CustomerWishListVo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Common\UrlParameterKey.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Config\Login.xml" />
+    <Content Include="Config\PhotosRule.xml" />
+    <Content Include="Css\bootstrap-formhelpers.min.css" />
+    <Content Include="Css\bootstrap-responsive.min.css" />
+    <Content Include="Css\bootstrap.min.css" />
+    <Content Include="Css\invoice.css" />
+    <Content Include="Css\main.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Images\favicon.ico" />
+    <Content Include="Images\glyphicons-halflings-white.png" />
+    <Content Include="Images\glyphicons-halflings.png" />
+    <Content Include="Images\grid-18px-masked.png" />
+    <Content Include="Images\invoice_logo.gif" />
+    <Content Include="Images\min-banner.jpg" />
+    <Content Include="Js\Base\common.js" />
+    <Content Include="Js\Base\main.js" />
+    <Content Include="Js\Base\message.js" />
+    <Content Include="Js\bootstrap-2.3.2.min.js" />
+    <Content Include="Js\bootstrap-formhelpers.js" />
+    <Content Include="Js\bootstrap.min.js" />
+    <Content Include="Js\Customer\AdminUser.js" />
+    <Content Include="Js\Customer\Customer.js" />
+    <Content Include="Js\jquery-1.8.3.min.js" />
+    <Content Include="Js\jquery.form.js" />
+    <Content Include="Js\jquery.form.min.js" />
+    <Content Include="Js\jquery.unobtrusive-ajax.js" />
+    <Content Include="Js\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="ImportModelFiles\DailyDeal\dailydeals_importmodel.xls" />
+    <Content Include="ImportModelFiles\Promotion\discount-area-products.xls" />
+    <Content Include="ImportModelFiles\ClubProduct\club-products.xls" />
+    <Content Include="ImportModelFiles\ProductArea\subject_area_products.xls" />
+    <Content Include="ImportModelFiles\Bestmatch\Best-match.xls" />
+    <Content Include="Config\EmailSaveXml.config" />
+    <Content Include="App_Data\8seasonsclub.xls" />
+    <Content Include="ImportModelFiles\Product\upload-products.xls" />
+    <None Include="Js\jquery.validate-vsdoc.js" />
+    <Content Include="Js\jquery.validate.js" />
+    <Content Include="Js\jquery.validate.min.js" />
+    <Content Include="Js\jquery.validate.unobtrusive.js" />
+    <Content Include="Js\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Js\json2.js" />
+    <Content Include="Js\knockout-2.2.0.js" />
+    <Content Include="Js\Marketing\Marketing.js" />
+    <Content Include="Js\modernizr-2.6.2.js" />
+    <Content Include="Js\_references.js" />
+    <Content Include="Upload\CagegoryAd\Shop_By_Subject.jpg" />
+    <Content Include="Upload\Category\Shop_By_Subject.jpg" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Shared\Error\PageNotFound.cshtml" />
+    <Content Include="Views\Shared\Error\SystemError.cshtml" />
+    <Content Include="Views\Shared\Layout\_Layout.cshtml" />
+    <Content Include="Views\Shared\Partial\_Footer.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Partial\_Header.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\Shared\Partial\_BreadCrumb.cshtml" />
+    <Content Include="Views\Category\GetInfo.cshtml" />
+    <Content Include="Views\Category\GetList.cshtml" />
+    <Content Include="Views\SEO\TopKeyword\TopKeywordList.cshtml" />
+    <Content Include="Views\SEO\TopKeyword\TopKeywordSubjectList.cshtml" />
+    <Content Include="Views\SEO\TopKeyword\TopKeyword.cshtml" />
+    <Content Include="Views\SEO\TopKeyword\TopKeywordSubject.cshtml" />
+    <Content Include="Views\SEO\TopKeyword\TopKeywordInfo.cshtml" />
+    <Content Include="Views\SEO\TopKeyword\TopKeywordSubjectInfo.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
+    <Content Include="Views\Review\Testimonials.cshtml" />
+    <Content Include="Views\Review\TestimonialsList.cshtml" />
+    <Content Include="Views\Review\TestimonialsEdit.cshtml" />
+    <Content Include="Views\Review\ProductReview.cshtml" />
+    <Content Include="Views\Review\ProductReviewList.cshtml" />
+    <Content Include="Views\Review\ProductReviewEdit.cshtml" />
+    <Content Include="Views\Category\PopularSearch.cshtml" />
+    <Content Include="Views\Property\Index.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Property\GetInfo.cshtml" />
+    <Content Include="Views\Property\GetList.cshtml" />
+    <Content Include="Views\Product\GetInfo.cshtml" />
+    <Content Include="Views\Product\GetList.cshtml" />
+    <Content Include="Views\Category\NodeItem.cshtml" />
+    <Content Include="Views\Category\GetPopularSearch.cshtml" />
+    <Content Include="Views\Shared\Partial\_Page_Bottom.cshtml" />
+    <Content Include="Views\Product\Detail.cshtml" />
+    <Content Include="Views\Product\Edit.cshtml" />
+    <Content Include="Views\Marketing\PageNotFoundAd.cshtml" />
+    <Content Include="Views\PropertyValue\GetInfo.cshtml" />
+    <Content Include="Views\PropertyValue\GetList.cshtml" />
+    <Content Include="Views\PropertyValue\Index.cshtml" />
+    <Content Include="_AppStart.cshtml" />
+    <None Include="Properties\PublishProfiles\8seasons_admin.pubxml" />
+    <Content Include="Views\Marketing\Shipping.cshtml" />
+    <Content Include="Views\Marketing\ShippingEdit.cshtml" />
+    <Content Include="Views\Marketing\ShippingList.cshtml" />
+    <Content Include="Views\Marketing\Partial\MarketingInfo.cshtml" />
+    <Content Include="Views\Marketing\Partial\MarketingCondition.cshtml" />
+    <Content Include="Views\Customer\ModifyEmail.cshtml" />
+    <Content Include="Views\Channel\AddChannel.cshtml" />
+    <Content Include="Views\Channel\ChannelList.cshtml" />
+    <Content Include="Views\Channel\Search.cshtml" />
+    <Content Include="Views\Coupon\Partial\CouponBaseInfo.cshtml" />
+    <Content Include="Views\Coupon\Partial\CouponCondition.cshtml" />
+    <Content Include="Views\Coupon\CouponDetail.cshtml" />
+    <Content Include="Views\Coupon\CouponEdit.cshtml" />
+    <Content Include="Views\Coupon\CouponSet.cshtml" />
+    <Content Include="Views\Coupon\CouponSetList.cshtml" />
+    <Content Include="Views\Marketing\Coupon\CouponMarketing.cshtml" />
+    <Content Include="Views\Marketing\Coupon\CouponMarketingList.cshtml" />
+    <Content Include="Views\Marketing\Coupon\CouponMarketingEdit.cshtml" />
+    <Content Include="Views\Marketing\Partial\CouponMarketingBaseInfo.cshtml" />
+    <Content Include="Upload\ImportCustomer\importdemo.xlsx" />
+    <Content Include="Views\Marketing\Coupon\CouponMarketingDetail.cshtml" />
+    <Content Include="Views\Coupon\CouponCustomerList.cshtml" />
+    <Content Include="Views\Coupon\CouponCustomer.cshtml" />
+    <Content Include="Views\Coupon\CouponCustomerEClose.cshtml" />
+    <Content Include="Views\Coupon\Partial\CouponViewInfo.cshtml" />
+    <Content Include="Views\Coupon\CouponCustomerEUse.cshtml" />
+    <Content Include="Views\Club\ClubCustomer.cshtml" />
+    <Content Include="Views\Club\ClubCustomerList.cshtml" />
+    <Content Include="Views\Club\ClubCustomerDetail.cshtml" />
+    <Content Include="Views\Club\Manager.cshtml" />
+    <Content Include="Views\Club\ManagerList.cshtml" />
+    <Content Include="Views\Club\ManagerEdit.cshtml" />
+    <Content Include="Views\Club\ClubBlackList.cshtml" />
+    <Content Include="Views\Cache\CacheManager.cshtml" />
+    <Content Include="Views\Banner\Index.cshtml" />
+    <Content Include="Views\Club\ClubCustomerEdit.cshtml" />
+    <Content Include="Views\AdminUser\Login.cshtml" />
+    <Content Include="Views\AdminUser\ModifyPassword.cshtml" />
+    <Content Include="Views\AdminUser\AdminSetting.cshtml" />
+    <Content Include="Views\AdminUser\AdminUserEdit.cshtml" />
+    <Content Include="Views\AdminUser\AdminUserAuth.cshtml" />
+    <Content Include="Views\Cash\Index.cshtml" />
+    <Content Include="Views\Cash\GetList.cshtml" />
+    <Content Include="Views\Cash\GetInfo.cshtml" />
+    <Content Include="Views\Banner\CountdownIndex.cshtml" />
+    <Content Include="Views\CashSection\Index.cshtml" />
+    <Content Include="Views\ClubProduct\ClubProduct.cshtml" />
+    <Content Include="Views\ClubProduct\ClubProductList.cshtml" />
+    <Content Include="Views\CountryHighRisk\Index.cshtml" />
+    <None Include="Views\Coupon\CouponCustomerEStart.cshtml" />
+    <Content Include="Views\Marketing\OrderDiscount\OrderDiscount.cshtml" />
+    <Content Include="Views\Marketing\OrderDiscount\OrderDiscountEdit.cshtml" />
+    <Content Include="Views\Marketing\OrderDiscount\OrderDiscountList.cshtml" />
+    <Content Include="Views\Customer\Avatar.cshtml" />
+    <Content Include="Views\Customer\AvatarList.cshtml" />
+    <Content Include="Views\Promotion\Promotion.cshtml" />
+    <Content Include="Views\Dailydeal\Dailydeal.cshtml" />
+    <Content Include="Views\Promotion\PromotionAreaList.cshtml" />
+    <Content Include="Views\Promotion\PromotionAreaEdit.cshtml" />
+    <Content Include="Views\Dailydeal\DailydealProductList.cshtml" />
+    <Content Include="Views\Dailydeal\DailydealEdit.cshtml" />
+    <Content Include="Views\Marketing\PlaceOrder\PlaceOrder.cshtml" />
+    <Content Include="Views\Marketing\PlaceOrder\PlaceOrderEdit.cshtml" />
+    <Content Include="Views\Marketing\PlaceOrder\PlaceOrderList.cshtml" />
+    <Content Include="Views\SEO\Meta\Index.cshtml" />
+    <Content Include="Views\SEO\Meta\MetaHome.cshtml" />
+    <Content Include="Views\SEO\Meta\MetaProductDetail.cshtml" />
+    <Content Include="Views\SEO\Meta\MetaList.cshtml" />
+    <Content Include="Views\SEO\Meta\MetaListInfo.cshtml" />
+    <Content Include="Views\SEO\Meta\MetaAreaInfo.cshtml" />
+    <Content Include="Views\SEO\Meta\MetaArea.cshtml" />
+    <Content Include="Views\ProductArea\ProductArea.cshtml" />
+    <Content Include="Views\ProductArea\ProductAreaEdit.cshtml" />
+    <Content Include="Views\ProductArea\ProductAreaList.cshtml" />
+    <Content Include="Views\Product\BestMatchItems.cshtml" />
+    <Content Include="Views\WishList\Search.cshtml" />
+    <Content Include="Views\WishList\GetList.cshtml" />
+    <Content Include="Views\Order\Detail.cshtml" />
+    <Content Include="Views\Order\Search.cshtml" />
+    <Content Include="Views\Currency\Index.cshtml" />
+    <Content Include="Views\Currency\GetList.cshtml" />
+    <Content Include="Views\HomeArea\Index.cshtml" />
+    <Content Include="Views\HomeArea\MiddleIndex.cshtml" />
+    <Content Include="Views\HomeArea\HomeMiddle.cshtml" />
+    <Content Include="Views\ProductPriceRise\Index.cshtml" />
+    <Content Include="Views\ProductPriceRise\GetList.cshtml" />
+    <Content Include="Views\ProductPriceRise\GetInfo.cshtml" />
+    <Content Include="Views\GlobalCollectDisabledCountry\Index.cshtml" />
+    <Content Include="Views\GlobalCollectDisabledCountry\GetList.cshtml" />
+    <Content Include="Views\GlobalCollectDisabledCountry\GetInfo.cshtml" />
+    <Content Include="Views\Order\GetList.cshtml" />
+    <Content Include="Views\Review\Suggestion.cshtml" />
+    <Content Include="Views\Review\SuggestionList.cshtml" />
+    <Content Include="Views\Review\SuggestionDetail.cshtml" />
+    <Content Include="Views\Customer\CustomerManage.cshtml" />
+    <Content Include="Views\Customer\CustomerManageList.cshtml" />
+    <Content Include="Views\Customer\CustomerManageDetail.cshtml" />
+    <Content Include="Views\Customer\CustomerManagerRemark.cshtml" />
+    <Content Include="Views\Customer\CustomerProduct.cshtml" />
+    <Content Include="Views\Customer\CustomerProductList.cshtml" />
+    <Content Include="Views\Marketing\Gift\Gift.cshtml" />
+    <Content Include="Views\Marketing\Gift\GiftEdit.cshtml" />
+    <Content Include="Views\Marketing\Gift\GiftList.cshtml" />
+    <Content Include="Views\Marketing\Partial\GiftMarketingBaseInfo.cshtml" />
+    <Content Include="Views\Order\GetDelete.cshtml" />
+    <Content Include="Views\Marketing\SearchKeyword\SearchKeyword.cshtml" />
+    <Content Include="Views\Marketing\SearchKeyword\SearchKeywordInBoxList.cshtml" />
+    <Content Include="Views\Marketing\Partial\SearchKeywordInBoxInfo.cshtml" />
+    <Content Include="Views\Marketing\Partial\SearchKeywordUnderBoxInfo.cshtml" />
+    <Content Include="Views\Marketing\SearchKeyword\SearchKeywordUnderBoxList.cshtml" />
+    <Content Include="Views\Marketing\SearchKeyword\SearchKeywordInBoxEdit.cshtml" />
+    <Content Include="Views\Marketing\SearchKeyword\SearchKeywordUnderBoxEdit.cshtml" />
+    <Content Include="Views\ShippingMethod\Index.cshtml" />
+    <Content Include="Views\ShippingMethod\List.cshtml" />
+    <Content Include="Views\ShippingMethod\Edit.cshtml" />
+    <Content Include="Views\ShippingMethod\Show.cshtml" />
+    <Content Include="Views\Order\OrderInvoice.cshtml" />
+    <Content Include="Views\GlobalCollectDisabledCountry\PaymentEnabledCustomer.cshtml" />
+    <Content Include="Views\GlobalCollectDisabledCountry\PaymentEnabledCustomerList.cshtml" />
+    <Content Include="Views\IpWhiteBlack\Index.cshtml" />
+    <Content Include="Views\Order\PaymentAmountLog.cshtml" />
+    <Content Include="Views\Order\ViewInfo.cshtml" />
+    <Content Include="Views\GlobalCollectDisabledCountry\PaymentEnabledCustomerEdit.cshtml" />
+    <Content Include="Views\Order\ViewInfo\BankOfChinaInfo.cshtml" />
+    <Content Include="Views\Order\ViewInfo\Default.cshtml" />
+    <Content Include="Views\Order\ViewInfo\HSBCInfo.cshtml" />
+    <Content Include="Views\Order\ViewInfo\MoneyGramInfo.cshtml" />
+    <Content Include="Views\Order\ViewInfo\WesternUnionInfo.cshtml" />
+    <Content Include="Views\MailLogo\Index.cshtml" />
+    <Content Include="Views\MailLogo\GetList.cshtml" />
+    <Content Include="Views\Promotion\PromotionURL.cshtml" />
+    <Content Include="Views\ProductArea\ProductAreaURL.cshtml" />
+    <Content Include="Views\Order\SpecialOrder.cshtml" />
+    <Content Include="Views\Order\AddSpecialOrder.cshtml" />
+    <Content Include="Views\Order\ViewSpecialOrder.cshtml" />
+    <Content Include="Views\CustomerHighRisk\GetInfo.cshtml" />
+    <Content Include="Views\CustomerHighRisk\GetList.cshtml" />
+    <Content Include="Views\CustomerHighRisk\Index.cshtml" />
+    <Content Include="Views\SomeArticle\Index.cshtml" />
+    <Content Include="Views\SomeArticle\GetList.cshtml" />
+    <Content Include="Views\SomeArticle\Edit.cshtml" />
+    <Content Include="Views\SomeArticle\Add.cshtml" />
+    <Content Include="Views\HelpCenter\Index.cshtml" />
+    <Content Include="Views\HelpCenter\List.cshtml" />
+    <Content Include="Views\HelpCenter\Edit.cshtml" />
+    <Content Include="Views\Remote\GetRemoteCityList.cshtml" />
+    <Content Include="Views\Remote\GetRemoteZipList.cshtml" />
+    <Content Include="Views\Remote\Index.cshtml" />
+    <Content Include="Views\HelpCenter\ArticleEdit.cshtml" />
+    <Content Include="Views\HelpCenter\ArticleList.cshtml" />
+    <Content Include="Views\HelpCenter\ArticleIndex.cshtml" />
+    <Content Include="Views\ShoppingCart\Detail.cshtml" />
+    <Content Include="Views\ShoppingCart\GetList.cshtml" />
+    <Content Include="Views\ShoppingCart\Index.cshtml" />
+    <Content Include="Views\ShoppingCart\SendMail.cshtml" />
+    <Content Include="Views\ShoppingCart\SendMailView.cshtml" />
+    <Content Include="Views\Product\UploadProduct.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Js\SEO\" />
+    <Folder Include="Upload\BestMatch\" />
+    <Folder Include="Upload\ImportDailydealProduct\" />
+    <Folder Include="Upload\ImportProductAreaProduct\" />
+    <Folder Include="Upload\MarketingAd\" />
+    <Folder Include="Upload\Test\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.csproj">
+      <Project>{08276825-378a-4cc2-ae5f-8296472bf96f}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ServiceImpl\ServiceImpl.csproj">
+      <Project>{caa7b534-dfb7-4fac-ac17-82c92dba4b0b}</Project>
+      <Name>ServiceImpl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Service\Service.csproj">
+      <Project>{84d49f07-70f0-4a56-9ce1-491c0691af44}</Project>
+      <Name>Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SiteCommon\SiteCommon.csproj">
+      <Project>{391d47fa-d372-475c-abee-6cea9a634953}</Project>
+      <Name>SiteCommon</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\appSettings.config" />
+    <Content Include="Config\customConfig.config" />
+    <Content Include="Config\depoly.config" />
+    <Content Include="Config\log4net.config" />
+    <Content Include="Config\WebPage.config" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>55356</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:8199/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

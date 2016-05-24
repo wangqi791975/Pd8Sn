@@ -1,0 +1,80 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.SiteConfigure
+@model PageData<Com.Panduo.Service.Help.HelpArticle>
+@{
+    Layout = null;
+}
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th width="6%">ID</th>
+            <th>主题-中文</th>
+            <th width="12%">涉及语种</th>
+            <th width="6%">英文状态</th>
+            <th width="6%">英文显示在上一级</th>
+            <th width="7%">创建时间</th>
+            <th width="6%">创建人</th>
+            <th width="10%">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @*foreach (var category in ViewBag.RootCategories)*@
+        @foreach (var article in Model.Data)
+        {
+            <tr>
+                <td>
+                    @article.ArticleId
+                </td>
+                <td>
+                    <a href="@Url.Content("~/HelpCenter/ArticleEdit?id=" + article.ArticleId)">@article.Title</a>
+                </td>
+                <td>
+                    @if (!article.Descriptions.IsNullOrEmpty())
+                    {
+                        foreach (var language in article.Descriptions.Select(helpCategoryDescription =>
+                            ((IList<Language>)ViewBag.AllLanguage).ToList().Find(x => x.LanguageId == helpCategoryDescription.LanguageId)).Where(language => !language.IsNullOrEmpty()))
+                        {
+                        @Html.Raw(language.ChineseName + "&nbsp;")
+                        }
+                    }
+                </td>
+                @if (article.Status)
+                {
+                    <td>
+                        <button onclick="change(@article.ArticleId)" class='btn btn-mini btn-success'>禁用</button>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <button onclick="change(@article.ArticleId)" class='btn btn-mini btn-danger'>启用</button>
+                    </td>
+                }
+                @if (article.IsShowParent)
+                {
+                    <td>
+                        <button onclick="change(@article.ArticleId)" class='btn btn-mini btn-success'>显示</button>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <button onclick="change(@article.ArticleId)" class='btn btn-mini btn-danger'>隐藏</button>
+                    </td>
+                }
+                <td>
+                    @article.DateCreated
+                </td>
+                <td>
+                    @article.DateCreated
+                </td>
+
+                <td>
+                    <a class="btn btn-mini btn-info btn-info-view" href="javascript:void(0)" data-id="@article.ArticleId" data-loading-text="<i class='icon-edit icon-white'></i> 加载"><i class="icon-edit icon-white"></i>编辑</a>
+                    <a class="btn btn-mini btn-info" href="javascript:void(0)"><i class="icon-edit icon-white"></i>删除</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.Partial("~/Views/Shared/Partial/_Page_Bottom.cshtml", Model.Pager)

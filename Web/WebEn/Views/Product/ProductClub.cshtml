@@ -1,0 +1,152 @@
+﻿@using Com.Panduo.Service.Product.ClubProduct
+@using Resources
+@{
+    ViewBag.Title = "Exclusive SALE";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+<style type="text/css">
+body, .club_d p, .club_d ul, .club_d li{margin:0; padding:0;}
+.clear{clear:both;}
+
+.club_d{width:1000px; margin:0 auto; font-size:12px; font-family:Arial; color:#000; }
+.club_d-banner{float:left; width:1000px; padding-bottom:30px; }
+.club_d-banner .banner{float:left; width:1000px; height:240px;}
+.club_d-banner .club_d-nav{float:left; width:1000px; height:70px;}
+.club_d-banner .club_d-nav img.about{float:left; width:500px; height:70px;}
+.club_d-banner .club_d-nav img.how{float:left; width:500px; height:70px;}
+
+.club_d .club_d-new{float:left; width:1000px; padding-bottom:30px; }
+.club_d .new_title{width:1000px; height:30px; padding-bottom:30px; }
+
+.club_d  ul{float:left; width:1000px; list-style-type:none;}
+.club_d  ul li.li_left{float:left; width:230px; height:310px; border:1px solid #dbdbdb; margin:0 24px 15px 0; position:relative; }
+.club_d  ul li.li_right{float:right; width:230px; height:310px; border:1px solid #dbdbdb; position:relative; }
+.club_d  ul li .label{width:50px; height:56px; background:url(/Images/flot_label.png) no-repeat; position:absolute; left:19px; top:-7px; float:left; }
+.club_d  ul li .label span.discount{float:left; font-size:24px; color:#FFF; font-weight:bold; padding:10px 0 0 4px; }
+.club_d  ul li .label span.percent{float:left; font-size:14px; color:#FFF; font-weight:bold; padding:8px 0 0 0; }
+.club_d  ul li img.club_d-pic{width:130px; height:130px; margin:20px 0 20px 50px; }
+.club_d  ul li p.club_d-title{width:210px; height:35px; display:block; margin:0 0 10px 10px; overflow:hidden; line-height:18px; color:#000; font-size:12px; }
+.club_d  ul li p.club_d-title a{color:#000; font-size:12px; text-decoration:none; font-family:Arial; }
+.club_d  ul li p.club_d-title a:hover{text-decoration:underline;}
+.club_d  ul li p.club_d-price{width:210px; display:block; margin:0 0 10px 10px; color:#fb6d0e; font-size:14px; } 
+.club_d  ul li p.club_d-price span{ display:block;font-size:16px; font-weight:bold; }
+.club_d  ul li .bottom{float:left; width:210px; height:26px; margin-left:10px; background:url(images/bottom.png) no-repeat; }
+.club_d  ul li .bottom a{width:210px; height:26px; display:block; font-size:14px; font-family:Arial; font-weight:bold; color:#000; text-decoration:none; text-align:center; line-height:26px; text-transform:capitalize; }
+
+.club_d .club_d-hot{float:left; width:1000px; padding-bottom:30px; }
+</style>
+
+<div class="club_d">
+    <div class="club_d-banner">
+        <img src="/Images/club_d-banner.jpg" width="1000" height="240" border="0" class="banner" />
+        <div class="club_d-nav">
+            <a href="#">
+                <img src="/Images/club_d-about.jpg" width="500" height="70" border="0" class="about" /></a>
+            <a href="/Product/HowJoinClub">
+                <img src="/Images/club_d-how.jpg" width="500" height="70" border="0" class="how" /></a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="club_d-new">
+        <div class="new_title">
+            <img src="/Images/club_d-new.jpg" width="470" height="30" border="0" />
+        </div>
+        <ul>
+            @if (ViewBag.NewClubProducts != null)
+            {
+                var newClubProducts = (List<ClubProductView>)ViewBag.NewClubProducts;
+                for (int i = 0; i < newClubProducts.Count; i++)
+                {
+                    var productName = newClubProducts[i].Name.Length > 60 ? newClubProducts[i].Name.Substring(0, 60) : newClubProducts[i].Name;
+                    if ((i + 1) % 4 != 0)
+                    {
+                <li class="li_left">
+                    <div class="label"><span class="discount">-@(Convert.ToInt32((newClubProducts[i].Discount * 100)))</span> <span class="percent">%</span></div>
+                    <a href="@UrlRewriteHelper.GetProductDetailUrl(newClubProducts[i].ProductId, newClubProducts[i].Name)">
+                        <img src="@ImageHelper.GetImageUrl(newClubProducts[i].Image, 130)" border="0" class="club_d-pic" /></a>
+                    <p class="club_d-title"><a href="@UrlRewriteHelper.GetProductDetailUrl(newClubProducts[i].ProductId, newClubProducts[i].Name)">@productName</a></p>
+                    <p class="club_d-price">
+                        @Lang.TipExcPriceNoChar
+                                <br />
+                        <span>@string.Format(Lang.TipAsLowAsN,PageHelper.GetCurrentCurrency().Format(newClubProducts[i].ProfitRate * newClubProducts[i].Discount))</span>
+                    </p>
+                    <div class="bottom"><a href="@UrlRewriteHelper.GetProductDetailUrl(newClubProducts[i].ProductId, newClubProducts[i].Name)">@Lang.TipBuyNow</a></div>
+                </li>
+                    }
+                    else
+                    {
+                <li class="li_right">
+                    <div class="label">
+                        <span class="discount">-@(Convert.ToInt32(newClubProducts[i].Discount * 100))<br />
+                        </span>
+                        <span class="percent">%</span>
+                    </div>
+                    <a href="@UrlRewriteHelper.GetProductDetailUrl(newClubProducts[i].ProductId, newClubProducts[i].Name)">
+                        <img src="@ImageHelper.GetImageUrl(newClubProducts[i].Image, 130)" width="130" height="130" border="0" class="club_d-pic" /></a>
+                    <p class="club_d-title"><a href="@UrlRewriteHelper.GetProductDetailUrl(newClubProducts[i].ProductId, newClubProducts[i].Name)">@productName</a></p>
+                    <p class="club_d-price">
+                        @Lang.TipExcPriceNoChar
+                    <br />
+                        <span>@string.Format(Lang.TipAsLowAsN,PageHelper.GetCurrentCurrency().Format(newClubProducts[i].ProfitRate * newClubProducts[i].Discount))</span>
+                    </p>
+                    <div class="bottom"><a href="@UrlRewriteHelper.GetProductDetailUrl(newClubProducts[i].ProductId, newClubProducts[i].Name)">@Lang.TipBuyNow</a></div>
+                </li>
+                    }
+                }
+            }
+        </ul>
+    </div>
+    <div class="clear"></div>
+    <div class="club_d-hot">
+        <div class="new_title">
+            <img src="images/club_d-hot.jpg" width="440" height="30" border="0" />
+        </div>
+        <ul>
+            @if (ViewBag.HotClubProducts != null)
+            {
+                var hotClubProducts = (List<ClubProductView>)ViewBag.HotClubProducts;
+                for (int i = 0; i < hotClubProducts.Count; i++)
+                {
+                    var productName = hotClubProducts[i].Name.Length > 60 ? hotClubProducts[i].Name.Substring(0, 60) : hotClubProducts[i].Name;
+                    if ((i + 1) % 4 != 0)
+                    {
+                <li class="li_left">
+                    <div class="label"><span class="discount">-@(Convert.ToInt32(hotClubProducts[i].Discount * 100))</span> <span class="percent">%</span></div>
+                    <a href="@UrlRewriteHelper.GetProductDetailUrl(hotClubProducts[i].ProductId, hotClubProducts[i].Name)">
+                        <img src="@ImageHelper.GetImageUrl(hotClubProducts[i].Image, 130)" width="130" height="130" border="0" class="club_d-pic" /></a>
+                    <p class="club_d-title"><a href="@UrlRewriteHelper.GetProductDetailUrl(hotClubProducts[i].ProductId, hotClubProducts[i].Name)">@productName</a></p>
+                    <p class="club_d-price">
+                        @Lang.TipExcPriceNoChar
+                                <br />
+                        <span>@string.Format(Lang.TipAsLowAsN,PageHelper.GetCurrentCurrency().Format(hotClubProducts[i].ProfitRate * hotClubProducts[i].Discount))</span>
+                    </p>
+                    <div class="bottom"><a href="@UrlRewriteHelper.GetProductDetailUrl(hotClubProducts[i].ProductId, hotClubProducts[i].Name)">@Lang.TipBuyNow</a></div>
+                </li>
+                    }
+                    else
+                    {
+                <li class="li_right">
+                    <div class="label">
+                        <span class="discount">-@(Convert.ToInt32(hotClubProducts[i].Discount * 100))<br />
+                        </span>
+                        <span class="percent">%</span>
+                    </div>
+                    <a href="@UrlRewriteHelper.GetProductDetailUrl(hotClubProducts[i].ProductId, hotClubProducts[i].Name)">
+                        <img src="@ImageHelper.GetImageUrl(hotClubProducts[i].Image, 130)" border="0" class="club_d-pic" /></a>
+                    <p class="club_d-title"><a href="@UrlRewriteHelper.GetProductDetailUrl(hotClubProducts[i].ProductId, hotClubProducts[i].Name)">@productName</a></p>
+                    <p class="club_d-price">
+                        @Lang.TipExcPriceNoChar
+                    <br />
+                        <span>@string.Format(Lang.TipAsLowAsN,PageHelper.GetCurrentCurrency().Format(hotClubProducts[i].ProfitRate * hotClubProducts[i].Discount))</span>
+                    </p>
+                    <div class="bottom"><a href="@UrlRewriteHelper.GetProductDetailUrl(hotClubProducts[i].ProductId, hotClubProducts[i].Name)">@Lang.TipBuyNow</a></div>
+                </li>
+                    }
+                }
+            }
+        </ul>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+

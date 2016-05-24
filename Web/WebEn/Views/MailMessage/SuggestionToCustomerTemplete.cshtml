@@ -1,0 +1,71 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Suggestion
+@model SuggestionContent
+@{
+    ViewBag.Title = "SuggestionToCustomerTemplete";
+    Layout = "~/Views/MailMessage/_layout/_Email_Customer_Layout.cshtml";
+}
+
+<!--<tilte>You have submitted successfully a message to 8seasons Team</tilte>-->
+
+@if (!Model.IsNullOrEmpty())
+{
+
+    <strong>Dear @Model.FullName/Customer:</strong>
+    <p>Thank you very much for your suggestions; we will try our best to amend to leave you a happy shopping experience at 8Seasons with us! Following is a copy of your suggestion.</p>
+    <table width="98%" border="0" cellspacing="0" cellpadding="0" style="border: 1px solid #e1e1e1; margin-left: 25px; line-height: 20px; margin: 0 auto;">
+        <tr>
+            <td width="35%" style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;"><strong>From</strong></td>
+            <td style="border-bottom: 1px solid #e1e1e1; padding: 5px;">@Model.FullName</td>
+        </tr>
+        <tr>
+            <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;"><strong>Email</strong></td>
+            <td style="border-bottom: 1px solid #e1e1e1; padding: 5px;">@Model.Email</td>
+        </tr>
+        <tr>
+            <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;"><strong>Suggestions &amp; Wishes</strong></td>
+            <td style="border-bottom: 1px solid #e1e1e1; padding: 5px;">@Html.Raw(Model.Content)</td>
+        </tr>
+        <tr>
+            <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;"><strong>Overall Impression</strong></td>
+            <td style="border-bottom: 1px solid #e1e1e1; padding: 5px;">{X-具体的星级数} stars</td>
+        </tr>
+
+
+        @{
+            var suggestionItems = ServiceFactory.SuggestionService.GetAllSuggestionItems(ServiceFactory.ConfigureService.SiteLanguageId);
+        }
+        @foreach (var suggestionItem in suggestionItems)
+        {
+            <tr>
+                <td valign="top" style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;"><strong>@suggestionItem.Name</strong></td>
+                <td style="border-bottom: 1px solid #e1e1e1; padding: 5px;">
+                    @if (suggestionItem.SuggestionObjects.Count > 0)
+                    {
+                        foreach (var suggestionObject in suggestionItem.SuggestionObjects)
+                        {
+                            @suggestionObject.Name
+                            @Html.Raw(": ")
+
+                            var o = suggestionObject;
+                            var firstOrDefault = Model.Details.FirstOrDefault(m => m.ObjectId == o.Id);
+
+                            if (firstOrDefault != null)
+                            {
+                                @firstOrDefault.Score
+                                @Html.Raw(" stars<br />")
+                            }
+
+                        }
+
+                    }
+
+                </td>
+            </tr>
+        }
+    </table>
+    <p>
+        Best regards<br/>
+        8Seasons Team
+    </p>
+}

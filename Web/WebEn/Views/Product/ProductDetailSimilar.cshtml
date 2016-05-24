@@ -1,0 +1,29 @@
+﻿@using Resources
+@model Com.Panduo.Web.Models.Product.RecommendItemVo
+@{
+    Layout = null;
+}
+
+@if (Model.ProductInfo.Count > 0)
+{ 
+    <h2 class="font14"><span class="lf">@Lang.TipSimilarItems</span>@if (Model.ProductInfo.Count > 5)
+                                                                    {<a rel="nofollow" class="font_verdana font12 btn_grey lf" href="@UrlRewriteHelper.GetSimiliarItemsUrl(Model.MainProductId.HasValue ? Model.MainProductId.Value : 1, 1)">@Lang.TipMore</a>}</h2>
+    <ul>
+        @if (Model.ProductInfo.Count <= 5)
+        {
+            foreach (var similar in Model.ProductInfo)
+            {
+            @Html.Partial("~/Views/Product/Partial/__Product__Item__Grid__View.cshtml", similar)
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 5; i++)
+            {
+            @Html.Partial("~/Views/Product/Partial/__Product__Item__Grid__View.cshtml", Model.ProductInfo[i])
+            }
+        }
+
+    </ul>
+    <div class="clearfix"></div>
+}

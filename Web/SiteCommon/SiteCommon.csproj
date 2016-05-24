@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{391D47FA-D372-475C-ABEE-6CEA9A634953}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Com.Panduo.Web.Common</RootNamespace>
+    <AssemblyName>SiteCommon</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EcmaScript.NET, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\Yahoo.Yui.Compressor\EcmaScript.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.84.0.0, Culture=neutral, PublicKeyToken=1b03e6acf1164f73">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\Tool\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\Yahoo.Yui.Compressor\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageLibrary, Version=1.2.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\Tool\ImageLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\Tool\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Net.Http.WebRequest, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Yahoo.Yui.Compressor, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\Yahoo.Yui.Compressor\Yahoo.Yui.Compressor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CacheManager.cs" />
+    <Compile Include="CommonConfigHelper.cs" />
+    <Compile Include="CommonConst.cs" />
+    <Compile Include="CommonToolHelper.cs" />
+    <Compile Include="ConfigManager.cs" />
+    <Compile Include="Config\Hander\CustomConfigManager.cs" />
+    <Compile Include="Config\Hander\GeneralConfigurationHandler.cs" />
+    <Compile Include="ControllerManager.cs" />
+    <Compile Include="CookieManager.cs" />
+    <Compile Include="CrossDomainCookie.cs" />
+    <Compile Include="DownloadHelper.cs" />
+    <Compile Include="Mvc\Controllers\YuiController.cs" />
+    <Compile Include="Mvc\Engine\CustomRazorViewEngine.cs" />
+    <Compile Include="Mvc\Error\Error404\ActionInvokerWrapper.cs" />
+    <Compile Include="Mvc\Error\Error404\ControllerFactoryWrapper.cs" />
+    <Compile Include="Mvc\Error\Error404\PageNotFoundController.cs" />
+    <Compile Include="Mvc\Error\Error404\PageNotFoundHandler.cs" />
+    <Compile Include="Mvc\Error\Error404\PageNotFoundViewResult.cs" />
+    <Compile Include="Mvc\Error\Error500\SystemErrorController.cs" />
+    <Compile Include="Mvc\Error\InstallerModule.cs" />
+    <Compile Include="Mvc\Filter\CompressFilter.cs" />
+    <Compile Include="Mvc\Filter\GlobalCompressFilter.cs" />
+    <Compile Include="Mvc\Helper\CommonUrlHelper.cs" />
+    <Compile Include="Mvc\Helper\FileUploadHelper.cs" />
+    <Compile Include="Mvc\Helper\HtmlHelperExtend.cs" />
+    <Compile Include="Mvc\Helper\ResultHelper.cs" />
+    <Compile Include="Mvc\Helper\ViewHelper.cs" />
+    <Compile Include="Mvc\Helper\YuiHtmlHelper.cs" />
+    <Compile Include="Mvc\Model\FileUpload\FileUploadData.cs" />
+    <Compile Include="Mvc\Model\FileUpload\KindEditorImageShowData.cs" />
+    <Compile Include="Mvc\Model\JsonData.cs" />
+    <Compile Include="Mvc\Model\KeyValueData.cs" />
+    <Compile Include="Mvc\Model\RouteObject.cs" />
+    <Compile Include="Mvc\Result\ChartResult.cs" />
+    <Compile Include="Mvc\Result\CssResult.cs" />
+    <Compile Include="Mvc\Result\ImageResult.cs" />
+    <Compile Include="Mvc\Result\JsonpResult.cs" />
+    <Compile Include="Mvc\Routing\RewriteUrlHelper.cs" />
+    <Compile Include="Mvc\Routing\RewriteUrlRoute.cs" />
+    <Compile Include="Mvc\Routing\RewriteUrlRouteExtensions.cs" />
+    <Compile Include="PageManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SessionManager.cs" />
+    <Compile Include="SiteConst.cs" />
+    <Compile Include="ValidateCodeHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.csproj">
+      <Project>{08276825-378a-4cc2-ae5f-8296472bf96f}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,89 @@
+﻿@using Com.Panduo.Service.Product.Category
+@using Com.Panduo.Service.SiteConfigure
+@model IList<Com.Panduo.Service.RelatedData<CategoryLanguage>>
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="span5">
+        <p><code>通配符统一约定：</code></p>
+        <p>{1}-当前类别别名 （无类别别名使用类别名称代替）</p>
+        <p>{2}-当前类别父类别别名（无类别别名使用类别名称代替）</p>
+        <p>{3}-一级类别别名（无类别别名使用类别名称代替）</p>
+        <p>{4}-当前列表页码</p>
+        <p>{5}-当前列表显示的商品数</p>
+        <p>{6}-当前列表的显示方式名称</p>
+        <p>{7}-筛选属性值对应的名称（当属性值有多个时，最先筛选的属性的先读取，使用半角输入法的空格进行分隔） （如theme=004 对应Animal）</p>
+        <p>{8}-搜索关键字 (使用网站搜索的时候适用)</p>
+    </div>
+    <div class="span7">
+        <p><code>特别注意：</code></p>
+        <p>
+            1.配置了 , page {4}、{5}、{6}的Meta信息，在展示第一页时，不展示 , page {4}、{5} 、{6}的内容
+            <ul>
+                <li>比如 Wholesale {7} {1} Supplies, {4}：第一页只显示Wholesale {7} {1} Supplies</li>
+                <li>Wholesale {7} {1} Supplies, xxx{4}, yyy{5} zzz{6}：第一页只显示Wholesale {7} {1} Supplies</li>
+            </ul>
+        </p>
+        <p>2.配置了 {1}、 {2}、 {3}的Meta信息，有类别别名的，用类别别名；没有类别别名的，用类别名称；</p>
+        <p>3.所有Meta Description里出现的通配符对应的值均为小写，Title和keywords里出现的通配符对应值均为首字母大写。</p>
+    </div>
+</div>
+<hr />
+<form id="metaListForm" class="form-search" method="post" action="/Meta/MetaList" name="metaListForm">
+    当前类别：
+    <select name="HID_categoryId" onchange=" $(this).next().next().click(); ">
+        @foreach (var rd1 in Model)
+        {
+            <option value="@rd1.Data.CategoryId">@rd1.Data.CategoryEnglishName</option>
+            if (!rd1.SubDataList.IsNullOrEmpty())
+            {
+                foreach (var rd2 in rd1.SubDataList)
+                {
+            <option value="@rd2.Data.CategoryId">&nbsp;&nbsp;@rd2.Data.CategoryEnglishName</option>
+                    if (!rd2.SubDataList.IsNullOrEmpty())
+                    {
+                        foreach (var rd3 in rd2.SubDataList)
+                        {
+            <option value="@rd3.Data.CategoryId">&nbsp;&nbsp;&nbsp;&nbsp;@rd3.Data.CategoryEnglishName</option>
+                            if (!rd3.SubDataList.IsNullOrEmpty())
+                            {
+                                foreach (var rd4 in rd3.SubDataList)
+                                {
+            <option value="@rd4.Data.CategoryId">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@rd4.Data.CategoryEnglishName</option>
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </select>
+    语言：
+    <select name="HID_languageId" onchange=" $(this).next().click(); ">
+        @foreach (Language lang in ViewBag.Languages)
+        {
+            <option value="@lang.LanguageId">@lang.ChineseName</option>
+        }
+    </select>
+    <button class="btn hide" type="submit">搜索</button>
+</form>
+
+<div id="metaListDiv"></div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#metaListForm").submit(function () {
+            var args = $(this).serialize();
+            var pageUrl = $(this).attr('action');
+            $.get(pageUrl + '?' + args, function (data) {
+                $('div#metaListDiv').filter(':first').html(data);
+            });
+            return false;
+        });
+        if ($("select[name=HID_categoryId]").val() > 0 && $("select[name=HID_languageId]").val() > 0) {
+            $("select[name=HID_languageId]").next().click();
+        }
+    });
+</script>

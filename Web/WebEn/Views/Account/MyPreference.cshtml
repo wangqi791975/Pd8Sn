@@ -1,0 +1,105 @@
+﻿@using Com.Panduo.Service.Customer
+@using Com.Panduo.Service.SiteConfigure
+@using Resources
+@{
+    Layout = "~/Views/Shared/Layout/_Layout_NoLeft.cshtml";
+    var languages = ViewBag.Languages;
+    var currencyies = ViewBag.Currencies;
+    var preferences = ViewBag.MyPreferences;
+}
+@section HtmlHead
+{
+    @Html.JsFor("Preference.js", "~/Js/jquery.pstrength.js,~/Js/Account/MyAccount.js,~/Js/cutpic.js,~/Js/uploadify/jquery.uploadify.min.js", fileVersion: "1.13")
+    @Html.JsFor("Order.js", "~/Js/jquery-ui-1.10.4.custom.min.js", fileVersion: "1.9")
+}
+
+@Html.Partial("Partial/_Account_Siderbar_Menu")
+<!-- 左侧结束 -->
+<div id="main" class="account_wrap">
+    <h2 class="font14 account_title">@Lang.TipMyPreference
+    </h2>
+    <div class="warning_wrap">
+        <ins class="btn_success_cart"></ins>
+        <p><strong class="fgreen">@Lang.MsgPreferenceSuccess</strong></p>
+    </div>
+    <div class="preference_cont">
+        <form method="post" onsubmit="return false;" action="@UrlRewriteHelper.GetMyPreferenceUrl()" name="preform" id="preform">
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <th>@Lang.TipExceptionalOffers</th>
+                    <td class="blank">&nbsp;</td>
+                    <th>@Lang.TipMyChoices</th>
+                </tr>
+                <tr>
+                    <td class="perference_title">@Lang.TipLanguage</td>
+                    <td class="blank">&nbsp;</td>
+                    <td class="label_width">
+                        @foreach (var language in languages)
+                        {
+                            <label>
+                                <input type="radio" name="lang" value="@language.LanguageId" @(preferences.LanguageId != null ? (preferences.LanguageId == language.LanguageId ? "checked" : "") : (ViewBag.CUrrentLanguage == language.LanguageId ? "checked" : "")) />@language.LanguageName</label>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td class="perference_title">@Lang.TipCurrencyNoPun</td>
+                    <td class="blank">&nbsp;</td>
+                    <td class="label_width">
+                        @foreach (var currency in currencyies)
+                        {
+                            <label>
+                                <input type="radio" name="currency" value="@currency.CurrencyId" @(preferences.CurrencyId != null ? (preferences.CurrencyId == currency.CurrencyId ? "checked" : "") : (ViewBag.CurrentCurrency == currency.CurrencyId ? "checked" : ViewBag.CurrentCurrency))/>@currency.CurrencyCode</label>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td class="perference_title">@Lang.TipLinearMeasure</td>
+                    <td class="blank">&nbsp;</td>
+                    <td>
+                        <label>
+                            <input type="radio" name="linear" value="@Unit.Metric" @(preferences.SizeUnit != null ? (preferences.SizeUnit == Unit.Metric ? "checked" : "") : "checked")/>@Lang.TipMetricUnits@Lang.TipMetricSizeUnites</label>
+                        <label>
+                            <input type="radio" name="linear" value="@Unit.Imperial" @(preferences.SizeUnit != null ? (preferences.SizeUnit == Unit.Imperial ? "checked" : "") : null)/>@Lang.TipImperialUnits@Lang.TipImperialSizeUnits</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="perference_title">@Lang.TipWeight</td>
+                    <td class="blank">&nbsp;</td>
+                    <td>
+                        <label>
+                            <input type="radio" name="weight"  value="@Unit.Metric" @(preferences.WeightUnit != null ? (preferences.WeightUnit == Unit.Metric ? "checked" : "") : "checked")/>@Lang.TipMetricUnits@Lang.TipMetricWeightUnites</label>
+                        <label>
+                            <input type="radio" name="weight" value="@Unit.Imperial" @(preferences.WeightUnit != null ? (preferences.WeightUnit == Unit.Imperial ? "checked" : "") : null)/>@Lang.TipImperialUnits@Lang.TipImperialWeightUnits</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="perference_title">@Lang.TipPageAs</td>
+                    <td class="blank">&nbsp;</td>
+                    <td class="label_width">
+                        <label>
+                            <input type="radio" name="page" value="@ListShowType.List" @(preferences.ListShowType != null ? (preferences.ListShowType == ListShowType.List ? "checked" : "") : "checked")/>@Lang.TipList</label>
+                        <label>
+                            <input type="radio" name="page" value="@ListShowType.Gallery" @(preferences.ListShowType != null ? (preferences.ListShowType == ListShowType.Gallery ? "checked" : "") : null)/>@Lang.TipGallery</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="perference_title">@Lang.TipPerPage</td>
+                    <td class="blank have_border">&nbsp;</td>
+                    <td class="label_width">
+                        <label>
+                            <input type="radio" name="perpage" value="@ListShowCount.T" @(preferences.ListShowCount != null ? (preferences.ListShowCount == ListShowCount.T ? "checked" : "") : null)/>30</label>
+                        <label>
+                            <input type="radio" name="perpage" value="@ListShowCount.S" @(preferences.ListShowCount != null ? (preferences.ListShowCount == ListShowCount.S ? "checked" : "") : "checked")/>60</label>
+                        <label>
+                            <input type="radio" name="perpage" value="@ListShowCount.N" @(preferences.ListShowCount != null ? (preferences.ListShowCount == ListShowCount.N ? "checked" : "") : null)/>90</label>
+                    </td>
+                </tr>
+                <tr class="noborder">
+                    <td colspan="2"></td>
+                    <td><a href="javascript:void(0)" id="presubmit" class="btn_orange btn_p30">@Lang.TipSave</a></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<div class="clearfix"></div>

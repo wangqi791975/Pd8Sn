@@ -1,0 +1,117 @@
+﻿@using Com.Panduo.Service.Marketing
+@using Com.Panduo.Service.SiteConfigure
+@model Marketing
+
+<div class="control-group">
+    <label class="control-label">目标客户：</label>
+    <div class="controls">
+        <select name="FD_CustomerType" class="span2" id="FD_CustomerType">
+            <option value="@((int)MarketingCustomerType.AllCustomer)" @(Model.CustomerType == MarketingCustomerType.AllCustomer ? "selected=selected" : "")>所有客户</option>
+            <option value="@((int)MarketingCustomerType.VipCustomer)" @(Model.CustomerType == MarketingCustomerType.VipCustomer ? "selected=selected" : "")>VIP等级客户</option>
+            <option value="@((int)MarketingCustomerType.ImportCustomer)" @(Model.CustomerType == MarketingCustomerType.ImportCustomer ? "selected=selected" : "")>导入客户</option>
+        </select>
+        <label class="checkbox inline">
+            <input type="checkbox" value="1" name="FD_IsExcludeClub" @(Model.IsExcludeClub ? "checked=checked" : "")>排除Club会员
+        </label>
+        <label class="checkbox inline">
+            <input type="checkbox" value="1" name="FD_IsExcludeChannels" @(Model.IsExcludeChannels ? "checked=checked" : "")>排除渠道商
+        </label>
+        <div id="FD_CustomerType_@((int)MarketingCustomerType.VipCustomer)" style="padding-left: 8px; margin-bottom: 5px;" @(Model.CustomerType == MarketingCustomerType.VipCustomer ? "" : "class=hide")>
+            <label class="checkbox inline" style="margin-left: 10px;">
+                <input type="checkbox" value="0" name="FD_CustomerVipIds" id="FD_CustomerVipIds" data-toggle="checkall" @(Model.CustomerVipIds == null ? "" : Model.CustomerVipIds.Count == 0 || Model.CustomerVipIds.Count == ViewBag.CustomerGroupDescs.Count ? "checked" : "")>所有
+            </label>
+            @foreach (var customerGroupDesc in ViewBag.CustomerGroupDescs)
+            {
+                <label class="checkbox inline">
+                    <input type="checkbox" value="@customerGroupDesc.CustomerGroupId" name="FD_CustomerVipIds" id="FD_CustomerVipIds_@customerGroupDesc.CustomerGroupId" @(Model.CustomerVipIds == null ? "" : Model.CustomerVipIds.Count == 0 ? "checked" : (Model.CustomerVipIds.Contains(customerGroupDesc.CustomerGroupId) ? "checked" : "")) data-toggle="checkthis">@customerGroupDesc.GroupName
+                </label>
+            }
+        </div>
+        <div id="FD_CustomerType_@((int)MarketingCustomerType.ImportCustomer)" style="padding-left: 8px; margin-bottom: 5px;" @(Model.CustomerType == MarketingCustomerType.ImportCustomer ? "" : "class=hide")>
+            <span class="help-inline">文件：<input type="file" id="file_importcustomers" name="file_importcustomers" /><a href="~/Upload/ImportCustomer/importdemo.xlsx">下载模板</a></span>
+        </div>
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label">语言：</label>
+    <div class="controls">
+        <label class="checkbox inline">
+            <input type="checkbox" value="0" name="FD_LanguageIds" id="FD_LanguageIds" data-toggle="checkall" @(Model.LanguageIds == null ? "" : Model.LanguageIds.Count == 0 || Model.LanguageIds.Count == ViewBag.Languages.Count ? "checked" : "") />所有
+        </label>
+        @foreach (var language in ViewBag.Languages)
+        {
+            <label class="checkbox inline">
+                <input type="checkbox" value="@language.LanguageId" name="FD_LanguageIds" id="FD_LanguageIds_@language.LanguageId" @(Model.LanguageIds == null ? "" : Model.LanguageIds.Count == 0 ? "checked" : (Model.LanguageIds.Contains(language.LanguageId) ? "checked" : "")) data-toggle="checkthis">@language.ChineseName
+            </label>
+        }
+    </div>
+</div>
+@if (ViewBag.Currencies != null)
+{
+    <div class="control-group">
+        <label class="control-label">币种：</label>
+        <div class="controls">
+            <label class="checkbox inline">
+                <input type="checkbox" value="0" name="FD_Currencies" id="FD_Currencies" data-toggle="checkall" @(Model.CurrencyIds == null ? "" : Model.CurrencyIds.Count == 0 || Model.CurrencyIds.Count == ViewBag.Currencies.Count ? "checked" : "") />所有
+            </label>
+            @foreach (var currency in (List<Currency>) ViewBag.Currencies)
+            {
+                <label class="checkbox inline">
+                    <input type="checkbox" value="@currency.CurrencyId" name="FD_currencies" id="FD_Currencies_@currency.CurrencyId" @(Model.CurrencyIds == null ? "" : Model.CurrencyIds.Count == 0 ? "checked" : (Model.CurrencyIds.Contains(currency.CurrencyId) ? "checked" : "")) data-toggle="checkthis">@currency.ChineseName
+                </label>
+            }
+        </div>
+    </div>
+}
+<div class="control-group">
+
+    <label class="control-label">国家：</label>
+    <div class="controls show_section">
+        <label class="checkbox">
+            <input type="checkbox" value="0" name="FD_ContinentIds" id="FD_ContinentIds" data-toggle="checkall" @(Model.CountryIds == null ? "" : Model.CountryIds.Count == 0 || Model.CountryIds.Count == ViewBag.Countries.Count ? "checked" : "") />所有
+        </label>
+        @foreach (var continent in ViewBag.Continents)
+        {
+            <label class="checkbox">
+                <input type="checkbox" value="@continent.ContinentId" name="FD_ContinentIds" id="FD_ContinentIds_@continent.ContinentId" @(Model.CountryIds == null ? "" : Model.CountryIds.Count == 0 ? "checked" : (Model.CountryIds.Contains(continent.ContinentId) ? "checked" : "")) data-toggle="checkthis">@continent.ContinentName
+            </label>
+            <div style="padding-left: 8px; margin-bottom: 5px;">
+                @foreach (var country in ViewBag.Countries[continent.ContinentId])
+                {
+                    <label class="checkbox inline" style="margin-left: 10px; min-width: 40px">
+                        <input type="checkbox" value="@country.CountryId" name="FD_CountryIds" id="FD_ContinentIds_@(continent.ContinentId)_@(country.CountryId)" @(Model.CountryIds == null ? "" : Model.CountryIds.Count == 0 ? "checked" : (Model.CountryIds.Contains(country.CountryId) ? "checked" : "")) data-toggle="checkthis"/>@country.CountryName
+                    </label>
+                }
+            </div>
+        }
+    </div>
+    <a href="javascript:void(0)" class="btnshow" title="展开"><i class="icon-chevron-down"></i></a>
+</div>
+<style type="text/css">
+    .btnshow
+    {
+        float: right;
+        margin-top: -5px;
+        margin-right: 3px;
+    }
+
+    .show_section
+    {
+        height: 100px;
+        overflow: hidden;
+    }
+</style>
+<script type="text/javascript">
+    $(function () {
+        $(".control-group .btnshow").click(function () {
+            $(this).parent().find(".controls").toggleClass("show_section");
+            if ($(this).find("i").hasClass("icon-chevron-up")) {
+                $(this).attr("title", "展开");
+                $(this).find("i").removeClass("icon-chevron-up").addClass("icon-chevron-down");
+            } else {
+                $(this).attr("title", "收起");
+                $(this).find("i").removeClass("icon-chevron-down").addClass("icon-chevron-up");
+            }
+        });
+    });
+</script>

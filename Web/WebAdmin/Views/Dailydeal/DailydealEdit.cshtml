@@ -1,0 +1,179 @@
+﻿@using Com.Panduo.Service.SiteConfigure
+@using Com.Panduo.Web.Models.Dailydeal
+@model List<DailydealModel>
+@{
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+    ViewBag.Title = "Daily Deals设置";
+}
+@section HtmlHead
+{
+}
+@if (ViewBag.ErrorMsg != null)
+{
+    <div class="alert alert-error">@ViewBag.ErrorMsg</div>
+}
+<p>
+    <h3>商品导入</h3>
+    <code>说明：时间为北京时间</code>
+</p>
+<div class="alert alert-error hide"><a class="close" data-dismiss="alert">&times;</a><span>请选择上传的文件.</span></div>
+<form class="form-horizontal" id="uploadimportfile_Form" name="uploadimportfile_Form" action="@Url.Content("~/Dailydeal/ImportDailydealProduct")" method="post" onsubmit="return false;">
+    <div class="well tab-content">
+        <div class="control-group">
+            <label class="control-label">导入文件：</label>
+            <div class="controls">
+                <span class="help-inline">
+                    <input type="file" id="file_dailydealproducts" name="file_dailydealproducts" accept="xls,xlsx" /></span> @{@:(.xls/.xlsx)
+                    }<a href="~/ImportModelFiles/DailyDeal/dailydeals_importmodel.xls">下载模板</a>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">一口价商品标签名称：</label>
+            <div class="controls">
+                <input type="hidden" id="labelnames" name="labelnames" />
+                <table>
+                    @for (var i = 0; i < ViewBag.AllLanguage.Count; i++)
+                    {
+                        var item = (Language)ViewBag.AllLanguage[i];
+                        <tr>
+                            <td>@item.ChineseName ：</td>
+                            <td>
+                                <input type="text" languageid="@item.LanguageId" value="" /></td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+        <div class="form-actions">
+            <a class="btn btn-primary" id="btnuploadfile" href="javascript:void(0)">导入</a>
+            <a class="btn" href="javascript:void(0)" onclick="$('#uploadimportfile_Form')[0].reset();">取消</a>
+        </div>
+    </div>
+</form>
+@*<div class="control-group">
+        <label class="control-label">Daily Deals总开关：</label>
+        <div class="controls">
+            <label class="radio inline">
+                @Html.RadioButtonFor(area => area.IsValid, "1", new { @checked = "checked" })开启
+            </label>
+            <label class="radio inline">
+                @Html.RadioButtonFor(area => area.IsValid, "0")关闭
+            </label>
+        </div>
+    </div>*@
+<p>
+    <h3>Daily Deal前台页面信息设置</h3>
+</p>
+<div class="alert alert-error hide"><a class="close" data-dismiss="alert">&times;</a><span>.</span></div>
+<form class="form-horizontal" id="dailydealinfo_Form" name="dailydealinfo_Form" action="@Url.Content("~/Dailydeal/DailydealSave")" method="post" onsubmit="return false;">
+    <div class="well tab-content">
+        <div class="control-group">
+            <div class="tab-content">
+                <ul class="nav nav-tabs">
+                    @for (var i = 0; i < ViewBag.AllLanguage.Count; i++)
+                    {
+                        var className = "";
+                        if (i == 0)
+                        {
+                            className = "active";
+                        }
+                        <li class="@className"><a data-toggle="tab" href="javascript:void(0)" data-target="#tab_language_description_@ViewBag.AllLanguage[i].LanguageId">@ViewBag.AllLanguage[i].ChineseName</a></li>
+                    }
+                </ul>
+                @for (var i = 0; i < ViewBag.AllLanguage.Count; i++)
+                {
+                    var item = ViewBag.AllLanguage[i];
+                    var className = "tab-pane";
+                    if (i == 0)
+                    {
+                        className = "tab-pane active";
+                    }
+                    var dailydealModel = Model.IsNullOrEmpty() ? new DailydealModel() : Model.Find(x => x.LanguageId == item.LanguageId);
+                            
+                    <div class="@className" id="tab_language_description_@item.LanguageId">
+                        <label class="control-label">头部图片：</label>
+                        <div class="controls">
+                            <div style="padding-left: 8px; margin-bottom: 5px;">
+                                <input type="file" name="file_headerimg_@item.LanguageId" value="@(!dailydealModel.IsNullOrEmpty() ? dailydealModel.HeaderImg : "")" />
+                                @{@:(JPG / PNG / JPEG)
+                                }
+                            </div>
+                            <div style="padding-left: 8px; margin-bottom: 5px;">
+                                <img src="@(!dailydealModel.IsNullOrEmpty() ? dailydealModel.HeaderImg : "")" />
+                            </div>
+                        </div>
+                        <label class="control-label">中间图片推荐区域：</label>
+                        <div class="controls">
+                            <textarea name="txtMiddleAreaHtml_@item.LanguageId" rows="8" id="txtMiddleAreaHtml_@item.LanguageId" style="width:800px;">@(!dailydealModel.IsNullOrEmpty() ? dailydealModel.MiddleAreaHtml : "")</textarea>
+                        </div>
+                        <label class="control-label">商品推荐区域：</label>
+                        <div class="controls">
+                            <textarea name="txtRecommendAreaHtml_@item.LanguageId" rows="8" id="txtRecommendAreaHtml_@item.LanguageId" style="width:800px;">@(!dailydealModel.IsNullOrEmpty() ? dailydealModel.RecommendAreaHtml : "")</textarea>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="form-actions">
+            <a class="btn btn-primary" id="btnSave" href="javascript:void(0)">保存</a>
+            <a class="btn" href="@Url.Content("~/Dailydeal/Dailydeal")">取消</a>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    $(function () {
+        //导入
+        $("#btnuploadfile").click(function () {
+            if ($("#file_dailydealproducts").val().trim() == "") {
+                $("#uploadimportfile_Form").prev().show().delay(2000).hide(200).find("span").text("请选择上传的文件.");
+            } else {
+                var msg = "";
+                $("#uploadimportfile_Form").ajaxSubmit({
+                    success: function (responseText) {
+                        switch (responseText.result) {
+                            case "success":
+                                msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作成功!' : responseText.msg;
+                                $("#file_dailydealproducts").val('');
+                                break;
+                            case "error":
+                            case "failing":
+                                msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作失败!' : responseText.msg;
+                                break;
+                        }
+                        $("#uploadimportfile_Form").prev().show().delay(2000).hide(200).find("span").text(msg);
+                    }
+                });
+            }
+        });
+        $("#btnSave").click(function () {
+            var msg = "";
+            $("#dailydealinfo_Form").ajaxSubmit({
+                success: function (responseText) {
+                    switch (responseText.result) {
+                        case "success":
+                            msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作成功!' : responseText.msg;
+                            break;
+                        case "error":
+                        case "failing":
+                            msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作失败!' : responseText.msg;
+                            break;
+                    }
+                    $("#dailydealinfo_Form").prev().show().delay(2000).hide(200).find("span").text(msg);
+                }
+            });
+        });
+        
+        $("#btnuploadfile").click(function () {
+            var labelnames = "";
+            $("#uploadimportfile_Form table input").each(function () {
+                var language = $(this).attr("languageid"); 
+                var val = $(this).val().replace(",", " ").replace(";", " "); 
+                labelnames = labelnames + language + "," + val + ";";
+            }); 
+            if (labelnames != "") {
+                labelnames = labelnames.substr(0, labelnames.length - 1);
+                $("#labelnames").val(labelnames);
+            }
+        });
+    });
+</script>

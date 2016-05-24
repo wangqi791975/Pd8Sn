@@ -1,0 +1,65 @@
+﻿@model Com.Panduo.Web.Models.Order.OrderSearchVo
+@{
+    ViewBag.Title = "Search";
+}
+<div class="pull-right">
+    <!-- search bar -->
+    <div class="pull-right">
+        <form method="post" action="@Url.Content("~/Order/GetList")" id="searchForm" name="searchForm" class="form-search">
+            订单号：<input type="text" placeholder="订单号" name="orderno">
+            客户姓名或邮编：<input type="text"  placeholder="客户姓名或邮编" name="customer" value="@ViewBag.Customer">
+            语言：<select id="languagecode" name="languagecode">
+                <option value="-1">所有</option>
+                @foreach (var lang in Model.Languages)
+                {
+                    <option value="@lang.LanguageCode">@lang.ChineseName</option>
+                }
+            </select>
+            来源：<select id="orderSource" name="orderSource">
+                <option value="-1">所有</option>
+                <option value="0">网站</option>
+                <option value="1">手机</option>
+            </select>
+            状态：<select id="orderStatus" name="orderStatus">
+            <option value="-1">所有</option>
+            @foreach (var orderStatus in Model.OrderStatus)
+            {
+                <option value="@orderStatus.Value">@orderStatus.Name</option>
+            }
+        </select>
+            支付方式：<select id="paymentId" name="paymentId">
+            <option value="-1">所有</option>
+            @foreach (var payment in Model.Payments)
+            {
+                <option value="@payment.Key">@payment.Value</option>
+            }
+        </select>
+          运输方式：<select id="shippingId" name="shippingId">
+            <option value="-1">所有</option>
+            @foreach (var shipping in Model.Shippings)
+            {
+                <option value="@shipping.ShippingId">@shipping.ShippingCode</option>
+            }
+        </select>
+
+            <button type="submit" class="btn"><i class="icon-search"></i>搜索</button>
+        </form>
+    </div>
+</div>
+<div class="clearboth"></div>
+
+<div id="main" class="ajax-list" data-url="@Url.Content("~/Order/GetList?page=" + ViewBag.Page+"&customer="+ViewBag.Customer)"></div>
+
+
+<div class="modal hide fade ajax_detail" data-url="@Url.Content("/Order/GetDelete")">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>删除</h3>
+    </div>
+    <div class="modal-body ajax_info">
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn btn-primary ajax_update" data-dismiss="modal">确定</a>
+        <a href="javascript:void(0)" class="btn" data-dismiss="modal">取消</a>
+    </div>
+</div>

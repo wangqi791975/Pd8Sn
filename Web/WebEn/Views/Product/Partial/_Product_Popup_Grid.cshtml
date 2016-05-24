@@ -1,0 +1,15 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Web.Models.Product
+@using Resources
+@model ProductGirdVo
+<div class="gallery_popup">
+    <div class="pro_popup_detail@(Model.ClassIndex)">
+        <!-- 飘窗右定位 pro_popup_detail -->
+        <div class="gallery_table">
+            <h5><a href="#" title="">@(ServiceFactory.ProductService.GetProductName(Model.Product.ProductId,ServiceFactory.ConfigureService.SiteLanguageId)) (@Model.Product.ProductCode)</a></h5>
+            @Html.Partial("~/Views/Product/Partial/_Price.cshtml",new PriceVo(){ProductId =Model.Product.ProductId,UnitId=Model.Product.UnitId})
+        </div>
+        <p>@Html.Partial("~/Views/Product/Partial/__Popup__Login__Part.cshtml")</p>
+        <p class="fgrey_mid">@Lang.TipShippingWeight (@Model.Product.Weight)g</p>
+    </div>
+</div>

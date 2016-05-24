@@ -1,0 +1,26 @@
+﻿@using Resources
+@model int
+<div id="mid_header">
+    <h1 class="lf"><a href="/" title="8seasons">@Lang.TipChineseJewelry</a></h1>
+    <div class="shop_step lf">
+        <ul>
+            @* 默认显示为第一个步骤是当前选中状态class为current,其他步骤li标签上没有class样式; 当选中第二步骤时,第一步骤class改为off,第二步骤class为current *@
+            <li class="@(Model==1 ? "current" : "off")">
+                <p class="step1">@Lang.TipCartUp</p>
+            </li>
+            <li class="@(Model==2 ? "current" : (Model>2 ? "off" : ""))">
+                <p class="step2">@Lang.TipPlaceOrderUp</p>
+            </li>
+            <li class="@(Model==3 ? "current" : (Model>3 ? "off" : ""))">
+                <p class="step3">@Lang.TipPayUp</p>
+            </li>
+            <li class="@(Model==4 ? "current" : "")">
+                <p class="step4">@Lang.TipSucceedUp</p>
+            </li>
+        </ul>
+    </div>
+    <h3 class="font14 lf">
+        <a rel="nofollow" href="@UrlRewriteHelper.GetContactUsUrl()"><ins class="icon_head_contact"></ins><i>@Lang.TipContactUs</i></a>
+    </h3>
+    <div class="clearfix"></div>
+</div>

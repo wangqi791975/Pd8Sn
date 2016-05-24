@@ -1,0 +1,129 @@
+﻿@{
+    ViewBag.Title = "CouponDetail";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+    string amountCurrency = ServiceFactory.ConfigureService.GetCurrency(Model.AmountCurrencyId).CurrencyCode;
+    string couponAmountType = Model.AmountType == AmountType.TotalAmount ? "物品总金额" : "正价商品总额";
+    string minAmountCurrency = ServiceFactory.ConfigureService.GetCurrency(Model.MinAmountCurrencyId).CurrencyCode;
+}
+@using Com.Panduo.Service
+@using Com.Panduo.Service.Coupon
+@model Com.Panduo.Service.Coupon.Coupon
+<form class="form-horizontal">
+    <div class="well tab-content">
+        <div id="tab_base_info">
+            <div class="control-group">
+                <label class="control-label">名称：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @Model.CouponName
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><i class="fred">*</i>CouponCode：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @Model.CouponCode
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><i class="fred">*</i>领取次数：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @(Model.LimitCount)次
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><i class="fred">*</i>面额：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @Model.Amount
+                    @amountCurrency
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><i class="fred">*</i>允许外部领取：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @(Model.AllowManualPick ? "是" : "否")
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><i class="fred">*</i>金额对象：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    <label>@couponAmountType</label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><i class="fred">*</i>最低消费金额：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @Model.MinAmount
+                    @minAmountCurrency
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><i class="fred">*</i>语种：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @ServiceFactory.ConfigureService.GetLanguageNameByIds(Model.LanguageIds, ",")
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><i class="fred">*</i>国家：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @ServiceFactory.ConfigureService.GetCoutryNameByIds(Model.CountryIds, ",")
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"><i class="fred">*</i>有效期：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    @if (Model.LimitType == LimitType.Day)
+                    {
+                        <label>领取后@(Model.LimitDay)天</label>
+                        <label>领取周期@(Model.PickBeginTime)-@(Model.PickEndTime)</label>
+                    }
+                    else
+                    {
+                        <label>使用周期@(Model.LimitBeginTime)-@(Model.LimitEndTime)</label>
+                    }
+                </div>
+            </div>
+            @{
+                IDictionary<int, CouponDesc> couponDescs = ServiceFactory.CouponService.GetCouponDesc(Model.CouponId);
+            }
+            <div class="control-group">
+                <label class="control-label">备注：</label>
+                <div class="controls" style="padding-top: 5px;">
+                    <div class="tab-content">
+                        <ul class="nav nav-tabs">
+                            @for (int i = 0; i < ViewBag.AllLanguage.Count; i++)
+                            {
+                                var classActive = " class=";
+                                if (i == 0)
+                                {
+                                    classActive = " class=active";
+                                }
+                                <li @classActive><a data-toggle="tab" href="javascript:void(0)" data-target="#tab_category_language_description_@ViewBag.AllLanguage[i].LanguageId">@ViewBag.AllLanguage[i].ChineseName</a></li>
+                            }
+                        </ul>
+
+                        @for (int i = 0; i < ViewBag.AllLanguage.Count; i++)
+                        {
+                            var classActive = " class=tab-pane";
+                            if (i == 0)
+                            {
+                                classActive = " class='tab-pane active'";
+                            }
+                            if (couponDescs.ContainsKey(ViewBag.AllLanguage[i].LanguageId))
+                            {
+                            @Html.Raw("<div" + classActive + " id=tab_category_language_description_" + ViewBag.AllLanguage[i].LanguageId + "><textarea name=category_language_description_" + ViewBag.AllLanguage[i].LanguageId + " rows='8' name='subject' disabled id='" + ViewBag.AllLanguage[i].LanguageId + "' style='width:800px;'>" + couponDescs[ViewBag.AllLanguage[i].LanguageId].Description + "</textarea></div>");
+                            }
+                            else
+                            {
+                            @Html.Raw("<div" + classActive + " id=tab_category_language_description_" + ViewBag.AllLanguage[i].LanguageId + "><textarea name=category_language_description_" + ViewBag.AllLanguage[i].LanguageId + " rows='8' name='subject' disabled id='" + ViewBag.AllLanguage[i].LanguageId + "' style='width:800px;'></textarea></div>");
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well form-actions">
+        <span>
+            <a class="btn" href="/Coupon/CouponSet/page=@(ViewBag.Page)">返回</a>
+        </span>
+    </div>
+</form>

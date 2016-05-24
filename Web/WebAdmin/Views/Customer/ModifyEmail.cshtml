@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "修改客户邮箱";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+<div class="ajax_detail">
+    <form method="post" enctype="multipart/form-data" action="/Customer/ModifyEmail" id="multiForm" name="multiForm" class="form-horizontal" target="_self">
+        <div class="well">
+            <table>
+                <tr>
+                    <td>
+                        <label class="control-label">客户当前邮箱：</label>
+                    </td>
+                    <td>
+                        <input type="text" class="input-xlarge" name="emial" value="" required="required" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="control-label">客户新邮箱：</label>
+                    </td>
+                    <td>
+                        <input type="text" class="input-xlarge" name="newemail" value="" required="required" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="control-label">确认新邮箱：</label>
+                    </td>
+                    <td>
+                        <input type="text" class="input-xlarge" name="conemail" value="" required="required" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="well form-actions">
+            <input type="submit" value="提交" id="modifyemailbtn" class="btn btn-primary ajax_update" />
+            <span>
+                <a href="javascrip:void(0)" class="btn">取消</a>
+            </span>
+        </div>
+    </form>
+</div>

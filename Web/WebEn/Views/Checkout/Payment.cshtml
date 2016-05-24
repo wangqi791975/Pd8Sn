@@ -1,0 +1,469 @@
+﻿@using Com.Panduo.Service.Order
+@using Com.Panduo.Service.Payment
+@using Com.Panduo.Service.Payment.PayConfig
+@using Resources
+@model Dictionary<string, object>
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/Layout/_Layout_ShoppingCart.cshtml";
+    Order order = ViewBag.Order;
+    var urlDownloadPaymentFile = Url.Content("~/Payment/DownloadPaymentFile?orderNo=" + ViewBag.Order.OrderNo + "&type=");
+    var urlReadPaymentFile = Url.Content("~/Payment/ReadPaymentFile?orderNo=" + ViewBag.Order.OrderNo + "&type=");
+}
+
+@section HtmlHead
+{
+    @* for test 需要jsfor *@
+    <script type="text/javascript" src="~/Js/Order/Payment.js"></script>
+}
+
+@Html.Partial("~/Views/ShoppingCart/Partial/_Header.cshtml", 3)
+
+<div class="order_confirmed">
+    <ins></ins>
+    <div class="text">
+        <h4 class="font14">@Lang.TipOrderConfirmed</h4>
+        <p>@Lang.TipOrderNumber<a class="fblue_mid" href="@UrlRewriteHelper.GetOrderDetail(order.OrderNo)">@order.OrderNo</a></p>
+    </div>
+    <div class="rt">
+        <script type="text/javascript" src="https://seal.websecurity.norton.com/getseal?host_name=www.8seasons.com&amp;size=S&amp;use_flash=NO&amp;use_transparent=NO&amp;lang=en">
+        </script>
+    </div>
+    <div class="clearfix"></div>
+    <p>@Lang.TipCheckShippingAddress</p>
+</div>
+
+<div class="download"><a class="fblue font_underline" href="@Url.Content("~/Order/PackingListTemplate")">@Lang.TipDownPackList</a></div>
+
+<div class="order_cont">
+    <h3>@Lang.TipPayForOrder</h3>
+    <div class="order_pay_cont">
+        <div class="account_balance" style="display: block;">
+            @* cash有欠款 *@
+            @if (ViewBag.debtCashUsd > 0)
+            {
+                <h5>@Lang.TipCreditAccountBalance</h5>
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th>@Lang.TipGrandTotal</th>
+                        <td><span class="fred money">@order.Currency @PageHelper.MoneyFormat(order.OrderCost.TotalOrderAmt * order.ExchangeRate, order.Currency)</span></td>
+                    </tr>
+                    <tr>
+                        <th>@Lang.TipMoneyYouOwe</th>
+                        <td><span class="fred money">@order.Currency @PageHelper.MoneyFormat(ViewBag.debtCashUsd * order.ExchangeRate, order.Currency)</span></td>
+                    </tr>
+                    <tr>
+                        <th>@Lang.TipNeedToPay</th>
+                        <td><strong class="fred money">@order.Currency @PageHelper.MoneyFormat((order.OrderCost.TotalOrderAmt + ViewBag.debtCashUsd) * order.ExchangeRate, order.Currency)</strong></td>
+                    </tr>
+                    @if (ViewBag.isPaypalExpress)
+                    {
+                        <tr>
+                            <th></th>
+                            <td><a class="btn_orange btn_p30" href="javascript:void(0)" id="paypalExpressSubmit">Confirm</a></td>
+                        </tr>
+                    }
+                </table>
+            }
+@* cash余额大于0 *@
+            else if (ViewBag.cashBalanceUsd > 0)
+            {
+                <h5>@Lang.TipCreditAccountBalance</h5>
+                <input type="hidden" id="hidCashBalanceUsd" value="@ViewBag.cashBalanceUsd"/>
+                <input type="hidden" id="hidCashBalance" value="@PageHelper.MoneyFormat(ViewBag.cashBalanceUsd * order.ExchangeRate, order.Currency)" />
+                <input type="hidden" id="hidTotalOrderAmtUsd" value="@order.OrderCost.TotalOrderAmt"/>
+                <input type="hidden" id="hidTotalOrderAmt" value="@PageHelper.MoneyFormat(order.OrderCost.TotalOrderAmt * order.ExchangeRate, order.Currency)" />
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th>@Lang.TipGrandTotal</th>
+                        <td><span class="fred">@order.Currency @PageHelper.MoneyFormat(order.OrderCost.TotalOrderAmt * order.ExchangeRate, order.Currency)</span></td>
+                    </tr>
+                    <tr>
+                        <th>@Lang.TipBalance</th>
+                        <td>
+                            <label>
+                                <input type="checkbox" checked="checked" name="radio4" id="chkUseCash" />@Lang.TipUseBalanceOrder<span class="fred">(@order.Currency @PageHelper.MoneyFormat(ViewBag.cashBalanceUsd * order.ExchangeRate, order.Currency))</span>@if (ViewBag.cashBalanceUsd >= order.OrderCost.TotalOrderAmt)
+                                                                                                                                                                                                                                                                         {@Html.Raw(" -(Balance  left: " + order.Currency + " <span id=\"spanBlanceLeft\">" + PageHelper.MoneyFormat((ViewBag.cashBalanceUsd - order.OrderCost.TotalOrderAmt) * order.ExchangeRate, order.Currency) + "</span>)") }</label></td>
+                    </tr>
+                    <tr>
+                        <th>@Lang.TipNeedToPay</th>
+                        @{
+                            var needToPayUsd = order.OrderCost.TotalOrderAmt - ViewBag.cashBalanceUsd < 0 ? 0 : order.OrderCost.TotalOrderAmt - ViewBag.cashBalanceUsd;
+                        }
+                        <td><strong class="fred">@order.Currency <span id="spanNeedToPay">@PageHelper.MoneyFormat((needToPayUsd) * order.ExchangeRate, order.Currency)</span></strong></td>
+                    </tr>
+                    @if (ViewBag.isPaypalExpress)
+                    {
+                        <tr>
+                            <th></th>
+                            <td><a class="btn_orange btn_p30" href="javascript:void(0)" id="paypalExpressSubmit">@Lang.TipConfirm</a></td>
+                        </tr>
+                    }
+                    else if (ViewBag.cashBalanceUsd >= order.OrderCost.TotalOrderAmt)
+                    {
+                        <tr>
+                            <th></th>
+                            <td><a class="btn_orange btn_p30" href="javascript:void(0)" id="cashSubmit">@Lang.TipConfirm</a></td>
+                        </tr>
+                    }
+                </table>
+            }
+@* 没有cash余额 *@
+            else
+            {
+                <table cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th>@Lang.TipGrandTotal</th>
+                        <td><strong class="fred">@order.OrderCost.TotalOrderAmt.ToExchangeCurrencyMoneyString(order.Currency, order.ExchangeRate)</strong></td>
+                    </tr>
+                </table>
+            }
+        </div>
+
+        <div class="pay_method_cont">
+            <input type="hidden" id="hidFromOrderDetail" value="0" />
+            <input type="hidden" id="hidOrderNo" value="@order.OrderNo"/>
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="address_warning error" style="display: block">
+                    <ins class="lf"></ins>
+                    <p class="lf">
+                        @Html.Raw(ViewBag.ErrorMessage)
+                    </p>
+                </div>
+            }
+            <h5>@Lang.TipPaymentMethods</h5>
+            <div class="pay_note">
+                @Lang.TipForPaymentMethods <a href="#" class="font_underline fblue">@Lang.TipClickDetail</a>
+            </div>
+            <table cellpadding="0" cellspacing="0">
+                @if (ViewBag.canUsePaypal)
+                {
+                    PaypalConfig paypal = (PaypalConfig)Model["Paypal"];
+                    <tr>
+                        <td>
+                            <input name="radio5" type="radio" id="paypal" checked="checked" class="method_payment"><label for="paypal"><ins class="paypal"></ins></label><label for="paypal"><span>@Lang.TipPaymentNamePaypal</span></label>
+                            <div class="method_info_cont" style="display: block;" id="cont_paypal">
+                                <table cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td>-</td>
+                                        <td>@Lang.TipPayClickBelow</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><a class="btn_orange btn_p30" href="javascript:void(0)" id="paypalSubmit">@Lang.TipPayNow</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>-</td>
+                                        <td>@Html.Raw(string.Format(Lang.TipPaypalPayment, paypal.Account))</td>
+                                    </tr>
+                                </table>
+                                <div class="clearfix"></div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                @if (ViewBag.canUseHsbc)
+                {
+                    HsbcConfig hsbc = (HsbcConfig)Model["Hsbc"];
+                    <tr>
+                        <td>
+                            <input type="radio" id="hsbc" name="radio5" class="method_payment"><label for="hsbc"><ins class="hsbc"></ins></label><label for="hsbc"><span>@Lang.TipPaymentNameHsbc</span></label>
+                            <div class="method_info_cont" id="cont_hsbc">
+                                <table cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <th colspan="2" class="title">@Lang.TipHSBCBankAccount<a class="download" href="@(urlDownloadPaymentFile + (int)PaymentType.Hsbc)"></a><a href="@(urlReadPaymentFile + (int)PaymentType.Hsbc)" class="print" target="_blank"></a></th>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipBeneficiaryBank</th>
+                                        <td>@hsbc.BankName</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipSWIFTCode</th>
+                                        <td>@hsbc.SwiftCode</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipBankAddress</th>
+                                        <td>@hsbc.Address</td>
+                                    </tr>
+                                </table>
+                                <table cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <th>@Lang.TipBankAccountNum</th>
+                                        <td>@hsbc.AccountNumber</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipBeneficiary</th>
+                                        <td>@hsbc.Beneficiary</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><a href="javascript:void(0)" class="btn_orange btn_p30" id="hsbcSubmit" data-paymenttype="@((int)PaymentType.Hsbc)">@Lang.TipSubmit</a></td>
+                                    </tr>
+                                </table>
+                                <div class="tip">
+                                    <span class="fred">@Lang.TipNote</span>
+                                    <ol>
+                                        <li>@Lang.TipWhenTransMoney</li>
+                                        <li>@Lang.TipBeSureTo</li>
+                                        <li>@Lang.TipBuyerResponsibility</li>
+                                    </ol>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                @if (ViewBag.canUseBankOfChina)
+                {
+                    BankOfChinaConfig bankOfChina = (BankOfChinaConfig)Model["BankOfChina"];
+                    <tr>
+                        <td>
+                            <input type="radio" id="china" name="radio5" class="method_payment"><label for="china"><ins class="china"></ins></label><label for="china"><span>@Lang.TipPaymentNameBankOfChina</span></label>
+                            <div class="method_info_cont" id="cont_china">
+                                <table cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <th colspan="2" class="title">@Lang.TipChinaBankAccount<a class="download" href="@(urlDownloadPaymentFile + (int)PaymentType.BankOfChina)"></a><a href="@(urlReadPaymentFile + (int)PaymentType.BankOfChina)" class="print" target="_blank"></a></th>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipBeneficiaryBank</th>
+                                        <td>@bankOfChina.BankName</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipSWIFTCode</th>
+                                        <td>@bankOfChina.SwiftCode</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipBankAccountName</th>
+                                        <td>@bankOfChina.AccountName</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipBankAccountNum</th>
+                                        <td>@bankOfChina.AccountNumber</td>
+                                    </tr>
+                                </table>
+                                <table cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <th>@Lang.TipBankAddress</th>
+                                        <td>@bankOfChina.Address</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipBankAccountPhone</th>
+                                        <td>@bankOfChina.Phone</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><a href="javascript:void(0)" class="btn_orange btn_p30" id="chinaSubmit" data-paymenttype="@((int)PaymentType.BankOfChina)">@Lang.TipSubmit</a></td>
+                                    </tr>
+                                </table>
+                                <div class="tip">
+                                    <span class="fred">Note:</span>
+                                    <ol>
+                                        <li>@Lang.TipWhenTransMoney</li>
+                                        <li>@Lang.TipBeSureTo</li>
+                                        <li>@Lang.TipBuyerResponsibility</li>
+                                    </ol>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                @if (ViewBag.canUseWesternUnion)
+                {
+                    WesternUnionConfig westernUnion = (WesternUnionConfig)Model["WesternUnion"];
+                    <tr>
+                        <td>
+                            <input type="radio" id="union" name="radio5" class="method_payment"><label for="union"><ins class="union"></ins></label><label for="union"><span>@Lang.TipPaymentNameWesternUnion</span></label>
+                            <div class="method_info_cont" id="cont_union">
+                                <table cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <th colspan="2" class="title">@Lang.TipWesternBankAccount<a class="download" href="@(urlDownloadPaymentFile + (int)PaymentType.WesternUnion)"></a><a href="@(urlReadPaymentFile + (int)PaymentType.WesternUnion)" class="print" target="_blank"></a></th>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipFirstName</th>
+                                        <td>@westernUnion.FirstName</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipLastName</th>
+                                        <td>@westernUnion.LastName</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipAddress</th>
+                                        <td>@westernUnion.Address</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipZipCode</th>
+                                        <td>@westernUnion.ZipCode</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipCity</th>
+                                        <td>@westernUnion.City</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipCountry</th>
+                                        <td>@westernUnion.Country</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipPhone</th>
+                                        <td>@westernUnion.Phone</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><a href="javascript:void(0)" class="btn_orange btn_p30" id="unionSubmit" data-paymenttype="@((int)PaymentType.WesternUnion)">@Lang.TipSubmit</a></td>
+                                    </tr>
+                                </table>
+                                <div class="clearfix"></div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                 @if (ViewBag.canUseGlobalCollect)
+                {
+                    <tr>
+                        <td>
+                            <input type="radio" id="visa" name="radio5" class="method_payment"><label for="visa"><ins class="visa"></ins></label><label for="visa"><span>@Lang.TipPaymentNameGc</span></label>
+                            <div class="method_info_cont" id="cont_visa">
+                                <table cellpadding="0" cellspacing="0" class="credit_card">
+                                    <tr class="credit">
+                                        <td>
+                                            <input type="radio" name="gcType" checked="checked" id="credit_visa" value="@((int)GlobalCollectType.Visa)"/><label for="credit_visa"><ins class="credit_visa"></ins></label><label for="credit_visa">Visa</label></td>
+                                        <td>
+                                            <input type="radio" name="gcType" id="credit_master" value="@((int)GlobalCollectType.MasterCard)"/><label for="credit_master"><ins class="credit_master"></ins></label><label for="credit_master">Master Card</label></td>
+                                        <td colspan="3"></td>
+                                    </tr>
+                                </table>
+                                <div id="iframeGcLoading"><img class="loading" src="@Url.Content("~/Images/loading.gif")" /></div>
+                                <div id="iframeGcDiv"><iframe id="iframeGc" style="width: 480px; height: 280px; border: 0px;" src="about:blank"></iframe></div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                @if (ViewBag.canUsePaypalCreditCard)
+                {
+                    <tr>
+                        <td>
+                            <input type="radio" id="paypalvisa" name="radio5" class="method_payment"><label for="paypalvisa"><ins class="visa"></ins></label><label for="paypalvisa"><span>@Lang.TipCreditCardPayPal</span></label>
+                            <div class="method_info_cont" id="cont_paypalvisa">
+                                <table cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td>-</td>
+                                        <td>@Lang.TipPayPalWebsite</td>
+                                    </tr>
+                                    <tr>
+                                        <td>-</td>
+                                        <td>@Lang.TipNoPayPalStillPay <a href="//www.paypal.com" class="fblue font_underline">@Lang.TipViewHow</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><a href="javascript:void(0)" class="btn_orange btn_p30">@Lang.TipPayNow</a></td>
+                                    </tr>
+                                </table>
+                                <div class="clearfix"></div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                @if (ViewBag.canUseMoneyGram)
+                {
+                    MoneyGramConfig moneyGram = (MoneyGramConfig)Model["MoneyGram"];
+                    <tr>
+                        <td>
+                            <input type="radio" id="mg" name="radio5" class="method_payment"><label for="mg"><ins class="mg"></ins></label><label for="mg"><span>@Lang.TipPaymentNameMoneyGram</span></label>
+                            <div class="method_info_cont" id="cont_mg">
+                                <table cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <th colspan="2" class="title">@Html.Raw(Lang.TipMGBankAccount)<a class="download" href="@(urlDownloadPaymentFile + (int)PaymentType.MoneyGram)"></a><a href="@(urlReadPaymentFile + (int)PaymentType.MoneyGram)" class="print" target="_blank"></a></th>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipFirstName</th>
+                                        <td>@moneyGram.FirstName</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipLastName</th>
+                                        <td>@moneyGram.LastName</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipAddress</th>
+                                        <td>@moneyGram.Address</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipZipCode</th>
+                                        <td>@moneyGram.ZipCode</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipCity</th>
+                                        <td>@moneyGram.City</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipCountry</th>
+                                        <td>@moneyGram.Country</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@Lang.TipTelephone</th>
+                                        <td>@moneyGram.Phone</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><a href="javascript:void(0)" class="btn_orange btn_p30" id="mgSubmit" data-paymenttype="@((int)PaymentType.MoneyGram)">@Lang.TipSubmit</a></td>
+                                    </tr>
+                                </table>
+                                <div class="clearfix"></div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                @if (ViewBag.canUseWebmoney)
+                {
+                    <tr>
+                        <td>
+                            <input type="radio" id="wm" name="radio5" class="method_payment"><label for="wm"><ins class="wm"></ins></label><label for="wm"><span>@Lang.TipPaymentNameWebmoney</span></label>
+                            <div class="method_info_cont" id="cont_wm">
+                                <table cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td>-</td>
+                                        <td>@Lang.TipSmartSolution</td>
+                                    </tr>
+                                    <tr>
+                                        <td>-</td>
+                                        <td>@Lang.TipMultifunlPayment</td>
+                                    </tr>
+                                    <tr>
+                                        <td>-</td>
+                                        <td>@Lang.TipWebMoneySupports</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><a class="btn_orange btn_p30 btnOceanPayment" data-paymenttype="@((int)PaymentType.Webmoney)" href="javascript:void(0)">@Lang.TipPayNow</a></td>
+                                    </tr>
+                                </table>
+                                <div class="clearfix"></div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                @if (ViewBag.canUseQiWi)
+                {
+                <tr>
+                    <td>
+                        <input type="radio" id="qw" name="radio5" class="method_payment"><label for="qw"><ins class="qw"></ins></label><label for="qw"><span>@Lang.TipPaymentNameQiWi</span></label>
+                        <div class="method_info_cont" id="cont_qw">
+                            <table cellpadding="0" cellspacing="0" class="qiwi_wallet">
+                                <tr>
+                                    <td><span class="fred">*</span>@Lang.TipEnterTelNum</td>
+                                </tr>
+                                <tr>
+                                        <td><i>+7</i><input type="tel" class="inputw310 input_text_wrap"/></td>
+                                </tr>
+                                <tr>
+                                        <td><a href="javascript:void(0)" class=" btn_orange btn_p30 btnOceanPayment" data-paymenttype="@((int)PaymentType.QiWi)">@Lang.TipContinue</a></td>
+                                </tr>
+                            </table>
+                                <div class="clearfix"></div>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+<!-- 订单支付结束 -->
+<div class="clearfix"></div>

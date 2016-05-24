@@ -1,0 +1,61 @@
+﻿@using Com.Panduo.Service
+@using Resources
+@{
+    ViewBag.Title = "Register-success";
+    Layout = "~/Views/Shared/Layout/_LoginBody.cshtml";
+}
+@model List<Com.Panduo.Service.Customer.CustomerGroup>
+<div class="wrap">
+    <div class="nav"><a href="/">@Lang.TipHome</a> &gt; <strong>@Lang.TipBindSuccess</strong></div>
+    <div class="account_w844">
+        <h2 class="forange font16 font_verdana"><ins></ins>
+
+            <p>
+                <span>@Lang.TipWelcomeJoin</span>            
+                @if (ViewBag.RegCouponCurrency != null)
+                {
+                    <span>@Html.Raw(string.Format(Lang.TipSendCoupon,ViewBag.RegCouponCurrency.CurrencyCode,PageHelper.MoneyFormat(ViewBag.RegCouponAmount, ViewBag.RegCouponCurrency)))</span>
+                }
+                <a href="/" class="fblue font12">@Lang.TipContinueShopping</a>
+            </p>
+
+        </h2>
+        <div class="discount_detail">
+            <p>@Lang.TipEnjoyDiscount</p>
+            <ol>
+                @if (!Model.IsNullOrEmpty() && Model.Count > 0)
+                {
+                    <li>
+                        @Lang.TipOrderDiscount
+                        <p class="fgrey">@Lang.TipCheckoutAuto</p>
+                        <table width="608" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <th>@Lang.TipTotProPrice<br />
+                                    <span class="fgrey">@Lang.TipExcPromItems</span></th>
+                                <th>@Lang.TipDiscount</th>
+                            </tr>
+                            @foreach (var c in Model)
+                            {
+                                <tr>
+                                    <td>@String.Format(Lang.TipMoreThan, @PageHelper.GetCurrentCurrency().Format(), @PageHelper.ExchangeMoneyByUsd(c.MinAmount).ToIntText())</td>
+                                    <td>@(c.Discount.ToIntText())%</td>
+                                </tr>
+                            }
+                        </table>
+                    </li>
+                }
+                <li>@Html.Raw(String.Format(Lang.TipSysAddVipGroup, UrlRewriteHelper.GetMyAccount()))</li>
+                <li>
+                    <h3>@Lang.TipAfterYouPlaced</h3>
+                    <ul>
+                        <li><a href="/">@Lang.TipHomeWithRail</a></li>
+                        <li><a href="@UrlRewriteHelper.GetMyAccount()">@Lang.TipDiscountPolicyWithRail</a></li>
+                        <li><a href="@UrlRewriteHelper.GetMyAccount()">@Lang.TipMyAccountWithRail</a></li>
+                        <li><a href="#">@Lang.TipNewArrivalsWithRail</a></li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+</div>

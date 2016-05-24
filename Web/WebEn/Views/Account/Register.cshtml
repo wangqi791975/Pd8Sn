@@ -1,0 +1,159 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Customer
+@using Resources
+@model Customer
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/Layout/_LoginBody.cshtml";
+}
+@section HtmlHead
+{
+    <script type="text/javascript" src="~/Js/jquery.pstrength.js"></script>
+    <script type="text/javascript" src="~/Js/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            "use strict";
+            $(':password#password1').pStrength({
+                'onPasswordStrengthChanged': function (passwordStrength, strengthPercentage) {
+                    $(".bar_wrap .pwd_bar").removeClass("pwd_bar_weak").removeClass("pwd_bar_medium").removeClass("pwd_bar_strong");
+                    if (strengthPercentage < 30) {
+                        $(".bar_wrap p.lf").html("Week");
+                        $(".bar_wrap .pwd_bar").addClass("pwd_bar_weak");
+                    } else if (strengthPercentage < 70) {
+                        $(".bar_wrap p.lf").html("Medium");
+                        $(".bar_wrap .pwd_bar").addClass("pwd_bar_medium");
+                    } else {
+                        $(".bar_wrap p.lf").html("Strong");
+                        $(".bar_wrap .pwd_bar").addClass("pwd_bar_strong");
+                    }
+                }
+            });
+
+            $("#regform").validate({
+                errorLabelContainer: $("#regform div.error")
+            });
+            //  密码校验显示隐藏
+            $("#password1").keyup(function () {
+                if ($("#password1").val() == "")
+                    $(".bar_wrap").css("display", "none");
+                else
+                    $(".bar_wrap").css("display", "block");
+            });
+        });
+    </script>
+}
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "regform" }))
+{
+    <div class="wrap">
+        <div class="account_w940">
+            <div class="lf register_wrap">
+                <h3 class="font14 font_verdana">@Lang.TipJoinCoupon</h3>
+                <table width="590" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th>@Lang.TipName</th>
+                        <td class="td_noright">
+                            @Html.TextBoxFor(m => m.FullName, new { @class = "inputw337 input_text_wrap" })
+                            <div class="fred">@Html.Raw(ViewBag.ErrorFullName ?? "")</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><i class="fred">*</i>@Lang.TipEmail</th>
+                        <td class="td_noright">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "inputw337 input_text_wrap" })
+                            <div class="fred">@Html.Raw(ViewBag.ErrorEmail ?? "")</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <i class="fred">*</i>@Lang.TipPassword
+                        </th>
+                        <td>
+                            @Html.PasswordFor(m => m.Password, new { @class = "inputw337 input_text_wrap", id = "password1" })
+                            <div class="fred">@(ViewBag.ErrorPassword ?? "")</div>
+                            <div class="bar_wrap">
+                                <div class="pwd_bar pwd_bar_weak lf"><span>&nbsp;</span></div>
+                                <p class="lf">@Lang.TipWeak</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><i class="fred">*</i>@Lang.TipConfPassword</th>
+                        <td>
+                            @Html.Password("ComfPassword", "", new { @class = "inputw337 input_text_wrap", id = "password2" })
+                            <div class="fred">@(ViewBag.ErrorConfPassword ?? "")</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><i class="fred">*</i>@Lang.TipDescribeYou</th>
+                        <td class="input_radio">
+                            <label>
+                                @Html.RadioButtonFor(m => m.CustomerType, CustomerType.Wholesaler, false)
+                                <span>@Lang.TipWholesaler</span>
+                            </label>
+                            <label>
+                                @Html.RadioButtonFor(m => m.CustomerType, CustomerType.Retailer, false)
+                                <span>@Lang.TipRetailer</span>
+                            </label>
+                            <label>
+                                @Html.RadioButtonFor(m => m.CustomerType, CustomerType.JewelryDiyFan, false)
+                                <span>@Lang.TipDIYFan</span>
+                            </label>
+                            <div class="fred">@(ViewBag.ErrorCustomerType ?? "")</div>
+                        </td>
+                    </tr>
+                    @if (ServiceFactory.CustomerService.GetRegisterCountByIP(HttpContext.Current.Request.UserHostAddress) >= 3)
+                    {
+                        <tr>
+                            <th>@Lang.TipVerificationCode</th>
+                            <td>
+                                @Html.TextBox("ValidateCode", "", new { @id = "validatecode", @class = "inputw130 input_text_wrap lf" })
+                                <a href="javascript:void(0)" class="lf">
+                                    <img id="valiCode" style="cursor: pointer;" alt="@Lang.TipVerificationCodeNoPun" />
+                                </a><ins id="iconcheck" class="icon_code_error"></ins>
+                                @*输入正确时，ins标签的class名称变为icon_code_ok *@
+                                <div class="clearfix"></div>
+                                <div class="fred">@(ViewBag.ErrorValidateCode ?? "")</div>
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <th>&nbsp;</th>
+                        <td class="notice_checkbox">
+                            <a href="#">
+                                <label>
+                                    @Html.CheckBox("Newsletter", true)<span>@Lang.TipReceiveNewsletters</span>
+                                </label>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <td>
+                            <input id="registerbtn" type="submit" style="display: none;" />
+                            <a rel="nofollow" class="btn_orange btn_p30" onclick="registervalid()" href="javascript:void(0)">@Lang.TipRegister</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <td>
+                            <p>
+                                @Html.Raw(Lang.TipAgree8Seasons)
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="rt service_sidebar">
+                <div class="to_login">
+                    <p>@Lang.TipHaveAccount</p>
+                    <a rel="nofollow" class="btn_w108 btn_grey" href="@UrlRewriteHelper.GetLoginUrl()">@Lang.TipLogin</a><a rel="nofollow" class="forange font_underline" href="@UrlRewriteHelper.GetForgetPwdUrl()">@Lang.TipFgtPwd</a>
+                </div>
+                @Html.Partial("~/Views/Account/Partial/_Service_Ease.cshtml")
+                @Html.Partial("~/Views/Account/Partial/_Service_Discount.cshtml")
+                @Html.Partial("~/Views/Account/Partial/_Exclusive_Service.cshtml")
+            </div>
+        </div>
+    </div>
+}

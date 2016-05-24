@@ -1,0 +1,84 @@
+﻿@using Com.Panduo.Service.Order.ShippingOption
+@using Resources
+
+<div class="popup_wrap popup_w720 modal fade" id="div_change_shipping">
+	<div class="close" data-dismiss="modal"><a href="javascript:void(0)"></a></div>
+	<h2 class="font14">@Lang.TipChangeShipping</h2>
+	<div class="change_shipping_cont">
+		<table cellpadding="0" cellspacing="0">
+			<tr>
+				<td width="110" align="right">@Lang.TipCountry</td>
+				<td>
+					<div class="select_cont select_w235 select_search">
+						<input type="hidden" id="countryId" name="CountryId" value="@ViewBag.Country.CountryId"/>
+						<label class="select_cont_span">@ViewBag.Country.CountryName</label>
+						<div class="pop_select_cont">
+							<input name="" type="text" class="input_text_wrap inputw228" />
+							<ul>
+								<li class="list_line">----------</li>
+								@foreach (var country in ViewBag.CommonCountry)
+								{
+									<li class="list_item" data-value="@country.CountryId">@country.CountryName</li>
+								}
+								<li class="list_line">----------</li>
+								@foreach (var country in ViewBag.UnCommonCountry)
+								{
+									<li class="list_item" data-value="@country.CountryId">@country.CountryName</li>
+								}
+							</ul>
+						</div>
+					</div>
+				</td>
+				<td rowspan="2" class="pro_weight" align="center">
+					<table cellpadding="0" cellspacing="0">
+						<tr>
+							<td align="right">@Lang.TipProducWeight</td>
+							<td>@ViewBag.ShoppingCartSummary.GrossWeight.ToString("N") g</td>
+						</tr>
+						<tr>
+							<td align="right">@Lang.TipVolumeWeightUp</td>
+							<td>@ViewBag.ShoppingCartSummary.VolumeWeight.ToString("N") g</td>
+						</tr>
+						<tr>
+							<td align="right">@Lang.TipPackageBoxWeight</td>
+							<td>@ViewBag.ShoppingCartSummary.PackageWeight.ToString("N") g</td>
+						</tr>
+						<tr>
+							<td align="right">@Lang.TipShippingWeight</td>
+							<td>@ViewBag.ShoppingCartSummary.ShippingWeight.ToString("N") g</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">@Lang.TipPostZipCode</td>
+				<td>
+					<input type="text" class="input_text_wrap inputw233" id="txtPosatlCode" />
+					<input type="hidden" id="txtSort" /></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td colspan="2"><a href="javascript:void(0)" onclick="fnCalculateShippingCost()" class="btn_orange btn_p30">@Lang.TipCalculate</a></td>
+			</tr>
+		</table>
+		<p class="fgrey">@Lang.TipShippingFeeCalculate</p>
+		<div class="shipping_cont">
+			<table cellpadding="0" cellspacing="0" class="title">
+				<tr>
+					<td class="radio"></td>
+					<td class="method">@Lang.TipShippingMethod</td>
+					<td class="time"><a href="javascript:void(0)" title="@Lang.TipOldToNew">@Lang.TipEstShippingTime<ins class="sort_arrow"></ins></a></td>
+					<td class="price"><a href="javascript:void(0)" title="@Lang.TipHighToLow">@Lang.TipShippingCost<ins class="sort_arrow_asc"></ins></a></td>
+				</tr>
+			</table>
+			<div class="shipping_item">
+				<img src="@Url.Content("~/Images/loading.gif")" />
+			</div>
+		</div>
+		<div class="action_cont">
+			<!-- a标签之间不能有空格或换行 -->
+			<a class="btn_orange btn_p30" href="javascript:fnSaveChangeShippingMethod()">@Lang.TipSave</a><a class="btn_grey btn_p30 close" data-dismiss="modal" href="void(0)">@Lang.TipCancel</a>
+		</div>
+	</div>
+</div>
+

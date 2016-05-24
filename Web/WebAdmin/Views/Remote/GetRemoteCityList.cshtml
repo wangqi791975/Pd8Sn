@@ -1,0 +1,25 @@
+﻿@using Com.Panduo.Service
+@model PageData<Com.Panduo.Service.Order.ShippingOption.RemoteCity>
+@{
+    Layout = null;
+}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th width="10%">ID</th>
+            <th width="20%">国家名称</th>
+            <th width="25%">城市名称</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var city in Model.Data)
+        {
+            <tr>
+                <td>@city.Id</td>
+                <td>@city.CountryEnglishName </td>
+                <td>@city.City </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.Partial("~/Views/Shared/Partial/_Page_Bottom.cshtml", @Model.Pager)

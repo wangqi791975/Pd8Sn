@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = ViewBag.Page == 0 ? "新建" : "编辑";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@section HtmlHead
+{
+    @Html.JsFor("GiftEdit.js", "~/Js/bootstrap-formhelpers.js,~/Js/Marketing/Marketing.js", fileVersion: "1.2")
+    @Html.CssFor("GiftEdit.css", "~/Css/bootstrap-formhelpers.min.css", fileVersion: "1.0")
+}
+@model Com.Panduo.Service.Marketing.Gift.GiftMarketing
+<div class="ajax_detail">
+    <form class="form-horizontal" name="updatecoupon" id="updatecoupon" action="@Url.Content("~/Marketing/GiftEdit")" method="post" onsubmit="return false;">
+        <div class="well tab-content">
+            <div id="tab_base_info">
+                @Html.HiddenFor(m => m.Id)
+                @Html.Partial("Partial/GiftMarketingBaseInfo", Model)
+            </div>
+        </div>
+
+        <div class="form-actions @(Model.Id == 0 ? "hide" : "") giftsubdiv">
+            <input type="submit" value="提交" class="btn btn-primary ajax_update" />
+            <a href="/Marketing/Gift?page=@(ViewBag.Page)" class="btn">取消</a>
+        </div>
+    </form>
+</div>

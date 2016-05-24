@@ -1,0 +1,43 @@
+﻿@using Com.Panduo.Service.Help
+@{
+    Layout = null;
+    HelpCategory helpCategory = Model;
+}
+<form name="updateForm" action="/HelpCenter/CategorySave" method="post" onsubmit="return false;">
+    <input type="hidden" id="current_url" name="current_url" value="@Url.Content("~/HelpCenter/List")" />
+    <div class="control-group">
+        <div class="controls">
+            主题(中文)：<input type="text" class="input-xlarge" name="txtCategoryName" id="txtCategoryName" value="@helpCategory.CategoryName" />(仅用于后台显示)
+            <input type="hidden" name="hidCategoryId" value="@helpCategory.HelpCategoryId" />
+            <input type="hidden" name="hidParentCategoryId" value="@ViewBag.ParentCategoryId" />
+        </div>
+        @foreach (var item in ViewBag.AllLanguage)
+        {
+            HelpCategoryDescription helpCategoryDescription = helpCategory.Descriptions.IsNullOrEmpty() ? new HelpCategoryDescription() : helpCategory.Descriptions.Find(x => x.LanguageId == item.LanguageId);
+            <div class="controls" style="padding-left: 35px;">
+                @item.ChineseName：<input class="input-xlarge" id="txtCategoryName_@item.LanguageId" name="txtCategoryName_@item.LanguageId" type="text" value="@(helpCategoryDescription.IsNullOrEmpty() ? "" : helpCategoryDescription.CategoryName)">
+            </div>
+            <div class="controls" style="padding-left: 70px; padding-bottom: 5px">
+                <label class="radio inline">
+                    <input name="Status_@item.LanguageId" type="radio" value="1" checked="@(helpCategoryDescription.IsNullOrEmpty() || @helpCategoryDescription.Status)" />显示
+                </label>
+                <label class="radio inline">
+                    <input name="Status_@item.LanguageId" type="radio" value="0" checked="@(!helpCategoryDescription.IsNullOrEmpty() && !@helpCategoryDescription.Status)" />隐藏
+                </label>
+            </div>
+        }
+        @if (ViewBag.ParentCategoryId > 0)
+        {
+            <div class="control-group">
+                <div class="controls">
+                    显示在上一级：<label class="radio inline">
+                               <input name="IsShowParent" type="radio" value="1" checked="@(helpCategory.IsNullOrEmpty() || @helpCategory.IsShowParent)" />是
+                           </label>
+                    <label class="radio inline">
+                        <input name="IsShowParent" type="radio" value="0" checked="@(helpCategory.IsNullOrEmpty() || @helpCategory.IsShowParent)" />否
+                    </label>
+                </div>
+            </div>
+        }
+    </div>
+</form>

@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = ViewBag.Id == 0 ? "新建" : "编辑";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@using Com.Panduo.Service.AdminUser
+@model AdminUser
+<form class="form-horizontal" name="editadminuser" id="editadminuser" action="@Url.Content("~/Coupon/CouponEdit")" method="post" onsubmit="return false;">
+    <div class="well tab-content">
+        <div id="tab_base_info">
+            @Html.HiddenFor(m => m.AdminId)
+            @if (ViewBag.Id != 0)
+            {
+                <div class="control-group">
+                    <label class="control-label">用户ID：</label>
+                    <div class="controls">
+                        @Model.AdminId
+                    </div>
+                </div>
+            }
+            <div class="control-group">
+                <label class="control-label">用户姓名：</label>
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "input-xlarge" })
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">用户邮箱：</label>
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.AccountEmail, new { @class = "input-xlarge" })
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">用户是否可见邮箱：</label>
+                <div class="controls">
+                    @Html.RadioButtonFor(m => m.IsViewEmail, true)是
+                    @Html.RadioButtonFor(m => m.IsViewEmail, false)否
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">启用/禁用：</label>
+                <div class="controls">
+                    @Html.RadioButtonFor(m => m.AdminUserStatus, AdminUserStatus.Active)启用
+                    @Html.RadioButtonFor(m => m.AdminUserStatus, AdminUserStatus.Lock)禁用
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-actions">
+        <input type="submit" value="保存" id="adminusereditbtn" class="btn btn-primary">
+        <a href="/AdminUser/AdminSetting?page=@(ViewBag.Page)" class="btn">取消</a>
+        @if (ViewBag.Id != 0)
+        {
+            <a href="/AdminUser/AdminUserAuth/@ViewBag.Id?page=@(ViewBag.Page)" class="btn">设置用户权限</a>
+        }
+    </div>
+</form>
+@section HtmlFooter
+{
+    <script>
+        $(function () {
+            $("#adminusereditbtn").click(function () {
+                $("#editadminuser").ajaxSubmit({
+                    url: "/AdminUser/AdminUserEdit",
+                    dataType: 'json',
+                    success: function (responseText) {
+                        $(".alert").remove();
+                        if (responseText.error != true) {
+                            var msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作成功!' : responseText.msg;
+                            $("#editadminuser").before('<div class="alert alert-success"><a class="close" data-dismiss="alert">×</a>' + msg + '</div>');
+                            if ($("#AdminId").val() == 0) $("#editadminuser")[0].reset();	//	重置表单
+                        } else {
+                            var msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作失败!' : responseText.msg;
+                            $("#editadminuser").before('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a>' + msg + '</div>');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

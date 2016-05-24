@@ -1,0 +1,193 @@
+﻿@using System.Globalization
+@using Com.Panduo.Service.Product.Promotion
+@model PromotionArea
+@{
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+    var promotionArea = Model;//(Com.Panduo.Service.Product.Promotion.PromotionArea)ViewBag.PromotionArea;
+    ViewBag.Title = promotionArea.PromotionAreaId > 0 ? "促销区设置 > 编辑" : "促销区设置 > 新建";
+
+    var effectiveBeginDate = Model.IsNullOrEmpty() ? DateTime.Now.ToString(CultureInfo.InvariantCulture).Split(' ').First() : Model.SaleStartTime.ToString(CultureInfo.InvariantCulture).Split(' ').First();
+    var effectiveBeginTime = Model.IsNullOrEmpty() ? "" : Model.SaleStartTime.ToString(CultureInfo.InvariantCulture).Split(' ').LastOrDefault();
+    var effectiveEndDate = Model.IsNullOrEmpty() ? DateTime.Now.AddMonths(1).ToString(CultureInfo.InvariantCulture).Split(' ').First() : Model.SaleEndTime.ToString(CultureInfo.InvariantCulture).Split(' ').First();
+    var effectiveEndTime = Model.IsNullOrEmpty() ? "" : Model.SaleEndTime.ToString(CultureInfo.InvariantCulture).Split(' ').LastOrDefault();
+}
+@section HtmlHead
+{
+    @Html.JsFor("promotionArea.js", "~/Js/bootstrap-formhelpers.js,~/Js/Marketing/Marketing.js", fileVersion: "1.4")
+    @Html.CssFor("promotionArea.css", "~/Css/bootstrap-formhelpers.min.css", fileVersion: "1.0")
+}
+
+<p>
+    <h3>促销区编辑</h3>
+</p>
+<div class="alert alert-error hide"><a class="close" data-dismiss="alert">&times;</a><span>@ViewBag.ErrorMsg</span></div>
+@*<p><code>说明：时间为北京时间</code></p>*@
+<form class="form-horizontal" id="promotionForm" name="promotionForm" action="@Url.Content("~/Promotion/PromotionSave")" method="post" onsubmit="return false;">
+    <div class="well tab-content">
+        <input type="hidden" name="promotionAreaId" id="promotionAreaId" value="@promotionArea.PromotionAreaId"/>
+
+        <div class="control-group">
+            <label class="control-label">名称：</label>
+            <div class="controls">
+                @Html.TextBoxFor(area => area.PromotionName, new { @class = "input-xlarge" }) @{@:(该名称只用于在后台显示)
+                }
+            </div>
+            @foreach (var item in ViewBag.AllLanguage)
+            {
+                var promotionDesc = promotionArea.PromotionDescs.IsNullOrEmpty() ? new PromotionDesc() : promotionArea.PromotionDescs.Find(x => x.LanguageId == item.LanguageId);
+                <div class="controls">
+                    <input class="input-xlarge" id="txtPromotionName_@item.LanguageId" name="txtPromotionName_@item.LanguageId" type="text" value="@(promotionDesc.IsNullOrEmpty() ? "" : promotionDesc.PromotionName)">
+                    @{ @:(@item.LanguageCode) 
+                    }
+                </div>
+            }
+        </div>
+        <label class="control-label">开始时间：</label>
+        <div class="controls">
+            <div class="bfh-datepicker" data-format="m/d/y" data-date="@(effectiveBeginDate ?? string.Empty)" data-icon="icon-calendar" data-name="limitBeginDate" data-placeholder="开始时间"></div>
+            <div class="bfh-timepicker" data-icon="icon-time" data-name="limitBeginTime" data-time="@(effectiveBeginTime ?? string.Empty)"></div>
+            <code>（北京时间）</code>
+            <em id="beginerror" class="inline error"></em>
+        </div>
+        <label class="control-label">结束时间：</label>
+        <div class="controls">
+            <div class="bfh-datepicker" data-format="m/d/y" data-date="@(effectiveEndDate ?? string.Empty)" data-icon="icon-calendar" data-name="limitEndDate" data-placeholder="开始时间"></div>
+            <div class="bfh-timepicker" data-icon="icon-time" data-name="limitEndTime" data-time="@(effectiveEndTime ?? string.Empty)"></div>
+            <code>（北京时间）</code>
+            <em id="enderror" class="inline error"></em>
+        </div>
+        <div class="control-group">
+            <label class="control-label">启用/禁用：</label>
+            <div class="controls">
+                <label class="radio inline">
+                    @Html.RadioButtonFor(area => area.IsValid, true)启用
+                </label>
+                <label class="radio inline">
+                    @Html.RadioButtonFor(area => area.IsValid, false)禁用
+                </label>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">是否设置首页：</label>
+            <div class="controls">
+                <label class="radio inline">
+                    @Html.RadioButtonFor(m => m.IsShowHome, true, new { @onchange = "fnChangeIsShowHome(this)" })是
+                </label>
+                <label class="radio inline">
+                    @Html.RadioButtonFor(m => m.IsShowHome, false, new { @onchange = "fnChangeIsShowHome(this)" })否
+                </label>
+            </div>
+            <div class="controls @(Model.IsShowHome ? "" : "hide")" id="div_sethometab">
+                <div class="tab-content">
+                    <ul class="nav nav-tabs">
+                        @for (var i = 0; i < ViewBag.AllLanguage.Count; i++)
+                        {
+                            var className = "";
+                            if (i == 0)
+                            {
+                                className = "active";
+                            }
+                            <li class="@className"><a data-toggle="tab" href="javascript:void(0)" data-target="#tab_language_description_@ViewBag.AllLanguage[i].LanguageId">@ViewBag.AllLanguage[i].ChineseName</a></li>
+                        }
+                    </ul>
+
+                    @for (var i = 0; i < ViewBag.AllLanguage.Count; i++)
+                    {
+                        var item = ViewBag.AllLanguage[i];
+                        var className = "tab-pane";
+                        if (i == 0)
+                        {
+                            className = "tab-pane active";
+                        }
+                        var promotionDesc = promotionArea.PromotionDescs.IsNullOrEmpty() ? new PromotionDesc() : promotionArea.PromotionDescs.Find(x => x.LanguageId == item.LanguageId);
+                        <div class="@className" id="tab_language_description_@item.LanguageId">
+                            <textarea name="txtPromotionHome_@item.LanguageId" rows="8" id="txtPromotionHome_@item.LanguageId" style="width:800px;">@(!promotionDesc.IsNullOrEmpty() ? promotionDesc.PromotionHome : "")</textarea>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <a class="btn btn-primary" id="btnSave" href="javascript:void(0)">保存</a>
+            <a class="btn" href="@Url.Content("~/Promotion/Promotion")">取消</a>
+        </div>
+    </div>
+</form>
+
+<p>
+    <h3>导入商品到该促销区</h3>
+</p>
+<div class="alert alert-error hide"><a class="close" data-dismiss="alert">&times;</a><span>请选择上传的文件.</span></div>
+<form class="form-horizontal" id="uploadimportfile_Form" name="uploadimportfile_Form" action="@Url.Content("~/Promotion/ImportPromotionProduct")" method="post" onsubmit="return false;">
+    <div class="well tab-content">
+        <div class="control-group">
+            <label class="control-label">导入文件：</label>
+            <div class="controls">
+                <span class="help-inline">
+                    <input type="hidden" name="txtPromotionAreaId" id="txtPromotionAreaId" value="@promotionArea.PromotionAreaId"/>
+                    <input type="file" id="file_promotionproducts" name="file_promotionproducts" /></span> @{@:(.xls/.xlsx)
+                    }<a href="~/ImportModelFiles/Promotion/discount-area-products.xls">下载模板</a>
+            </div>
+        </div>
+        <div class="form-actions">
+            <a class="btn btn-primary" id="btnuploadfile" href="javascript:void(0)">导入</a>
+            <a class="btn" href="javascript:void(0)" onclick="$('#uploadimportfile_Form').reset();">取消</a><code>说明：时间为北京时间</code>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    $(function () {
+        //导入
+        $("#btnuploadfile").click(function () {
+            if ($("#txtPromotionAreaId").val() > 0) {
+                if ($("#file_promotionproducts").val().trim() == "") {
+                    $("#uploadimportfile_Form").prev().show().delay(2000).hide(200).find("span").text("请选择上传的文件.");
+                } else {
+                    var msg = "";
+                    $("#uploadimportfile_Form").ajaxSubmit({
+                        success: function (responseText) {
+                            switch (responseText.result) {
+                                case "success":
+                                    msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作成功!' : responseText.msg;
+                                    $("#file_promotionproducts").val('');
+                                    break;
+                                case "error":
+                                case "failing":
+                                    msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作失败!' : responseText.msg;
+                                    break;
+                            }
+                            $("#uploadimportfile_Form").prev().show().delay(2000).hide(200).find("span").text(msg);
+                        }
+                    });
+                }
+            } else
+                $("#uploadimportfile_Form").prev().show().delay(2000).hide(200).find("span").text("请先保存促销区.");
+        });
+        $("#btnSave").click(function () {
+            var msg = "";
+            $("#promotionForm").ajaxSubmit({
+                success: function (responseText) {
+                    switch (responseText.result) {
+                        case "success":
+                            msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作成功!' : responseText.msg;
+                            $("#txtPromotionAreaId").val(responseText.promotionid);
+                            $("#promotionAreaId").val(responseText.promotionid);
+                            break;
+                        case "error":
+                        case "failing":
+                            msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作失败!' : responseText.msg;
+                            break;
+                    }
+                    $("#promotionForm").prev().show().delay(2000).hide(200).find("span").text(msg);
+                }
+            });
+        });
+    });
+
+    function fnChangeIsShowHome(obj) {
+        if ($(obj).val() == "True") $("#div_sethometab").show(); else $("#div_sethometab").hide();
+    }
+</script>

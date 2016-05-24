@@ -1,0 +1,43 @@
+﻿@using Com.Panduo.Service
+@{
+    ViewBag.Title = "8Seasons Club会员管理";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@section HtmlHead
+{
+    @Html.JsFor("customer.js", "~/Js/Customer/Customer.js", "1.3")
+}
+<div id="pull-right" class="pull-right locationopt">
+    <form method="post" action="/Club/ClubCustomerList" id="searchForm" name="searchForm" class="form-search">
+        搜索客户Email：<input type="text" onkeyup=" $(this).val($(this).val().replace(/\//g, '')); " id="customerEmail" name="customerEmail">
+        通过客服经理筛选：
+        <select id="clubManager" name="clubManager">
+            <option value="0">All</option>
+            @foreach (var clubCustomer in ServiceFactory.CustomerService.FindAllManager(1, 1000, null, null).Data)
+            {
+                <option value="@clubCustomer.CustomerManagerId">@clubCustomer.ChineseName</option>
+            }
+        </select>
+        <button class="btn" id="searchBtn" type="submit">搜索</button>
+    </form>
+    <a id="exportbtn" class="btn" style="float: right;margin-bottom: 10px" href="/Club/ExportExcel?customerEmail=''&clubManager=''" target="_blank">数据导出</a>
+</div>
+<div class="clearboth"></div>
+<div id="main" class="ajax-list" data-url="/Club/ClubCustomerList">
+</div>
+
+@section HtmlFooter
+{
+    <div class="modal hide fade ajax_detail" data-url="/Club/ClubCustomerEdit">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">&times;</a>
+            <h3>编辑</h3>
+        </div>
+        <div class="modal-body ajax_info">
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:void(0)" class="btn btn-primary ajax_update">保存</a>
+            <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+        </div>
+    </div>
+}

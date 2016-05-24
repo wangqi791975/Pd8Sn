@@ -1,0 +1,617 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CAA7B534-DFB7-4FAC-AC17-82C92DBA4B0B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Com.Panduo.ServiceImpl</RootNamespace>
+    <AssemblyName>ServiceImpl</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging">
+      <HintPath>..\RefDLL\SpringNet\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="HttpWebAdapters">
+      <HintPath>..\RefDLL\Solr\HttpWebAdapters.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\RefDLL\NHibernate\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageLibrary">
+      <HintPath>..\RefDLL\Tool\ImageLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\RefDLL\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Memcached.ClientLibrary">
+      <HintPath>..\RefDLL\NHibernate\MemCache\Memcached.ClientLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\RefDLL\Solr\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\RefDLL\NHibernate\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Caches.MemCache">
+      <HintPath>..\RefDLL\NHibernate\MemCache\NHibernate.Caches.MemCache.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Mapping.Attributes">
+      <HintPath>..\RefDLL\NHibernate\NHibernate.Mapping.Attributes.dll</HintPath>
+    </Reference>
+    <Reference Include="Panduo.Com.Email.SaveXml">
+      <HintPath>..\RefDLL\Panduo\Panduo.Com.Email.SaveXml.dll</HintPath>
+    </Reference>
+    <Reference Include="PhotosRule">
+      <HintPath>..\RefDLL\Panduo\PhotosRule.dll</HintPath>
+    </Reference>
+    <Reference Include="SolrNet">
+      <HintPath>..\RefDLL\Solr\SolrNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Aop">
+      <HintPath>..\RefDLL\SpringNet\Spring.Aop.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core">
+      <HintPath>..\RefDLL\SpringNet\Spring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Data">
+      <HintPath>..\RefDLL\SpringNet\Spring.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Data.NHibernate32">
+      <HintPath>..\RefDLL\SpringNet\Spring.Data.NHibernate32.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Scheduling.Quartz20">
+      <HintPath>..\RefDLL\SpringNet\Spring.Scheduling.Quartz20.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminUser\AdminUserService.cs" />
+    <Compile Include="AdminUser\Dao\AdminDao.cs" />
+    <Compile Include="AdminUser\Dao\AdminMenuDao.cs" />
+    <Compile Include="AdminUser\Dao\AdminModuleDao.cs" />
+    <Compile Include="AdminUser\Dao\AdminPasswordUsedDao.cs" />
+    <Compile Include="AdminUser\Dao\AdminUserModuleDao.cs" />
+    <Compile Include="AdminUser\Dao\IAdminDao.cs" />
+    <Compile Include="AdminUser\Dao\IAdminMenuDao.cs" />
+    <Compile Include="AdminUser\Dao\IAdminModuleDao.cs" />
+    <Compile Include="AdminUser\Dao\IAdminPasswordUsedDao.cs" />
+    <Compile Include="AdminUser\Dao\IAdminRoleDao.cs" />
+    <Compile Include="AdminUser\Dao\AdminRoleDao.cs" />
+    <Compile Include="AdminUser\Dao\IAdminUserModuleDao.cs" />
+    <Compile Include="Article\ArticleService.cs" />
+    <Compile Include="Article\Dao\ISpreadArticleDao.cs" />
+    <Compile Include="Article\Dao\ISpreadArticleDescriptionDao.cs" />
+    <Compile Include="Article\Dao\SpreadArticleDao.cs" />
+    <Compile Include="Article\Dao\SpreadArticleDescriptionDao.cs" />
+    <Compile Include="BaseDao.cs" />
+    <Compile Include="Cash\CashService.cs" />
+    <Compile Include="Cash\Dao\CashSectionDao.cs" />
+    <Compile Include="Cash\Dao\CashItemDao.cs" />
+    <Compile Include="Cash\Dao\CashAccountDao.cs" />
+    <Compile Include="Cash\Dao\ICashSectionDao.cs" />
+    <Compile Include="Cash\Dao\ICashItemDao.cs" />
+    <Compile Include="Cash\Dao\ICashAccountDao.cs" />
+    <Compile Include="ConfigHelper.cs" />
+    <Compile Include="Coupon\CouponService.cs" />
+    <Compile Include="Coupon\Dao\CouponCustomerDao.cs" />
+    <Compile Include="Coupon\Dao\CouponCustomerViewDao.cs" />
+    <Compile Include="Coupon\Dao\CouponDao.cs" />
+    <Compile Include="Coupon\Dao\CouponDescDao.cs" />
+    <Compile Include="Coupon\Dao\ICouponCustomerDao.cs" />
+    <Compile Include="Coupon\Dao\ICouponCustomerViewDao.cs" />
+    <Compile Include="Coupon\Dao\ICouponDao.cs" />
+    <Compile Include="Coupon\Dao\ICouponDescDao.cs" />
+    <Compile Include="Customer\ChannelService.cs" />
+    <Compile Include="Customer\Club\ClubService.cs" />
+    <Compile Include="Customer\Club\Dao\ClubBlackListDao.cs" />
+    <Compile Include="Customer\Club\Dao\ClubCustomerDao.cs" />
+    <Compile Include="Customer\Club\Dao\ClubCustomerViewDao.cs" />
+    <Compile Include="Customer\Club\Dao\ClubFeeDao.cs" />
+    <Compile Include="Customer\Dao\CustomerHighRiskDao.cs" />
+    <Compile Include="Customer\Dao\ICustomerHighRiskDao.cs" />
+    <Compile Include="Help\Dao\VHelpArticleDao.cs" />
+    <Compile Include="Help\Dao\IVHelpArticleDao.cs" />
+    <Compile Include="Help\Dao\IVHelpCategoryDao.cs" />
+    <Compile Include="Help\Dao\VHelpCategoryDao.cs" />
+    <Compile Include="Help\HelpService.cs" />
+    <Compile Include="Product\ClubProduct\Dao\ClubProductViewDao.cs" />
+    <Compile Include="Product\ClubProduct\Dao\IClubProductViewDao.cs" />
+    <Compile Include="Customer\Dao\CustomerAvatarDao.cs" />
+    <Compile Include="Customer\Dao\CustomerRemarkDao.cs" />
+    <Compile Include="Customer\Dao\ICustomerAvatarDao.cs" />
+    <Compile Include="Customer\Dao\ICustomerRemarkDao.cs" />
+    <Compile Include="Marketing\BannerService.cs" />
+    <Compile Include="Marketing\Dao\BannerDao.cs" />
+    <Compile Include="Marketing\Dao\HomeAreaSettingDao.cs" />
+    <Compile Include="Marketing\Dao\IBannerDao.cs" />
+    <Compile Include="Marketing\Dao\IHomeAreaSettingDao.cs" />
+    <Compile Include="Marketing\Dao\IMarketingGiftDao.cs" />
+    <Compile Include="Marketing\Dao\IVMarketingGiftDao.cs" />
+    <Compile Include="Marketing\Dao\MarketingGiftDao.cs" />
+    <Compile Include="Marketing\Dao\VMarketingGiftDao.cs" />
+    <Compile Include="Order\Dao\IOrderPaymentAmountLogDao.cs" />
+    <Compile Include="Order\Dao\IOrderRemarkByAdminDao.cs" />
+    <Compile Include="Order\Dao\ISpecialOrderDao.cs" />
+    <Compile Include="Order\Dao\OrderPaymentAmountLogDao.cs" />
+    <Compile Include="Order\Dao\OrderRemarkByAdminDao.cs" />
+    <Compile Include="Order\Dao\SpecialOrderDao.cs" />
+    <Compile Include="Payment\Dao\IGlobalCollectDisabledCountryDao.cs" />
+    <Compile Include="Payment\Dao\GlobalCollectDisabledCountryDao.cs" />
+    <Compile Include="Payment\Dao\PaymentEnabledCustomerDao.cs" />
+    <Compile Include="Payment\Dao\IPaymentEnabledCustomerDao.cs" />
+    <Compile Include="Product\Dailydeal\Dao\DailydealLabelDao.cs" />
+    <Compile Include="Product\Dailydeal\Dao\IDailydealLabelDao.cs" />
+    <Compile Include="Product\Dao\ProductPriceRiseDao.cs" />
+    <Compile Include="Product\Dao\IProductPriceRiseDao.cs" />
+    <Compile Include="Product\Dao\IOemSourcingDao.cs" />
+    <Compile Include="Product\Dao\OemSourcingDao.cs" />
+    <Compile Include="SiteConfigure\Dao\CountryHighRiskDao.cs" />
+    <Compile Include="SiteConfigure\Dao\ICountryHighRiskDao.cs" />
+    <Compile Include="SystemMail\Dao\EmailConfigDao.cs" />
+    <Compile Include="SystemMail\Dao\EmailLogoDao.cs" />
+    <Compile Include="SystemMail\Dao\IEmailConfigDao.cs" />
+    <Compile Include="SystemMail\Dao\IEmailLogoDao.cs" />
+    <Compile Include="SystemMail\Dao\IEmailProduceLogDao.cs" />
+    <Compile Include="SystemMail\Dao\EmailProduceLogDao.cs" />
+    <Compile Include="SystemMail\MailService.cs" />
+    <Compile Include="Product\ClubProduct\Dao\ClubProductDao.cs" />
+    <Compile Include="Customer\Club\Dao\IClubBlackListDao.cs" />
+    <Compile Include="Customer\Club\Dao\IClubCustomerDao.cs" />
+    <Compile Include="Customer\Club\Dao\IClubCustomerViewDao.cs" />
+    <Compile Include="Customer\Club\Dao\IClubFeeDao.cs" />
+    <Compile Include="Product\ClubProduct\Dao\IClubProductDao.cs" />
+    <Compile Include="Customer\CustomerService.cs" />
+    <Compile Include="Customer\Dao\ChannelDao.cs" />
+    <Compile Include="Customer\Dao\CustomerAddressDao.cs" />
+    <Compile Include="Customer\Dao\CustomerDao.cs" />
+    <Compile Include="Customer\Dao\CustomerGroupDao.cs" />
+    <Compile Include="Customer\Dao\CustomerGroupDescDao.cs" />
+    <Compile Include="Customer\Dao\CustomerManagerDao.cs" />
+    <Compile Include="Customer\Dao\CustomerPreferenceDao.cs" />
+    <Compile Include="Customer\Dao\ForgotPasswordDao.cs" />
+    <Compile Include="Customer\Dao\IChannelDao.cs" />
+    <Compile Include="Customer\Dao\IForgotPasswordDao.cs" />
+    <Compile Include="Customer\Product\CustomerProductService.cs" />
+    <Compile Include="Customer\Product\Dao\CustomerProductDao.cs" />
+    <Compile Include="Customer\Product\Dao\CustomerProductViewDao.cs" />
+    <Compile Include="Customer\Product\Dao\ICustomerProductDao.cs" />
+    <Compile Include="Customer\Product\Dao\ICustomerProductViewDao.cs" />
+    <Compile Include="Customer\Product\Dao\IWishListHistoryDao.cs" />
+    <Compile Include="Customer\Product\Dao\IWishListDao.cs" />
+    <Compile Include="Customer\Product\Dao\IWishListTypeDescDao.cs" />
+    <Compile Include="Customer\Product\Dao\WishListDao.cs" />
+    <Compile Include="Customer\Product\Dao\WishListHistoryDao.cs" />
+    <Compile Include="Customer\Product\Dao\WishListTypeDescDao.cs" />
+    <Compile Include="Customer\Product\WishListService.cs" />
+    <Compile Include="ImplCacheHelper.cs" />
+    <Compile Include="Customer\Dao\ISubscribeDao.cs" />
+    <Compile Include="Customer\Dao\SubscribeDao.cs" />
+    <Compile Include="Customer\NewsletterService.cs" />
+    <Compile Include="Marketing\Dao\IMarketingCouponDao.cs" />
+    <Compile Include="Marketing\Dao\IMarketingCustomerClaimDao.cs" />
+    <Compile Include="Marketing\Dao\IMarketingDao.cs" />
+    <Compile Include="Marketing\Dao\IMarketingFreeShippingDao.cs" />
+    <Compile Include="Marketing\Dao\IMarketingOrderDiscountDao.cs" />
+    <Compile Include="Marketing\Dao\IMarketingPlaceOrderDao.cs" />
+    <Compile Include="Marketing\Dao\IMarketingShippingDao.cs" />
+    <Compile Include="Marketing\Dao\IMarketingShippingDiscountDao.cs" />
+    <Compile Include="Marketing\Dao\IMarketingShippingUpgradeDao.cs" />
+    <Compile Include="Marketing\Dao\IVMarketingCouponDao.cs" />
+    <Compile Include="Marketing\Dao\MarketingCouponDao.cs" />
+    <Compile Include="Marketing\Dao\MarketingCustomerClaimDao.cs" />
+    <Compile Include="Marketing\Dao\MarketingDao.cs" />
+    <Compile Include="Marketing\Dao\MarketingFreeShippingDao.cs" />
+    <Compile Include="Marketing\Dao\MarketingOrderDiscountDao.cs" />
+    <Compile Include="Marketing\Dao\MarketingPlaceOrderDao.cs" />
+    <Compile Include="Marketing\Dao\MarketingShippingDao.cs" />
+    <Compile Include="Marketing\Dao\MarketingShippingDiscountDao.cs" />
+    <Compile Include="Marketing\Dao\MarketingShippingUpgradeDao.cs" />
+    <Compile Include="Marketing\Dao\VMarketingCouponDao.cs" />
+    <Compile Include="Marketing\Dao\VMarketingMarketingShippingDao.cs" />
+    <Compile Include="Marketing\Dao\IVMarketingMarketingShippingDao.cs" />
+    <Compile Include="Marketing\MarketingService.cs" />
+    <Compile Include="Order\Dao\IOrderStatusHistoryDao.cs" />
+    <Compile Include="Order\Dao\IPackageDetailDao.cs" />
+    <Compile Include="Order\Dao\OrderStatusHistoryDao.cs" />
+    <Compile Include="Order\Dao\PackageDetailDao.cs" />
+    <Compile Include="Order\OrderService.cs" />
+    <Compile Include="Order\ShippingOption\Dao\CustomsNoDao.cs" />
+    <Compile Include="Order\ShippingOption\Dao\ICustomsNoDao.cs" />
+    <Compile Include="Order\ShippingOption\ShippingService.cs" />
+    <Compile Include="Order\ShoppingCart\Dao\ShoppingCartDao.cs" />
+    <Compile Include="Order\ShoppingCart\Dao\IShoppingCartDao.cs" />
+    <Compile Include="Order\ShoppingCart\Dao\IAutoCookieIdDao.cs" />
+    <Compile Include="Order\ShoppingCart\Dao\AutoCookieIdDao.cs" />
+    <Compile Include="Order\ShoppingCart\Dao\IVshoppingCartUnAvailablDao.cs" />
+    <Compile Include="Order\ShoppingCart\Dao\VshoppingCartUnAvailablDao.cs" />
+    <Compile Include="Order\ShoppingCart\Dao\VShoppingCartDao.cs" />
+    <Compile Include="Order\ShoppingCart\Dao\IVShoppingCartDao.cs" />
+    <Compile Include="Order\ShoppingCart\ShoppingCartService.cs" />
+    <Compile Include="Payment\Dao\IOrderPaymentLogDao.cs" />
+    <Compile Include="Payment\Dao\IPaymentLogBankOfChinaDao.cs" />
+    <Compile Include="Payment\Dao\IPaymentLogGcDao.cs" />
+    <Compile Include="Payment\Dao\IPaymentLogHsbcDao.cs" />
+    <Compile Include="Payment\Dao\IPaymentLogMoneyGramDao.cs" />
+    <Compile Include="Payment\Dao\IPaymentLogOceanPaymentDao.cs" />
+    <Compile Include="Payment\Dao\IPaymentLogPaypalDao.cs" />
+    <Compile Include="Payment\Dao\IPaymentLogWesternUnionDao.cs" />
+    <Compile Include="Payment\Dao\IRandGcDao.cs" />
+    <Compile Include="Payment\Dao\OrderPaymentLogDao.cs" />
+    <Compile Include="Payment\Dao\PaymentLogBankOfChinaDao.cs" />
+    <Compile Include="Payment\Dao\PaymentLogGcDao.cs" />
+    <Compile Include="Payment\Dao\PaymentLogHsbcDao.cs" />
+    <Compile Include="Payment\Dao\PaymentLogMoneyGramDao.cs" />
+    <Compile Include="Payment\Dao\PaymentLogOceanPaymentDao.cs" />
+    <Compile Include="Payment\Dao\PaymentLogPaypalDao.cs" />
+    <Compile Include="Payment\Dao\PaymentLogWesternUnionDao.cs" />
+    <Compile Include="Payment\Dao\RandGcDao.cs" />
+    <Compile Include="Payment\PaymentConfigHelper.cs" />
+    <Compile Include="Payment\PaymentService.cs" />
+    <Compile Include="Product\Category\CategoryService.cs" />
+    <Compile Include="Product\ClubProduct\ClubProductService.cs" />
+    <Compile Include="Product\Dailydeal\Dao\VdailydealProductDao.cs" />
+    <Compile Include="Product\Dailydeal\Dao\IVdailydealProductDao.cs" />
+    <Compile Include="Product\Dailydeal\Dao\IDailydealTitleDao.cs" />
+    <Compile Include="Product\Dailydeal\Dao\DailydealTitleDao.cs" />
+    <Compile Include="Product\Dailydeal\Dao\IDailydealDescDao.cs" />
+    <Compile Include="Product\Dailydeal\Dao\DailydealDescDao.cs" />
+    <Compile Include="Product\Dao\IProductSimilarIgnoreDao.cs" />
+    <Compile Include="Product\Dao\IProductSimilarIgnoreViewDao.cs" />
+    <Compile Include="Product\Dao\ProductSimilarIgnoreDao.cs" />
+    <Compile Include="Product\Dao\ProductSimilarIgnoreViewDao.cs" />
+    <Compile Include="Product\Dao\UnitDao.cs" />
+    <Compile Include="Product\Dao\IUnitDao.cs" />
+    <Compile Include="Product\Dao\IUnitDescDao.cs" />
+    <Compile Include="Product\Dao\UnitDescDao.cs" />
+    <Compile Include="Product\ProductImageService.cs" />
+    <Compile Include="Product\Promotion\Dao\PromotionDescDao.cs" />
+    <Compile Include="Product\Promotion\Dao\IPromotionDescDao.cs" />
+    <Compile Include="Product\Solr\PostQueryConnection.cs" />
+    <Compile Include="Product\Solr\ProductSolrField.cs" />
+    <Compile Include="Product\Solr\ProductSolrInfo.cs" />
+    <Compile Include="Product\Solr\ProductSolrService.cs" />
+    <Compile Include="Product\Solr\SolrConfigHelper.cs" />
+    <Compile Include="Product\Solr\SolrConfigurer.cs" />
+    <Compile Include="Product\Solr\SolrConst.cs" />
+    <Compile Include="Product\Solr\SolrExtendHelper.cs" />
+    <Compile Include="Product\Solr\SolrQueryHelper.cs" />
+    <Compile Include="Product\Solr\SolrQueryParam.cs" />
+    <Compile Include="Product\Solr\SolrQueryResultData.cs" />
+    <Compile Include="Product\Solr\SolrRateHelper.cs" />
+    <Compile Include="Product\Solr\SolrSynonym.cs" />
+    <Compile Include="Product\Solr\SolrPageRateHelper.cs" />
+    <Compile Include="Review\Dao\INotReviewProductViewDao.cs" />
+    <Compile Include="Review\Dao\IReviewProductCustomerViewDao.cs" />
+    <Compile Include="Review\Dao\IReviewWebsiteCustomerViewDao.cs" />
+    <Compile Include="Review\Dao\NotReviewProductViewDao.cs" />
+    <Compile Include="Review\Dao\ReviewProductCustomerViewDao.cs" />
+    <Compile Include="Review\Dao\ReviewWebsiteCustomerViewDao.cs" />
+    <Compile Include="SEO\Dao\IMetaHomeDao.cs" />
+    <Compile Include="SEO\Dao\MetaHomeDao.cs" />
+    <Compile Include="SEO\Dao\IMetaListDao.cs" />
+    <Compile Include="SEO\Dao\MetaListDao.cs" />
+    <Compile Include="SEO\Dao\IMetaAreaDao.cs" />
+    <Compile Include="SEO\Dao\MetaAreaDao.cs" />
+    <Compile Include="SEO\TopKeywordService.cs" />
+    <Compile Include="SEO\MetaService.cs" />
+    <Compile Include="Shipping\Dao\IShippingDao.cs" />
+    <Compile Include="Shipping\Dao\IShippingDayDao.cs" />
+    <Compile Include="Shipping\Dao\IShippingDescDao.cs" />
+    <Compile Include="Shipping\Dao\IShippingDisabledCityDao.cs" />
+    <Compile Include="Shipping\Dao\IShippingDisabledCountryDao.cs" />
+    <Compile Include="Shipping\Dao\IShippingDisabledPostcodeDao.cs" />
+    <Compile Include="Shipping\Dao\ShippingDao.cs" />
+    <Compile Include="Shipping\Dao\ShippingDayDao.cs" />
+    <Compile Include="Shipping\Dao\ShippingDescDao.cs" />
+    <Compile Include="Shipping\Dao\ShippingDisabledCityDao.cs" />
+    <Compile Include="Shipping\Dao\ShippingDisabledCountryDao.cs" />
+    <Compile Include="Shipping\Dao\ShippingDisabledPostcodeDao.cs" />
+    <Compile Include="SiteConfigure\Dao\CountryIp1Dao.cs" />
+    <Compile Include="SiteConfigure\Dao\CountryIp2Dao.cs" />
+    <Compile Include="SiteConfigure\Dao\ICountryIp1Dao.cs" />
+    <Compile Include="Product\Dao\IProductSearchLogDao.cs" />
+    <Compile Include="Product\Dao\ProductSearchLogDao.cs" />
+    <Compile Include="Product\ProductArea\Dao\IProductAreaDao.cs" />
+    <Compile Include="Product\ProductArea\Dao\ProductAreaDao.cs" />
+    <Compile Include="Product\ProductArea\Dao\IProductAreaLanguageDao.cs" />
+    <Compile Include="Product\ProductArea\Dao\ProductAreaLanguageDao.cs" />
+    <Compile Include="Product\ProductArea\Dao\IProductAreaRelativeDao.cs" />
+    <Compile Include="Product\ProductArea\Dao\ProductAreaRelativeDao.cs" />
+    <Compile Include="Product\ProductArea\ProductAreaService.cs" />
+    <Compile Include="Product\Property\PropertyService.cs" />
+    <Compile Include="Review\Dao\IReviewProductDao.cs" />
+    <Compile Include="Review\Dao\IReviewWebsiteDao.cs" />
+    <Compile Include="Review\Dao\ReviewProductDao.cs" />
+    <Compile Include="Review\Dao\ReviewWebsiteDao.cs" />
+    <Compile Include="Review\ReviewService.cs" />
+    <Compile Include="SEO\Dao\ITopKeywordDao.cs" />
+    <Compile Include="SEO\Dao\ITopKeywordSubjectDao.cs" />
+    <Compile Include="SEO\Dao\TopKeywordDao.cs" />
+    <Compile Include="SEO\Dao\TopKeywordSubjectDao.cs" />
+    <Compile Include="SiteConfigure\Dao\AddressFormatDao.cs" />
+    <Compile Include="SiteConfigure\Dao\CountryDescriptionDao.cs" />
+    <Compile Include="SiteConfigure\Dao\IAddressFormatDao.cs" />
+    <Compile Include="SiteConfigure\Dao\ICountryDescriptionDao.cs" />
+    <Compile Include="SiteConfigure\Dao\SearchKeywordDao.cs" />
+    <Compile Include="SiteConfigure\Dao\ICountryIp2Dao.cs" />
+    <Compile Include="SiteConfigure\SystemService.cs" />
+    <Compile Include="Suggestion\Dao\CustomerSuggestionAttachmentDao.cs" />
+    <Compile Include="Suggestion\Dao\CustomerSuggestionContentDao.cs" />
+    <Compile Include="Suggestion\Dao\CustomerSuggestionDetailDao.cs" />
+    <Compile Include="Suggestion\Dao\CustomerSuggestionItemDao.cs" />
+    <Compile Include="Suggestion\Dao\CustomerSuggestionObjectsDao.cs" />
+    <Compile Include="Customer\Dao\ICustomerAddressDao.cs" />
+    <Compile Include="Customer\Dao\ICustomerDao.cs" />
+    <Compile Include="Customer\Dao\ICustomerGroupDao.cs" />
+    <Compile Include="Customer\Dao\ICustomerGroupDescDao.cs" />
+    <Compile Include="Customer\Dao\ICustomerManagerDao.cs" />
+    <Compile Include="Customer\Dao\ICustomerPreferenceDao.cs" />
+    <Compile Include="Help\Dao\HelpArticleDao.cs" />
+    <Compile Include="Help\Dao\HelpArticleDescriptionDao.cs" />
+    <Compile Include="Help\Dao\HelpCategoryDao.cs" />
+    <Compile Include="Help\Dao\HelpCategoryDescriptionDao.cs" />
+    <Compile Include="Help\Dao\IHelpArticleDao.cs" />
+    <Compile Include="Help\Dao\IHelpArticleDescriptionDao.cs" />
+    <Compile Include="Help\Dao\IHelpCategoryDao.cs" />
+    <Compile Include="Help\Dao\IHelpCategoryDescriptionDao.cs" />
+    <Compile Include="HqlHelper.cs" />
+    <Compile Include="ImplToolHelper.cs" />
+    <Compile Include="LocalSessionFactoryObject .cs" />
+    <Compile Include="IBaseDao.cs" />
+    <Compile Include="Message\Dao\ITicketReplyAttachmentDao.cs" />
+    <Compile Include="Message\Dao\ITicketReplyDao.cs" />
+    <Compile Include="Message\Dao\ITicketTopicAttachmentDao.cs" />
+    <Compile Include="Message\Dao\ITicketTopicDao.cs" />
+    <Compile Include="Message\Dao\TicketReplyAttachmentDao.cs" />
+    <Compile Include="Message\Dao\TicketReplyDao.cs" />
+    <Compile Include="Message\Dao\TicketTopicAttachmentDao.cs" />
+    <Compile Include="Message\Dao\TicketTopicDao.cs" />
+    <Compile Include="Order\Dao\IOrderAddressDao.cs" />
+    <Compile Include="Order\Dao\IOrderDao.cs" />
+    <Compile Include="Order\Dao\IOrderOutOfStockDao.cs" />
+    <Compile Include="Order\Dao\IPackageDao.cs" />
+    <Compile Include="Order\Dao\IOrderPayStatusDao.cs" />
+    <Compile Include="Order\Dao\IOrderPayStatusDescriptionDao.cs" />
+    <Compile Include="Order\Dao\IOrderPriceDao.cs" />
+    <Compile Include="Order\Dao\IOrderDetailDao.cs" />
+    <Compile Include="Order\Dao\IOrderSnapshotDao.cs" />
+    <Compile Include="Order\Dao\IOrderStatusDao.cs" />
+    <Compile Include="Order\Dao\IOrderStatusDescriptionDao.cs" />
+    <Compile Include="Order\Dao\OrderAddressDao.cs" />
+    <Compile Include="Order\Dao\OrderDao.cs" />
+    <Compile Include="Order\Dao\OrderOutOfStockDao.cs" />
+    <Compile Include="Order\Dao\PackageDao.cs" />
+    <Compile Include="Order\Dao\OrderPayStatusDao.cs" />
+    <Compile Include="Order\Dao\OrderPayStatusDescriptionDao.cs" />
+    <Compile Include="Order\Dao\OrderPriceDao.cs" />
+    <Compile Include="Order\Dao\OrderDetailDao.cs" />
+    <Compile Include="Order\Dao\OrderSnapshotDao.cs" />
+    <Compile Include="Order\Dao\OrderStatusDao.cs" />
+    <Compile Include="Order\Dao\OrderStatusDescriptionDao.cs" />
+    <Compile Include="Product\Category\Dao\CategoryAdDao.cs" />
+    <Compile Include="Product\Category\Dao\CategoryDao.cs" />
+    <Compile Include="Product\Category\Dao\CategoryDescDao.cs" />
+    <Compile Include="Product\Category\Dao\CategoryKeywordDao.cs" />
+    <Compile Include="Product\Category\Dao\CategoryPropertyDao.cs" />
+    <Compile Include="Product\Category\Dao\ICategoryAdDao.cs" />
+    <Compile Include="Product\Category\Dao\ICategoryDao.cs" />
+    <Compile Include="Product\Category\Dao\ICategoryDescDao.cs" />
+    <Compile Include="Product\Category\Dao\ICategoryKeywordDao.cs" />
+    <Compile Include="Product\Category\Dao\ICategoryPropertyDao.cs" />
+    <Compile Include="Product\Dailydeal\Dao\DailydealProductDao.cs" />
+    <Compile Include="Product\Dao\HotProductDao.cs" />
+    <Compile Include="Product\Dailydeal\Dao\IDailydealProductDao.cs" />
+    <Compile Include="Product\Dao\IHotProductDao.cs" />
+    <Compile Include="Product\Dao\IProductStockDao.cs" />
+    <Compile Include="Product\Dao\IProductAlsoboughtDao.cs" />
+    <Compile Include="Product\Dao\IProductCategorieDao.cs" />
+    <Compile Include="Product\Dao\IProductClickDao.cs" />
+    <Compile Include="Product\Dao\IProductDao.cs" />
+    <Compile Include="Product\Dao\IProductDescDao.cs" />
+    <Compile Include="Product\Dao\IProductImageDao.cs" />
+    <Compile Include="Product\Dao\IProductMatchDao.cs" />
+    <Compile Include="Product\Dao\IProductPropertyValueDao.cs" />
+    <Compile Include="Product\Dao\IProductQuantityPriceDao.cs" />
+    <Compile Include="Product\Dao\IProductSaleDao.cs" />
+    <Compile Include="Product\Dao\IProductsOtherpackDao.cs" />
+    <Compile Include="Product\Promotion\Dao\IPromotionDao.cs" />
+    <Compile Include="Product\Promotion\Dao\IPromotionProductDao.cs" />
+    <Compile Include="Product\Dao\ProductStockDao.cs" />
+    <Compile Include="Product\Dao\ProductAlsoboughtDao.cs" />
+    <Compile Include="Product\Dao\ProductCategorieDao.cs" />
+    <Compile Include="Product\Dao\ProductClickDao.cs" />
+    <Compile Include="Product\Dao\ProductDao.cs" />
+    <Compile Include="Product\Dao\ProductDescDao.cs" />
+    <Compile Include="Product\Dao\ProductImageDao.cs" />
+    <Compile Include="Product\Dao\ProductMatchDao.cs" />
+    <Compile Include="Product\Dao\ProductPropertyValueDao.cs" />
+    <Compile Include="Product\Dao\ProductQuantityPriceDao.cs" />
+    <Compile Include="Product\Dao\ProductSaleDao.cs" />
+    <Compile Include="Product\Dao\ProductsOtherpackDao.cs" />
+    <Compile Include="Product\Promotion\Dao\PromotionDao.cs" />
+    <Compile Include="Product\Promotion\Dao\PromotionProductDao.cs" />
+    <Compile Include="Product\Dailydeal\ProductDailyDealService.cs" />
+    <Compile Include="Product\ProductService.cs" />
+    <Compile Include="Product\Promotion\PromotionService.cs" />
+    <Compile Include="Product\Property\Dao\PropertyDao.cs" />
+    <Compile Include="Product\Property\Dao\PropertyDescDao.cs" />
+    <Compile Include="Product\Property\Dao\PropertyValueDao.cs" />
+    <Compile Include="Product\Property\Dao\PropertyValueDescDao.cs" />
+    <Compile Include="Product\Property\Dao\PropertyValueGroupDao.cs" />
+    <Compile Include="Product\Property\Dao\PropertyValueGroupDescDao.cs" />
+    <Compile Include="SiteConfigure\ConfigureService.cs" />
+    <Compile Include="SiteConfigure\Dao\AreaCountryDao.cs" />
+    <Compile Include="SiteConfigure\Dao\ConfigDao.cs" />
+    <Compile Include="SiteConfigure\Dao\CountryAreaDao.cs" />
+    <Compile Include="SiteConfigure\Dao\CountryAreaDescriptionDao.cs" />
+    <Compile Include="SiteConfigure\Dao\CountryCityDao.cs" />
+    <Compile Include="SiteConfigure\Dao\CountryCityDescriptionDao.cs" />
+    <Compile Include="SiteConfigure\Dao\CountryContinentDao.cs" />
+    <Compile Include="SiteConfigure\Dao\CountryDao.cs" />
+    <Compile Include="SiteConfigure\Dao\CountryProvinceDao.cs" />
+    <Compile Include="SiteConfigure\Dao\CountryProvinceDescriptionDao.cs" />
+    <Compile Include="SiteConfigure\Dao\CurrencyDao.cs" />
+    <Compile Include="SiteConfigure\Dao\CurrencyLogDao.cs" />
+    <Compile Include="SiteConfigure\Dao\IAreaCountryDao.cs" />
+    <Compile Include="SiteConfigure\Dao\IIpWhiteBlackListDao.cs" />
+    <Compile Include="SiteConfigure\Dao\ILanguageDao.cs" />
+    <Compile Include="SiteConfigure\Dao\IpWhiteBlackListDao.cs" />
+    <Compile Include="SiteConfigure\Dao\ISearchKeywordDao.cs" />
+    <Compile Include="Product\Property\Dao\IPropertyDao.cs" />
+    <Compile Include="Product\Property\Dao\IPropertyDescDao.cs" />
+    <Compile Include="Product\Property\Dao\IPropertyValueDao.cs" />
+    <Compile Include="Product\Property\Dao\IPropertyValueDescDao.cs" />
+    <Compile Include="Product\Property\Dao\IPropertyValueGroupDao.cs" />
+    <Compile Include="Product\Property\Dao\IPropertyValueGroupDescDao.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceImplUtil.cs" />
+    <Compile Include="SiteConfigure\Dao\IConfigDao.cs" />
+    <Compile Include="SiteConfigure\Dao\ICountryAreaDao.cs" />
+    <Compile Include="SiteConfigure\Dao\ICountryAreaDescriptionDao.cs" />
+    <Compile Include="SiteConfigure\Dao\ICountryCityDao.cs" />
+    <Compile Include="SiteConfigure\Dao\ICountryCityDescriptionDao.cs" />
+    <Compile Include="SiteConfigure\Dao\ICountryContinentDao.cs" />
+    <Compile Include="SiteConfigure\Dao\ICountryDao.cs" />
+    <Compile Include="SiteConfigure\Dao\ICountryProvinceDao.cs" />
+    <Compile Include="SiteConfigure\Dao\ICountryProvinceDescriptionDao.cs" />
+    <Compile Include="SiteConfigure\Dao\ICurrencyDao.cs" />
+    <Compile Include="SiteConfigure\Dao\ICurrencyLogDao.cs" />
+    <Compile Include="SiteConfigure\Dao\LanguageDao.cs" />
+    <Compile Include="SqlHelper.cs" />
+    <Compile Include="Suggestion\Dao\ICustomerSuggestionAttachmentDao.cs" />
+    <Compile Include="Suggestion\Dao\ICustomerSuggestionContentDao.cs" />
+    <Compile Include="Suggestion\Dao\ICustomerSuggestionDetailDao.cs" />
+    <Compile Include="Suggestion\Dao\ICustomerSuggestionItemDao.cs" />
+    <Compile Include="Suggestion\Dao\ICustomerSuggestionObjectsDao.cs" />
+    <Compile Include="Suggestion\SuggestionService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{08276825-378a-4cc2-ae5f-8296472bf96f}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entity\Entity.csproj">
+      <Project>{A7AEC529-2393-4E1D-8DD9-9E3D38AE4C2A}</Project>
+      <Name>Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Service\Service.csproj">
+      <Project>{84D49F07-70F0-4A56-9CE1-491C0691AF44}</Project>
+      <Name>Service</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Config\ApplicationContent.config" />
+    <EmbeddedResource Include="Config\NHibernate.config" />
+    <EmbeddedResource Include="Config\Service-AdminUser.config" />
+    <EmbeddedResource Include="Config\Service.config">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Config\Service-SiteConfigure.config" />
+    <EmbeddedResource Include="Config\Service-Product.config" />
+    <EmbeddedResource Include="Config\Service-Customer.config" />
+    <EmbeddedResource Include="Config\Service-Help.config" />
+    <EmbeddedResource Include="Config\Service-Message.config" />
+    <EmbeddedResource Include="Config\Service-Order.config" />
+    <EmbeddedResource Include="Config\Service-Property.config" />
+    <EmbeddedResource Include="Config\Service-Category.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Config\Service-Review.config">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Config\Service-SEO.config" />
+    <EmbeddedResource Include="Config\Service-Suggestion.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Config\Service-Dailydeal.config" />
+    <EmbeddedResource Include="Config\Service-Newsletter.config" />
+    <EmbeddedResource Include="Config\Service-ProductArea.config" />
+    <EmbeddedResource Include="Config\Service-Promotion.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Config\Service-WishList.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Config\Service-Coupon.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Config\Service-Payment.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Config\Service-ShoppingCart.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Config\Service-Club.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Config\Service-Shipping.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Config\Service-Marketing.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Config\Service-CustomerProduct.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Config\Service-ClubProduct.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Config\Service-Banner.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Config\Service-SystemMail.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Config\Service-Article.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

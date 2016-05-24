@@ -1,0 +1,28 @@
+﻿@using Com.Panduo.Service
+@model PageData<Com.Panduo.Service.Order.ShippingOption.RemoteZip>
+@{
+    Layout = null;
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th width="10%">ID</th>
+            <th width="20%">国家名称</th>
+            <th width="10%">邮编开始</th>
+            <th width="10%">邮编结束</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var zip in Model.Data)
+        {
+            <tr>
+                <td>@zip.Id</td>
+                <td>@zip.CountryEnglishName</td>
+                <td>@zip.PostcodeStart</td>
+                <td>@zip.PostcodeEnd</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.Partial("~/Views/Shared/Partial/_Page_Bottom.cshtml", @Model.Pager)

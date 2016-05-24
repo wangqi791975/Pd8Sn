@@ -1,0 +1,193 @@
+﻿@{
+    Layout = null;
+    string customerFullName = ViewBag.CustomerFullName;
+    Com.Panduo.Web.Models.Order.OrderInvoiceVo orderInvoice = ViewBag.OrderInvoice;
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Order Confirmation #@orderInvoice.Order.OrderNo</title>
+</head>
+
+<body>
+    <table align="0" border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto; background: #FFF;" width="670">
+        <tr>
+            <td valign="top">
+                <table align="0" border="0" cellpadding="0" cellspacing="0" style="border: 1px solid #ccc;" width="670">
+                    <tr>
+                        <td>
+                            <table width="670" border="0" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td width="5"></td>
+                                    <td align="left" style="border-bottom: 1px solid #ccc; padding: 10px 0 5px 0;">
+                                        <a href="javascript:void(0)">
+                                            <img src="@Url.Content("~/Images/mail/news_logo.png")" border="0" alt=""/></a>
+                                    </td>
+                                    <td width="5"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="padding: 5px 0;">
+                            <a href="@ViewBag.BannerLink" target="_blank">
+                                <img src="@(ViewBag.BannerUrl)" alt="" border="0" /></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" style="font-size: 12px; color: #333; font-family: Verdana,Arial; font-weight: normal; padding: 0 5px 0 8px; line-height: 18px;"><strong>Dear @(customerFullName.IsNullOrEmpty() ? "Customer" : ViewBag.CustomerFullName):</strong>
+                            <p>Thanks for your kind business. The following is your order details:</p>
+                            <p>
+                                <strong>Shipping Details:</strong>
+                            </p>
+                            <table width="98%" border="0" cellspacing="0" cellpadding="0" style="border: 1px solid #e1e1e1; margin-left: 25px; line-height: 20px; margin: 0 auto;">
+                                <tr>
+                                    <td align="right" style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;"><strong>Order No</strong></td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">@orderInvoice.Order.OrderNo</td>
+                                    <td rowspan="3" valign="top" align="right" style="border-right: #e1e1e1 1px solid; padding: 5px;"><strong>Delivery address</strong></td>
+                                    <td rowspan="3" valign="top" style="padding: 5px;">
+                                        @if (orderInvoice.OrderShippingAddress != null)
+                                        {
+                                            <span>
+                                                @orderInvoice.OrderShippingAddress.FullName
+                                                <br />
+                                                @if (orderInvoice.OrderShippingAddress.Street2 != null)
+                                                {
+                                                    <span>@orderInvoice.OrderShippingAddress.Street2,&nbsp;</span>
+                                                }
+                                                @orderInvoice.OrderShippingAddress.Street1<br />
+                                                @orderInvoice.OrderShippingAddress.City<br />
+                                                @orderInvoice.OrderShippingAddress.Province @orderInvoice.OrderShippingAddress.ZipCode<br />
+                                                @orderInvoice.OrderShippingAddress.CountryName<br />
+                                                @orderInvoice.OrderShippingAddress.Telphone
+                                            </span>
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right" style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;"><strong>Date Ordered</strong></td>
+                                    <td style="border-bottom: 1px solid #e1e1e1; border-right: #e1e1e1 1px solid; padding: 5px;">@PageHelper.ToCurrentShortDate(orderInvoice.Order.OrderTime)</td>
+                                </tr>
+                                <tr>
+                                    <td align="right" style="border-right: #e1e1e1 1px solid; padding: 5px;"><strong>Shipping method</strong></td>
+                                    <td style="border-right: #e1e1e1 1px solid; padding: 5px;">@Html.Raw(orderInvoice.ShippingName)</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" style="border-top: 1px solid #e1e1e1; padding: 5px; color: #ff6701">Please make sure your delivery address is correct. If you find it incorrect please contact us within 24 hours</td>
+                                </tr>
+                                @if (orderInvoice.Order != null && !orderInvoice.Order.OrderRemark.IsNullOrEmpty())
+                                {
+                                    <tr>
+                                        <td colspan="4" style="border-top: 1px solid #e1e1e1; padding: 5px;">Order Comments:<br />
+                                            @orderInvoice.Order.OrderRemark</td>
+                                    </tr>
+                                }
+                            </table>
+                            <p><strong>Order Invoice:</strong></p>
+                            <table width="98%" border="0" cellspacing="0" cellpadding="0" style="border: 1px solid #e1e1e1; margin-left: 25px; line-height: 20px; margin: 0 auto;">
+                                @foreach (var item in orderInvoice.OrderDetailList)
+                                {
+                                    <tr>
+                                        <td width="70" style="padding: 5px; border-bottom: 1px dashed #e1e1e1;">
+                                            <img src="@ImageHelper.GetImageUrl(item.ProductInfo.Product.MainImage, 80)" /></td>
+                                        <td width="20" style="padding: 5px; border-bottom: 1px dashed #e1e1e1;">@item.OrderDetail.Quantity &times;</td>
+                                        <td style="padding: 5px; border-bottom: 1px dashed #e1e1e1;"><a href="@UrlRewriteHelper.GetProductDetailUrl(item.ProductInfo.Product.ProductId, item.ProductInfo.ProductEnName)" style="color: #0066cc;">@item.ProductInfo.ProductName</a></td>
+                                        <td width="100" style="padding: 5px; border-bottom: 1px dashed #e1e1e1;">@orderInvoice.Order.Currency @(item.OrderDetail.Quantity * PageHelper.MoneyFormat(item.OrderDetail.Price * orderInvoice.Order.ExchangeRate, orderInvoice.Order.Currency))</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td colspan="4" align="right" style="padding: 5px;">
+                                        <table width="55%" border="0" cellspacing="0" cellpadding="0" class="pro_price">
+                                            <tr>
+                                                <th align="right" scope="row" style="font-weight: normal; padding-right: 5px;">Discounted item:</th>
+                                                <td>(+) @orderInvoice.Order.Currency @PageHelper.MoneyFormat(orderInvoice.Order.OrderCost.OriginalProductAmount * orderInvoice.Order.ExchangeRate, orderInvoice.Order.Currency)</td>
+                                            </tr>
+                                            @if (orderInvoice.Order.OrderCost.DiscountProductAmount > 0)
+                                            {
+                                                <tr>
+                                                    <th align="right" scope="row" style="font-weight: normal; padding-right: 5px;">Product Discount:</th>
+                                                    <td>(-) @orderInvoice.Order.Currency @PageHelper.MoneyFormat(orderInvoice.Order.OrderCost.DiscountProductAmount * orderInvoice.Order.ExchangeRate, orderInvoice.Order.Currency)</td>
+                                                </tr>
+                                            }
+                                            <tr>
+                                                <th align="right" scope="row" style="font-weight: normal; padding-right: 5px;">Regular-priced itme:</th>
+                                                <td>(+) @orderInvoice.Order.Currency @PageHelper.MoneyFormat(orderInvoice.Order.OrderCost.NoDiscountProductAmount * orderInvoice.Order.ExchangeRate, orderInvoice.Order.Currency)</td>
+                                            </tr>
+                                            @if (orderInvoice.Order.OrderCost.VipLessAmount > 0)
+                                            {
+                                                <tr>
+                                                    <th align="right" valign="top" style="font-weight: normal; padding-right: 5px;" scope="row">VIP Discount:</th>
+                                                    <td>(-) @orderInvoice.Order.Currency @PageHelper.MoneyFormat(orderInvoice.Order.OrderCost.VipLessAmount * orderInvoice.Order.ExchangeRate, orderInvoice.Order.Currency)<br />
+                                                        <span style="color: #999;">(@(orderInvoice.Order.OrderCost.OrderDiscount * 100)% off)</span>
+                                                    </td>
+                                                </tr>
+                                            }
+                                            @if (orderInvoice.Order.OrderCost.FreeShippingFee > 0 || orderInvoice.Order.OrderCost.ClubFee > 0)
+                                            {
+                                                <tr>
+                                                    <th align="right" scope="row" style="font-weight: normal; padding-right: 5px;">Handling Fee:</th>
+                                                    <td>(+) @orderInvoice.Order.Currency @PageHelper.MoneyFormat(orderInvoice.Order.OrderCost.FreeShippingFee > 0 ? orderInvoice.Order.OrderCost.FreeShippingFee * orderInvoice.Order.ExchangeRate : orderInvoice.Order.OrderCost.ClubFee * orderInvoice.Order.ExchangeRate, orderInvoice.Order.Currency)</td>
+                                                </tr>
+                                            }
+                                            <tr>
+                                                <th align="right" valign="top" style="font-weight: normal; padding-right: 5px;" scope="row">@Html.Raw(orderInvoice.ShippingName)@* (4 boxes)*@:</th>
+                                                <td>Free Shipping<br />
+                                                    + @orderInvoice.Order.Currency @PageHelper.MoneyFormat(orderInvoice.Order.OrderCost.TotalShippingCost * orderInvoice.Order.ExchangeRate, orderInvoice.Order.Currency)</td>
+                                            </tr>
+                                            @if (orderInvoice.Order.OrderCost.CouponAmt > 0)
+                                            {
+                                                <tr>
+                                                    <th align="right" scope="row" style="font-weight: normal; padding-right: 5px;">Coupon:</th>
+                                                    <td>(-) @orderInvoice.Order.Currency @PageHelper.MoneyFormat(orderInvoice.Order.OrderCost.CouponAmt * orderInvoice.Order.ExchangeRate, orderInvoice.Order.Currency)</td>
+                                                </tr>
+                                            }
+                                            <tr>
+                                                <th align="right" scope="row" style="padding-right: 5px;"><strong>Grand Total:</strong></th>
+                                                <td><strong style="color: #f00;">(+) @orderInvoice.Order.Currency @PageHelper.MoneyFormat(orderInvoice.Order.OrderCost.TotalOrderAmt * orderInvoice.Order.ExchangeRate, orderInvoice.Order.Currency)</strong></td>
+                                            </tr>
+                                            @if (orderInvoice.Order.OrderCost.CashAmt > 0)
+                                            {
+                                                <tr>
+                                                    <th align="right" scope="row" style="padding-right: 5px;"><strong>Balance:</strong></th>
+                                                    <td><strong style="color: #f00;">(-) @orderInvoice.Order.Currency @PageHelper.MoneyFormat(orderInvoice.Order.OrderCost.CashAmt * orderInvoice.Order.ExchangeRate, orderInvoice.Order.Currency)</strong></td>
+                                                </tr>
+                                            }
+                                            <tr>
+                                                <th align="right" scope="row" style="padding-right: 5px;"><strong>You need to pay:</strong></th>
+                                                <td><strong style="color: #f00;">@orderInvoice.Order.Currency @PageHelper.MoneyFormat(orderInvoice.Order.OrderCost.NeedToPayAmt * orderInvoice.Order.ExchangeRate, orderInvoice.Order.Currency)</strong></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            <p>Normally we will ship out your order within 2 business days after receiving your payment. </p>
+                            <p>In few cases, there may be delay because of short items:</p>
+                            <p>1. If only a few items short, we will arrange shipment of available items in advance. The short items will be sent when they are in stock or with your next order.</p>
+                            <p>2. For large proportion of short items, we will contact you immediately.</p>
+                            <p>
+                                If you have other request, please contact us within 24 hours.
+(Kindly note: You may check your spam folder if you have not received the email, sometimes the message may be blocked by accident.) 
+                            </p>
+                            <p>
+                                Best regards
+                                <br />
+                                8Seasons Team
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td height="10"></td>
+        </tr>
+        <tr>
+            <td width="670" style="text-align: center; font-size: 12px; color: #999; font-family: Verdana,Arial; font-weight: normal; padding: 10px; line-height: 20px; border: 1px solid #ccc;">&copy;2002-2015 Hangzhou Panduo Information technology Co., Ltd. China Wholesale Beads.<br />
+                All rights reserved </td>
+        </tr>
+    </table>
+    @* Todo:这里邮件主题别忘掉了 *@
+    <!--<tilte>Welcome to 8Seasons ( Beads, Jewelry Making Supplies & Crafts Wholesaler )</tilte>-->
+</body>
+</html>

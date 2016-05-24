@@ -1,0 +1,7 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeEditing/Localization/MoveToResource/LastResourceFile/@EntryValue">EDE40F05-F53D-4A29-AADE-3F941D93A527/d:App_GlobalResources/f:Lang.resx</s:String>
+	
+	<s:String x:Key="/Default/CodeInspection/WebPathMapping/IgnoredPaths/=VIEWS_005CACCOUNT_005CGETVALIDATECODE/@EntryIndexedValue">Views\Account\GetValidateCode</s:String>
+	<s:String x:Key="/Default/CodeInspection/WebPathMapping/MappedPaths/=ACCOUNT_005CPREFERENCESETING/@EntryIndexedValue"></s:String>
+	<s:String x:Key="/Default/CodeInspection/WebPathMapping/PathsInCorrectCasing/=ACCOUNT_005CPREFERENCESETING/@EntryIndexedValue">Account\PreferenceSeting</s:String>
+	<s:String x:Key="/Default/CodeInspection/WebPathMapping/PathsInCorrectCasing/=VIEWS_005CACCOUNT_005CGETVALIDATECODE/@EntryIndexedValue">Views\Account\GetValidateCode</s:String></wpf:ResourceDictionary>

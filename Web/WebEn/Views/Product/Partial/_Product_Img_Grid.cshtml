@@ -1,0 +1,9 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Product
+@model Com.Panduo.Web.Models.Product.ProductGirdVo
+<div class="gallery_img@(Model.ClassIndex)">
+    <a href="@UrlRewriteHelper.GetProductDetailUrl(Model.Product.ProductId, ServiceFactory.ProductService.GetProductNameByEn(Model.Product.ProductId))" class="gallery_pro_img_a">
+        <img class="scrollLoading" src="@Url.Content("~/Images/snap.jpg")" data-url="@ImageHelper.GetImageUrl(Model.Product.MainImage, 310)" />
+        @Html.Partial("~/Views/Product/Partial/__Promotion__Icon.cshtml", @Model.Product)
+    </a>
+</div>

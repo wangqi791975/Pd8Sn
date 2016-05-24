@@ -1,0 +1,168 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Web.Models.Order
+@using Resources
+@model PageData<OrderDetailItemVo>
+@{
+    ViewBag.Title = "My Products";
+    Layout = "~/Views/Shared/Layout/_Layout_NoLeft.cshtml";
+    var orderDetailIds = Model.Data.Select(c => c.OrderDetail.Id).Join(",");
+    var orderProductIds = Model.Data.Select(c => c.OrderDetail.ProductId).Join(",");
+    
+}
+@section HtmlHead{
+    @Html.JsFor("wishlist.js", "~/Js/jquery.scrollLoading.min.js ,~/Js/WishList/WishList.js", fileVersion: "2.2")
+}
+
+@Html.Partial("~/Views/Account/Partial/_Account_Siderbar_Menu.cshtml")
+<div id="main" class="account_wrap">
+    <h2 class="font14 account_title">@Lang.TipProductReviews</h2>
+    <h5>@Lang.TipDearFriendRev</h5>
+    <div class="accout_tab">
+        <a href="@UrlRewriteHelper.GetWriteReviews(ViewBag.OrderId)">
+            <h3 class="current">@Lang.TipWriteReviews</h3>
+        </a>
+        <a href="@UrlRewriteHelper.GetReadReviews(ViewBag.OrderId)">
+            <h3 class="nostock">@Lang.TipHistoryProRev</h3>
+        </a>
+    </div>
+    <!-- Write Reviews 开始 -->
+    <div class="reviews_cont">
+        <div class="border">
+            <form onsubmit="return false;" class="reviewform" action="@Url.Content("~/Reviews/Submit")" method="POST" id="reviewformfather" name="reviewformfather">
+                <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th>@Lang.TipBatchAddRev</th>
+                        <td id="divStars_0">
+                            <!--已选择的星星class名称变为 star_selected ，默认星星class名称为star_grey-->
+                            <ins class="star_grey" onmouseout="MouseOut(0)" onmouseover="MouseOver(0, 1)" onclick="Click(0, 1)"></ins>
+                            <ins class="star_grey" onmouseout="MouseOut(0)" onmouseover="MouseOver(0, 2)" onclick="Click(0, 2)"></ins>
+                            <ins class="star_grey" onmouseout="MouseOut(0)" onmouseover="MouseOver(0, 3)" onclick="Click(0, 3)"></ins>
+                            <ins class="star_grey" onmouseout="MouseOut(0)" onmouseover="MouseOver(0, 4)" onclick="Click(0, 4)"></ins>
+                            <ins class="star_grey" onmouseout="MouseOut(0)" onmouseover="MouseOver(0, 5)" onclick="Click(0, 5)"></ins>
+                            <input class="reviewrating" type="hidden" value="0" name="rating_0" id="rating_0">
+                            <span class="fred" style="display: inline-block;" id="reviews_desc_0">@Lang.TipChooseRating</span>
+                        </td>
+                        <!--默认显示为将span标签删除display效果，另此处显示时为display:inline-block;-->
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <!--报错提示时，textarea标签增加fred，提示文字变红-->
+                            <textarea id="review_content_0" name="review_content_0" class="textarea_w580 textarea_wrap fred reviewcontent" id="order_remark" name="order_remark" data-toggle="remain" data-target="#star_remain" data-maxlen="1000">@Lang.TipLeastOneChar</textarea>
+                            <p class="action_cont">
+                                <input type="submit" class="lf btn_orange btn_p30" value="@Lang.TipSubmit" onclick="writeReview('#reviewformfather')" />
+                                <span class="rt fgrey">@Html.Raw(string.Format(Lang.Tip1000Chars,"star_remain"))</span>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="order_id" value="@ViewBag.OrderId" />
+                <input type="hidden" name="order_detail_ids" value="@orderDetailIds" />
+                <input type="hidden" name="order_product_ids" value="@orderProductIds" />
+            </form>
+        </div>
+        <div class="title">@Html.Raw(Lang.TipAddRevOneByOne)</div>
+        <div id="products_list">
+            @Html.Partial("Partial/_WriteList", Model)
+        </div>
+    </div>
+    <!-- Write Reviews 结束 -->
+</div>
+<div class="clearfix"></div>
+<script language="javascript">
+    function writeReview(form) {
+        $(".textarea_w580").each(function () {
+            if ($(this).val() == Message.MsgProRevLstOneChar) {
+                $(this).val("");
+            }
+        });
+
+        var ratingCount = 0;
+        var ratingContent = "";
+        $(form).find(".reviewrating").each(function () {
+            ratingCount += $(this).val();
+        });
+        if (ratingCount <= 0) {
+            DivOs.showErrorModal(Message.MsgRatingForItem);
+            $(form).resetForm();
+            return false;
+        }
+
+        $(form).find(".reviewcontent").each(function () {
+            ratingContent += $(this).val();
+        });
+        if (ratingContent == "") {
+            DivOs.showErrorModal(Message.MsgAddRevOneByOne);
+            $(form).resetForm();
+            return false;
+        }
+        $(form).ajaxSubmit({
+            success: function (result) {
+                if (result.result == "success") {
+                    location.href = location.href;
+                } else {
+                    DivOs.showErrorModal(Message.TipMessage + result.msg);
+                }
+            }
+        });
+    }
+
+
+    function ChangeState(objectId, index, isfixed) {
+        var colStars = document.getElementById("divStars_" + objectId).getElementsByTagName("ins");
+        var i = 0;
+        var k = isfixed ? parseInt(document.getElementById("rating_" + objectId).value) : index;
+        for (i = 0; i < colStars.length; i++) {
+            colStars[i].className = (i < k ? "star_selected" : "star_grey");
+        }
+    }
+
+    function Click(objectId, index) {
+        document.getElementById("rating_" + objectId).value = index;
+    }
+
+    function MouseOver(objectId, index) {
+        var result = Message.MsgRatingForItemNoMsg;
+        if (index == 1) {
+            result = "Poor";
+        }
+        if (index == 2) {
+            $("#divStars_" + objectId).find("span").html(Message.TipFair);
+            result = "Fair";
+        }
+        if (index == 3) {
+            $("#divStars_" + objectId).find("span").html(Message.TipAverage);
+            result = "Average";
+        }
+        if (index == 4) {
+            $("#divStars_" + objectId).find("span").html(Message.TipGood);
+            result = "Good";
+        }
+        if (index == 5) {
+            $("#divStars_" + objectId).find("span").html(Message.TipExcellent);
+            result = "Excellent";
+        }
+        ChangeState(objectId, index, false);
+        document.getElementById("reviews_desc_" + objectId).innerHTML = result;
+    }
+
+    function MouseOut(objectId) {
+        ChangeState(objectId, 0, true);
+        MouseOver(objectId, $("#rating_" + objectId).val());
+    }
+
+    $(function () {
+
+        $(".reviewcontent").focus(function () {
+            if ($(this).val() == Message.MsgAddRevOneByOneNoMsg) {
+                $(this).val("");
+            }
+        });
+        $(".reviewcontent").blur(function () {
+            if ($(this).val() == "") {
+                $(this).val(Message.MsgAddRevOneByOneNoMsg);
+            }
+        });
+    });
+</script>
+<!-- 写评论结束 -->

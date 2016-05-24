@@ -1,0 +1,94 @@
+﻿@using Resources
+@{
+    ViewBag.Title = "forget-pwd";
+    Layout = "~/Views/Shared/Layout/_LoginBody.cshtml";
+}
+
+
+<div class="wrap">
+    @{
+        //面包屑导航
+        if (ViewBag.Sitemaps == null)
+        {
+            ViewBag.Sitemaps = "";
+        }
+        @Html.Raw(ViewBag.Sitemaps)
+    }
+    <div class="account_w820">
+        @if (ViewBag.ResetLink ?? false)
+        {
+            <div class="warning_wrap error"><span class="fred">@Lang.TipPwdLinkInvalid</span></div>
+        }
+        @if (ViewBag.SendMessage ?? false)
+        {
+            <div class="warning_wrap"><ins class="btn_success_cart"></ins><strong class="fgreen">@Lang.MsgUpdatePwdSuccess</strong>@Lang.MsgGoTo<a href="@UrlRewriteHelper.GetMyAccount()" class="fblue">@Lang.TipMyAccount</a></div>
+            <div class="warning_wrap">@Html.Raw(string.Format(Lang.TipFgtSendEmail, ViewBag.SendEmail))</div>
+        }
+        else
+        {
+            <div class="pwd_wrap">
+                <h3 class="font_verdana font14">@Lang.TipForgetPassword</h3>
+                <p>
+                    @Lang.MsgEnterRegisterEmail
+                    <span class="fred">@Lang.MsgRequiredInfo</span>
+                </p>
+
+                <form method="POST" id="forgotpwdform" action="/Account/ForgetPwd" onsubmit="return false;">
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <th><i class="fred">*</i><span>@Lang.TipEmail</span></th>
+                            <td>
+                                @Html.TextBox("Email", "", new { id = "email", @class = "inputw337 input_text_wrap" })
+                                <div class="fred"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><i class="fred">*</i><span>@Lang.TipVerificationCode</span></th>
+                            <td>
+                                @Html.TextBox("ValidateCode", "", new { @class = "inputw130 input_text_wrap lf valiCodeInput" })
+                                <a href="javascript:void(0)" class="lf">
+                                    <img class="valiCode" alt="valiCode" />
+                                </a><ins class="icon_code_error valiCodeChk"></ins>
+                                <div class="clearfix"></div>
+                                <div class="fred"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <td>
+                                <a class="btn_orange btn_p30" id="forgotpwdsub" href="javascript:void(0)">@Lang.TipSubmit</a><a class="fblue_mid" href="@UrlRewriteHelper.GetLoginUrl()">@Lang.TipBack &gt;</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <td>
+                                <p>@Html.Raw(Lang.TipForgetEmailContact)</p>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <div class="bottom_shadow">&nbsp;</div>
+            </div>
+        }
+    </div>
+</div>
+<script>
+    $("#forgotpwdsub").click(function () {
+        $('#forgotpwdform').ajaxSubmit({
+            success: function (responseText) {
+                $("#email").nextAll(".fred").html("");
+                $("#ValidateCode").nextAll(".fred").html("");
+                if (responseText.error) {
+                    if (responseText.email != "") {
+                        $("#email").nextAll(".fred").html(responseText.email);
+                    }
+                    if (responseText.valcode != "") {
+                        $("#ValidateCode").nextAll(".fred").html(responseText.valcode);
+                    }
+                } else {
+                    location.href = responseText.url;
+                }
+            }
+        });
+    })
+</script>

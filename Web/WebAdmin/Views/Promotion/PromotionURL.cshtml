@@ -1,0 +1,99 @@
+﻿@using Com.Panduo.Service.SiteConfigure
+@{
+    ViewBag.Title = "生成URL";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+<form class="form-horizontal" id="promotionUrl" name="promotionUrl" action="@Url.Content("~/Promotion/PromotionUrl")" method="post" onsubmit="return false;">
+    <div class="well tab-content">
+        <div class="control-group">
+            <label class="control-label">语言：</label>
+            <div class="controls">
+                <select name="language">
+                    <option value="-1">请选择</option>
+                    @foreach (var language in (List<Language>)ViewBag.Languages)
+                    {
+                        <option value="@language.LanguageId">@language.ChineseName</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">折扣：</label>
+            <div class="controls">
+                <select name="discount">
+                    <option value="-1">请选择</option>
+                    @foreach (var discount in (List<int>)ViewBag.Discounts)
+                    {
+                        <option value="@discount">@discount %</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">类别：</label>
+            <div class="controls">
+                <select name="category">
+                    <option value="-1">请选择</option>
+                    @foreach (var rd1 in ViewBag.Category)
+                    {
+                        <option value="@rd1.Data.CategoryId">@rd1.Data.CategoryEnglishName</option>
+                        if (rd1.SubDataList != null)
+                        {
+                            foreach (var rd2 in rd1.SubDataList)
+                            {
+                        <option value="@rd2.Data.CategoryId">&nbsp;&nbsp;@rd2.Data.CategoryEnglishName</option>
+                                if (rd2.SubDataList != null)
+                                {
+                                    foreach (var rd3 in rd2.SubDataList)
+                                    {
+                        <option value="@rd3.Data.CategoryId">&nbsp;&nbsp;&nbsp;&nbsp;@rd3.Data.CategoryEnglishName</option>
+                                        if (rd3.SubDataList != null)
+                                        {
+                                            foreach (var rd4 in rd3.SubDataList)
+                                            {
+                        <option value="@rd4.Data.CategoryId">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@rd4.Data.CategoryEnglishName</option>
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="form-actions">
+        <a class="btn btn-primary" id="btngeturl" href="javascript:void(0)">确定</a>
+        <a class="btn btn-primary" onclick="$('#promotionUrl')[0].reset()" href="javascript:void(0)">重置</a>
+        <a class="btn btn-primary" href="@Url.Content("~/Promotion/Promotion")">返回</a>
+    </div>
+    <div class="well tab-content">
+        <div class="control-group">
+            <label class="control-label">URL：</label>
+            <div class="controls">
+                <input type="text" class="input-xxlarge" id="urlshow" />
+                <a class="btn btn-primary" id="copyurl" href="javascript:void(0)">复制</a>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $("#btngeturl").click(function () {
+        $("#promotionUrl").ajaxSubmit({
+            success: function (responseText) {
+                $(".alert").remove();
+                var msg;
+                if (responseText.error != true) {
+                    msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作成功!' : responseText.msg;
+                    $("#promotionUrl").before('<div class="alert alert-success"><a class="close" data-dismiss="alert">×</a>' + msg + '</div>');
+                    $("#urlshow").val(responseText.url);
+                } else {
+                    msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作失败!' : responseText.msg;
+                    $("#promotionUrl").before('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a>' + msg + '</div>');
+                }
+            }
+        });
+    });
+
+</script>

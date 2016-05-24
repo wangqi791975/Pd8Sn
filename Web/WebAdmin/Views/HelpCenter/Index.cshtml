@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Help Center管理";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<div class="pull-right">
+    <form method="post" action="@Url.Content("~/HelpCenter/List")" id="searchForm" name="searchForm" class="form-search">
+        关键词：<input type="text" onkeyup=" $(this).val($(this).val().replace(/\//g, '')); " placeholder="关键词" name="keyword" />
+        <button class="btn" type="submit">搜索</button>
+    </form>
+</div>
+<a class="btn" href="javascript:void(0)" data-toggle="modal" data-target=".ajax_show_add" data-backdrop="true"><i class="icon-edit"></i>新建主题</a>
+<a class="btn" href="@Url.Content("~/HelpCenter/ArticleIndex")"><i class="icon-edit"></i>新增文章</a>
+<div class="clearboth"></div>
+
+<div id="main" class="ajax-list" data-url="@Url.Content("~/HelpCenter/List")"></div>
+<a class="btn" href="javascript:void(0)" data-toggle="modal" data-target=".ajax_show_add" data-backdrop="true"><i class="icon-edit"></i>新建主题</a>
+
+<!-- detail -->
+<div class="modal hide fade ajax_detail" data-url="@Url.Content("~/HelpCenter/Edit")">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>编辑主题</h3>
+    </div>
+    <div class="modal-body ajax_info">
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn btn-primary ajax_update">保存</a>
+        <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+    </div>
+</div>
+
+<!-- detail -->
+<div class="modal hide fade ajax_show_add" style="width: 620px">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>添加主题</h3>
+    </div>
+    <div class="modal-body ajax_info">
+        <form name="updateForm" action="/HelpCenter/CategorySave" method="post" onsubmit="return false;">
+            <div class="control-group">
+                <div class="controls">
+                    主题(中文)：<input type="text" class="input-xlarge" name="txtCategoryName" id="txtCategoryName" value="" />(仅用于后台显示)
+                </div>
+                @foreach (var item in ViewBag.AllLanguage)
+                {
+                    <div class="controls" style="padding-left: 35px;">
+                        @item.ChineseName：<input class="input-xlarge" id="txtCategoryName_@item.LanguageId" name="txtCategoryName_@item.LanguageId" type="text" value="">
+                    </div>
+                    <div class="controls" style="padding-left: 70px; padding-bottom: 5px">
+                        <label class="radio inline">
+                            <input name="IsShow_@item.LanguageId" type="radio" checked="" />显示
+                        </label>
+                        <label class="radio inline">
+                            <input name="IsShow_@item.LanguageId" type="radio" checked="checked" />隐藏
+                        </label>
+                    </div>
+                }
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn btn-primary ajax_add">保存</a>
+        <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+    </div>
+</div>

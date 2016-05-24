@@ -1,0 +1,122 @@
+﻿@using System.Web.UI.WebControls
+@using Resources
+@{
+    ViewBag.Title = "Reset-pwd";
+    Layout = "~/Views/Shared/Layout/_LoginBody.cshtml";
+}
+@section HtmlHead
+{
+    <script type="text/javascript" src="~/Js/jquery.pstrength.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            "use strict";
+            $(':password#password1').pStrength({
+                'onPasswordStrengthChanged': function (passwordStrength, strengthPercentage) {
+                    $(".bar_wrap .pwd_bar").removeClass("pwd_bar_weak").removeClass("pwd_bar_medium").removeClass("pwd_bar_strong");
+                    if (strengthPercentage < 30) {
+                        $(".bar_wrap p.lf").html("@Lang.TipWeak");
+                        $(".bar_wrap .pwd_bar").addClass("pwd_bar_weak");
+                    } else if (strengthPercentage < 70) {
+                        $(".bar_wrap p.lf").html("@Lang.TipMedium");
+                        $(".bar_wrap .pwd_bar").addClass("pwd_bar_medium");
+                    } else {
+                        $(".bar_wrap p.lf").html("@Lang.TipStrong");
+                        $(".bar_wrap .pwd_bar").addClass("pwd_bar_strong");
+                    }
+                }
+            });
+        });
+    function resetvalid() {
+        var password1 = $.trim($("#password1").val());
+        var password1Err = $("#password1").next();
+        var password2 = $.trim($("#password2").val());
+        var password2Err = $("#password2").next();
+        $(password1Err).html("");
+        $(password2Err).html("");
+        if (password1 == "") {
+            $(password1Err).html(Message.ErrorPasswordEmpty);
+            return false;
+        }
+        if (password1.length < 5) {
+            $(password1Err).html(Message.ErrorShortPassword);
+            return false;
+        }
+        if (password1.length > 32) {
+            $(password1Err).html(Message.ErrorLongPassword);
+            return false;
+        }
+        if (password2 == "") {
+            $(password2Err).html(Message.ErrorConfPasswordEmpty);
+            return false;
+        }
+        if (password1 != password2) {
+            $(password2Err).html(Message.ErrorPasswordNotMatch);
+            return false;
+        }
+        $("#resetbtn").click();
+        return true;
+    }
+    </script>
+}
+@using (Html.BeginForm("ResetPwd", "Account"))
+{
+    <div class="wrap">
+        @{
+    //面包屑导航
+    if (ViewBag.Sitemaps == null)
+    {
+        ViewBag.Sitemaps = "";
+    }
+            @Html.Raw(ViewBag.Sitemaps)
+        }
+        <div class="account_w820">
+            @if (ViewBag.IsSuccess ?? false)
+            {
+                <div class="warning_wrap">
+                    <ins class="btn_success_cart"></ins>
+                    <p><strong class="fgreen">@Lang.MsgUpdatePwdSuccess</strong> &nbsp; @Html.Raw(Lang.MsgGoAccount)</p>
+                </div>
+            }
+            else
+            {
+                <div class="pwd_wrap">
+                    <h3 class="font_verdana font14">@Lang.TipResetPwd</h3>
+                    <p>
+                        @Lang.TipYourAccountIs <a class="fblue_mid font_underline" href="#">@ViewBag.Email</a>
+                        <span class="fred">(* @Lang.TipRequiredInfo)</span>
+                    </p>
+                    <table border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <th class="reset"><i class="fred">*</i><span>@Lang.TipEnterNPwd:</span></th>
+                            <td>
+                                @Html.Password("Password", "", new { @class = "inputw337 input_text_wrap", id = "password1" })
+                                <div class="fred">@(ViewBag.ErrorPassword ?? "")</div>
+                                <div class="bar_wrap">
+                                    <div class="pwd_bar pwd_bar_weak lf"><span>&nbsp;</span></div>
+                                    <p class="lf">@Lang.TipWeak</p>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="reset"><i class="fred">*</i><span>@Lang.TipConfPwd:</span></th>
+                            <td>
+                                @Html.Password("ConfPassword", "", new { @class = "inputw337 input_text_wrap", id = "password2" })
+                                <div class="fred">@(ViewBag.ErrorConfPassword ?? "")</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <td>
+                                <input name="code" type="hidden" value="@ViewBag.VerifyCode" />
+                                <input type="submit" id="resetbtn" style="display: none;" />
+                                <a class="btn_orange btn_p30" onclick="resetvalid()" href="javascript:void(0)">@Lang.TipSubmit</a>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="bottom_shadow">&nbsp;</div>
+                </div>
+                
+            }
+        </div>
+    </div>
+}

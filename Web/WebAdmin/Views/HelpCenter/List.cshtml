@@ -1,0 +1,176 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.SiteConfigure
+@using Com.Panduo.Service.Help
+@model PageData<HelpCategory>
+@{
+    Layout = null;
+    List<HelpCategory> categoriesNoRoot = ViewBag.CategoriesNoRoot;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".btnexptree").off("click").on("click", function () {
+            var obj = $(this);
+            var id = obj.data("id");
+            if (obj.html() === "◇") {
+                obj.html("◆");
+                $(".table").find("tr[data-pid*=" + id + "]").hide().find(".btnexptree").html("◆");
+            } else {
+                obj.html("◇");
+                $(".table").find("tr[data-pid=" + id + "]").show();
+            }
+        });
+    });
+
+</script>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th width="6%">ID</th>
+            <th>主题-中文</th>
+            <th width="12%">涉及语种</th>
+            <th width="7%">创建时间</th>
+            <th width="6%">创建人</th>
+            <th width="6%">状态</th>
+            <th width="10%">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @*foreach (var category in ViewBag.RootCategories)*@
+        @foreach (var category in Model.Data)
+        {
+            var hasSub = categoriesNoRoot.Exists(x => x.ParentId == category.HelpCategoryId);
+            <tr>
+                <td>
+                    @category.HelpCategoryId
+                </td>
+                <td>
+                    @Html.Raw((hasSub ? "<a href='javascript:void(0)' class='btnexptree' data-id='" + category.HelpCategoryId + "T'>◆</a>" : "&nbsp;&nbsp;"))  <a href="@Url.Content("~/Help/Edit/" + category.HelpCategoryId)">@category.CategoryName</a>
+                </td>
+                <td>
+                    @if (!category.Descriptions.IsNullOrEmpty())
+                    {
+                        foreach (var language in category.Descriptions.Select(helpCategoryDescription =>
+                            ((IList<Language>)ViewBag.AllLanguage).ToList().Find(x => x.LanguageId == helpCategoryDescription.LanguageId)).Where(language => !language.IsNullOrEmpty()))
+                        {
+                        @Html.Raw(language.ChineseName + "&nbsp;")
+                        }
+                    }
+                </td>
+                <td>
+                    @category.DateCreated
+                </td>
+                <td>
+                    @category.DateCreated
+                </td>
+
+                @if (category.Status)
+                {
+                    <td>
+                        <button name="@category.HelpCategoryId" onclick="change(@category.HelpCategoryId)" class='btn btn-mini btn-success'>禁用</button>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <button name="@category.HelpCategoryId" onclick="change(@category.HelpCategoryId)" class='btn btn-mini btn-danger'>启用</button>
+                    </td>
+                }
+                <td>
+                    <a class="btn btn-mini btn-info btn-info-view" href="javascript:void(0)" data-id="@category.HelpCategoryId" data-loading-text="<i class='icon-edit icon-white'></i> 加载"><i class="icon-edit icon-white"></i>编辑</a>
+                    <a class="btn btn-mini btn-info" href="javascript:void(0)"><i class="icon-edit icon-white"></i>新增主题</a>
+                    <a class="btn btn-mini btn-info" href="@Url.Content("~/HelpCenter/ArticleIndex?cid=" + category.HelpCategoryId)"><i class="icon-edit icon-white"></i>新增文章</a>
+                </td>
+            </tr>
+                if (hasSub)
+                {
+                    foreach (var subCategory in categoriesNoRoot.FindAll(x => x.ParentId == category.HelpCategoryId))
+                    {
+            <tr class="hide" data-pid="@category.HelpCategoryId@("T")">
+                <td>&nbsp;
+                </td>
+                <td style="padding-left: 60px;">@Html.Raw((categoriesNoRoot.Exists(x => x.ParentId == subCategory.HelpCategoryId) ? "<a href='javascript:void(0)' class='btnexptree' data-id='" + category.HelpCategoryId + "T" + subCategory.HelpCategoryId + "T'>◆</a>" : "&nbsp;&nbsp;"))<a href="@Url.Content("~/Help/Edit/" + subCategory.HelpCategoryId)">@subCategory.HelpCategoryId@("-")@subCategory.CategoryName</a>
+                </td>
+                <td>
+                    @if (!subCategory.Descriptions.IsNullOrEmpty())
+                    {
+                        foreach (var language in subCategory.Descriptions.Select(helpCategoryDescription =>
+                            ((IList<Language>)ViewBag.AllLanguage).ToList().Find(x => x.LanguageId == helpCategoryDescription.LanguageId)).Where(language => !language.IsNullOrEmpty()))
+                        {
+                        @Html.Raw(language.ChineseName + "&nbsp;")
+                        }
+                    }
+                </td>
+                <td>
+                    @subCategory.DateCreated
+                </td>
+                <td>
+                    @subCategory.DateCreated
+                </td>
+
+                @if (subCategory.Status)
+                {
+                    <td>
+                        <button name="@subCategory.HelpCategoryId" onclick=" change(@subCategory.HelpCategoryId) " class='btn btn-mini btn-success'>禁用</button>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <button name="@subCategory.HelpCategoryId" onclick=" change(@subCategory.HelpCategoryId) " class='btn btn-mini btn-danger'>启用</button>
+                    </td>
+                }
+                <td>
+                    <a class="btn btn-mini btn-info btn-info-view" href="javascript:void(0)" data-id="@subCategory.HelpCategoryId" data-loading-text="<i class='icon-edit icon-white'></i> 加载"><i class="icon-edit icon-white"></i>编辑</a>
+                    <a class="btn btn-mini btn-info" href="javascript:void(0)"><i class="icon-edit icon-white"></i>新增主题</a>
+                    <a class="btn btn-mini btn-info" href="@Url.Content("~/HelpCenter/ArticleIndex?cid=" + subCategory.HelpCategoryId)"><i class="icon-edit icon-white"></i>新增文章</a>
+                </td>
+            </tr>
+                foreach (var threeCategory in categoriesNoRoot.FindAll(x => x.ParentId == subCategory.HelpCategoryId))
+                {
+            <tr class="hide" data-pid="@category.HelpCategoryId@("T")@subCategory.HelpCategoryId@("T")">
+                <td>&nbsp;
+                </td>
+                <td style="padding-left: 120px;"><a href="@Url.Content("~/Help/Edit/" + threeCategory.HelpCategoryId)">@threeCategory.HelpCategoryId@("-")@threeCategory.CategoryName</a>
+                </td>
+                <td>
+                    @if (!threeCategory.Descriptions.IsNullOrEmpty())
+                    {
+                        foreach (var language in threeCategory.Descriptions.Select(helpCategoryDescription =>
+                            ((IList<Language>)ViewBag.AllLanguage).ToList().Find(x => x.LanguageId == helpCategoryDescription.LanguageId)).Where(language => !language.IsNullOrEmpty()))
+                        {
+                        @Html.Raw(language.ChineseName + "&nbsp;")
+                        }
+                    }
+                </td>
+                <td>
+                    @threeCategory.DateCreated
+                </td>
+                <td>
+                    @threeCategory.DateCreated
+                </td>
+
+                @if (threeCategory.Status)
+                {
+                    <td>
+                        <button name="@threeCategory.HelpCategoryId" onclick=" change(@threeCategory.HelpCategoryId) " class='btn btn-mini btn-success'>禁用</button>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <button name="@threeCategory.HelpCategoryId" onclick=" change(@threeCategory.HelpCategoryId) " class='btn btn-mini btn-danger'>启用</button>
+                    </td>
+                }
+                <td>
+                    <a class="btn btn-mini btn-info btn-info-view" href="javascript:void(0)" data-id="@threeCategory.HelpCategoryId" data-loading-text="<i class='icon-edit icon-white'></i> 加载"><i class="icon-edit icon-white"></i>编辑</a>
+                    <a class="btn btn-mini btn-info" href="javascript:void(0)"><i class="icon-edit icon-white"></i>新增主题</a>
+                    <a class="btn btn-mini btn-info" href="@Url.Content("~/HelpCenter/ArticleEdit?cid=" + threeCategory.HelpCategoryId)"><i class="icon-edit icon-white"></i>新增文章</a>
+                </td>
+            </tr>
+                }
+                    }
+                }
+        }
+    </tbody>
+</table>
+@Html.Partial("~/Views/Shared/Partial/_Page_Bottom.cshtml", Model.Pager)

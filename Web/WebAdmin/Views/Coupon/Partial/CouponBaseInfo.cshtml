@@ -1,0 +1,35 @@
+﻿@model Com.Panduo.Service.Coupon.Coupon
+
+<div class="control-group">
+    <label class="control-label">名称：</label>
+    <div class="controls">
+        @Html.TextBoxFor(m => m.CouponName, new { @class = "input-xlarge" })
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label"><i class="fred">*</i>CouponCode：</label>
+    <div class="controls">
+        @Html.TextBoxFor(m => m.CouponCode, new { @class = "input-xlarge", id = "CodeCoupon", required = "required" })
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label"><i class="fred">*</i>领取次数：</label>
+    <div class="controls">
+        @Html.TextBoxFor(m => m.LimitCount, new { @class = "input-xlarge", required = "required", @Value = "1", datatype = "i0" })次
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label"><i class="fred">*</i>面额：</label>
+    <div class="controls">
+        @Html.TextBoxFor(m => m.Amount, new { @class = "input-xlarge", required = "required", datatype = "f1" })
+        @Html.DropDownListFor(m => m.AmountCurrencyId, ViewBag.AllCurrency as SelectList, new { @class = "input-small" })
+    </div>
+</div>
+<div class="control-group">
+    <label class="control-label"><i class="fred">*</i>允许外部领取：</label>
+    <div class="controls">
+        @Html.RadioButtonFor(m => m.AllowManualPick, "1")是
+        @Html.RadioButtonFor(m => m.AllowManualPick, "0", new { @checked = "checked" })否
+        （选择“是”表示允许客户在前台人为激活这个coupon）
+    </div>
+</div>

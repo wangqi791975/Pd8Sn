@@ -1,0 +1,33 @@
+﻿@using Com.Panduo.Service.Help
+@using Resources
+@{
+    Layout = null;
+    Com.Panduo.Service.PageData<VHelpArticle> normalPager = Model;
+}
+<div class="help_article">
+    <!--查询结果无时显示，在div上增加display:block-->
+    <div class="warning_wrap error"><span class="fred">@Lang.TipNoRestInfo</span></div>
+    <!--查询结果无时结束-->
+    <!--查询结果标题开始-->
+    <!--<h3>Search <span class="forange_mid">Order</span> in Help Center</h3>-->
+    <!--查询结果标题结束-->
+    <h3>@ViewBag.SubTitle</h3>
+    <ol class="list" style="min-height: 300px;">
+        @if (!normalPager.Data.IsNullOrEmpty())
+        {
+            foreach (var item in normalPager.Data)
+            {
+            <li><a target="_blank" href="@UrlRewriteHelper.GetHelpArticleDetailUrl(item.ArticleId, item.EnArticleName)">@item.ArticleName</a></li>
+            }
+        }
+    </ol>
+    <div class="action">
+        <a href="javascript:void(0)" onclick="window.history.go(-1)" class="fblue">@Lang.TipBackArrow</a>
+        <!-- 底部翻页开始 -->
+        <div class="ajax-pagination" data-target="#tab_list_article" data-mode="replace">
+            @Html.Partial("~/Views/Shared/Partial/_Ajax_Pager.cshtml", normalPager.Pager)
+        </div>
+        <!-- 底部翻页结束 -->
+    </div>
+
+</div>

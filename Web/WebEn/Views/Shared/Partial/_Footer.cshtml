@@ -1,0 +1,120 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Customer
+@using Resources
+@{
+    ViewBag.CustomerId = SessionHelper.CurrentCustomer == null ? 0 : SessionHelper.CurrentCustomer.CustomerId;
+    ViewBag.LoginErrorCount = CookieHelper.LoginErrorCount;
+    ViewBag.RecomendReview = ServiceFactory.ReviewService.GetRecommendReview();
+    ViewBag.RegisterCount = ServiceFactory.CustomerService.GetRegisterCountByIP(PageManager.GetClientIp());
+}
+<div class="wrap">
+    <div class="foot_newsletter">
+        <h5 class="font_verdana lf"><strong>@Lang.TipGetFirstInfo</strong></h5>
+        <div class="foot_newsletter_input lf">
+            <div class="poptip poptip_w350">
+                <i class="bottom"></i><em class="bottom"></em>
+                @Lang.TipCheckEmailFormat
+            </div>
+            <input id="txtSubscribeEmail" class="inputw298 icon_foot_letter input_text_wrap lf" type="text" placeholder="@Lang.TipEnterEmail"/><a href="javascript:void(0);" id="btnSubscribe" class="btn_orange btn_w110">@Lang.TipSubscribe</a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="foot_service_cont">
+        <ul>
+            <li class="foot_testimonials lf">
+                <h5 class="font_verdana font15"><strong>@Lang.TipFriendsSay</strong></h5>
+                <div class="foot_testimonials_cont">
+                    <ins></ins><em></em><span id="lbltestimonials">@(ViewBag.RecomendReview == null ? "" : ViewBag.RecomendReview.Content)</span>
+                </div>
+                <div class="lf customer_name forange_mid">
+                    <strong>@(ViewBag.RecomendReview == null ? "" : ViewBag.RecomendReview.Name)</strong>
+                </div>
+                <div class="rt action">
+                    <a rel="nofollow" href="testimonial.html">@Lang.TipMoreTestimonials &gt;&gt;</a>
+                    <a rel="nofollow" href="javascript:void(0);" onclick=" testimonialcap() ">@Lang.TipWriteTestimonial &gt;&gt;</a>
+                </div>
+            </li>
+            <li class="foot_service lf">
+                <h5 class="font_verdana font15"><strong>@Lang.TipService</strong></h5>
+                <p>
+                    <a rel="nofollow" href="@UrlRewriteHelper.GetProductSouringUrl()"><ins class="foot_service_oem"></ins>@Html.Raw(Lang.TipOEMPro)</a>
+                </p>
+                <p>
+                    <a rel="nofollow" href="#"><ins class="foot_service_club"></ins>@Lang.Tip8SeasonsClub</a>
+                </p>
+                <p>
+                    <a rel="nofollow" href="#"><ins class="foot_service_sample"></ins>@Lang.TipFreeSample</a>
+                </p>
+                <p>
+                    <a rel="nofollow" href="#"><ins class="foot_service_cda"></ins>@Lang.TipDutyAdvice</a>
+                </p>
+                <p>
+                    <a rel="nofollow" href="#"><ins class="foot_service_shipping"></ins>@Lang.TipDropShipping </a>
+                </p>
+            </li>
+            <li class="foot_customer_service lf">
+                <h5 class="font_verdana font15"><strong>@Lang.TipCustomerService</strong></h5>
+                <p>
+                    <a rel="nofollow" href="#">@Lang.TipCompanyProfile</a>
+                </p>
+                <p>
+                    <a rel="nofollow" href="#">@Lang.TipVIPolicy</a>
+                </p>
+                <p>
+                    <a href="#">@Lang.TipPaymentMethod</a>
+                </p>
+                <p>
+                    <a rel="nofollow" href="#">@Lang.TipShippingFee</a>
+                </p>
+                <p>
+                    <a rel="nofollow" href="#">@Lang.TipReturnPolicy</a>
+                </p>
+            </li>
+            <li class="foot_share lf">
+                <h5 class="font_verdana font15"><strong>@Lang.TipFollowUsOn</strong></h5>
+                <p>
+                    <a rel="nofollow" href="#" title="@Lang.TipFacebook"><ins class="foot_share_facebook"></ins>@Lang.TipFacebook</a>
+                </p>
+                <p>
+                    <a rel="nofollow" href="http://www.pinterest.com/8seasons/" title="@Lang.TipPinterest"><ins class="foot_share_pinterest"></ins>@Lang.TipPinterest</a>
+                </p>
+                <p>
+                    <a rel="nofollow" href="https://twitter.com/8Seasons_2003" title="@Lang.TipTwitter"><ins class="foot_share_twitter"></ins>@Lang.TipTwitter</a>
+                </p>
+                <p>
+                    <a rel="nofollow" href="https://plus.google.com/101042750748573982218" title="@Lang.TipGoogle"><ins class="foot_share_google"></ins>@Lang.TipGoogle</a>
+                </p>
+            </li>
+        </ul>
+    </div>
+    <div class="foot_site">
+        <p class="foot_site_service">
+            <a rel="nofollow" href="#" class="paypal" title="@Lang.TipPaypal"></a><a rel="nofollow" href="#" class="fedex" title="@Lang.TipFedex"></a><a rel="nofollow" href="#" class="ups" title="@Lang.TipUps"></a><a rel="nofollow" href="#" class="postal" title="@Lang.TipUnitedStates"></a><a rel="nofollow" href="#" class="dhl" title="@Lang.TipDhl"></a><a rel="nofollow" href="#" class="ems" title="@Lang.TipEms"></a><a rel="nofollow" href="#" class="western" title="@Lang.TipWesternUnion"></a><a rel="nofollow" href="#" class="chinabank" title="@Lang.TipChinaBank"></a>
+        </p>
+        <p>
+            @Html.Raw(Lang.TipCompanyAddress)<br />
+            @Html.Raw(Lang.TipCompanyTel) @Html.Raw(Lang.TipCompanyFax) @Html.Raw(Lang.TipCompanyEmail)<br />
+            ©2002-@DateTime.Now.Year @Html.Raw(Lang.TipRightsReserved)<br />
+            <ul>
+                <li>-<a rel="nofollow" href="#">@Lang.TipAffiliates</a></li>
+                <li>-<a rel="nofollow" href="@UrlRewriteHelper.GetSitemapPageUrl()">@Lang.TipSitemap</a></li>
+            </ul>
+            <ul>
+                <li><a rel="nofollow" href="#">@Lang.TipWholesaleBeads</a>-</li>
+                <li><a rel="nofollow" href="#">@Lang.TipJewelrySupplies</a>-</li>
+                <li><a rel="nofollow" href="#">@Lang.TipAcrylicBeads</a>-</li>
+                <li><a rel="nofollow" href="#">@Lang.TipGlassBeads</a>-</li>
+                <li><a rel="nofollow" href="#">@Lang.TipGemstoneBeads</a>-</li>
+                <li><a rel="nofollow" href="#">@Lang.TipLampwork</a>-</li>
+                <li><a rel="nofollow" href="#">@Lang.TipBeads</a>-</li>
+                <li><a rel="nofollow" href="#">@Lang.TipSeedBeads</a>-</li>
+                <li><a rel="nofollow" href="#">@Lang.TipClayBeads</a>-</li>
+                <li><a rel="nofollow" href="#">@Lang.TipWholesaleButtons</a>-</li>
+                <li><a rel="nofollow" href="#">@Lang.TipCharmsWholesale</a></li>
+            </ul>
+        </p>
+    </div>
+</div>
+<input id="valcustomerid" type="hidden" value="@ViewBag.CustomerId"/>
+<input id="valoginerrcount" type="hidden" value="@ViewBag.LoginErrorCount"/>
+<input id="valregistercount" type="hidden" value="@ViewBag.RegisterCount"/>

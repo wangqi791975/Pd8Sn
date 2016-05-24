@@ -1,0 +1,145 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Customer
+@using Com.Panduo.Service.ServiceConst
+@using Com.Panduo.Service.SiteConfigure
+@using Resources
+@model List<Address>
+@{
+    ViewBag.Title = "AddressBook";
+    Layout = "~/Views/Shared/Layout/_Layout_NoLeft.cshtml";
+}
+@section HtmlHead
+{
+    @Html.JsFor("AddressBook_test.js", "~/Js/jquery.validate.js", fileVersion: "1.0")
+    <script type="text/javascript">
+        $(function () {
+            //  删除
+            $("a.btnAddrDelete").on("click", function () {
+                $.post("/Account/AddressBookDelete", { AddressId: $(this).data("id") }, function (jsonData) {
+                    if (jsonData.Message != null && jsonData.Message != "") {
+                        DivOs.showErrorModal(DivOs.getMessage(jsonData.Message));
+                    } else {
+                        window.location.reload();
+                    }
+                });
+            });
+            //  设为默认
+            $("a.btnAddrSetDef").on("click", function () {
+                $.post("/Account/AddressBookSetDef", { AddressId: $(this).data("id") }, function (jsonData) {
+                    if (jsonData.Message != null && jsonData.Message != "") {
+                        DivOs.showErrorModal(DivOs.getMessage(jsonData.Message));
+                    } else {
+                        window.location.reload();
+                    }
+                });
+            });
+            //  打开编辑
+            $("a.btnAddrEdit").on("click", function () {
+                $hide = $(this).hasClass("btnAddrEditDef") ? $(".address_info") : $(".all_address_cont");
+                $target = $(this).hasClass("btnAddrEditDef") ? $(".address_edit#address_edit_def") : $(".address_edit#address_edit_all");
+                $.post("/Account/AddressBookInfo", { AddressId: $(this).data("id") }, function (response) {
+                    $hide.hide();
+                    $target.html(response).show();
+                    $("a.btnAddrCancle").on("click", function () {
+                        $target.hide();
+                        $hide.show();
+                    });
+                });
+            });
+            //  保存
+            $("a.btnAddrSave").on("click", function () {
+                $(this).parents("form").filter(":first").ajaxSubmit({
+                    url: "/Account/AddressBookSave",
+                    success: function (jsonData) {
+                        if (jsonData.Message != null && jsonData.Message != "") {
+                            DivOs.showErrorModal(DivOs.getMessage(jsonData.Message));
+                        } else {
+                            window.location.reload();
+                        }
+                    }
+                });
+            });
+            //  无资料时候
+            if ($(".address_edit#address_edit_none").length > 0) {
+                $(".address_edit#address_edit_none").load("/Account/AddressBookInfo", { AddressId: 0 }).show();
+            }
+        })
+    </script>
+}
+@Html.Partial("~/Views/Account/Partial/_Account_Siderbar_Menu.cshtml")
+
+<div id="main" class="account_wrap">
+    <h2 class="font14 account_title">@Lang.TipAddressBookUp</h2>
+    <div class="address_cont">
+        <h5>@Lang.TipDefaultShipAddress</h5>
+        @if (Model.IsNullOrEmpty() || Model.Count == 0)
+        {
+            <div class="address_edit" id="address_edit_none">
+            </div>
+        }
+        else
+        {
+            var defalutAddress = Model.Where(x => x.AddressId == ViewBag.defaultId).ToList().FirstOrDefault();
+            defalutAddress = defalutAddress ?? new Address();
+            var countryLanguage = ServiceFactory.ConfigureService.GetCountryLanguage(defalutAddress.Country, ServiceFactory.ConfigureService.SiteLanguageId);
+            countryLanguage = countryLanguage ?? new CountryLanguage();
+            <div class="address_info" style="display: block;">
+                <strong>@defalutAddress.FullName</strong>
+                <p>@defalutAddress.Street1 @defalutAddress.Street2 @defalutAddress.City @defalutAddress.ZipCode @defalutAddress.Province</p>
+                <p>@countryLanguage.CountryName</p>
+                <p>Phone: @defalutAddress.Telphone</p>
+                <a href="javascript:void(0)" class="btn_orange btn_p30 btnAddrEdit btnAddrEditDef" data-id="@defalutAddress.AddressId">@Lang.TipEdit</a>
+            </div>
+            <div class="address_edit" id="address_edit_def"></div>
+            <div class="title">
+                <h5>@Html.Raw(string.Format(Lang.TipShipMaxAllow,ServiceFactory.ConfigureService.CustomersAddressMaxCount))</h5>
+                @if (Model.Count < ServiceFactory.ConfigureService.CustomersAddressMaxCount)
+                {
+                    <a class="fgreen_mid btnAddrEdit" href="javascript:void(0)" data-id="0"><ins class="add"></ins>@Lang.TipAddNewAddress</a>
+                }
+            </div>
+            <div class="all_address_cont" style="display: block;">
+                @{
+            var loop = 0;
+                }
+                @foreach (var address in Model)
+                {
+                    countryLanguage = ServiceFactory.ConfigureService.GetCountryLanguage(address.Country, ServiceFactory.ConfigureService.SiteLanguageId);
+                    if (loop % 2 == 0)
+                    {
+                        var bottom = loop >= Model.Count - 1 ? " class=\"bottom_border\"" : "";
+                    @Html.Raw("<ul" + bottom + ">")
+                    }
+                    <li>
+                        <strong>@address.FullName</strong>
+                        <p>@address.Street1 @address.Street2 @address.City @address.ZipCode @address.Province</p>
+                        <p>@countryLanguage.CountryName</p>
+                        <p>@Lang.TipPhone @address.Telphone</p>
+                        @if (address.AddressId != ViewBag.defaultId)
+                        {
+                            <p class="fblue_mid">
+
+                                <a href="javascript:void(0)" class="btnAddrSetDef" data-id="@address.AddressId"> @Lang.TipSetAsDefault</a>
+
+                            </p>
+                        }
+                        <p>
+                            <a href="javascript:void(0)" class="btn_orange btn_p30 btnAddrEdit" data-id="@address.AddressId">@Lang.TipEdit</a>
+                            @if (address.AddressId != ViewBag.defaultId)
+                            {
+                                <a href="javascript:void(0)" class="btn_grey btn_p30 btnAddrDelete" data-id="@address.AddressId">@Lang.TipDelete</a>
+                            }
+                        </p>
+                    </li>
+                            if (loop % 2 == 1 || loop == Model.Count)
+                            {
+                    @Html.Raw("</ul>")
+                            }
+                            loop++;
+                }
+            </div>
+            <div class="address_edit" id="address_edit_all"></div>
+        }
+    </div>
+</div>
+<div class="clearfix"></div>

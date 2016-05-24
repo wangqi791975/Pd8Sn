@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Rules>
+  <!-- *************************************非均衡加载相关设置************************************ Begin-->
+
+  <SiteRules>
+    <!--<SiteRule key=".*" value="http://photos1.pandahall.com" />-->
+    <SiteRule key="^[a-c]{1}" value="http://img.8seasons.com" />
+    <SiteRule key="^[e-f]{1}" value="http://img.8seasons.com" />
+    <SiteRule key="^[g-i]{1}" value="http://img.8seasons.com" />
+    <SiteRule key="^[j-l]{1}" value="http://img.8seasons.com" />
+    <SiteRule key="^[m-o]{1}" value="http://img.8seasons.com" />
+    <SiteRule key="^[p-r]{1}" value="http://img.8seasons.com" />
+    <SiteRule key="^[s-u]{1}" value="http://img.8seasons.com" />
+    <SiteRule key="^[v-z]{1}" value="http://img.8seasons.com" />
+    <SiteRule key="^[0-2]{1}" value="http://img.8seasons.com" />
+    <SiteRule key="^[3-5]{1}" value="http://img.8seasons.com" />
+    <SiteRule key="^[6-7]{1}" value="http://img.8seasons.com" />
+    <SiteRule key="^[8-9]{1}" value="http://img.8seasons.com" />
+  </SiteRules>
+  <!-- 图片对应虚拟目录的规则（可以为空,请注意虚拟目录应与磁盘对应)-->
+  <VirtualDirectoryRules>
+    <!--<VirtualDirectoryRule key=".*" value="photos1" />-->
+    <VirtualDirectoryRule key="^[a-c]{1}" value="bmz_cache/images/watermarkimg_new" />
+    <VirtualDirectoryRule key="^[e-f]{1}" value="bmz_cache/images/watermarkimg_new" />
+    <VirtualDirectoryRule key="^[g-i]{1}" value="bmz_cache/images/watermarkimg_new" />
+    <VirtualDirectoryRule key="^[j-l]{1}" value="bmz_cache/images/watermarkimg_new" />
+    <VirtualDirectoryRule key="^[m-o]{1}" value="bmz_cache/images/watermarkimg_new" />
+    <VirtualDirectoryRule key="^[p-r]{1}" value="bmz_cache/images/watermarkimg_new" />
+    <VirtualDirectoryRule key="^[s-u]{1}" value="bmz_cache/images/watermarkimg_new" />
+    <VirtualDirectoryRule key="^[v-z]{1}" value="bmz_cache/images/watermarkimg_new" />
+    <VirtualDirectoryRule key="^[0-2]{1}" value="bmz_cache/images/watermarkimg_new" />
+    <VirtualDirectoryRule key="^[3-5]{1}" value="bmz_cache/images/watermarkimg_new" />
+    <VirtualDirectoryRule key="^[6-7]{1}" value="bmz_cache/images/watermarkimg_new" />
+    <VirtualDirectoryRule key="^[8-9]{1}" value="bmz_cache/images/watermarkimg_new" />
+  </VirtualDirectoryRules>
+
+  <!-- 图片对应站点的缺省规则，当图片无法匹配上面的规则时用，建议必填-->
+  <DefaultSiteRule>http://img.8seasons.com</DefaultSiteRule>
+  <!-- 图片对应虚拟目录的缺省规则，当图片无法匹配上面的规则时用，建议必填-->
+  <DefaultVirtualDirectoryRules>photos1</DefaultVirtualDirectoryRules>
+  <!-- nophoto图片存放地址，请将nophoto图片按规格大小存储，其生成的规格图片名应为：宽_高_nophoto.jpg-->
+  <NoPhotoUrl>http://img.8seasons.com/photos1</NoPhotoUrl>
+
+  <!-- *************************************非均衡加载相关设置************************************ End-->
+
+
+
+  <!-- *************************************均衡加载相关设置************************************ Begin-->
+
+  <!-- 均衡加载站点设置，包括站点和虚拟目录(key值务必为连续的正整数，从1开始)-->
+  <BalanceSites>
+    <BalanceSite key="1" value="http://img.8seasons.com/bmz_cache/images/watermarkimg_new" />
+    <BalanceSite key="2" value="http://img.8seasons.com/bmz_cache/images/watermarkimg_new" />
+    <BalanceSite key="3" value="http://img.8seasons.com/bmz_cache/images/watermarkimg_new" />
+    <BalanceSite key="4" value="http://img.8seasons.com/bmz_cache/images/watermarkimg_new" />
+  </BalanceSites>
+  <!-- 均衡加载图片站点设置,启动均衡加载时，SiteRules和 VirtualDirectoryRules设置的规则将失效-->
+  <IsBalanceSites>false</IsBalanceSites>
+
+  <!-- *************************************均衡加载相关设置************************************ End-->
+  <!-- 图片对应站点的规则-->
+
+
+
+  <!-- *************************************公共设置************************************ Begin-->
+
+  <!-- 图片对应磁盘的规则-->
+  <DiskRules>
+    <DiskRule key="^[a-c]{1}" value="E:\pdphotos" />
+    <DiskRule key="^[e-f]{1}" value="E:\pdphotos" />
+    <DiskRule key="^[g-i]{1}" value="E:\pdphotos" />
+    <DiskRule key="^[j-l]{1}" value="E:\pdphotos" />
+    <DiskRule key="^[m-o]{1}" value="E:\pdphotos" />
+    <DiskRule key="^[p-r]{1}" value="D:\pdphotos" />
+    <DiskRule key="^[s-u]{1}" value="D:\pdphotos" />
+    <DiskRule key="^[v-z]{1}" value="D:\pdphotos" />
+    <DiskRule key="^[0-2]{1}" value="D:\pdphotos" />
+    <DiskRule key="^[3-5]{1}" value="E:\pdphotos" />
+    <DiskRule key="^[6-7]{1}" value="E:\pdphotos" />
+    <DiskRule key="^[8-9]{1}" value="D:\pdphotos" />
+  </DiskRules>
+
+  <!-- 图片对应磁盘的缺省规则，当图片无法匹配上面的规则时用，建议必填-->
+  <DefaultDiskRules>D:\pdphotos</DefaultDiskRules>
+  <!-- 原始图片物理存放路径-->
+  <PhotoStorageFolderPath>E:\pdorgphotos</PhotoStorageFolderPath>
+  <!-- 图片分层级目录的级数，必填-->
+  <FolderMaxLevel>2</FolderMaxLevel>
+  <!-- 比如：如果图片名称为abcd.jpg，如果分2级目录存放，不启用反转时的存放地址为:a\b\abcd.jpg，启用反转时的存放地址为:d\c\abcd.jpg-->
+  <FolderIsReverse>false</FolderIsReverse>
+  <!-- *************************************公共设置************************************ End-->
+</Rules>

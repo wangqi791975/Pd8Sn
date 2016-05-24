@@ -1,0 +1,242 @@
+﻿@using Com.Panduo.Web.Models.ShoppingCart
+@using Resources
+@model ShoppingAddress
+@{
+    Layout = null;
+
+    var provinceNameDisplay = string.Empty;
+    var provinceIdDisplay = string.Empty;
+    if (Model.Address.ProvinceId != null && Model.Address.ProvinceId > 0)
+    {
+        provinceNameDisplay = "style=display:none";
+    }
+    else
+    {
+        provinceIdDisplay = "style=display:none";
+    }
+}
+
+<form action="/Account/AddressBookSave" method="POST" name="formAddressBookSave" id="formAddressBookSave" onsubmit=" return false; ">
+    <input type="hidden" id="address_id" name="address_id" value="@Model.Address.AddressId" />
+    <input class="has_province" type="hidden" name="has_province" value="0" />
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <th><span class="fred">*</span>@Lang.TipFirstName</th>
+            <td>
+                <input id="first_name" name="first_name" type="text" value="@Model.Address.FirstName" maxlength="33" class="inputw270 input_text_wrap"><div class="fred">@Lang.TipThisIsText</div>
+            </td>
+        </tr>
+        <tr>
+            <th><span class="fred">*</span>@Lang.TipLastName</th>
+            <td>
+                <input class="inputw270 input_text_wrap" id="last_name" name="last_name" type="text" value="@Model.Address.LastName" maxlength="32"><div class="fred">@Lang.TipThisIsText</div>
+            </td>
+        </tr>
+        <tr>
+            <th><span class="fred">*</span>@Lang.TipAddressLine1</th>
+            <td>
+                <input class="inputw400 input_text_wrap" type="text" id="street_address" name="street_address" value="@Model.Address.Street1" maxlength="50"><div class="fred">@Lang.TipThisIsText</div>
+            </td>
+        </tr>
+        <tr>
+            <th>@Lang.TipAddressLine2</th>
+            <td>
+                <input class="inputw400 input_text_wrap" type="text" id="street_address2" name="street_address2" value="@Model.Address.Street2" maxlength="50">
+                <p><strong class="fred">NOTE:</strong> @Lang.TipPelSomeBox </p>
+            </td>
+        </tr>
+        <tr>
+            <th><span class="fred">*</span>@Lang.TipCountry</th>
+            <td>
+                <div class="select_cont select_w235" id="country_id_add_address" data-callback="getProvinceByCountry">
+                    <input type="hidden" id="country_id" name="country_id" value="@Model.CountryLanguage.CountryId" />
+                    <span class="select_cont_span">@Model.CountryLanguage.CountryName</span>
+                    <div class="pop_select_cont" style="display: none">
+                        <input id="country_search" name="country_search" type="text" class="input_text_wrap inputw228">
+                        <ul data-value="@Model.CountryLanguage.CountryId">
+                            <li class="list_line">----------</li>
+                            @if (Model.CommonCountryLanguages != null)
+                            {
+                                foreach (var country in Model.CommonCountryLanguages)
+                                {
+                                    <li class="list_item" data-value="@country.CountryId">@country.CountryName</li>
+                                }
+                            }
+
+                            <li class="list_line">----------</li>
+                            @if (Model.CountryLanguages != null)
+                            {
+                                foreach (var country in Model.CountryLanguages)
+                                {
+                                    <li class="list_item list_item_general" data-value="@country.CountryId">@country.CountryName</li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr @provinceNameDisplay class="province_name">
+            <th><span class="fred">*</span>@Lang.TipStateProReg</th>
+            <td>
+                <input class="inputw270 input_text_wrap" type="text" id="province_name" name="province_name" value="@Model.Address.Province">
+                <div class="fred">This text is a tip text.</div>
+                <p><strong class="fred">NOTE:</strong> It is better to fulfill complete name of State/Province instead of Abbreviation to smooth the delivery. </p>
+            </td>
+        </tr>
+        <tr @provinceIdDisplay class="province_id">
+            <th><span class="fred">*</span>State/Province/Region:</th>
+            <td data-value="@Model.Address.ProvinceId">
+                <select id="province_id" name="province_id" class="inputw270 input_text_wrap">
+                    <option value="0">Please select ...</option>
+                </select>
+                <label for="province_id" generated="true" class="error" style="display: none">@Lang.MsgSelectState</label>
+                <p>@Html.Raw(Lang.TipNoteStateDeliv) </p>
+            </td>
+        </tr>
+        <tr>
+            <th><span class="fred">*</span>@Lang.TipCityNoPun</th>
+            <td>
+                <input class="inputw270 input_text_wrap" type="text" id="city" name="city" value="@Model.Address.City" maxlength="32">
+                <div class="fred">@Lang.TipThisIsText</div>
+            </td>
+        </tr>
+        <tr>
+            <th><span class="fred">*</span>@Lang.TipPostZipCode</th>
+            <td>
+                <input class="inputw270 input_text_wrap" type="text" id="zip_code" name="zip_code" value="@Model.Address.ZipCode" maxlength="16">
+                <div class="fred">@Lang.TipThisIsText</div>
+            </td>
+        </tr>
+        <tr>
+            <th><span class="fred">*</span>@Lang.TipPhoneNumber</th>
+            <td>
+                <input class="inputw270 input_text_wrap" type="text" id="phone_number" name="phone_number" value="@Model.Address.Telphone" maxlength="16">
+                <div class="fred">@Lang.TipThisIsText</div>
+                <p>@Lang.TipPhoneToDeliv</p>
+                <p class="fgrey_deep">
+                    <label>
+                        <input type="checkbox" name="is_default_shipping_address" value="true" @Model.IsDisabledAddress @Model.IsCheckedAddress>@Lang.TipSetShipAddress
+                    </label>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <th></th>
+            <td><a class="btn_orange btn_p30 btnAddrSave" href="javascript:void(0)" onclick="$(this).parents('form').filter(':first').submit();">@Lang.TipSave</a><a class="btn_grey btn_p30 btnAddrCancle" href="javascript:void(0)">@Lang.TipCancel</a></td>
+        </tr>
+    </table>
+</form>
+
+<script type="text/javascript">
+    $(function () {
+        $(".select_w235 .pop_select_cont li.list_item_general").each(function () {
+            if ($(this).data("value") != undefined && $(this).data("value") == $(this).parents("ul").filter(":first").data("value")) {
+                $(this).click();
+                $(".pop_select_cont").hide();
+            }
+        });
+
+        $(".province_id select").live("change", function () {
+            $(".province_name input").val("");
+            if ($(this).find("option:selected").val() != "0") {
+                $(".province_name input").val($(this).find("option:selected").text());
+            }
+        });
+
+        $("#formAddressBookSave").validate({
+            rules: {
+                first_name: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 50
+                },
+                last_name: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 50
+                },
+                street_address: {
+                    required: true,
+                    minlength: 5,
+                    maxlength: 200
+                },
+                province_name: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 100
+                },
+                city: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 100
+                },
+                zip_code: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 30
+                },
+                phone_number: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 50
+                }
+            },
+            messages: {
+                first_name: {
+                    required: Message.MsgFirstNameEmpty,
+                    minlength: Message.MsgFirstNameCantLess,
+                    maxlength: MsgFirstNameCantGreater
+                },
+                last_name: {
+                    required: Message.MsgLastNameEmpty,
+                    minlength: Message.MsgLastNameCantLess,
+                    maxlength: Message.MsgLastNameCantGreater
+                },
+                street_address: {
+                    required: Message.MsgAddressFEmpty,
+                    minlength: Message.MsgAddressFCantLess,
+                    maxlength: Message.MsgAddressFCantGreater
+                },
+                province_name: {
+                    required: Message.MsgProvinceEmpty,
+                    minlength: Message.MsgProvinceCantLess,
+                    maxlength: Message.MsgProvinceCantGreater
+                },
+                city: {
+                    required: Message.MsgCityEmpty,
+                    minlength: Message.MsgCityCantLess,
+                    maxlength: Message.MsgCityCantGreater
+                },
+                zip_code: {
+                    required: Message.MsgZipCodeEmpty,
+                    minlength: Message.MsgZipCodeCantLess,
+                    maxlength: Message.MsgZipCodeCantGreater
+                },
+                phone_number: {
+                    required: Message.MsgPhoneNumEmpty,
+                    minlength: Message.MsgPhoneNumCantLess,
+                    maxlength: Message.MsgPhoneNumCantGreater
+                }
+            },
+            submitHandler: function (form) {
+                if ($(form).find(".has_province").val() == "1" && $(form).find("#province_id").val() == "0") {
+                    $(form).find("#province_id").toggleClass("error");
+                    $(form).find("#province_id").next().show();
+                    return false;
+                }
+                $(form).ajaxSubmit({
+                    url: "/Account/AddressBookSave",
+                    success: function (jsonData) {
+                        if (jsonData.msg != null && jsonData.msg != "") {
+                            DivOs.showErrorModal(DivOs.getMessage(jsonData.msg));
+                        } else {
+                            window.location.reload();
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+

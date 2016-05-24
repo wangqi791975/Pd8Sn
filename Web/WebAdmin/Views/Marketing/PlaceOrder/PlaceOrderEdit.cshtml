@@ -1,0 +1,248 @@
+﻿@using Com.Panduo.Service.Marketing
+@using Com.Panduo.Service.Marketing.PlaceOrder
+@{
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+    var placeOrderMarketing = (PlaceOrderMarketing)ViewBag.PlaceOrderMarketing;
+    ViewBag.Title = placeOrderMarketing.Id > 0 ? "下单活动设置 > 编辑" : "下单活动设置 > 新建";
+    var placeOrderRewardType = placeOrderMarketing.PlaceOrderRewardType;
+}
+@section HtmlHead
+{
+    @Html.JsFor("MarketingShipping.js", "~/Js/bootstrap-formhelpers.js,~/Js/Marketing/Marketing.js", fileVersion: "1.4")
+    @Html.CssFor("MarketingShipping.css", "~/Css/bootstrap-formhelpers.min.css", fileVersion: "1.0")
+}
+@*<p><code>说明：时间为北京时间</code></p>*@
+<div class="alert alert-error hide"><a class="close" data-dismiss="alert">&times;</a><span>@ViewBag.ErrorMsg</span></div>
+<form class="form-horizontal" name="updateForm" id="PlaceOrderupdateForm" action="@Url.Content("~/Marketing/PlaceOrderSave")" method="post" onsubmit="return false;">
+    <div class="well tab-content">
+
+        <input type="hidden" name="marketingId" value="@(placeOrderMarketing.Id)"/>
+
+        <div class="control-group">
+            <label class="control-label">送礼类型：</label>
+            <div class="controls">
+                <select name="FD_PlaceOrderType" class="span2" id="FD_PlaceOrderType">
+                    <option value="@((int)MarketingPlaceOrderResultType.Gift)" @(placeOrderMarketing.PlaceOrderRewardType == MarketingPlaceOrderResultType.Gift ? "selected=selected" : "")>下单送礼</option>
+                    <option value="@((int)MarketingPlaceOrderResultType.Coupon)" @(placeOrderMarketing.PlaceOrderRewardType == MarketingPlaceOrderResultType.Coupon ? "selected=selected" : "")>下单送Coupon</option>
+                </select>
+            </div>
+        </div>
+        @Html.Partial("Partial/MarketingCondition", placeOrderMarketing)
+
+        <hr />
+        <div class="control-group">
+            <label class="control-label">金额对象：</label>
+            <div class="controls">
+                <select name="FD_AmountType" class="span2" id="FD_AmountType">
+                    <option value="@((int)MarketingAmountType.TotalAmount)" @(placeOrderMarketing.AmountType == MarketingAmountType.TotalAmount ? "selected=selected" : "")>物品总金额</option>
+                    <option value="@((int)MarketingAmountType.NoDiscountTotalAmount)" @(placeOrderMarketing.AmountType == MarketingAmountType.NoDiscountTotalAmount ? "selected=selected" : "")>正价商品金额</option>
+                </select>
+            </div>
+        </div>
+        <div id="FD_RewardType_@((int)MarketingPlaceOrderResultType.Coupon)" @(placeOrderMarketing.PlaceOrderRewardType == MarketingPlaceOrderResultType.Gift ? "class=hide" : "")>
+            <div class="control-group">
+                <label class="control-label">起算金额(USD)：</label>
+                <div class="controls">
+                    <table class="table table-striped table-bordered" id="TB_Amount_coupon" style="width: 50%; margin-bottom: 0px;">
+                        <thead>
+                            <tr>
+                                <th>起算金额</th>
+                                <th>Coupon Code</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        @if (placeOrderMarketing.PlaceOrderRewardType == MarketingPlaceOrderResultType.Coupon && !placeOrderMarketing.PlaceOrderDetails.IsNullOrEmpty())
+                        {
+                            foreach (var item in placeOrderMarketing.PlaceOrderDetails)
+                            {
+                            <tr>
+                                <td>
+                                    <input type="text" class="input-medium" datatype="f1" name="Amount" value="@item.Amount" />
+                                </td>
+                                <td>
+                                    <input type="text" class="input-medium" name="CouponCode" value="@item.CouponCode" />
+                                </td>
+                                <td><a href="javascript:void(0);" class="btn del_tr">删除</a></td>
+                            </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>
+                                    <input type="text" class="input-medium" datatype="f1" name="Amount" value="" />
+                                </td>
+                                <td>
+                                    <input type="text" class="input-medium" name="CouponCode" value="" />
+                                </td>
+                                <td><a href="javascript:void(0);" class="btn del_tr">删除</a></td>
+                            </tr>
+                        }
+                    </table>
+                    <a href="javascript:void(0);" class="btn add_tr" data-target="#TB_Amount_coupon" data-length="1">新增</a>
+                </div>
+            </div>
+        </div>
+        <div id="FD_RewardType_@((int)MarketingPlaceOrderResultType.Gift)" @(placeOrderMarketing.PlaceOrderRewardType == MarketingPlaceOrderResultType.Coupon ? "class=hide" : "")>
+            <div class="control-group">
+                <label class="control-label">起算金额(USD)&amp;Coupon：</label>
+                <div class="controls">
+                    <table class="table table-striped table-bordered" id="TB_Amount_gift" style="width: 50%; margin-bottom: 0px;">
+                        <thead>
+                            <tr>
+                                <th>起算金额</th>
+                                <th>礼品等级</th>
+                            </tr>
+                        </thead>
+
+                        <tr>
+                            <td>
+                                <input type="text" class="input-medium" datatype="f1" name="Amount_gift" value="@(!placeOrderMarketing.PlaceOrderDetails.IsNullOrEmpty() && placeOrderMarketing.PlaceOrderDetails.Exists(x => x.GiftLevel == "A") ? placeOrderMarketing.PlaceOrderDetails.Find(x => x.GiftLevel == "A").Amount.ToString("F") : "")" />
+                            </td>
+                            <td>
+                                <i data-val="A">1级</i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" class="input-medium" datatype="f1" name="Amount_gift" value="@(!placeOrderMarketing.PlaceOrderDetails.IsNullOrEmpty() && placeOrderMarketing.PlaceOrderDetails.Exists(x => x.GiftLevel == "B") ? placeOrderMarketing.PlaceOrderDetails.Find(x => x.GiftLevel == "B").Amount.ToString("F") : "")" />
+                            </td>
+                            <td>
+                                <i data-val="B">2级</i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" class="input-medium" datatype="f1" name="Amount_gift" value="@(!placeOrderMarketing.PlaceOrderDetails.IsNullOrEmpty() && placeOrderMarketing.PlaceOrderDetails.Exists(x => x.GiftLevel == "C") ? placeOrderMarketing.PlaceOrderDetails.Find(x => x.GiftLevel == "C").Amount.ToString("F") : "")" />
+                            </td>
+                            <td>
+                                <i data-val="C">3级</i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" class="input-medium" datatype="f1" name="Amount_gift" value="@(!placeOrderMarketing.PlaceOrderDetails.IsNullOrEmpty() && placeOrderMarketing.PlaceOrderDetails.Exists(x => x.GiftLevel == "D") ? placeOrderMarketing.PlaceOrderDetails.Find(x => x.GiftLevel == "D").Amount.ToString("F") : "")" />
+                            </td>
+                            <td>
+                                <i data-val="D">4级</i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" class="input-medium" datatype="f1" name="Amount_gift" value="@(!placeOrderMarketing.PlaceOrderDetails.IsNullOrEmpty() && placeOrderMarketing.PlaceOrderDetails.Exists(x => x.GiftLevel == "E") ? placeOrderMarketing.PlaceOrderDetails.Find(x => x.GiftLevel == "E").Amount.ToString("F") : "")" />
+                            </td>
+                            <td>
+                                <i data-val="E">5级</i>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+        @Html.Partial("Partial/MarketingInfo", placeOrderMarketing)
+
+        <div class="form-actions">
+            <input type="submit" value="保存" id="PlaceOrderSave" class="btn btn-primary" />
+            <a class="btn" href="@Url.Content("~/Marketing/PlaceOrder")">取消</a>
+        </div>
+    </div>
+</form>
+<div class="alert alert-error hide"><a class="close" data-dismiss="alert">&times;</a><span>@ViewBag.ErrorMsg</span></div>
+
+@section HtmlFooter
+{
+    <script type="text/javascript">
+        $(function () {
+            $("#FD_PlaceOrderType").on("change", function () {
+                var val = $(this).val();
+                if (val == 1) {
+                    $("#FD_RewardType_0").hide();
+                    $("#FD_RewardType_1").show();
+                } else {
+                    $("#FD_RewardType_1").hide();
+                    $("#FD_RewardType_0").show();
+                }
+            });
+
+            //coupon保存
+            $("#PlaceOrderSave").click(function () {
+                var btn = $(this);
+                btn.unbind("click").text("正在提交数据");
+                var languages = "";
+                var countrys = "";
+                var descs = "";
+                var couponstr = "";
+                var giftstr = "";
+                //获取选中语种
+                if ($("#FD_LanguageIds").attr("checked")) {
+                    languages = "All";
+                } else {
+                    $("[name='FD_LanguageIds']").each(function () {
+                        if ($(this).attr("checked")) {
+                            languages = languages + $(this).val() + ",";
+                        }
+                    });
+                    if (languages != "")
+                        languages = languages.substr(0, languages.length - 1);
+                }
+                //获取国家
+                if ($("#FD_ContinentIds").attr("checked")) {
+                    countrys = "All";
+                } else {
+                    $("[name='FD_ContinentIds']").each(function () {
+                        if ($(this).attr("checked")) {
+                            countrys = countrys + $(this).val() + ",";
+                        }
+                    });
+                    if (countrys != "")
+                        countrys = countrys.substr(0, countrys.length - 1);
+                }
+
+                $("#TB_Amount_gift").find("tbody tr").each(function () {
+                    var tdArr = $(this).children();
+                    var amount = tdArr.eq(0).find("input").val(); //金额
+                    var level = tdArr.eq(1).find("i").data("val"); //等级
+                    if (amount.length > 0) {
+                        giftstr += amount + "|" + level + ";";
+                    }
+                });
+
+                $("#TB_Amount_coupon").find("tbody tr").each(function () {
+                    var tdArr = $(this).children();
+                    var amount = tdArr.eq(0).find("input").val(); //coupon金额
+                    var coupon = tdArr.eq(1).find("input").val(); //折扣
+                    if (amount.length > 0) {
+                        couponstr += amount + "|" + coupon + ";";
+                    }
+                });
+
+                $("#PlaceOrderupdateForm").ajaxSubmit({
+                    data: { languages: languages, countrys: countrys, coupon: couponstr, gift: giftstr },
+                    success: function (responseText) {
+                        var msg = "";
+                        if (responseText.result == "success") {
+                            msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作成功!' : responseText.msg;
+                            btn.text("保存成功");
+                            $(".alert").removeClass("alert-error").addClass("alert-success").show().delay(2000).hide(200).find("span").text(msg);
+                            setTimeout(function () {
+                                location.reload();
+                            }, 500);
+                        } else {
+                            msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作失败!' : responseText.msg;
+                            $(".alert").removeClass("alert-success").addClass("alert-error").show().delay(2000).hide(200).find("span").text(msg);
+                        }
+                    }
+                });
+            });
+
+            $(".del_tr").click(function () {
+                var tr = $(this).parents("tr");
+                if (tr.find("[name=CouponCode]").val() != "" && confirm("你确认要删除这一行数据吗?"))
+                    tr.remove();
+                else
+                    tr.remove();
+            });
+        });
+    </script>
+}

@@ -1,0 +1,13 @@
+﻿@using Com.Panduo.Service.Product
+@using Resources
+@model ProductInfo
+@{
+    var ifhot =Model.IsHot;
+    var ifnew =(!ifhot) && DateTime.Now.Subtract(Model.Product.CreateTime).TotalDays <= 30;//NEW标签
+    var ifstocklimit = Model.ProductStock.JudgeStocklimit();
+    var discount = PageHelper.GetDiscount(Model.ProductPrice);
+    
+}
+<div class="promotion_icon">  @*折扣icon_sale和新品icon_newhot标签直接不能有空白*@
+  @if (discount < 1&&discount>0){<ins class="icon_sale"><span>@PageHelper.GetShowDiscount(discount)</span></ins>}@if(ifhot){<ins class="icon_newhot"><span>HOT</span></ins>}@if(ifnew){<ins class="icon_newhot"><span>@Lang.TipNEW</span></ins>}@if(ifstocklimit){<ins class="icon_limitedstock"><span>@Lang.TipLmtStock</span></ins>}
+</div>	

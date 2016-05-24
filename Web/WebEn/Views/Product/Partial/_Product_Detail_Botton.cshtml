@@ -1,0 +1,32 @@
+﻿@using Com.Panduo.Service.Product
+@using Resources
+@model ProductInfo
+@{
+    var isLimit = Model.ProductStock.JudgeStocklimit();
+}
+<div class="pro_detail_btn">
+
+    <div class="pro_detail_input">
+        <span>@Lang.TipQTY</span><input class="inputw98 input_text_wrap" type="text" value="1" name="input_qty_@Model.Product.ProductId" />
+        @if (isLimit && Model.ProductStock.StockNumber > 0)
+        {<span>@string.Format(Lang.TipNStockAvailable,Model.ProductStock.StockNumber)</span> }
+    </div>
+    @if (@Model.Product.Status == ProductStatus.BackOrder)
+    {
+        <a rel="nofollow" class="btn_orange btn_w170" href="javascript:void(0)" onclick="fnBackorderAddToCart(this)" data-productid="@Model.Product.ProductId"  data-restocktime="@Model.ProductStock.GetProductStockDay()" ><ins class="btn_backorder"></ins><span>@Lang.TipBackorder</span></a>
+    }
+    else
+    {
+        <a rel="nofollow" class="btn_orange btn_w170 cart_btn_add" data-productid="@Model.Product.ProductId" data-pagesource="productdetail" href="javascript:void(0)" ><ins class="btn_cart"></ins><span>@Lang.TipAddCart</span></a>
+    }
+    <a rel="nofollow" class="btn_grey btn_w170 wishlist_btn_add" data-productid="@Model.Product.ProductId" data-pagesource="productdetail" href="javascript:void(0)"><ins class="btn_wishlist"></ins><span>@Lang.TipAddWishlist</span></a>
+    <div class="clearfix"></div>
+    @if (@Model.Product.Status == ProductStatus.BackOrder)
+    {
+        @Html.Raw("<div class=\"time fgrey_mid\">Restock Time:" + @Model.ProductStock.GetProductStockDay() + " days </div>")
+    }
+    else if (@Model.Product.OtherPackType == ProductOtherPackType.Big)
+    {
+        @Html.Raw("<div class=\"time fgrey_mid\">Ready Time：7 - 15 workdays </div>")
+    }
+</div>

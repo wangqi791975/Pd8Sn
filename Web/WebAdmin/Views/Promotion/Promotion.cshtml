@@ -1,0 +1,18 @@
+﻿@using Com.Panduo.Service.Marketing
+@{
+    ViewBag.Title = "促销区设置";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<div class="pull-right">
+    <form method="post" action="@Url.Content("~/Promotion/PromotionAreaList")" id="searchForm" name="searchForm" class="form-search">
+        促销区名称：<input type="text" onkeyup=" $(this).val($(this).val().replace(/\//g, '')); " placeholder="促销区名称" name="keyword" />
+        <button class="btn" type="submit">搜索</button>@*<code>说明：时间为北京时间</code>*@
+    </form>
+</div>
+<a class="btn" href="@Url.Content("~/Promotion/PromotionAreaEdit/0")"><i class="icon-plus"></i>新建促销区</a>
+<a class="btn" href="/Promotion/PromotionURL"><i class="icon-plus"></i>生成URL</a>
+
+<div class="clearboth"></div>
+
+<div id="main" class="ajax-list" data-url="@Url.Content("~/Promotion/PromotionAreaList")"></div>

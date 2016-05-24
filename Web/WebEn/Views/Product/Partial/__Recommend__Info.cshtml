@@ -1,0 +1,14 @@
+﻿@using Com.Panduo.Service
+@model int 
+@{
+var title=ServiceFactory.ProductService.GetProductName(Model,ServiceFactory.ConfigureService.SiteLanguageId);
+var stepPrice = ServiceFactory.ProductService.GetProductSalePriceByPurchaseQty(Model, 1);
+}
+@if(!stepPrice.IsNullOrEmpty()) {
+    <div class="recommend_info">
+        <p class="recommend_pro_name"><a href="#">@title.ToCutString(33,"...")</a></p>
+        <div class="recommend_pro_price">
+        @Html.Partial("~/Views/Product/Partial/__Product__As__Low__As.cshtml",@stepPrice)
+        </div>
+    </div>
+}

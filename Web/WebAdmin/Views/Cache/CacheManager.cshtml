@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "系统管理 / 缓存管理";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+
+<form novalidate="novalidate" method="post" action="/Cache/CacheManager" id="cacheForm" name="cacheForm" class="form-horizontal" target="_self">
+    <input type="hidden" id="update_type" name="update_type" value="" />
+    <table class="table table-striped table-bordered">
+        <tbody>
+            <tr style="height: 76px">
+                <td width="25%">更新所有缓存：</td>
+                <td width="25%"><a data-value="更新所有缓存" href="javascript:void(0);" data-loading-text="加载中..." class="btn btn-warning sync_btn">更新所有缓存</a></td>
+                <td width="50%" colspan="2">
+                    <div class="show-alert">
+                        <div class="alert alert-success hide"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 76px">
+                <td>公用缓存：</td>
+                <td><a data-value="更新网站语种缓存" href="javascript:void(0);" data-loading-text="加载中..." class="btn btn-warning sync_btn">更新网站语种缓存</a></td>
+                <td><a data-value="更新网站币种缓存" href="javascript:void(0);" data-loading-text="加载中..." class="btn btn-warning sync_btn">更新网站币种缓存</a></td>
+                <td>
+                    <div class="show-alert">
+                        <div class="alert alert-success hide"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 76px">
+                <td>类别缓存：</td>
+                <td><a data-value="更新类别缓存" href="javascript:void(0);" data-loading-text="加载中..." class="btn btn-warning sync_btn">更新类别缓存</a></td>
+                <td colspan="2">
+                    <div class="show-alert">
+                        <div class="alert alert-success hide"></div>
+                    </div>
+                </td>
+            </tr>
+        <tr style="height: 76px">
+            <td>属性缓存：</td>
+            <td><a data-value="更新属性缓存" href="javascript:void(0);" data-loading-text="加载中..." class="btn btn-warning sync_btn">更新属性缓存</a></td>
+            <td colspan="2">
+                <div class="show-alert">
+                    <div class="alert alert-success hide"></div>
+                </div>
+            </td>
+        </tr>
+        <tr style="height: 76px">
+            <td>首页横导航：</td>
+            <td><a data-value="首页横导航缓存" href="javascript:void(0);" data-loading-text="加载中..." class="btn btn-warning sync_btn">更新横导航缓存</a></td>
+            <td colspan="2">
+                <div class="show-alert">
+                    <div class="alert alert-success hide"></div>
+                </div>
+            </td>
+        </tr>
+        <tr style="height: 76px">
+            <td>首页中间区域 – 类别展示右侧：</td>
+            <td><a data-value="更新类别展示右侧缓存" href="javascript:void(0);" data-loading-text="加载中..." class="btn btn-warning sync_btn">更新首页中间区域 – 类别展示右侧缓存</a></td>
+            <td colspan="2">
+                <div class="show-alert">
+                    <div class="alert alert-success hide"></div>
+                </div>
+            </td>
+        </tr>
+        <tr style="height: 76px">
+            <td>首页中间区域 – 类别展示下方：</td>
+            <td><a data-value="更新类别展示下方缓存" href="javascript:void(0);" data-loading-text="加载中..." class="btn btn-warning sync_btn">更新首页中间区域 – 类别展示下方缓存</a></td>
+            <td colspan="2">
+                <div class="show-alert">
+                    <div class="alert alert-success hide"></div>
+                </div>
+            </td>
+        </tr>
+         <tr style="height: 76px">
+            <td>更新后台菜单缓存：</td>
+            <td><a data-value="更新后台菜单缓存" href="javascript:void(0);" data-loading-text="加载中..." class="btn btn-warning sync_btn">更新后台菜单缓存</a></td>
+            <td colspan="2">
+                <div class="show-alert">
+                    <div class="alert alert-success hide"></div>
+                </div>
+            </td>
+        </tr>
+            
+        </tbody>
+    </table>
+</form>
+<script language="javascript">
+    $(function () {
+        $('.sync_btn').click(function () {
+            var current = $(this);
+            var value = current.data('value');
+            $('#update_type').val(value);
+            $('.sync_btn').attr('disabled', true);
+            current.parents("tr").filter(":first").find('.show-alert .alert').show().text("......");
+            $('#cacheForm').ajaxSubmit(function (data) {
+                $('.sync_btn').attr('disabled', false).button('reset');
+                current.parents("tr").filter(":first").find('.show-alert .alert').show().text(data.msg).fadeOut(3000);
+            });
+        });
+    });
+</script>

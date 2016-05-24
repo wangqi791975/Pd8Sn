@@ -1,0 +1,41 @@
+﻿@using Com.Panduo.Service
+@using Resources
+@{
+    ViewBag.Title = "Testimonial";
+    Layout = "~/Views/Shared/Layout/_Layout_NoLeft.cshtml";
+    var vaildLanguages = ServiceFactory.ConfigureService.GetAllValidLanguage();
+}
+@model  PageData<Com.Panduo.Service.Review.ReviewWebsiteCustomerView>
+
+@Html.JsFor("testimonial.js", "~/Js/Review/Testimonial.js", fileVersion: "1.2")
+
+<div class="testimonial_wrap">
+    <img src="/Images/img_testimonial.jpg" />
+    <p class="top_text">@Lang.TipShareFaceback</p>
+    <a href="javascript:testimonialcap()" class="btn_orange btn_p30">@Lang.TipWriteATestimonial</a>
+    <div class="testimonial_cont">
+        <div class="title">
+            <h3>@Lang.TipCustomersTestimonials</h3>
+            <div class="testimonial_language">
+                <em>@Lang.TipLanguageDown</em>
+                <div class="select_cont select_w128">
+                    All
+                    <div class="pop_select_cont">
+                        <ul>
+                            <li class="list_item active" id="0">@Lang.TipAll</li>
+                            @foreach (var language in vaildLanguages)
+                            {
+                                <li class="list_item" id="@language.LanguageId">@language.LanguageName</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Partial("TestimonialList", Model)
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+

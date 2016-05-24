@@ -1,0 +1,11 @@
+﻿@using Com.Panduo.Service
+@{
+    ViewBag.Title = "首页";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<div id="main">
+    这里是Admin的首页
+    @ServiceFactory.ProductImageService.GetProductImageUrl("e533d95b-1251-4b9c-a3ae-4bf33b4333ce.jpeg")<br/>
+    @ServiceFactory.ProductImageService.GetProductImageUrl("e533d95b-1251-4b9c-a3ae-4bf33b4333ce.jpeg",200)
+</div> 

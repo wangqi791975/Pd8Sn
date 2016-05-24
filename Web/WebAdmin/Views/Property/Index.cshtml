@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "属性管理";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<div class="pull-right">
+    <form method="post" action="@Url.Content("~/Property/GetList")" id="searchForm" name="searchForm" class="form-search">
+        属性编号：<input type="text" onkeyup="$(this).val($(this).val().replace(/\//g,''));" placeholder="属性编号或中文名称" name="keyword">
+        <button type="submit" class="btn"><i class="icon-search"></i>搜索</button>
+    </form>
+</div>
+<div class="clearboth"></div>
+
+<div data-url="/Property/GetList" class="ajax-list" id="main"></div>
+
+<!-- detail -->
+<div class="modal hide fade ajax_detail" data-url="@Url.Content("~/Property/GetInfo")">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>编辑属性</h3>
+    </div>
+    <div class="modal-body ajax_info">
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn btn-primary ajax_update">保存</a>
+        <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+    </div>
+</div>

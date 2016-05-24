@@ -1,0 +1,95 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Product.Promotion
+@model PageData<PromotionArea>
+@{
+    Layout = null;
+}
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th width="6%">编号</th>
+            <th>名称</th>
+            <th width="10%">显示首页</th>
+            <th width="12%">开始时间</th>
+            <th width="12%">结束时间</th>
+            <th width="7%">状态</th>
+            <th width="7%">有产品</th>
+            <th width="8%">启用/禁用</th>
+            <th width="10%">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var promotionArea in Model.Data)
+        {
+            <tr>
+                <td>
+                    @promotionArea.PromotionAreaId
+                </td>
+                <td>
+                    <a href="@Url.Content("~/Promotion/PromotionAreaEdit/" + promotionArea.PromotionAreaId)">@promotionArea.PromotionName</a>
+                </td>
+                <td>
+                    @(promotionArea.IsShowHome ? "显示" : "不显示")
+                </td>
+                <td>
+                    @promotionArea.SaleStartTime
+                </td>
+                <td>
+                    @promotionArea.SaleEndTime
+                </td>
+                <td>
+                    @(promotionArea.SaleStartTime > DateTime.Now ? "未开始" : (promotionArea.SaleEndTime < DateTime.Now ? "已结束" : "活动"))
+                </td>
+                <td>
+                    @(promotionArea.HasProduct ? "有" : "没有")
+                </td>
+
+                @if (promotionArea.IsValid)
+                {
+                    <td>
+                        <button id="@promotionArea.PromotionAreaId" onclick="change(@promotionArea.PromotionAreaId)" class='btn btn-mini btn-success'>禁用</button>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <button id="@promotionArea.PromotionAreaId" onclick=" change(@promotionArea.PromotionAreaId) " class='btn btn-mini btn-danger'>启用</button>
+                    </td>
+                }
+                <td>
+                    <a class="btn btn-mini btn-info" id="data-@promotionArea.PromotionAreaId" href="@Url.Content("~/Promotion/PromotionAreaEdit/" + promotionArea.PromotionAreaId)"><i class="icon-edit icon-white"></i>编辑</a>
+                    <a class="btn btn-mini btn-info btn-del" data-promotionid="@promotionArea.PromotionAreaId" href="javascript:void(0)"><i class="icon-trash icon-white"></i>删除</a>
+                    @if (promotionArea.HasProduct && (promotionArea.SaleStartTime > DateTime.Now || promotionArea.SaleEndTime < DateTime.Now))
+                    { 
+                        <a class="btn btn-mini btn-info btn-cleanpromotionproduct" data-promotionid="@promotionArea.PromotionAreaId" href="javascript:void(0)"><i class="icon-trash icon-white"></i>清空产品</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.Partial("~/Views/Shared/Partial/_Page_Bottom.cshtml", Model.Pager)
+
+<script type="text/javascript">
+    $(function () {
+        //清空该促销区的产品
+        $(".table .btn-cleanpromotionproduct").click(function () {
+            if (confirm("您确认清空该促销区的产品吗？")) {
+                $.post("/Promotion/CleanPromotionProduct", { "promotionAreaId": $(this).data("promotionid") }, function (responsedata) {
+                    $.get('/Promotion/PromotionAreaList', function (data) {
+                        $('.ajax-list').filter(':first').html(data);
+                    });
+                });
+            }
+        });
+        $(".table .btn-del").click(function () {
+            if (confirm("您确认删除该促销区吗？")) {
+                $.post("/Promotion/PromotionAreaDelete", { "promotionAreaId": $(this).data("promotionid") }, function (responsedata) {
+                    $.get('/Promotion/PromotionAreaList', function (data) {
+                        $('.ajax-list').filter(':first').html(data);
+                    });
+                });
+            }
+        });
+    });
+</script>

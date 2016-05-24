@@ -1,0 +1,29 @@
+﻿@using System.Globalization
+@using Com.Panduo.Service
+@using Com.Panduo.Service.Product.Category
+@{
+    ViewBag.Title = "popular search关键词";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<div id="main" class="tree well ajax-list" style="width: 25%; float: left;">
+    @foreach (Category category in ViewBag.ParentCategory)
+    {
+        @Html.Partial("NodeItem", CategoryTreeViewItem.GetMyTreeViewItem(category));
+    }
+</div>
+
+<div class="hide fade ajax_detail" data-url="@Url.Content("~/Category/GetPopularSearch")">
+    <div class="modal-body ajax_info">
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('.tree li.parent_li > span').each(function () {
+            var children = $(this).parent('li.parent_li').find(' > ul > li');
+            children.hide('fast');
+        });
+    });
+</script>

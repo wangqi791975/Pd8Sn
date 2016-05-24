@@ -1,0 +1,12 @@
+﻿@{
+    Layout = null;
+}
+<form name="updateForm" action="@Url.Content("~/CustomerHighRisk/Submit")" method="post" onsubmit="return false;">
+    <input type="hidden" id="current_url" name="current_url" value="@Url.Content("~/CustomerHighRisk/GetList")" />
+    <table class="table table-striped input-append">
+        <tr>
+            <td width="30%" style="text-align: center">客户邮箱：</td>
+            <td width="70%"><input type="text" name="customer_email" maxlength="64" required="required" /></td>
+        </tr>
+    </table>
+</form>

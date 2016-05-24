@@ -1,0 +1,488 @@
+﻿@{
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<div class="nav"><a href="#">Home</a> &gt; <a href="#">My Account</a> &gt; <strong>My Products</strong></div>
+@Html.Partial("Partial/_Account_Siderbar_Menu")
+<div id="main" class="account_wrap">
+    <h2 class="font14 account_title">My Products
+    </h2>
+    <div class="products_search_cont">
+        <!-- 输入关键字查询时，input保留输入的关键字，若搜索有结果即显示翻页及搜索结果列表 -->
+        <input class="inputw248 input_text_wrap lf" type="text" value="beads" /><a href="#" class="btn_orange btn_p30 lf">Search</a>
+    </div>
+    <!-- 无商品提示，该行显示时，上面商品搜索div消失 -->
+    <div class="warning_wrap" style="display: none;">No product available, any question, please contact us via service@8seasons.com</div>
+
+    <!-- 搜索无结果提示，该行显示时，下面商品搜索列表div消失 -->
+    <div class="warning_wrap error">No item found, please reset your information</div>
+
+    <!-- 搜索结果列表开始 -->
+    <div class="products_list">
+        <!-- 顶部翻页开始 -->
+        <div class="page">
+            <h3 class="lf"><span>7654 </span>items found in Beads</h3>
+            <div class="rt pagelist">
+                <a href="#">&lt;</a><a class="pagelist_rt" href="#">&gt;</a>
+            </div>
+        </div>
+        <!-- 顶部翻页结束 -->
+        <ul>
+            <!-- 默认列表样式 -->
+            <li>
+                <div class="lf list_pro_img">
+                    <a href="#">
+                        <img src="pro-ad/pro_big_img140.jpg" />
+                        <div class="promotion_icon">
+                            <ins class="icon_sale"><span>30% <i>off</i></span></ins><ins class="icon_newhot"><span>NEW</span></ins>
+                        </div>
+                    </a>
+                    <p><a class="fblue_mid" href="#">Other Package Sizes</a></p>
+                    <p><a class="fblue_mid" href="#">Similar Items</a></p>
+                </div>
+                <div class="lf list_pro_info">
+                    <div class="list_table">
+                        <h5><a href="#" title=""></a><a href="#" title="">(Grade B) Synthetic Agate Gemstone Beads Round 8mm Dia, Hole:Approx 1mm, 50PCs  (B23937)</a></h5>
+                        <table cellpadding="0" cellspacing="0" width="385">
+                            <tr>
+                                <th colspan="7">Your Price of VIP Discount (<span class="fred">US $/Pack</span>) :<ins class="pro_vip"></ins></th>
+                            </tr>
+                            <tr>
+                                <td class="noborder">1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>200<ins class="plus"></ins><br />
+                                    <span class="font13">Chat</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <p><a href="#" title="Login to View your VIP Price">Login to View your VIP Price</a></p>
+                    <p class="fgrey_mid">Shipping Weight: 37grams</p>
+                </div>
+                <div class="lf list_icon">
+                    <div class="list_input"><em>Add:</em><input class="inputw98 input_text_wrap" type="text" value="1" /></div>
+                    <a class="btn_orange btn_w144" href="#"><ins class="btn_cart"></ins><span>Add To Cart</span></a>
+                    <a class="btn_grey btn_w144" href="#"><ins class="btn_wishlist_current"></ins><span>Add To Wishlist</span></a>
+                </div>
+                <div class="clearfix"></div>
+            </li>
+            <!-- 添加成功列表样式 -->
+            <li>
+                <div class="lf list_pro_img">
+                    <a href="#">
+                        <img src="pro-ad/pro_big_img140.jpg" />
+                        <div class="promotion_icon">
+                            <ins class="icon_newhot"><span>NEW</span></ins>
+                        </div>
+                    </a>
+                    <p><a class="fblue_mid" href="#">Other Package Sizes</a></p>
+                    <p><a class="fblue_mid" href="#">Similar Items</a></p>
+                </div>
+                <div class="lf list_pro_info">
+                    <div class="list_table">
+                        <h5><a href="#" title="">(Grade B) Synthetic Agate Gemstone Beads Round 8mm Dia, Hole:Approx 1mm, 50PCs  (B23937)</a></h5>
+                        <table cellpadding="0" cellspacing="0" width="385">
+                            <tr>
+                                <th colspan="7">Your Price of Promotion Discount (<span class="fred">US $/Pack</span>) :<ins class="pro_sale"></ins></th>
+                            </tr>
+                            <tr>
+                                <td class="noborder">1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>200<ins class="plus"></ins><br />
+                                    <span class="font13">Chat</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <p><a href="#" title="Login to View your VIP Price">Login to View your VIP Price</a></p>
+                    <p class="fgrey_mid">Shipping Weight: 37grams</p>
+                </div>
+                <div class="lf list_icon">
+                    <div class="list_input"><em>Add:</em><input class="inputw98 input_text_wrap" type="text" value="1" /></div>
+                    <a class="btn_success_w144"><ins class="btn_success_cart_big"></ins>Success
+							<div class="poptip poptip_w350_lf" style="display: block;">
+                                <i class="bottom"></i><em class="bottom"></em>
+                                Only x packs are available now, and they have been added into your cart successfully.
+
+                            </div>
+                    </a>
+                    <!-- 添加成功产品信息 -->
+                    <a class="btn_grey btn_w144" href="#"><ins class="btn_wishlist"></ins><span>Add To Wishlist</span></a>
+                </div>
+                <div class="clearfix"></div>
+            </li>
+            <!-- 更新列表样式 -->
+            <li>
+
+                <div class="lf list_pro_img">
+                    <a href="#">
+                        <img src="pro-ad/pro_big_img140.jpg" />
+                    </a>
+                    <p><a class="fblue_mid" href="#">Other Package Sizes</a></p>
+                    <p><a class="fblue_mid" href="#">Similar Items</a></p>
+                    <div class="products_list_popup">
+                        <i class="left"></i><em class="left"></em>
+                        <img src="pro-ad/list_pic_big.jpg" />
+                    </div>
+                </div>
+
+                <div class="lf list_pro_info">
+                    <div class="list_table">
+                        <h5><a href="#" title="">(Grade B) Synthetic Agate Gemstone Beads Round 8mm Dia, Hole:Approx 1mm, 50PCs  (B23937)</a></h5>
+                        <table cellpadding="0" cellspacing="0" width="385">
+                            <tr>
+                                <th colspan="7">Your Price of VIP Discount (<span class="fred">US $/Pack</span>) :<ins class="pro_vip"></ins></th>
+                            </tr>
+                            <tr>
+                                <td class="noborder">1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>200<ins class="plus"></ins><br />
+                                    <span class="font13">Chat</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <p><a href="#" title="Login to View your VIP Price">Login to View your VIP Price</a></p>
+                    <p class="fgrey_mid">Shipping Weight: 37grams</p>
+                </div>
+                <div class="lf list_icon">
+                    <div class="list_input"><em>Add:</em><input class="inputw98 input_text_wrap" type="text" value="1" /></div>
+                    <a class="btn_orange btn_w144" href="#"><ins class="btn_update"></ins><span>Update</span></a>
+                    <a class="btn_grey btn_w144" href="#"><ins class="btn_wishlist_current"></ins><span>Add To Wishlist</span></a>
+                </div>
+                <div class="clearfix"></div>
+            </li>
+            <!-- 预定列表样式 -->
+            <li>
+                <div class="lf list_pro_img">
+                    <a href="#">
+                        <img src="pro-ad/pro_big_img140.jpg" />
+                        <div class="promotion_icon">
+                            <ins class="icon_limitedstock"><span>limited stock</span></ins>
+                        </div>
+                    </a>
+                    <p><a class="fblue_mid" href="#">Other Package Sizes</a></p>
+                    <p><a class="fblue_mid" href="#">Similar Items</a></p>
+                </div>
+                <div class="lf list_pro_info">
+                    <div class="list_table">
+                        <h5><a href="#" title="">(Grade B) Synthetic Agate Gemstone Beads Round 8mm Dia, Hole:Approx 1mm, 50PCs  (B23937)</a></h5>
+                        <table cellpadding="0" cellspacing="0" width="385">
+                            <tr>
+                                <th colspan="7">Your Price of VIP Discount (<span class="fred">US $/Pack</span>) :<ins class="pro_vip"></ins></th>
+                            </tr>
+                            <tr>
+                                <td class="noborder">1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>200<ins class="plus"></ins><br />
+                                    <span class="font13">Chat</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <p><a href="#" title="Login to View your VIP Price">Login to View your VIP Price</a></p>
+                    <p class="fgrey_mid">Shipping Weight: 37grams</p>
+                </div>
+                <div class="lf list_icon">
+                    <div class="list_input"><em>Add:</em><input class="inputw98 input_text_wrap" type="text" value="1" /></div>
+                    <a class="btn_orange btn_w144" href="#"><ins class="btn_backorder"></ins><span>Backorder</span></a>
+                    <a class="btn_grey btn_w144" href="#"><ins class="btn_wishlist"></ins><span>Add To Wishlist</span></a>
+                </div>
+                <div class="clearfix"></div>
+            </li>
+            <!-- 删除列表样式 -->
+            <li>
+                <div class="lf list_pro_img">
+                    <a href="#">
+                        <img src="pro-ad/pro_big_img140.jpg" />
+                        <div class="promotion_icon">
+                            <ins class="icon_sale"><span>30% <i>off</i></span></ins><ins class="icon_newhot"><span>NEW</span></ins>
+                            <ins class="icon_limitedstock"><span>limited stock</span></ins>
+                        </div>
+                    </a>
+                    <p><a class="fblue_mid" href="#">Other Package Sizes</a></p>
+                    <p><a class="fblue_mid" href="#">Similar Items</a></p>
+                </div>
+                <div class="lf list_pro_info">
+                    <div class="list_table">
+                        <h5><a href="#" title="">(Grade B) Synthetic Agate Gemstone Beads Round 8mm Dia, Hole:Approx 1mm, 50PCs  (B23937)</a></h5>
+                        <table cellpadding="0" cellspacing="0" width="385">
+                            <tr>
+                                <th colspan="7">Your Price of VIP Discount (<span class="fred">US $/Pack</span>) :<ins class="pro_vip"></ins></th>
+                            </tr>
+                            <tr>
+                                <td class="noborder">1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>200<ins class="plus"></ins><br />
+                                    <span class="font13">Chat</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <p></p>
+                    <p class="fgrey_mid">Shipping Weight: 37grams</p>
+                </div>
+                <div class="lf list_icon">
+                    <div class="list_input"></div>
+                    <a class="btn_removed btn_w144">Removed</a>
+                </div>
+                <div class="clearfix"></div>
+            </li>
+            <!-- 50+列表样式 -->
+            <li>
+                <div class="lf list_pro_img">
+                    <a href="#">
+                        <img src="pro-ad/pro_big_img140.jpg" />
+                        <div class="promotion_icon">
+                            <ins class="icon_sale"><span>30% <i>off</i></span></ins><ins class="icon_newhot"><span>NEW</span></ins>
+                            <ins class="icon_limitedstock"><span>limited stock</span></ins>
+                        </div>
+                    </a>
+                    <p></p>
+                    <p><a class="fblue_mid" href="#">Similar Items</a></p>
+                </div>
+                <div class="lf list_pro_info">
+                    <div class="list_table">
+                        <h5><a href="#" title="">(Grade B) Synthetic Agate Gemstone Beads Round 8mm Dia, Hole:Approx 1mm, 50PCs  (B23937)</a></h5>
+                        <table cellpadding="0" cellspacing="0" width="385">
+                            <tr>
+                                <th colspan="7">Your Price of VIP Discount (<span class="fred">US $/Pack</span>) :<ins class="pro_vip"></ins></th>
+                            </tr>
+                            <tr>
+                                <td class="noborder">1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>50+<ins class="amount50_down"><!-- 鼠标点击后class名称变为amount50_up 箭头朝上，div标签上增加display:block显示提示文字 -->
+                                    <div class="poptip poptip_w350">
+                                        <i class="top"></i><em class="top"></em>
+                                        Please check the email address. It should look like: email@hotmail.com.
+                                    </div>
+                                </ins>
+                                    <br />
+                                    <span class="font13">Chat</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <p><a href="#" title="Login to View your VIP Price">Login to View your VIP Price</a></p>
+                    <p class="fgrey_mid">Shipping Weight: 37grams</p>
+                </div>
+                <div class="lf list_icon">
+                    <div class="list_input"></div>
+                    <a class="btn_removed btn_w144">Removed</a>
+
+                </div>
+                <div class="clearfix"></div>
+            </li>
+            <!-- 删除列表样式 -->
+            <li>
+                <div class="lf list_pro_img">
+                    <a href="#">
+                        <img src="pro-ad/pro_big_img140.jpg" />
+                        <div class="promotion_icon">
+                            <!--<ins class="icon_sale"><span>30% <i>off</i></span></ins><ins class="icon_newhot"><span>NEW</span></ins>
+                                <ins class="icon_limitedstock"><span>limited stock</span></ins>-->
+                        </div>
+                    </a>
+                    <p></p>
+                    <p><a class="fblue_mid" href="#">Similar Items</a></p>
+                </div>
+                <div class="lf list_pro_info">
+                    <div class="list_table">
+                        <h5><a href="#" title="">(Grade B) Synthetic Agate Gemstone Beads Round 8mm Dia, Hole:Approx 1mm, 50PCs  (B23937)</a></h5>
+                        <table cellpadding="0" cellspacing="0" width="385">
+                            <tr>
+                                <th colspan="7">Your Price of VIP Discount (<span class="fred">US $/Pack</span>) :<ins class="pro_vip"></ins></th>
+                            </tr>
+                            <tr>
+                                <td class="noborder">1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>1-2<br />
+                                    <del>1.80</del><br />
+                                    <span class="font13">1.70</span>
+                                </td>
+                                <td>50+<ins class="amount50_down"><!-- 鼠标点击后class名称变为amount50_up 箭头朝上，div标签上增加display:block显示提示文字 -->
+                                    <div class="poptip poptip_w350">
+                                        <i class="top"></i><em class="top"></em>
+                                        Please check the email address. It should look like: email@hotmail.com.
+                                    </div>
+                                </ins>
+                                    <br />
+                                    <span class="font13">Chat</span>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <p></p>
+                    <p class="fgrey_mid">Shipping Weight: 37grams</p>
+                </div>
+                <div class="lf list_icon">
+                    <div class="list_input"></div>
+                    <a class="btn_removed btn_w144">Removed</a>
+
+                </div>
+                <div class="clearfix"></div>
+            </li>
+        </ul>
+        <!-- 底部翻页开始 -->
+        <div class="page">
+            <div class="rt pagelist">
+                <a href="#">&lt;</a><a href="#">1</a><a class="ellipsis">...</a><a href="#">10</a><a href="#">11</a><a href="#" class="current">12</a><a href="#">13</a><a href="#">14</a><a class="ellipsis">...</a><a href="#">15</a><a class="pagelist_rt" href="#">&gt;</a>
+            </div>
+        </div>
+        <!-- 底部翻页结束 -->
+    </div>
+    <!-- 搜索结果列表结束 -->
+
+</div>
+<div class="clearfix"></div>

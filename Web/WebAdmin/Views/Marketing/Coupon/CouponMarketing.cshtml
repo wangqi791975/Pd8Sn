@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Coupon活动";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+@section HtmlHead
+{
+    @Html.JsFor("marketing.js", "~/Js/Marketing/Marketing.js", fileVersion: "1.28")
+}
+
+<div id="pull-right" class="pull-right">
+    <form method="post" action="/Marketing/CouponMarketingList" id="searchForm" name="searchForm" class="form-search">
+        活动名称：<input type="text" onkeyup=" $(this).val($(this).val().replace(/\//g, '')); " placeholder="活动名称" name="keyword">
+        <button class="btn" type="submit">搜索</button>
+    </form>
+</div>
+<div id="main" class="ajax-list" data-url="/Marketing/CouponMarketingList?page=@ViewBag.Page">
+</div>

@@ -1,0 +1,354 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Product.Category
+@using Com.Panduo.Service.Product.Property
+@using Com.Panduo.Service.SiteConfigure
+@{
+    ViewBag.Title = "编辑类别";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+    string propertyIds = string.Empty;
+}
+<div class="ajax_detail">
+    <div class="ajax_info">
+        <form method="post" enctype="multipart/form-data" action="@Url.Content("~/Category/Submit")" id="multiForm" name="multiForm" class="form-horizontal" target="_self">
+            <input type="hidden" id="id" name="id" value="@ViewBag.Id" />
+            <input type="hidden" id="parent_id" name="parent_id" value="@ViewBag.Category.ParentId" />
+            <div class="tabbable" style="margin-bottom: 9px;">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="javascript:void(0)" data-target="#tab_base_info">基本信息</a></li>
+                    @if (ViewBag.IsLeafCategory && ViewBag.Properties != null)
+                    {
+                        <li class=""><a data-toggle="tab" href="javascript:void(0)" data-target="#tab_product_attribute">属性信息</a></li>
+                    }
+                    @if (ViewBag.IsLeafCategory)
+                    {
+                        <li class=""><a data-toggle="tab" href="javascript:void(0)" data-target="#tab_attribute_price">营销信息</a></li>
+                    }
+                </ul>
+            </div>
+
+            <div class="well tab-content">
+                <div id="tab_base_info" class="tab-pane active">
+                    <h4>基本信息</h4>
+                    <div class="control-group">
+                        <label class="control-label">类别ID：</label>
+                        <div class="controls">
+                            <p class="help-block"><span class="badge badge-warning">@ViewBag.Category.CategoryId</span></p>
+                        </div>
+                    </div>
+                    <!--
+                    <div class="control-group">
+                        <label class="control-label">类别编码：</label>
+                        <div class="controls">
+                            <p class="help-block"><span class="badge badge-warning">@ViewBag.Category.CategoryCode</span></p>
+                        </div>
+                    </div>
+                    -->
+                    <div class="control-group" style="display: none;">
+                        <label class="control-label">类别中文名称：</label>
+                        <div class="controls"><input type="text" class="input-xlarge" id="category_name" name="category_name" value="@ViewBag.Category.CategoryName" required='required' maxlength="32" /></div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">类别状态：</label>
+                        <div class="controls">
+                            @if (ViewBag.Category.IsDisplay)
+                            {
+                                @Html.Raw("<input type='radio' id='is_display1' name='is_display' value='true' checked='checked' /> 开启　　<input type='radio' id='is_display2' name='is_display' value='false' /> 关闭");
+                            }
+                            else
+                            {
+                                @Html.Raw("<input type='radio' id='is_display1' name='is_display' value='true' /> 开启　　<input type='radio' id='is_display2' name='is_display' value='false' checked='checked' /> 关闭");
+                            }
+                            <span class="badge badge-important">关闭后将导致所在类别下的商品无法展示</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">类别名称：</label>
+                        <div class="controls">
+                            @{
+                                //放到List里统一调用，类别名称和类别描述都要用到
+                                IList<CategoryLanguage> categoryLanguagesPreserve = new List<CategoryLanguage>();
+                                string languageIds = ((IList<Language>)ViewBag.Languages).Select(x => x.LanguageId).Join(",");
+                            }
+                            <table>
+                                @for (int i = 0; i < ViewBag.Languages.Count; i++)
+                                {
+                                    IList<CategoryLanguage> categoryLanguages = ((IList<CategoryLanguage>)ViewBag.CategoryLanguage).Where(x => x.LanguageId == ViewBag.Languages[i].LanguageId).ToList();
+                                    if (!categoryLanguages.IsNullOrEmpty())
+                                    {
+                                        categoryLanguagesPreserve.Add(categoryLanguages[0]);
+                                        <tr height="38">
+                                            <td>@ViewBag.Languages[i].ChineseName：</td>
+                                            <td>@Html.Raw("<input type='text' value='" + categoryLanguagesPreserve[i].CategoryLanguageName + "' class='input-xlarge' name='category_language_name_" + ViewBag.Languages[i].LanguageId + "' id='category_language_name_" + ViewBag.Languages[i].LanguageId + "' maxlength='32' />")</td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        categoryLanguagesPreserve.Add(null);
+                                        <tr height="38">
+                                            <td>@ViewBag.Languages[i].ChineseName：</td>
+                                            <td>@Html.Raw("<input type='text' value='' class='input-xlarge' name='category_language_name_" + ViewBag.Languages[i].LanguageId + "' id='category_language_name_" + ViewBag.Languages[i].LanguageId + "'  maxlength='32' />")</td>
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">类别图片：</label>
+                        <div class="controls"><input type="file" class="input-xlarge" id="category_image" name="category_image" data-support=",JPG,JPEG,GIF,PNG," data-error="对不起，当前文件不是图片文件！"><span class="badge badge-important">仅支持JPG、JPEG、GIF、PNG类型的图片</span><input type="hidden" name="category_image_hidden" value="@ViewBag.Category.CategoryImage" /></div>
+                    </div>
+                    <hr />
+                    <div class="control-group">
+                        <label class="control-label">类别描述：</label>
+                        <div class="controls">
+                            <div class="tab-content">
+                                <ul class="nav nav-tabs">
+                                    @for (int i = 0; i < ViewBag.Languages.Count; i++)
+                                    {
+                                        var classActive = " class=";
+                                        if (i == 0)
+                                        {
+                                            classActive = " class=active";
+                                        }
+                                        <li @classActive><a data-toggle="tab" href="javascript:void(0)" data-target="#tab_category_language_description_@ViewBag.Languages[i].LanguageId">@ViewBag.Languages[i].ChineseName</a></li>
+                                    }
+                                </ul>
+
+                                @for (int i = 0; i < ViewBag.Languages.Count; i++)
+                                {
+                                    var classActive = " class=tab-pane";
+                                    if (i == 0)
+                                    {
+                                        classActive = " class='tab-pane active'";
+                                    }
+                                    if (categoryLanguagesPreserve[i] != null)
+                                    {
+                                        @Html.Raw("<div" + classActive + " id=tab_category_language_description_" + ViewBag.Languages[i].LanguageId + "><textarea name=category_language_description_" + ViewBag.Languages[i].LanguageId + " rows='8' name='subject' id='subject' style='width:800px;'>" + categoryLanguagesPreserve[i].CategoryLanguageDescription + "</textarea></div>");
+                                                                                                                                                                                                                                                                                                                                                                                          ;
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw("<div" + classActive + " id=tab_category_language_description_" + ViewBag.Languages[i].LanguageId + "><textarea name=category_language_description_" + ViewBag.Languages[i].LanguageId + " rows='8' name='subject' id='subject' style='width:800px;'></textarea></div>");
+                                    }
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">前台排序：</label>
+                        <div class="controls"><input type="text" value="@ViewBag.Category.DiplayOrder" class="input-mini" name="display_order" id="display_order" datatype="i1" required='required' /> &nbsp;<span class="badge badge-important" style="display: none;"></span></div>
+                    </div>
+                </div>
+
+                @if (ViewBag.IsLeafCategory && ViewBag.Properties != null)
+                {
+                    propertyIds = ((IList<Property>)ViewBag.Properties).Select(x => x.PropertyId).Join(",");
+                    <div id="tab_product_attribute" class="tab-pane">
+                        <div class="control-group">
+                            绑定属性：<span class="badge badge-important">勾选属性名称前面的复选框，表示前台要显示</span>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label"><b>属性</b></label>
+                            <div class="controls input-append">
+                                <b>是否显示 &nbsp;&nbsp;&nbsp;&nbsp;排序</b>
+                            </div>
+                        </div>
+                        @for (int i = 0; i < ViewBag.Properties.Count; i++)
+                        {
+                            string isChecked = string.Empty;
+                            if (ViewBag.Properties[i].IsDisplay)
+                            {
+                                isChecked = " checked=checked";
+                            }
+                            <div class="control-group">
+                                <label class="control-label">@ViewBag.Properties[i].PropertyName</label>
+                                <div class="controls input-append">
+                                    <input type="checkbox" id="property_id_@ViewBag.Properties[i].PropertyId" name="property_id_@ViewBag.Properties[i].PropertyId" @isChecked>显示 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="display_order_@ViewBag.Properties[i].PropertyId" class='input-small' type='text' value="@ViewBag.Properties[i].DisplayOrder" maxlength="5" datatype="i1" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+
+                @if (ViewBag.IsLeafCategory)
+                {
+                    <div id="tab_attribute_price" class="tab-pane">
+                        <h4>营销信息</h4>
+                        <div class="tab-content" style="padding-top: 10px;">
+                            <ul class="nav nav-tabs">
+                                @for (int i = 0; i < ViewBag.Languages.Count; i++)
+                                {
+                                    var classActive = " class=";
+                                    if (i == 0)
+                                    {
+                                        classActive = " class=active";
+                                    }
+                                    <li @classActive><a data-toggle="tab" href="javascript:void(0)" data-target="#tab_marketing_@ViewBag.Languages[i].LanguageId">@ViewBag.Languages[i].ChineseName</a></li>
+                                }
+                            </ul>
+
+                            @for (int i = 0; i < ViewBag.Languages.Count; i++)
+                            {
+                                CategoryAdvertisement categoryAdvertisement = ServiceFactory.CategoryService.GetCategoryAdvertisement(ViewBag.Category.CategoryId, ViewBag.Languages[i].LanguageId);
+                                var classActive = " class=tab-pane";
+                                if (i == 0)
+                                {
+                                    classActive = " class='tab-pane active'";
+                                }
+                                <div id="tab_marketing_@ViewBag.Languages[i].LanguageId" @Html.Raw(classActive)>
+                                    @if (categoryAdvertisement != null)
+                                    {
+                                        <div class="control-group">
+                                            <label class="control-label">@ViewBag.Languages[i].ChineseName 营销标题：</label>
+                                            <div class="controls"><input type="text" class="input-xlarge" name="marketing_title_@ViewBag.Languages[i].LanguageId" value="@categoryAdvertisement.MarketingTitle" /></div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="control-group">
+                                            <label class="control-label">@ViewBag.Languages[i].ChineseName 营销标题：</label>
+                                            <div class="controls"><input type="text" class="input-xlarge" name="marketing_title_@ViewBag.Languages[i].LanguageId" value="" /></div>
+                                        </div>
+                                    }
+
+                                    @if (categoryAdvertisement != null)
+                                    {
+                                        <div class="control-group">
+                                            <label class="control-label">类别页营销图片：</label>
+                                            <div class="controls">
+                                                <table>
+                                                    <tr>
+                                                        <td>图片：</td>
+                                                        <td><input type="file" id="advertising_image_@ViewBag.Languages[i].LanguageId" name="advertising_image_@ViewBag.Languages[i].LanguageId" data-support=",JPG,JPEG,GIF,PNG," data-error="对不起，当前文件不是图片文件！" /> <span class="badge badge-important">图片宽度不要超过795px</span><input type="hidden" name="advertising_image_hidden_@ViewBag.Languages[i].LanguageId" value="@categoryAdvertisement.AdvertisingImage"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Alt：</td>
+                                                        <td><input type="text" class="input-xlarge" name="advertising_words_@ViewBag.Languages[i].LanguageId" value="@categoryAdvertisement.AdvertisingWords" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>链接：</td>
+                                                        <td><input type="text" class="input-xlarge" name="url_@ViewBag.Languages[i].LanguageId" value="@categoryAdvertisement.Url" /></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">商品详情页营销描述：</label>
+                                            <div class="controls">
+                                                <div class="tab-content">
+                                                    <textarea rows="8" style="width: 800px;" name="product_marketing_area_@ViewBag.Languages[i].LanguageId">@categoryAdvertisement.ProductMarketingArea</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="control-group">
+                                            <label class="control-label">类别页营销图片：</label>
+                                            <div class="controls">
+                                                <table>
+                                                    <tr>
+                                                        <td>图片：</td>
+                                                        <td><input type="file" id="advertising_image_@ViewBag.Languages[i].LanguageId" name="advertising_image_@ViewBag.Languages[i].LanguageId" data-support=",JPG,JPEG,GIF,PNG," data-error="对不起，当前文件不是图片文件！" /> <span class="badge badge-important">图片宽度不要超过795px</span><input type="hidden" name="advertising_image_hidden_@ViewBag.Languages[i].LanguageId" value=""></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Alt：</td>
+                                                        <td><input type="text" class="input-xlarge" name="advertising_words_@ViewBag.Languages[i].LanguageId" value="" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>链接：</td>
+                                                        <td><input type="text" class="input-xlarge" name="url_@ViewBag.Languages[i].LanguageId" value="" /></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">商品详情页营销描述：</label>
+                                            <div class="controls">
+                                                <div class="tab-content">
+                                                    <textarea rows="8" style="width: 800px;" name="product_marketing_area_@ViewBag.Languages[i].LanguageId"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+
+
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+                }
+
+
+
+            </div>
+
+            <div class="well form-actions">
+                <input type="hidden" name="language_ids" value="@languageIds" />
+                <input type="hidden" name="property_ids" value="@propertyIds" />
+                <input type="submit" value="提交" class="btn btn-primary ajax_update">
+                <span>
+                    <a href="@Url.Content("~/Category/Index/" + ViewBag.Category.ParentId)" class="btn">取消</a>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+<script language="javascript">
+    function validateFileSuffix(obj) {
+        var fileUrl = obj.val();
+        var pos = fileUrl.lastIndexOf(".") + 1;
+        var suffix = fileUrl.substr(pos, 3).toUpperCase();
+        if (obj.data("support").lastIndexOf("," + suffix + ",") > -1) {
+            return true;
+        }
+        return false;
+    }
+
+    $(function () {
+        $("input[type='file']").live("change", function () {
+            var correct = validateFileSuffix($(this));
+            if (correct) {
+                $(this).next(".badge-important").hide();
+                $(".ajax_update").attr("disabled", false);
+            } else {
+                $(this).next(".badge-important").text($(this).data("error"));
+                $(".ajax_update").attr("disabled", true);
+            }
+        });
+
+        $("#display_order").live("keyup", function () {
+            var categoryId = $("#id").val();
+            var displayOrder = $(this).val();
+            $.ajax({
+                type: "POST",
+                url: "/Category/ValidateDisplayOrder",
+                data: { "category_id": categoryId, "display_order": displayOrder },
+                async: true,
+                success: function (result) {
+                    console.log(result.error);
+                    if (result.error == true) {
+                        $("#display_order").next(".badge-important").show();
+                        $("#display_order").next(".badge-important").text(result.msg);
+                        $(".ajax_update").attr("disabled", true);
+                    } else {
+                        $("#display_order").next(".badge-important").hide();
+                        $("#display_order").next(".badge-important").text("");
+                        $(".ajax_update").attr("disabled", false);
+                    }
+                }
+            });
+        });
+
+
+    });
+
+
+
+</script>

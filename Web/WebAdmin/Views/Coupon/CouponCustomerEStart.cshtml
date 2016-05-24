@@ -1,0 +1,39 @@
+﻿@{
+    Layout = null;
+}
+@model Com.Panduo.Service.Coupon.CouponCustomerView
+
+<form name="updateForm" action="/Coupon/CouponCustomerEStart" method="post" onsubmit="return false;">
+    <input type="hidden" id="current_url" name="current_url" value="@Url.Content("~/Coupon/CouponCustomerList")" />
+    <input type="hidden" name="id" value="@Model.Id" />
+    <table class="table table-striped">
+        @Html.Partial("Partial/CouponViewInfo", Model)
+        <tr>
+            <td style="width: 21%">最新有效日期：</td>
+            <td>
+                <div>
+                    <label class="control-label">开始时间：</label>
+                    <div class="controls">
+                        默认为发送时间
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 20%"></td>
+            <td>
+                <div>
+                    <label class="control-label">结束时间：</label>
+                    <div class="control-group">
+                        <div class="controls">
+                            <div class="bfh-datepicker" data-format="y-m-d" data-date="" data-icon="icon-calendar" data-name="endDate" data-placeholder="结束时间"></div>
+                            <div class="bfh-timepicker" data-icon="icon-time" data-time="" data-name="endTime"></div>
+                            <code>（北京时间）</code>
+                            <label>（*不填写表示无结束日期）</label>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>

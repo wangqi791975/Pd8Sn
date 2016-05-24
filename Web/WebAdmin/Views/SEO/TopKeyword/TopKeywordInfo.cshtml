@@ -1,0 +1,23 @@
+﻿@{
+    Layout = null;
+}
+<form name="updateForm" action="/TopKeyword/Edit" method="post" onsubmit="return false;">
+    <table class="table">
+        <tr>
+            <td width="20%">ID：</td>
+            <td>
+                <input type="text" id="txtTopKeywordId" value="@ViewBag.Item.TopKeyworId"  readonly="readonly" class="input-mini" /></td>
+        </tr>
+        <tr>
+            <td width="40%">关键词主题：</td>
+            <td>
+                <input type="hidden" name="hidTopKeywordSubjectId" value="@ViewBag.Item.TopKeywordSubjectId" readonly="readonly" />
+                <input type="text" id="txtTopKeywordSubjectName" value="@ViewBag.Item.TopKeywordSubjectName" readonly="readonly" /></td>
+        </tr>
+        <tr>
+            <td width="40%">关键词：</td>
+            <td>
+                <input type="text" id="txtTopKeywordName" required="required" value="@ViewBag.Item.TopKeywordName" /></td>
+        </tr>
+    </table>
+</form>

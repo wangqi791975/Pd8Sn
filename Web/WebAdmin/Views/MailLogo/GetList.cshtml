@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "GetList";
+}
+@model  Com.Panduo.Service.PageData<Com.Panduo.Service.SystemMail.MailLogo>
+@{
+    Layout = null;
+}
+
+@if (@Model.Pager.TotalRowCount > 0)
+{
+    
+        <table class="table table-striped" data-delaction="/MailLogo/Delete/">
+        <thead>
+            <tr>
+                <th width="10%">当前Logo图片</th>
+                <th width="20%">logo链接</th>
+                <th width="10%">操作</th>
+            </tr>
+        </thead>
+            <tbody>
+           @{ var mo = Model.Data.FirstOrDefault(x => x.IsUse == true);}
+            @if (!mo.IsNullOrEmpty())
+            {
+                <tr>
+                    <td><img src="@ImageHelper.GetMailLogoImageUrl(mo.LogoImage)"/></td>
+                    <td>@mo.LogoUrl</td>
+                    <td>
+                        <div>
+                        <a class="btn btn-mini btn-info" data-link="@mo.LogoUrl" data-id="@mo.LogoId" onclick=" f(this) ">编辑</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+            </tbody>
+    </table>
+    <table class="table table-striped" data-delaction="/MailLogo/Delete/">
+        <thead>
+            <tr>
+                <th width="10%">历史Logo图片</th>
+                <th width="20%">logo链接</th>
+                <th width="10%">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        @{ var hlist = Model.Data.Where(x => x.IsUse == false).ToList();}
+        @foreach (var logo in hlist)
+        {
+            <tr>
+                <td><img src="@ImageHelper.GetMailLogoImageUrl(logo.LogoImage)"/></td>
+                <td>@logo.LogoUrl</td>
+                <td>
+                    <div>
+                    <a class="btn btn-mini btn-info" data-link="@logo.LogoUrl" data-id="@logo.LogoId" onclick=" f(this) ">编辑</a>
+                    <a class="btn btn-mini btn-info"  data-link="@logo.LogoUrl" data-id="@logo.LogoId" onclick=" usef(this) ">use</a>
+                    <a class="btn btn-mini btn-danger btn-ajax-delete" data-id="@logo.LogoId "><i class="icon-trash icon-white"></i>删除</a>
+                    </div>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    @Html.Partial("~/Views/Shared/Partial/_Page_Bottom.cshtml", @Model.Pager) 
+}

@@ -1,0 +1,47 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = Model.CustomerManagerId == 0 ? "新建" : "编辑";
+}
+@model Com.Panduo.Service.Customer.CustomerManager
+
+<form name="updateForm" action="/Club/ManagerEdit" method="post" onsubmit="return false;">
+    <input type="hidden" id="current_url" name="current_url" value="@Url.Content("~/Club/ManagerList")" />
+    <input type="hidden" name="CustomerManagerId" value="@Model.CustomerManagerId" />
+    <table class="table table-striped">
+        <tr>
+            <td style="width: 20%">头像：</td>
+            <td>
+                <input type="file" name="avatar" class="input-large" accept="" /></td>
+        </tr>
+        <tr>
+            <td style="width: 20%">昵称：</td>
+            <td>
+                @Html.TextBoxFor(m => m.Name)
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 20%">Email：</td>
+            <td>
+                @Html.TextBoxFor(m => m.ServiceEmail)
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 20%">联系电话：</td>
+            <td>
+                @Html.TextBoxFor(m => m.Telphone)
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 20%">skype：</td>
+            <td>
+                @Html.TextBoxFor(m => m.Skype)
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 20%">潘多邮箱：</td>
+            <td>
+                @Html.TextBoxFor(m => m.CompanyEmail)
+            </td>
+        </tr>
+    </table>
+</form>

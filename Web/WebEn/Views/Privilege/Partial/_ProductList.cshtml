@@ -1,0 +1,92 @@
+﻿@using System.Collections
+@using Com.Panduo.Common
+@using Com.Panduo.Service
+@using Com.Panduo.Service.Customer.Product
+@using Com.Panduo.Web.Models.Customer
+@using Resources
+@model PageData<MyProductsProductInfoVo>
+@{
+    Layout = null;
+    IDictionary<int, int> dic = new Dictionary<int, int>();
+
+}
+<!-- 顶部翻页开始 -->
+<div class="page">
+    @if (ViewBag.KeyWord != string.Empty)
+    {
+        <h3 class="lf"><span>@Model.Pager.TotalRowCount </span>items found in @ViewBag.KeyWord</h3>
+    }
+    <div class="rt pagelist" style="display: none;">
+        <a href="#">&lt;</a><a class="pagelist_rt" href="#">&gt;</a>
+    </div>
+</div>
+<!-- 顶部翻页结束 -->
+<ul>
+    
+    @foreach (var m in Model.Data)
+    {
+        var ifhot = m.ProductInfo.IsHot;
+        var ifnew = !ifhot && (DateTime.Now.Subtract(m.ProductInfo.Product.CreateTime).TotalDays <= 30); //NEW标签
+        var ifstocklimit = m.ProductInfo.ProductStock.JudgeStocklimit();
+        <li>
+            <div class="lf list_pro_img">
+                <a href="@UrlRewriteHelper.GetProductDetailUrl(m.ProductInfo.Product.ProductId, m.ProductInfo.ProductEnName)">
+                    <img src="@ImageHelper.GetImageUrl(m.ProductInfo.Product.MainImage, 130) " />
+                    <div class="promotion_icon">
+                        @{ var discount = PageHelper.GetDiscount(m.ProductInfo.ProductPrice);}
+                        @if (discount > 0 && discount < 1)
+                        {
+                            <ins class="icon_sale"><span>@PageHelper.GetShowDiscount(discount)</span></ins>
+                        }
+                        @if (ifhot)
+                        {<ins class="icon_newhot"><span>@Lang.TipHOT</span></ins>}
+                        @if (ifnew)
+                        {<ins class="icon_newhot"><span>@Lang.TipNEW</span></ins>}
+                        @if (ifstocklimit)
+                        {<ins class="icon_limitedstock"><span>@Lang.TipLmtStock</span></ins>}
+                    </div>
+                </a>
+                @if (m.ProductInfo.Product.IsOtherPack)
+                {
+                    <p><a class="fblue_mid" data-target="#otherpack" data-toggle="modal" href="javascript:void(0)" data-remote="/Product/OtherPackage/@m.ProductInfo.Product.ProductId">@Lang.TipOtherPackageSizes</a></p>
+                }
+                @if (m.ProductInfo.HasSimilarItems)
+                {
+                    <p><a class="fblue_mid" href="@UrlRewriteHelper.GetSimiliarItemsUrl(m.ProductInfo.Product.ProductId, 1)" target="_blank">@Lang.TipSimilarItems</a></p>
+                }
+                
+                <div class="products_list_popup">
+                    <i class="left"></i><em class="left"></em>
+                    <img src="pro-ad/list_pic_big.jpg" />
+                </div>
+            </div>
+
+            <div class="lf list_pro_info">
+                <div class="list_table">
+                    <h5><a href="@UrlRewriteHelper.GetProductDetailUrl(m.ProductInfo.Product.ProductId, m.ProductInfo.ProductEnName)">@m.ProductInfo.ProductName</a></h5>
+                    @Html.Partial("~/Views/Product/Partial/_Price_Small.cshtml", m.ProductInfo)
+                </div>
+                <p><a href="#" title="@Lang.TipLoginViewVIPrice">@Lang.TipLoginViewVIPrice</a></p>
+                <p class="fgrey_mid">@string.Format(Lang.TipGrossGrams,m.ProductInfo.Product.Weight)</p>
+            </div>
+            <div class="lf list_icon">
+                <div class="list_input"><em>@Lang.TipAdd</em><input class="inputw98 input_text_wrap" type="text" value="1" name="input_qty_@m.ProductInfo.Product.ProductId"> </div>
+                <a class="btn_orange btn_w144 cart_btn_add" href="javascript:void(0)" data-productid="@m.ProductInfo.Product.ProductId" data-pagesource="productlist">
+                    <ins class="btn_cart"></ins>
+                    <span>@Lang.TipAddCart</span>
+                </a>
+                <a class="btn_grey btn_w144 wishlist_btn_add" data-productid="@m.ProductInfo.Product.ProductId" data-pagesource="productdetail" href="javascript:void(0)"><ins class="btn_wishlist"></ins><span>@Lang.TipAddWishlist</span></a>
+
+            </div>
+            <div class="clearfix"></div>
+        </li>
+    }
+    
+    
+</ul>
+@*底部翻页开始*@
+<div class="ajax-pagination" data-target="#products_list" data-mode="replace">
+    @Html.Partial("~/Views/Shared/Partial/_Ajax_Pager.cshtml", @Model.Pager)
+</div>
+<div class="clearfix"></div>
+@*底部翻页结束*@

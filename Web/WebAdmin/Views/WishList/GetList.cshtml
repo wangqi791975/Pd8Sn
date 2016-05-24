@@ -1,0 +1,43 @@
+﻿@model Com.Panduo.Service.PageData<Com.Panduo.Web.Models.WishList.CustomerWishListVo>
+@{
+    Layout = null;
+}
+@if (@Model.Pager.TotalRowCount > 0)
+{
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th width="10%">产品图片</th>
+                <th width="25%">产品名称</th>
+                <th width="10%">产品编号</th>
+                <th width="10%">客户姓名</th>
+                <th width="20%">客户邮箱</th>
+                <th width="15%">添加时间</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var vo in @Model.Data)
+            {
+                <tr>
+                    <td><img src="@ImageHelper.GetImageUrl(vo.ProductInfo.Product.MainImage, 130)"/></td>
+                    <td>@vo.ProductInfo.ProductEnName</td>
+                    <td>@vo.ProductInfo.Product.ProductCode</td>
+                    <td>@vo.WishListInfo.CustomerFull</td>
+                    <td>@vo.WishListInfo.CustomerEmail</td>
+                    <td>@vo.WishListInfo.AddDateTime</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @Html.Partial("~/Views/Shared/Partial/_Page_Bottom.cshtml", @Model.Pager) 
+}
+else if (ViewBag.KeyWord != string.Empty)
+{
+  @Html.Raw("<div class='alert alert-info'>请核对商品编号，该商品网站不存在</div>");
+}
+else
+{
+    @Html.Raw("<div class='alert alert-info'>无查询结果，请重新设置查询条件</div>");
+}
+

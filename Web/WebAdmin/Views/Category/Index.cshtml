@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "类别管理";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+
+<div class="pull-left" style="height: 50px;">
+    <form class="pull-left" novalidate="novalidate" method="post" action="/Cache/CacheManager" id="cacheForm" name="cacheForm" class="form-horizontal" target="_self">
+        <input type="hidden" id="update_type" name="update_type" value="" />
+        <button type="submit" data-value="更新类别缓存" class="btn sync_btn">清除缓存</button>
+    </form>
+    <div class="pull-right show-alert" style="margin-left: 20px;">
+        <div class="alert alert-success hide"></div>
+    </div>
+</div>
+<div class="clearboth"></div>
+
+<div id="main" class="ajax-list" data-url="@Url.Content("~/Category/GetList/" + ViewBag.Id)"></div>
+
+<!-- detail -->
+<div class="modal hide fade ajax_detail" data-url="@Url.Content("~/Category/GetInfo")">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>编辑类别</h3>
+    </div>
+    <div class="modal-body ajax_info">
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn btn-primary ajax_update">保存</a>
+        <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+    </div>
+</div>
+
+
+<div class="popup_wrap popup_w860 modal fade modal-lg" id="pupularkeyword">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>popular search关键词编辑</h3>
+    </div>
+    <div class="modal-body"></div>
+</div>
+<script language="javascript">
+    $(function () {
+        $('.sync_btn').click(function () {
+            var value = $(this).data('value');
+            $('#update_type').val(value);
+            $('#cacheForm').submit();
+        });
+        $('#cacheForm').submit(function () {
+            $('.sync_btn').attr('disabled', true);
+            $(this).ajaxSubmit(function (data) {
+                $('.show-alert .alert').show().text(data.msg).fadeOut(3000);
+                $('.sync_btn').attr('disabled', false).button('reset');
+            });
+            return false;
+        });
+    });
+</script>

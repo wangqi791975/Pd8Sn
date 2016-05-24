@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = ViewBag.CouponMarketingId == 0 ? "新建" : "编辑";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+@using Com.Panduo.Service.Marketing.Coupon
+@model CouponMarketing
+@section HtmlHead
+{
+    @Html.JsFor("CouponEdit.js", "~/Js/bootstrap-formhelpers.js,~/Js/Marketing/Marketing.js", fileVersion: "1.50")
+    @Html.CssFor("CouponEdit.css", "~/Css/bootstrap-formhelpers.min.css", fileVersion: "1.0")
+}
+@if (ViewBag.ErrorMsg != null)
+{
+    <div class="alert alert-error">@ViewBag.ErrorMsg</div>
+}
+<form class="form-horizontal" name="updatecoupon" id="updatecoupon" action="@Url.Content("~/Marketing/CouponMarketingEdit")" method="post" onsubmit="return false;">
+    <div class="well tab-content">
+        <div id="tab_base_info">
+            @Html.HiddenFor(m => m.Id)
+            @Html.Partial("Partial/CouponMarketingBaseInfo", Model)
+        </div>
+    </div>
+
+    <div class="form-actions couponconddiv hide">
+        <input type="submit" value="提交" id="coumarsavebtn" class="btn btn-primary"/>
+        <a href="/Marketing/CouponMarketing?page=@(ViewBag.Page)" class="btn">取消</a>
+    </div>
+</form>

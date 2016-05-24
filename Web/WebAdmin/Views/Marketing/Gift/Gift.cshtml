@@ -1,0 +1,48 @@
+﻿@using Com.Panduo.Service.Marketing.Gift
+@{
+    ViewBag.Title = "下单活动";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@section HtmlHead
+{
+    @Html.JsFor("GiftEdit.js", "~/Js/bootstrap-formhelpers.js,~/Js/Marketing/Marketing.js", fileVersion: "1.2")
+}
+<div class="pull-right">
+    <form method="post" action="@Url.Content("~/Marketing/GiftList")" id="searchForm" name="searchForm" class="form-search">
+        <table>
+            <tr>
+                <td>活动名称：</td>
+                <td>
+                    <input type="text" onkeyup="$(this).val($(this).val().replace(/\//g,''));" placeholder="活动名称" name="keyword">
+                </td>
+            </tr>
+            <tr>
+                <td>排序：</td>
+                <td>
+                    <select name="sorter">
+                        <option value="0">All</option>
+                        <option value="IdAsc">编号从小到大</option>
+                        <option value="IdDesc">编号从大到小</option>
+                        <option value="EffectiveBeginAsc">开始时间从远到近</option>
+                        <option value="EffectiveBeginDesc">开始时间从近到远</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>场景：</td>
+                <td>
+                    <select name="rewardtype">
+                        <option value="0">All</option>
+                        <option value="@((int)GiftMarketingRewardType.Register)">注册</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <button type="submit" class="btn">搜索</button>
+    </form>
+</div>
+
+<div class="clearboth"></div>
+
+<div id="main" class="ajax-list" data-url="@Url.Content("~/Marketing/GiftList")"></div>
+<a class="btn" href="@Url.Content("~/Marketing/GiftEdit/0")"><i class="icon-plus"></i>新建</a>

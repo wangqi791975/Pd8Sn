@@ -1,0 +1,51 @@
+﻿@model IList<Com.Panduo.Service.SiteConfigure.WhiteList>
+@{
+    ViewBag.Title = "客户 / IP验证";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+
+    //string ips = Model.Select(x => x.IpAddress).Join(",");
+}
+
+
+<div class="ajax_detail">
+    <div class="ajax_info">
+        <form novalidate="novalidate" method="post" action="@Url.Content("~/IpWhiteBlack/Submit")" id="cacheForm" name="cacheForm" class="form-horizontal" target="_self">
+            <input type="hidden" id="update_type" name="update_type" value="">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th width="50%">IP列表（多个IP之间用,号隔开）</th>
+                        <th width="50%">已提交IP（对这些IP不进行访问限制）</th>
+                    </tr>
+
+                    <tr style="height: 76px">
+                        <td>
+                            <textarea name="ips" rows="8" id="ips" style="width:98%;" required="required"></textarea>
+                        </td>
+                        <td>
+                            @for (int index = 0; index < Model.Count; index++)
+                            {
+                                @Html.Raw(Model[index].IpAddress);
+                                if (index != Model.Count - 1)
+                                {
+                                    @Html.Raw(",");
+                                }
+                                if (index % 5 == 0 && index!=0)
+                                {
+                                    @Html.Raw("<br>");
+                                }
+                            }
+                        </td>
+                    </tr>
+                </thead>
+            </table>
+            <div class="well form-actions">
+                <input type="submit" value="提交" class="btn btn-primary ajax_update">
+                <span>
+                    <input type="reset" value="取消" class="btn" />
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+

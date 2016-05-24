@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "客户Wishlist商品";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+<div class="pull-right">
+    <!-- search bar -->
+    <div class="pull-right">
+        <form method="post" action="@Url.Content("~/WishList/GetList")" id="searchForm" name="searchForm" class="form-search">
+            客户邮箱：<input type="text" placeholder="客户邮箱" name="customeremail">
+            产品编号：<input type="text" onkeyup="$(this).val($(this).val().replace(/\//g,''));" placeholder="产品编号" name="keyword">
+            <button type="submit" class="btn"><i class="icon-search"></i>搜索</button>
+        </form>
+    </div>
+</div>
+<div class="clearboth"></div>
+
+<div id="main" class="ajax-list"></div>

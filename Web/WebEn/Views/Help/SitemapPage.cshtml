@@ -1,0 +1,47 @@
+﻿@using Resources
+@{
+	ViewBag.Title = "8Seasons.com Sitemap";
+	Layout = "~/Views/Shared/Layout/_Layout_NoLeft.cshtml";
+}
+
+<div class="sitemap_wrap">
+	<h2 class="font16">@Lang.Tip8SeasonSitemap</h2>
+
+	@foreach (var rootData in ViewBag.CategoryTree.CategoryRelatedDatas as List<Com.Panduo.Service.RelatedData<Com.Panduo.Service.Product.Category.CategoryLanguage>>)
+	{
+		<h3 class="font14"><a href="@UrlRewriteHelper.GetProductListUrl(rootData.Data.CategoryId, rootData.Data.CategoryEnglishName, 1)">@rootData.Data.CategoryLanguageName</a></h3>
+		<div class="sitemap_cont">
+
+			@foreach (var secondData in rootData.SubDataList as List<Com.Panduo.Service.RelatedData<Com.Panduo.Service.Product.Category.CategoryLanguage>>)
+			{
+				<ul>
+					<li class="title"><a href="@UrlRewriteHelper.GetProductListUrl(secondData.Data.CategoryId, secondData.Data.CategoryEnglishName, 1)">@secondData.Data.CategoryLanguageName</a></li>
+					@foreach (var thirdData in secondData.SubDataList as List<Com.Panduo.Service.RelatedData<Com.Panduo.Service.Product.Category.CategoryLanguage>>)
+					{
+						<li><a href="@UrlRewriteHelper.GetProductListUrl(thirdData.Data.CategoryId, thirdData.Data.CategoryEnglishName, 1)">@thirdData.Data.CategoryLanguageName</a></li>
+					}
+				</ul>
+			}
+			<div class="clearfix"></div>
+		</div>
+	}
+
+	@* 固定内容 *@
+	<h3 class="font14"><a href="javascript:void(0)">@Lang.TipOtherHelpInfo</a></h3>
+	<div class="sitemap_cont">
+			<ul>
+				<li class="title"><a href="javascript:void(0)">@Lang.TipNewProducts</a></li>
+			</ul>
+			<ul>
+				<li class="title"><a href="javascript:void(0)">@Lang.TipShippinpReturn</a></li>
+			</ul>
+			<ul>
+				<li class="title"><a href="javascript:void(0)">@Lang.TipPrivacyNotice</a></li>
+			</ul>
+			<ul>
+				<li class="title"><a href="@UrlRewriteHelper.GetContactUsUrl()">@Lang.TipContactUs</a></li>
+			</ul>
+			<div class="clearfix"></div>
+		</div>
+</div>
+<div class="clearfix"></div>

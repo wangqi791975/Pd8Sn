@@ -1,0 +1,25 @@
+﻿@using Com.Panduo.Service
+@using Resources
+@model Com.Panduo.Service.Product.Product
+@{
+    var similarItems = ServiceFactory.ProductService.GetSimilarProductTopNById(Model.ProductId, 5);  
+}
+<div class="lf list_pro_img">
+    <a href="@UrlRewriteHelper.GetProductDetailUrl(Model.ProductId, ServiceFactory.ProductService.GetProductNameByEn(Model.ProductId))" class="list_pro_img_a">
+        <img class="scrollLoading" src="@Url.Content("~/Images/snap.jpg")" data-url="@ImageHelper.GetImageUrl(Model.MainImage, 130)" />
+        @Html.Partial("~/Views/Product/Partial/__Promotion__Icon.cshtml", @Model)
+    </a>
+    @if (Model.IsOtherPack)
+    {
+        <p><a class="fblue_mid" data-target="#otherpack" data-toggle="modal" href="javascript:void(0)" data-remote="/Product/OtherPackage/@Model.ProductId">@Lang.TipOtherPackageSizes</a></p>
+    }
+    @if (similarItems.Count > 0)
+    { 
+        <p><a class="fblue_mid" href="@UrlRewriteHelper.GetSimiliarItemsUrl(Model.ProductId, 1)">@Lang.TipSimilarItems</a></p>
+    }
+    <div class="products_list_popup">
+        <i class="left"></i>
+        <em class="left"></em>
+        <img src="@Url.Content("~/Images/loading.gif")" data-original="@ImageHelper.GetImageUrl(Model.MainImage, 310)"/>
+    </div>
+</div>

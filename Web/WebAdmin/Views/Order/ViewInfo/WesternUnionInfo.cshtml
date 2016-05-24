@@ -1,0 +1,25 @@
+﻿@{
+    Layout = null;
+}
+@model IList<Com.Panduo.Service.Payment.PayInfo.WesternUnionInfo>
+<table cellpadding="0" cellspacing="0">
+    @foreach (var payinfo in Model)
+    {
+        <tr>
+            <th>Cyrrency:</th>
+            <td>@payinfo.CurrencyCode</td>
+        </tr>
+        <tr>
+            <th>Amount:</th>
+            <td>@PageHelper.MoneyFormat(payinfo.Amount,payinfo.CurrencyCode)</td>
+        </tr>
+        <tr>
+            <th>Control No.:</th>
+            <td>@payinfo.ControlNo</td>
+        </tr>
+        <tr>
+            <th>FullName:</th>
+            <td>@payinfo.PaymentReceipt</td>
+        </tr>
+    }
+</table>

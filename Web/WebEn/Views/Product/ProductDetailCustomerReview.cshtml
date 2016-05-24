@@ -1,0 +1,178 @@
+﻿@using Resources
+@{
+    Layout = null;
+    ViewBag.CurrentCustomer = SessionHelper.CurrentCustomer;
+}
+
+@Html.Partial("ProductReviewList")
+
+<!-- 写评论开始 -->
+<div class="write_review">
+    <p id="msgcantreview" style="display: none;">@Lang.TipYouCantReview<ins class="question"></ins><a rel="nofollow" href="javascript:void(0)" class="fblue_mid" data-toggle="modal" data-target="#popup_askshow">@Lang.TipAskQue</a></p>
+    <a class="btn_grey"  rel="nofollow" href="javascript:showreviewdiv();"><ins class="btn_write_review"></ins>@Lang.TipWriteReview</a>
+    <form id="reviewform">
+        <!--点击上面按钮后，form标签增加display:block显示表单数据，另隐藏上面灰色按钮-->
+        <p>@Lang.TipDearFriend</p>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <th width="100">@Lang.TipRating</th>
+                <td>
+                    <!--已选择的星星class名称变为 star_selected ，默认星星class名称为star_grey-->
+                    <ins class="star_grey star"></ins><ins class="star_grey star"></ins><ins class="star_grey star"></ins><ins class="star_grey star"></ins><ins class="star_grey star"></ins><strong></strong><span id="rating_tips" class="fred">@Lang.TipChooseRating</span>
+                </td>
+            </tr>
+            <tr>
+                <th width="100">@Lang.TipYourName</th>
+                <td>
+                    <input id="proreivewname" class="inputw274 input_text_wrap" value="@(ViewBag.CurrentCustomer == null ? "" : ViewBag.CurrentCustomer.FullName)" />
+                </td>
+            </tr>
+            <tr>
+                <th width="100">@Lang.TipYouReview</th>
+                <td>
+                    <div>
+                        <textarea id="reviewcontent" class="textarea_w500 textarea_wrap" onkeyup="checkLength()">@Lang.TipLeastOneChar</textarea>
+                        <p>
+                            <span class="lf">(<span id="proreview_remain">1000</span> @Lang.TipCharRemaining)</span><a  rel="nofollow" class="rt btn_orange btn_w108" id="subreview" href="javascript:void(0)">@Lang.TipSubmit</a>
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <input id="proreivewpid" type="hidden" value="@ViewBag.ProductId"/>
+</div>
+<script>
+    function proreviewloginsuccess(result) {
+        $("#proreivewname").val(result.Name);
+        $('#reviewform').css('display', 'block');
+    }
+
+    /**
+    *评分选星星效果
+    */
+    var localindex = 0;
+    $(".star").hover(function () {
+        var index = indexOf($(".star"), this);
+        $(".star").each(function () {
+            var itemindex = indexOf($(".star"), this);
+            if (index >= itemindex) {
+                $(this).attr("class", "star_selected star");
+                if (index == 1) {
+                    $("#reviewform strong").html("(" + Message.TipPoor + ")");
+                }
+                if (index == 2) {
+                    $("#reviewform strong").html("(" + Message.TipFair + ")");
+                }
+                if (index == 3) {
+                    $("#reviewform strong").html("(" + Message.TipAverage + ")");
+                }
+                if (index == 4) {
+                    $("#reviewform strong").html("(" + Message.TipGood + ")");
+                }
+                if (index == 5) {
+                    $("#reviewform strong").html("(" + Message.TipExcellent + ")");
+                }
+            }
+            else {
+                $(this).attr("class", "star_grey star");
+            }
+        });
+    });
+    $(".star").mouseleave(function () {
+        $(".star").each(function () {
+            var itemindex = indexOf($(".star"), this);
+            if (itemindex > localindex) {
+                $(this).attr("class", "star_grey star");
+            }
+            else {
+                $(this).attr("class", "star_selected star");
+            }
+            if (localindex == 0) {
+                $("#reviewform strong").html("");
+            }
+            if (localindex == 1) {
+                $("#reviewform strong").html("(" + Message.TipPoor + ")");
+            }
+            if (localindex == 2) {
+                $("#reviewform strong").html("(" + Message.TipFair + ")");
+            }
+            if (localindex == 3) {
+                $("#reviewform strong").html("(" + Message.TipAverage + ")");
+            }
+            if (localindex == 4) {
+                $("#reviewform strong").html("(" + Message.TipGood + ")");
+            }
+            if (localindex == 5) {
+                $("#reviewform strong").html("(" + Message.TipExcellent + ")");
+            }
+        });
+    });
+    $(".star").click(function () {
+        localindex = indexOf($(".star"), this);
+    });
+    function indexOf(arr, e) {
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] == e) {
+                return i + 1;
+            }
+        }
+    }
+
+    $("#subreview").click(function () {
+        var isok = true;
+        if (localindex == 0) {
+            isok = false;
+            $("#rating_tips").show();
+        } else {
+            $("#rating_tips").hide();
+        }
+        if ($("#reviewcontent").val() == Message.ErrorMoreThanOnrChar || $("#reviewcontent").val() == "") {
+            $("#reviewcontent").css("color", "#f00");
+            $("#reviewcontent").bind("click", function () { $("#reviewcontent").css("color", ""); });
+            isok = false;
+        } else {
+            if (!checkLength())
+                isok = false;
+        }
+        if (!isok)
+            return false;
+        $.ajax({
+            type: "POST",
+            url: "/Product/WriteReview",
+            data: { "rating": localindex, "name": $("#proreivewname").val(), "rviewcontent": $("#reviewcontent").val(), "productId": $("#proreivewpid").val() },
+            success: function (responseTest) {
+                if (responseTest.error) {
+                    $("#msgcantreview").show();
+                } else {
+                    $('#reviewform')[0].reset();
+                }
+                $('#reviewform').hide();
+                $(".write_review .btn_grey").hide();
+            }
+        });
+    });
+
+    $("#reviewcontent").focus(function () {
+        if ($(this).val() == Message.ErrorMoreThanOnrChar) {
+            $(this).val("");
+        }
+    });
+    $("#reviewcontent").blur(function () {
+        if ($(this).val() == "") {
+            $(this).val(Message.ErrorMoreThanOnrChar);
+        }
+    });
+
+    function checkLength() {
+        var maxChars = 1000;
+        if ($("#reviewcontent").val().length > maxChars) {
+            $("#reviewcontent").val($("#reviewcontent").val().substring(0, maxChars));
+            return false;
+        } else {
+            $("#proreview_remain").html(maxChars - $("#reviewcontent").val().length);
+            return true;
+        }
+    }
+</script>
+<!-- 写评论结束 -->

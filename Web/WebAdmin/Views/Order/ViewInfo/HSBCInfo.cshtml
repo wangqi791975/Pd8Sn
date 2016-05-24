@@ -1,0 +1,21 @@
+﻿@{
+    Layout = null;
+}
+@model IList<Com.Panduo.Service.Payment.PayInfo.HsbcInfo>
+<table cellpadding="0" cellspacing="0">
+    @foreach (var payinfo in Model)
+    {
+        <tr>
+            <th>Cyrrency:</th>
+            <td>@payinfo.CurrencyCode</td>
+        </tr>
+        <tr>
+            <th>Amount:</th>
+            <td>@PageHelper.MoneyFormat(payinfo.Amount,payinfo.CurrencyCode)</td>
+        </tr>
+        <tr>
+            <th>Payment Date:</th>
+            <td>@PageHelper.ToCurrentShortDate(payinfo.PaymentDate)</td>
+        </tr>
+    }
+</table>

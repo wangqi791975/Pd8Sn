@@ -1,0 +1,418 @@
+﻿@using System.Web.Mvc.Html
+@using Com.Panduo.Web.Models.Product
+@using Com.Panduo.Service
+@using Com.Panduo.Service.Product
+@using Com.Panduo.Service.Product.Category
+@using Resources
+@model ProductDetailVo
+@{
+    ViewBag.IsFromDetail = Model.ProductInfo.Product.ProductId;
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@{
+    var ifhot = Model.ProductInfo.IsHot;
+    var islogin = SessionHelper.CurrentCustomer.IsNullOrEmpty();
+    var ifnew = (!ifhot) && DateTime.Now.Subtract(Model.ProductInfo.Product.CreateTime).TotalDays <= 30;//NEW标签
+    var ifstocklimit = Model.ProductInfo.ProductStock.JudgeStocklimit();
+    var promotionalDiscounts = PageHelper.GetDiscount(Model.ProductInfo.ProductPrice);
+}
+@section HtmlHead
+{
+    @Html.JsFor("uploadify.js", "~/Js/uploadify/jquery.uploadify.js", fileVersion: "1.6")
+    @Html.JsFor("ProductContact.js", "~/Js/Product/ProductContact.js", fileVersion: "1.9.29mailattachment")
+    @Html.JsFor("scrollloading.js", "~/Js/jquery.scrollLoading.min.js,~/Js/Product/Index.js", fileVersion: "1.6")
+    @Html.CssFor("uploadify.css", new[] { "~/Css/uploadify.css" }, fileVersion: "1.6")
+}
+<div id="main">
+    <div class="pro_detail_info">
+        <dl>
+            @* 图片展示开始*@
+            <dt>
+                <div class="big_imgshow">
+                    <img id="big_imgshow_img" src="@ImageHelper.GetImageUrl(Model.ProductInfo.Product.MainImage, 310)"/>
+                    <div class="promotion_icon">
+                        @* 折扣icon_sale和新品icon_newhot标签直接不能有空白*@
+                        @if (promotionalDiscounts < 1 && promotionalDiscounts > 0)
+                        {<ins class="icon_sale"><span>@PageHelper.GetShowDiscount(Model.ProductInfo.ProductPrice)</span></ins>}@if (ifhot)
+                                                                                                                               {<ins class="icon_newhot"><span>HOT</span></ins>}@if (ifnew)
+                                                                                                                                                                                {<ins class="icon_newhot"><span>@Lang.TipNEW</span></ins>}@if (ifstocklimit)
+                                                                                                                                                                                                                                          {<ins class="icon_limitedstock"><span>@Lang.TipLmtStock</span></ins>}
+                    </div>
+                </div>
+                <div class="small_imgshow">
+                    @if (Model.ProductInfo.ProductImages.Count > 0)
+                    {
+                        <ul>
+                            @foreach (var img in Model.ProductInfo.ProductImages)
+                            {
+                                if (img.IsMainImage)
+                                {
+                                <li class="current"><i class="top"></i><em class="top"></em>
+                                    <img src="@ImageHelper.GetImageUrl(img.ImageName, 80)" data-src="@ImageHelper.GetImageUrl(img.ImageName, 310)"/></li>
+                                }
+                                else
+                                {
+                                <li><i class="top"></i><em class="top"></em>
+                                    <img src="@ImageHelper.GetImageUrl(img.ImageName, 80)" data-src="@ImageHelper.GetImageUrl(img.ImageName, 310)"/></li>
+                                }
+                            }
+                        </ul>
+                    }
+                    <p>
+                        @if (Model.ProductInfo.HasSimilarItems)
+                        {<ins class="smiliar"></ins><a  rel="nofollow" href="@UrlRewriteHelper.GetSimiliarItemsUrl(Model.ProductInfo.Product.ProductId, 1)" class="fblue_mid">@Lang.TipSimilarItems</a>}&nbsp;
+                    </p>
+                    <p class="text_rt">
+                        <ins class="question"></ins><a  rel="nofollow" href="javascript:void(0)" class="fblue_mid" data-toggle="modal" data-target="#popup_askshow">@Lang.TipAskQue</a>
+                    </p>
+                </div>
+            </dt>
+            @*图片展示结束*@
+            @*文字详情开始 *@
+            <dd>
+                <h4>@(Model.ProductInfo.ProductName) (@Model.ProductInfo.Product.ProductCode)</h4>
+                @if (!Model.ProductMarketingTitle.IsNullOrEmpty())
+                {
+                    <em>@Model.ProductMarketingTitle</em>@*营销标题*@
+                }
+                @{
+                    var step = Model.ProductInfo.ProductPrice.StepPrice;
+                }
+                @if (!step.IsNullOrEmpty())
+                {
+                    var discount = PageHelper.GetDiscount(Model.ProductInfo.ProductPrice);
+                    <div class="price">
+                        @Lang.TipAsLowAs
+                        @if (discount > 0 && discount < 1)
+                        {
+                            <del>@PageHelper.GetCurrentCurrency().Format(PageHelper.ExchangeMoneyByUsd(step[step.Count - 1].OriginalPrice, PageHelper.GetCurrentCurrency()))</del>
+                        }
+                        <strong>@PageHelper.GetProductAsLowAsPrice(Model.ProductInfo.ProductPrice)</strong>
+                        <span class="fgrey">per Pack/@Model.ProductInfo.Product.GroupQuantity @Model.ProductInfo.UnitName</span>
+                    </div>
+                }
+                @if (Model.ProductInfo.Product.IsClub || Model.ProductInfo.Product.IsRuClub)
+                {
+                    <div class="price_img @ServiceFactory.ConfigureService.SiteLanguageCode.ToLower()">
+                        @* 默认英语版本，无语种样式跟随，小语种对应在div标签上增加语种切换相应背景图片*@
+                        @Html.Partial("~/Views/Product/Partial/__Price__Popoup.cshtml", @Model.ProductInfo)
+                    </div>
+                }
+
+                @Html.Partial("~/Views/Product/Partial/_Price_Big.cshtml", @Model.ProductInfo)
+                <div class="txt_link">
+                    <i>@if (Model.ProductInfo.Product.IsOtherPack)
+                       {
+                        <a  rel="nofollow" class="fblue_mid" href="#othersizes">@Lang.TipOtherPackage</a>}&nbsp;</i><span class="fblue_mid"> @Html.Partial("~/Views/Product/Partial/__Popup__Login__Part.cshtml")</span>
+                </div>
+                @Html.Partial("~/Views/Product/Partial/_Product_Detail_Botton.cshtml", @Model.ProductInfo)
+                <div class="review">
+                    @if (ViewBag.RatingCount != 0)
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            if (i < ViewBag.RatingAvg)
+                            {
+                        <ins class="star_orange"></ins>
+                            }
+                            else
+                            {
+                        <ins class="star_grey"></ins>
+                            }
+                        }
+                        <a  rel="nofollow" href="#divproreivew">( @ViewBag.RatingCount ) @Lang.TipWriteReview</a>
+                    }
+                    else
+                    {
+                        <a  rel="nofollow" href="#divproreivew">@Lang.TipWriteReview</a>
+                    }
+                </div>
+                <div class="sevice"><span><ins class="air"></ins>@Lang.TipShipInTime</span><span><ins class="quality"></ins>@Lang.TipQualityControl</span><span><ins class="return"></ins>@Lang.TipReturnPolicy</span><span><ins class="duty"></ins>@Lang.TipImportDutyRisk </span><span><ins class="licence"></ins>@Lang.TipCertificate </span><span><ins class="safe"></ins>@Lang.TipSafeMaterial</span></div>
+            </dd>
+            @* 文字详情结束*@
+        </dl>
+        <div class="clearfix"></div>
+    </div>
+
+    @* 产品描述开始 *@
+    @Html.Partial("~/Views/Product/Partial/_Product_Detail_Description.cshtml", @Model)
+    @* 产品描述结束 *@
+    @if (Model.ProductInfo.Product.IsOtherPack && Model.OtherPack.Count > 0)
+    {//大小包装
+        <div class="products_list">
+            <h2 class="font14"><a rel="nofollow" name="othersizes" id="othersizes"></a>@Lang.TipOtherPackage</h2>
+            <ul>
+                <li>
+                    <div class="lf list_pro_img">
+                        <a href="@UrlRewriteHelper.GetProductDetailUrl(Model.OtherPack[0].Product.ProductId, Model.OtherPack[0].ProductName)">
+                            <img src="@ImageHelper.GetImageUrl(Model.OtherPack[0].Product.MainImage)" />
+                            @Html.Partial("~/Views/Product/Partial/__Promotion__Icon.cshtml", @Model.OtherPack[0])
+                        </a>
+                        @* 图片放大效果开始 *@
+                        @Html.Partial("~/Views/Product/Partial/__Popup__Product__Image.cshtml", @Model.OtherPack[0].Product.MainImage)
+                        @*图片放大效果结束 *@
+                    </div>
+                    <div class="lf list_pro_info">
+                        <div class="list_table">
+                            <h5><a href="@UrlRewriteHelper.GetProductDetailUrl(Model.OtherPack[0].Product.ProductId, Model.OtherPack[0].ProductName)" title="@Model.OtherPack[0].ProductName">@(Model.OtherPack[0].ProductName) (@Model.OtherPack[0].Product.ProductCode)</a></h5>
+                            @Html.Partial("~/Views/Product/Partial/_Price_Small.cshtml", Model.OtherPack[0])
+                        </div>
+                        <p>
+                            @if (islogin)
+                            {
+                                <a rel="nofollow" href="javascript:void(0)" onclick=" $('#logindiv').modal('show'); " title="@Lang.TipLoginViewVIPrice">@Lang.TipLoginViewVIPrice</a>
+                          
+                            }
+                        </p>
+                        @if (Model.OtherPack[0].Product.Weight > 0)
+                        {
+                            <p class="fgrey_mid">@Lang.TipGrossWeight @(Model.OtherPack[0].Product.Weight)g</p>
+                        }
+                    </div>
+                    <div class="lf list_icon">
+                        @if (Model.OtherPack[0].Product.Status == ProductStatus.OffLine)
+                        {
+                            <div class="list_input"></div>
+                            <a rel="nofollow" class="btn_removed btn_w144">@Lang.TipRemoved</a>
+                        }
+                        else
+                        {
+                            <div class="list_input">
+                                <em>@Lang.TipAdd</em><input class="inputw98 input_text_wrap" type="text" value="1" name="input_qty_@Model.OtherPack[0].Product.ProductId"/>
+                                @if (Model.OtherPack[0].ProductStock.JudgeStocklimit() && Model.OtherPack[0].ProductStock.StockNumber > 0)
+                                {
+                                    <span>@Model.OtherPack[0].ProductStock.StockNumber @Lang.TipStockAvailable</span>
+                                }
+                            </div>
+                                if (Model.OtherPack[0].Product.Status == ProductStatus.BackOrder)
+                                {
+                            <a rel="nofollow" class="btn_orange btn_w170" href="javascript:void(0)" data-productid="@Model.OtherPack[0].Product.ProductId" data-restocktime="15" onclick="fnBackorderAddToCart(this)"><ins class="btn_backorder"></ins><span>@Lang.TipBackorder</span></a>
+                               
+                                }
+                                else
+                                {
+                            <a rel="nofollow" class="btn_orange btn_w144 cart_btn_add" href="javascript:void(0)" data-productid="@Model.OtherPack[0].Product.ProductId" data-pagesource="productlist"><ins class="btn_cart"></ins><span>@Lang.TipAddCart</span></a>
+                                }
+
+                            <a rel="nofollow" class="btn_grey btn_w144 wishlist_btn_add" href="javascript:void(0)" data-productid="@Model.OtherPack[0].Product.ProductId" data-pagesource="productlist"><ins class="btn_wishlist"></ins><span>@Lang.TipAddWishlist</span></a>
+                            
+                            if (@Model.OtherPack[0].Product.OtherPackType == ProductOtherPackType.Big)
+                            {
+                              @Html.Raw("<div class=\"fgrey_mid\">Ready Time：<br/>7 - 15 workdays </div>")
+                            }
+                        }
+                    </div>
+                    <div class="clearfix"></div>
+
+                </li>
+                @if (Model.OtherPack.Count > 1)
+                { 
+                    <li>
+                        <div class="lf list_pro_img">
+                            <a href="@UrlRewriteHelper.GetProductDetailUrl(Model.OtherPack[1].Product.ProductId, Model.OtherPack[1].ProductName)">
+                                <img src="@ImageHelper.GetImageUrl(Model.OtherPack[1].Product.MainImage)" />
+                                @Html.Partial("~/Views/Product/Partial/__Promotion__Icon.cshtml", @Model.OtherPack[1])
+                            </a>
+                            @* 图片放大效果开始*@
+                            @Html.Partial("~/Views/Product/Partial/__Popup__Product__Image.cshtml", @Model.OtherPack[1].Product.MainImage)
+                            @* 图片放大效果结束*@
+                        </div>
+                        <div class="lf list_pro_info">
+                            <div class="list_table">
+                                <h5><a href="@UrlRewriteHelper.GetProductDetailUrl(Model.OtherPack[1].Product.ProductId, Model.OtherPack[1].ProductName)" title="@Model.OtherPack[1].ProductName">@(Model.OtherPack[1].ProductName) (@Model.OtherPack[1].Product.ProductCode)</a></h5>
+                                @Html.Partial("~/Views/Product/Partial/_Price_Small.cshtml", Model.OtherPack[1])
+                            </div>
+                            @if (islogin)
+                            {
+                                <p>
+                                    <a rel="nofollow" href="javascript:void(0)" onclick=" $('#logindiv').modal('show'); " title="@Lang.TipLoginViewVIPrice">@Lang.TipLoginViewVIPrice</a>
+                                </p>
+                            }
+                            @if (Model.OtherPack[1].Product.Weight > 0)
+                            {
+                                <p class="fgrey_mid">@Lang.TipGrossWeight @(Model.OtherPack[1].Product.Weight)g</p>
+                            }
+                        </div>
+                        <div class="lf list_icon">
+                            @if (Model.OtherPack[1].Product.Status == ProductStatus.OffLine)
+                            {
+                                <div class="list_input"></div>
+                                <a rel="nofollow" class="btn_removed btn_w144">@Lang.TipRemoved</a>
+                            }
+                            else
+                            {
+                                <div class="list_input">
+                                    <em>@Lang.TipAdd</em><input class="inputw98 input_text_wrap" type="text" value="1" name="input_qty_@Model.OtherPack[1].Product.ProductId"/>
+                                    @if (Model.OtherPack[1].ProductStock.JudgeStocklimit() && Model.OtherPack[1].ProductStock.StockNumber > 0)
+                                    {
+                                        <span>@Model.OtherPack[1].ProductStock.StockNumber @Lang.TipStockAvailable</span>
+                                    }
+                                </div>
+                                    if (Model.OtherPack[1].Product.Status == ProductStatus.BackOrder)
+                                    {
+                                <a rel="nofollow" class="btn_orange btn_w170" href="javascript:void(0)" onclick="fnBackorderAddToCart(this)"><ins class="btn_backorder"></ins><span>@Lang.TipBackorder</span></a>
+                                    }
+                                    else
+                                    {
+                                <a rel="nofollow" class="btn_orange btn_w144 cart_btn_add" href="javascript:void(0)" data-productid="@Model.OtherPack[1].Product.ProductId" data-pagesource="productlist"><ins class="btn_cart"></ins><span>@Lang.TipAddCart</span></a>
+                                    }
+                                <a rel="nofollow" class="btn_grey btn_w144 wishlist_btn_add" href="javascript:void(0)" data-productid="@Model.OtherPack[1].Product.ProductId" data-pagesource="productlist"><ins class="btn_wishlist"></ins><span>@Lang.TipAddWishlist</span></a>
+                                if (@Model.OtherPack[1].Product.OtherPackType == ProductOtherPackType.Big)
+                                {
+                                   @Html.Raw("<div class=\"fgrey_mid\">Ready Time：<br/>7 - 15 workdays </div>")
+                                }
+                            }
+                        </div>
+                        <div class="clearfix"></div>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+    @Html.Partial("~/Views/Category/Partial/_CategoryAd.cshtml", @Model.CategoryAdvertisement ?? new CategoryAdvertisement())
+
+    @*Similiar Items开始*@
+    <div class="recommend_cont more_icon scrollLoading" data-url="/Product/ProductDetailSimilar?productId=@Model.ProductInfo.Product.ProductId">
+        <img class="loading" src="@Url.Content("~/Images/loading.gif")" />
+    </div>
+    @* Similiar Items结束*@
+    @* Best Matched Items开始 *@
+    <div class="recommend_cont more_icon scrollLoading" data-url="/Product/ProductDetailBestMatch?productId=@Model.ProductInfo.Product.ProductId">
+        <img class="loading" src="@Url.Content("~/Images/loading.gif")" />
+    </div>
+    @* Best Matched Items结束*@
+    @* 推荐产品容器开始*@
+    <div class="recommend_cont scrollLoading" data-url="/Product/ProductDetailAlsoBuy?productId=@Model.ProductInfo.Product.ProductId">
+        <img class="loading" src="@Url.Content("~/Images/loading.gif")" />
+    </div>
+    @*推荐产品容器结束*@
+    @*Recently Viewed start*@
+    <div class="recommend_cont scrollLoading" data-url="/Product/ProductDetailRecentViewed?productId=@Model.ProductInfo.Product.ProductId">
+        <img class="loading" src="@Url.Content("~/Images/loading.gif")" />
+    </div>
+    @* Recently Viewed over*@
+    @*客户评论开始*@
+    <div id="divproreivew" class="scrollLoading" data-url="/Product/ProductDetailCustomerReview?productId=@Model.ProductInfo.Product.ProductId">
+        <img class="loading" src="@Url.Content("~/Images/loading.gif")" />
+    </div>
+    @*客户评论结束*@
+</div>
+<div class="clearfix"></div>
+
+@section HtmlFooter
+{
+    <div id="popup_imgshow" class="popup_wrap popup_w650 modal fade">
+        <div class="close" data-dismiss="modal">
+            <a href="javascript:void(0)"></a>
+        </div>
+        <div class="pro_imgshow">
+            <dl>
+                <dt>
+                    @if (Model.ProductInfo.ProductImages.Count > 0)
+                    {
+                        <ul>
+                            @foreach (var img in Model.ProductInfo.ProductImages)
+                            {
+                                <li>
+                                    <i class="right"></i><em class="right"></em>
+                                    <img src="@ImageHelper.GetImageUrl(img.ImageName, 80)" data-src="@ImageHelper.GetImageUrl(img.ImageName, 500)"/>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </dt>
+                <dd>
+                    <a class="arrow_up" href="javascript:void(0)"></a>
+                    <img id="pop_imgshow_img" src="@Url.Content("~/Images/snap.jpg")">
+                    <a class="arrow_down" href="javascript:void(0)"></a>
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="popup_wrap popup_w650 modal fade" id="popup_askshow">
+        <div class="close" data-dismiss="modal">
+            <a href="javascript:void(0)"></a>
+        </div>
+        <h2 class="font14">@Lang.TipEmailUs</h2>
+        <div class="question_popup">
+            <div class="pro_img">
+                <img src="@ImageHelper.GetImageUrl(Model.ProductInfo.Product.MainImage, 130)"/>
+                <span>@Lang.TipPartNo @Model.ProductInfo.Product.ProductCode</span>
+                <p>@Model.ProductInfo.ProductName</p>
+            </div>
+            <div class="questiong_form">
+                <p>@Lang.TipContactUsF</p>
+                <form onsubmit=" return false; " method="post" action="/Product/EmailUs" name="EmailUsForm" id="EmailUsForm">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <th scope="row"><span class="fred">*</span><em>@Lang.TipEmail</em></th>
+                            <td>
+                                <input class="inputw248 input_text_wrap" name="email" type="text" id="email" />
+                                <div class="fred"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><span class="fred">*</span><em>@Lang.TipName</em></th>
+                            <td>
+                                <input class="inputw248 input_text_wrap" name="fullname" type="text" id="fullname" />
+                                <div class="fred"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><span class="fred">*</span><em>@Lang.TipQuestion</em></th>
+                            <td>
+                                <textarea class="textarea_wrap textarea_w248" data-maxlen="3000" data-target="#askquestion_remain" data-toggle="remain" name="question" id="question" cols="" rows=""></textarea><span>(<label id="askquestion_remain">3000</label>
+                                    @Lang.TipCharRemaining)</span>
+                                <div class="fred"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><span class="fred">&nbsp;</span><em>@Lang.TipAttachment</em></th>
+                            <td>
+                                <input type="file" name="mailattachment" id="mailattachment" />
+                                <span id="uploadify"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><span class="fred">*</span><em>@Lang.TipVerificationCode</em></th>
+                            <td>
+                                <input class="inputw108 input_text_wrap lf valiCodeInput" name="" type="text" /><a href="javascript:void(0)" class="lf"><img class="valiCode" /></a><ins class="icon_code_error valiCodeChk" id="VerificationCode"></ins><!-- 输入正确时，ins标签的class名称变为icon_code_ok -->
+                                <div class="clearfix"></div>
+                                <div class="fred" id="k">@*@Lang.ErrorValidateCode*@</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">&nbsp;</th>
+                            <td><a id="SubmitEmail" class="btn_orange btn_p30" href="javascript:void(0)">@Lang.TipSubmit</a></td>
+                        </tr>
+                    </table>
+                </form>
+                <div class="success_wrap">
+                    <ins class="btn_success_cart_big"></ins>
+                    <p><em>@Lang.TipQueSendSucc </em>@Lang.TipRepTwoDays</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function showreviewdiv() {
+            $("#msgcantreview").hide();
+            if (parseInt($("#valcustomerid").val()) != 0 || islogin) {
+                $.post("/Product/CheckProductReivew", { productId: $("#proreivewpid").val() }, function (responseText) {
+                    if (responseText.error) {
+                        $("#msgcantreview").show();
+                    } else {
+                        $('#reviewform').css('display', 'block');
+                    }
+                    $(".write_review .btn_grey").hide();
+                });
+
+
+            } else {
+                location.href = "@UrlRewriteHelper.GetLoginUrl()?redirectUrl=@Request.RawUrl";
+            }
+        }
+    </script>
+}

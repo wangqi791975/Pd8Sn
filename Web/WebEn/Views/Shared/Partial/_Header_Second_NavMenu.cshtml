@@ -1,0 +1,38 @@
+﻿@using Com.Panduo.Service
+@using Resources
+@{
+    var navContent = CacheHelper.GetHomeAreaNavigation(ServiceFactory.ConfigureService.SiteLanguageId);
+    
+}
+<div id="menu" class="menu">
+    <ul class="warp_bg">
+       @* <li><a href="/"><ins class="icon_head_home"></ins>@Lang.TipHome</a></li>
+        <li class="hot"><a href="#">@Lang.TipWhatNew</a><span class="icon_head_hot"></span></li>
+        <li><a href="#">@Lang.TipMarketSpotlight</a></li>
+        <li><a href="@UrlRewriteHelper.GetClubHomeUrl()">@Lang.TipExclusiveSale</a></li>
+        <li><a href="@UrlRewriteHelper.GetDailyDealHomeUrl()">@Lang.TipTodayDeals</a></li>*@
+        @if (!navContent.IsNullOrEmpty())
+        {
+            @Html.Raw(navContent)
+        }
+@*        <li><a href="#">@Lang.TipService<ins class="icon_arrow"></ins></a>
+            <ul class="menu_sub_cont font12">
+                <li><ins class="menu_service_oem"></ins><a href="@UrlRewriteHelper.GetProductSouringUrl()">@Html.Raw(Lang.TipOEMPro)</a></li>
+                <li><ins class="menu_service_club"></ins><a href="#">@Lang.Tip8SeasonsClub</a></li>
+                <li><ins class="menu_service_sample"></ins><a href="#">@Lang.TipFreeSample</a></li>
+                <li><ins class="menu_service_cda"></ins><a href="#">@Lang.TipDutyAdvice</a></li>
+                <li><ins class="menu_service_shipping"></ins><a href="#">@Lang.TipDropShipping</a></li>
+            </ul>
+        </li>
+        <li><a href="#">@Lang.TipCompanyProfile</a></li>*@
+    </ul>
+</div>
+@Html.Partial("~/Views/Product/Partial/_Banner.cshtml")
+@{
+    //面包屑导航
+    if (ViewBag.Sitemaps == null)
+    {
+        ViewBag.Sitemaps = "";
+    }
+    @Html.Raw(ViewBag.Sitemaps)
+}

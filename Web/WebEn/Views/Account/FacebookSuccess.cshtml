@@ -1,0 +1,23 @@
+﻿@using Resources
+@{
+    ViewBag.Title = "Bind your Account Successfully";
+    Layout = "~/Views/Shared/Layout/_LoginBody.cshtml";
+}
+
+<div class="wrap fb_success">
+	@{
+        if (ViewBag.Sitemaps == null)
+        {
+            ViewBag.Sitemaps = "";
+        }
+        @Html.Raw(ViewBag.Sitemaps)
+    }
+	<h2 class="font_verdana">
+    	<ins></ins>
+        <p class="forange font18">
+			@Html.Raw(Lang.TipFaceboolBinSucess)
+			<a class="btn_orange btn_p30 font12" href="/"> @Lang.TipGoShopping</a>
+        </p>
+        <div class="clearfix"></div>  
+    </h2> 
+</div>

@@ -1,0 +1,124 @@
+﻿@{
+    ViewBag.Title = ViewBag.CustomerEmail;
+}
+@model Com.Panduo.Service.PageData<Com.Panduo.Service.Order.ShoppingCart.VShoppingCartItem>
+@section HtmlHead
+{
+    <script type="text/javascript">
+        $(function () {
+            function openBlank(action, data, n) {
+                var form = $("<form/>").attr('action', action).attr('method', 'post');
+                if (n)
+                    form.attr('target', '_blank');
+                var input = '';
+                $.each(data, function (i, n) {
+                    input += '<input type="hidden" name="' + i + '" value="' + n + '" />';
+                });
+                form.append(input).appendTo("body").css('display', 'none').submit();
+            }
+
+            $('body').on("click", "#topSendEmail,#bottomSendEmail", function () {
+
+                if ($("input[type=checkbox][name=ckb]:checked").length < 1) {
+
+                    alert('请选择客户');
+                    
+                } else {
+                    var ckbs = $("#main").find("input[type=checkbox][name=ckb]:checked");
+                    var items = "";
+                    ckbs.each(function(i, item) {
+                        var mail = $(item).data("email");
+                        if (mail.length > 0) {
+                            items = items + mail + ";";
+                        }
+                    });
+                    items = items.substring(0, items.length - 1);
+                    openBlank('/ShoppingCart/SendMailView', { CustomerEmail: items},true);
+                }         
+        });
+
+        // 全选，反选
+        $('body').on("click", "#ck_customer_all", function() {
+            if ($(this).attr("checked")) {
+                $("input[type=checkbox][name=ckb]").attr("checked", true);
+            } else {
+                $("input[type=checkbox][name=ckb]").attr("checked", false);
+            }
+        });
+    });
+    </script>
+}
+<div class="pull-right">
+        <form method="post" action="@Url.Content("~/ShoppingCart/GetList")" id="searchForm" name="searchForm" class="form-search">
+            关键词：<input type="text"  placeholder="客户ID或姓名或邮箱" name="keyword" value="@ViewBag.Keyword">
+            语言：<select id="languageid" name="languageid">
+                <option value="-1">所有</option>
+                @foreach (var lang in ViewBag.Language)
+                {
+                    <option value="@lang.LanguageId">@lang.ChineseName</option>
+                }
+               </select>
+            <button type="submit" class="btn"><i class="icon-search"></i>搜索</button>
+        </form>
+</div>
+<div class="clearboth"></div>
+   商品数：@Model.Pager.TotalRowCount
+   物品总数：USD @ViewBag.GrandTotal        
+   净重：  @ViewBag.Weight
+   体积重： @ViewBag.VolumeWeight;
+<div id="main" class="ajax-list">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th width="10%">商品图片</th>
+            <th width="25%">商品名称</th>
+            <th width="10%">商品编码</th>
+            <th width="5%">数量</th>
+            <th width="5%">原价</th>
+            <th width="5%">折扣</th>
+            <th width="10%">折后价</th>
+            <th width="10%">总价</th>
+            <th width="20%">添加时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var cart in Model.Data)
+        {
+            <tr>
+                <td>
+                    <img src="@ImageHelper.GetImageUrl(cart.MainImage, 130)"/>
+                </td>
+                <td>
+                    @cart.ProductEnName
+                </td>
+                <td>
+                    @cart.ProductCode
+                </td>
+                <td>
+                    @cart.Quantity
+                </td>
+                <td>
+                    @cart.OriginalPrice
+                </td>
+                <td>
+                    @cart.Discount
+                </td>
+                <td>
+                    @cart.Price
+                </td>
+                <td>
+                    @cart.ProductSubTotal
+                </td>
+                <td>
+                    @cart.DateCreated
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <div class="pull-right">
+        <a href="/ShoppingCart/SendMailView?CustomerEmail=@ViewBag.CustomerEmail" class="btn"><i class="icon-search"></i>发送邮件</a>
+        <a href="/ShoppingCart/Index" class="btn"><i class="icon-search"></i>返回</a>
+    </div>
+    @Html.Partial("~/Views/Shared/Partial/_Page_Bottom.cshtml", @Model.Pager)
+</div>

@@ -1,0 +1,42 @@
+﻿@using Resources
+@model Com.Panduo.Service.PageData<Com.Panduo.Service.Review.ReviewProductCustomerView>
+
+<!-- 评论展示开始-->
+<div class="customer_review">
+    <h2 class="font14"><a name="review" id="review">@Lang.TipCustomerReview</a></h2>
+    <h3 class="font13 font_verdana">@Html.Raw(string.Format(Lang.TipDisplayingReviews, (Model.Pager.TotalRowCount == 0 ? 0 : Model.Pager.StartRowNumber), Model.Pager.EndRowNumber, Model.Pager.TotalRowCount)) </h3>
+    <!--当无评论时，删除h3以及dl套标签，新增p标签，文字嵌入p标签中-->
+    @if (!Model.Data.IsNullOrEmpty() || Model.Data.Count != 0)
+    {
+        foreach (var productReview in Model.Data)
+        {
+        <dl>
+            <dt class="lf">
+                <span class="lf"></span>
+                <p class="lf">
+                    @productReview.Content<br />
+                    <i>@productReview.DateCreated</i>
+                </p>
+            </dt>
+            <dd class="rt">
+                <p>
+                    <strong>@productReview.Name</strong><br />
+                    @productReview.CountryName
+                </p>
+                @for (int i = 0; i < productReview.Rating; i++)
+                {
+                    <ins class="star_orange"></ins>
+                }
+            </dd>
+        </dl>
+        }
+    }
+    else
+    {
+        <p>@Lang.TipNoProReviews</p>
+    }
+    <div class="ajax-pagination" data-target="#divproreivew" data-mode="replace">
+        @Html.Partial("~/Views/Shared/Partial/_Ajax_Pager.cshtml", @Model.Pager)
+    </div>
+</div>
+<!-- 评论展示结束 -->

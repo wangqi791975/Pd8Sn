@@ -1,0 +1,5 @@
+﻿@using Resources
+@*未登陆用户提示登陆*@
+ @if(SessionHelper.CurrentCustomer.IsNullOrEmpty()){
+      <a href="javascript:void(0)" onclick="$('#logindiv').modal('show');" title="@Lang.TipLoginViewVIPrice">@Lang.TipLoginViewVIPrice</a>
+}

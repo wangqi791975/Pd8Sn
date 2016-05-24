@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "订单 / 默认不显示GC支付国家管理";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<div class="pull-left" style="height: 50px;">
+    <a class="btn btn-info-add" href="javascript:void(0)" data-id="0">新建</a>
+</div>
+<div class="clearboth"></div>
+
+<div id="main" class="ajax-list" data-url="@Url.Content("~/GlobalCollectDisabledCountry/GetList")"></div>
+
+<!-- detail -->
+<div class="modal hide fade ajax_show_add" data-url="@Url.Content("~/GlobalCollectDisabledCountry/GetInfo")">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>新建</h3>
+    </div>
+    <div class="modal-body ajax_info">
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn btn-primary ajax_add">新增</a>
+        <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+    </div>
+</div>

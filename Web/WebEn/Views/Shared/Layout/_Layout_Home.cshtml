@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="shortcut icon" href="~/Images/favicon.ico" type="image/x-icon"/>
+    @Html.Partial("~/Views/Shared/Partial/_Meta.cshtml", ViewBag.MetaInfo as Com.Panduo.Web.Models.SEO.MetaInfoVo ?? new Com.Panduo.Web.Models.SEO.MetaInfoVo())
+    @Html.JsFor("base.js", "~/Js/jquery-1.8.3.min.js,~/Js/jquery.form.min.js", fileVersion: "1.7")
+    @Html.JsFor("8seasons.js", "~/Js/Base/message.js,~/Js/Base/bootstrap.js,~/Js/Base/common.js,~/Js/Base/main.js,~/Js/uploadify/jquery.uploadify.js", fileVersion: "1.1.2")
+    @Html.CssFor("8seasonsHome.css", new[] { "~/Css/global.css", "~/Css/layout.css", "~/Css/form.css", "~/Css/public.css", "~/Css/index.css", "~/Css/uploadify.css"  }, fileVersion: "3.2")
+
+    @if (IsSectionDefined("HtmlHead"))
+    { 
+        @RenderSection("HtmlHead", false)
+    }
+</head>
+<body>
+    @*顶部头开始*@
+    <div class="site_nav">
+        @Html.Partial("~/Views/Shared/Partial/_Header_Top.cshtml")
+    </div>
+    @*顶部头结束*@
+    <div class="wrap">
+        @*头部开始*@
+        @Html.Partial("~/Views/Shared/Partial/_Header_Second.cshtml")
+        @Html.Partial("~/Views/Shared/Partial/_Header_Second_NavMenu.cshtml")
+        @*头部结束 *@
+        @*左侧菜单*@
+        @Html.Partial("~/Views/Shared/Partial/_LeftMenu.cshtml")
+        @*主体内容*@
+        @RenderBody()
+    </div>
+    @*底部开始*@
+    <div id="foot">
+        @Html.Partial("~/Views/Shared/Partial/_Footer.cshtml")
+    </div>
+    @*底部结束*@
+    @*弹窗开始*@
+    @Html.Partial("~/Views/Shared/Partial/_Popup.cshtml")
+    @*弹窗结束*@
+    @*小耳朵开始*@
+    @Html.Partial("~/Views/Shared/Partial/_ToolBar.cshtml")
+    @*小耳朵结束*@
+    @RenderSection("HtmlFooter", false)
+</body>
+</html>

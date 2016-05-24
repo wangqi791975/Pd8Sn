@@ -1,0 +1,955 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EDE40F05-F53D-4A29-AADE-3F941D93A527}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Com.Panduo.Web</RootNamespace>
+    <AssemblyName>WebEn</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MailChimp.Net.Api">
+      <HintPath>..\..\RefDLL\MailChimp\MailChimp.Net.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="MailServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\Panduo\MailServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\Tool\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=3.2.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\NHibernate\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\..\RefDLL\NPOI\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML">
+      <HintPath>..\..\RefDLL\NPOI\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net">
+      <HintPath>..\..\RefDLL\NPOI\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Panduo.Com.Email.SaveXml, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\Panduo\Panduo.Com.Email.SaveXml.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Aop, Version=2.0.0.40000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\SpringNet\Spring.Aop.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core, Version=2.0.0.40000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\SpringNet\Spring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Web, Version=2.0.0.40000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\SpringNet\Spring.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Web.Extensions, Version=2.0.0.40000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\SpringNet\Spring.Web.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Web.Mvc4, Version=2.0.0.40000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\SpringNet\Spring.Web.Mvc4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RefDLL\MVC4\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20715.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_GlobalResources\Lang.designer.cs">
+      <DependentUpon>Lang.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Common\CacheHelper.cs" />
+    <Compile Include="Common\ConfigHelper.cs" />
+    <Compile Include="Common\Config\LoginFilterConfig.cs" />
+    <Compile Include="Common\ControllerHelper.cs" />
+    <Compile Include="Common\CookieHelper.cs" />
+    <Compile Include="Common\DisplayHelper.cs" />
+    <Compile Include="Common\Filters\AutoLoginFiter.cs" />
+    <Compile Include="Common\Filters\ExceptionFilter.cs" />
+    <Compile Include="Common\Filters\IpCheckFilter.cs" />
+    <Compile Include="Common\Filters\LoginFilter.cs" />
+    <Compile Include="Common\Filters\SslFilter.cs" />
+    <Compile Include="Common\ImageHelper.cs" />
+    <Compile Include="Common\KeywordRedirect.cs" />
+    <Compile Include="Common\NpoiHelper .cs" />
+    <Compile Include="Common\PageHelper.cs" />
+    <Compile Include="Common\PagerParm.cs" />
+    <Compile Include="Common\PdfConvert.cs" />
+    <Compile Include="Common\SessionHelper.cs" />
+    <Compile Include="Common\SiteConst.cs" />
+    <Compile Include="Common\Sitemap.cs" />
+    <Compile Include="Common\SitemapItem.cs" />
+    <Compile Include="Common\SslHelper.cs" />
+    <Compile Include="Common\ToolHelper.cs" />
+    <Compile Include="Common\UrlFuncitonHelper.cs" />
+    <Compile Include="Common\UrlParameterKey.cs" />
+    <Compile Include="Common\UrlRewriteHelper.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ContactUsController.cs" />
+    <Compile Include="Controllers\HelpController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MailMessageController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\ReviewsController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\PublicController.cs" />
+    <Compile Include="Controllers\PlaceOrderController.cs" />
+    <Compile Include="Controllers\ShoppingCartController.cs" />
+    <Compile Include="Controllers\SuggestionController.cs" />
+    <Compile Include="Controllers\WebSiteController.cs" />
+    <Compile Include="Controllers\PrivilegeController.cs" />
+    <Compile Include="Controllers\WishListController.cs" />
+    <Compile Include="Controllers\CheckoutController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\PubClass.cs" />
+    <Compile Include="Models\BaseViewModel.cs" />
+    <Compile Include="Models\Coupon\CouponCustomerVo.cs" />
+    <Compile Include="Models\Customer\CustomerVo.cs" />
+    <Compile Include="Models\Customer\MyProductsProductInfoVo.cs" />
+    <Compile Include="Models\Customer\WishListProductInfoVo.cs" />
+    <Compile Include="Models\Home\HomeVo.cs" />
+    <Compile Include="Models\Login\LoginVo.cs" />
+    <Compile Include="Models\Order\OrderDetailItemVo.cs" />
+    <Compile Include="Models\Order\OrderDetailVo.cs" />
+    <Compile Include="Models\Order\OrderInvoiceVo.cs" />
+    <Compile Include="Models\Order\OrderItemSnapshotVo.cs" />
+    <Compile Include="Models\Order\PackageDetailInfoItemVo.cs" />
+    <Compile Include="Models\Order\ViewInfoVo.cs" />
+    <Compile Include="Models\Payment\OceanPaymentSubmitParm.cs" />
+    <Compile Include="Models\Payment\OfflinePaymentInfo.cs" />
+    <Compile Include="Models\Payment\DoPaypalExpressCheckoutPaymentParm.cs" />
+    <Compile Include="Models\Payment\DoPaypalExpressCheckoutPaymentResult.cs" />
+    <Compile Include="Models\Payment\PaypalSubmitParm.cs" />
+    <Compile Include="Models\Product\CategoryTreeVo.cs" />
+    <Compile Include="Models\Product\PriceVo.cs" />
+    <Compile Include="Models\Product\ProductDetailVo.cs" />
+    <Compile Include="Models\Product\ProductGirdVo.cs" />
+    <Compile Include="Models\Product\ProductPackVo.cs" />
+    <Compile Include="Models\Product\ProductPriceVo.cs" />
+    <Compile Include="Models\Product\ProductVo.cs" />
+    <Compile Include="Models\Product\RecommendItemVo.cs" />
+    <Compile Include="Models\Product\SimilarItemVo.cs" />
+    <Compile Include="Models\Review\ReviewProductsProductInfoVo.cs" />
+    <Compile Include="Models\SEO\MetaInfoVo.cs" />
+    <Compile Include="Models\ShoppingCart\ShoppingAddress.cs" />
+    <Compile Include="Models\ShoppingCart\ShoppingCartItemVo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="App_GlobalResources\Lang.resx">
+      <SubType>Designer</SubType>
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Lang.designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="Config\KeywordRedirect.txt" />
+    <Content Include="Config\Login.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Config\PhotosRule.xml" />
+    <Content Include="Config\product_solr_synonyms.txt" />
+    <Content Include="Config\SslConfig.xml" />
+    <Content Include="Config\MailChimpServiceConfig.config" />
+    <Content Include="Css\avatar.css" />
+    <Content Include="Css\dailydeal.css" />
+    <Content Include="Css\form.css" />
+    <Content Include="Css\global.css" />
+    <Content Include="Css\images\animated-overlay.gif" />
+    <Content Include="Css\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Css\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Css\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Css\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Css\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Css\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Css\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Css\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Css\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Css\images\ui-icons_222222_256x240.png" />
+    <Content Include="Css\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="Css\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Css\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Css\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Css\index.css" />
+    <Content Include="Css\invoice.css" />
+    <Content Include="Css\jquery-ui-1.10.4.custom.min.css" />
+    <Content Include="Css\layout.css" />
+    <Content Include="Css\main.css" />
+    <Content Include="Css\public.css" />
+    <Content Include="Css\uploadify.css" />
+    <Content Include="Font\ds-digi-webfont.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130709621229170751.png" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130709621742590117.png" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130709631334588748.png" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130711163575054249.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130711178370200483.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130711179613501595.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130711189462174907.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130711389206919653.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130711389328806625.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130711389466534502.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130711390034016961.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712266352007056.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712278211035353.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712293120368119.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712293561743364.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712294105084441.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712294425212751.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712306022706090.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712879902593136.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712900166174050.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712905003791513.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712905521558715.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712907283204058.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712917415781008.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712930602357890.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712933941126971.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712934890824441.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712935051798454.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712935950483914.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712936191222179.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712941586326917.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712950311576780.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712950630395016.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712954697127619.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712969629001674.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712969867695326.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130712973786529471.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713007179179421.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713054068551340.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713054810503777.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713055048637397.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713055946518753.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713057085363892.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713060742353059.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713061197019065.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713061691457345.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713062258699789.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713062860344201.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713062996932014.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713065349976600.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713066672262231.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713068238721827.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713069048458141.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713070312240426.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713073538224941.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713073812280616.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713075071832659.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713075335057714.png" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713078373661512.png" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713078606064805.png" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713079337976668.png" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713090913518751.png" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713092153709686.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713092612035901.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713092994187759.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713094719646449.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713094964670464.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713097270182332.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713100114825036.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713111727209226.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713114951463643.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713115923339231.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713116786338592.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713117291497485.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713117342550405.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713123135181725.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713123160663182.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713123598498225.png" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713124575384100.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713125506717369.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713127899294217.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713128038372171.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713128127147249.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713138122018923.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713138781786660.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713139638105638.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713139759502582.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713142459437009.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713142800086493.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713143715248838.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713143935951461.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713144591098933.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713144995392058.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713146485427283.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713146653116874.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713147624392428.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713148107590065.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713148502332643.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713149048023855.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713149583184464.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713150337647617.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713151999952695.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713152427647158.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713152964237849.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713153270795384.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713154116863776.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713155043306765.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713155559086266.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713155639960892.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713155752027302.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713155869974048.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713156061885025.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713156605526119.png" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713156990728151.png" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713157498627202.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713161818184266.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713163345061599.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713163597356029.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713164602243505.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713172565688988.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713172784611510.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713176459001673.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713181457518230.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713182882063261.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713195100750336.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713195125850617.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713197063397281.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713197129509640.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713197609903643.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713198595152061.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713199185745934.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713199418480212.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713199537702640.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713199681945812.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713200200033015.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713200732382366.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713201456481884.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713201730170209.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713202102050777.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130713202447604188.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130715467229231816.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130715467256563380.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130715467283274907.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130715467306886258.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130715467357899176.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130715513679608626.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130715515334933305.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130715718274610791.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130715718311032874.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130715718342984701.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130715718384677086.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130715718409628513.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130715760439062459.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130716382260412293.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130716384421525902.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130716384439076906.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130716385075843327.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130716386580639396.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130716388950054919.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130716390389707262.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130716390496813389.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130716391379883897.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130716398373443906.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130716400928330037.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130716401699444142.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130716405553584587.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130716411514025504.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130716411589859842.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130716411973581789.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130716414453143612.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130716490030026363.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130717403426758536.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130718077082120546.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130718077158819275.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130718077405191691.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130718078020238052.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130718078574495241.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130718080141103461.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130718080176483649.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130718080197553816.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130718080218993949.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130718080430407019.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130718083039597816.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130718086191451692.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130718086516100261.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130718087190568838.jpg" />
+    <Content Include="ImagesAvator\Temp\ThumbNail130719090150991154.jpg" />
+    <Content Include="ImagesAvator\User\2-130715635174757751.jpg" />
+    <Content Include="ImagesAvator\User\2-130715635950322111.jpg" />
+    <Content Include="ImagesAvator\User\2-130715636092300231.jpg" />
+    <Content Include="ImagesAvator\User\2-130716491310489601.jpg" />
+    <Content Include="ImagesAvator\User\2-130717286836329945.jpg" />
+    <Content Include="ImagesAvator\User\2-130718321507100977.jpg" />
+    <Content Include="ImagesAvator\User\2-130718349036295557.jpg" />
+    <Content Include="ImagesAvator\User\96-130718074701176800.jpg" />
+    <Content Include="ImagesAvator\User\96-130718074927488501.jpg" />
+    <Content Include="ImagesAvator\User\96-130718075069268962.jpg" />
+    <Content Include="ImagesAvator\User\96-130718083786724164.jpg" />
+    <Content Include="ImagesAvator\User\96-130718083958071872.jpg" />
+    <Content Include="ImagesAvator\User\96-130718084063192991.jpg" />
+    <Content Include="ImagesAvator\User\96-130718088033147031.jpg" />
+    <Content Include="ImagesAvator\User\96-130718088285161445.jpg" />
+    <Content Include="Images\addcartbtn.png" />
+    <Content Include="Images\addcartbtn_backorder.png" />
+    <Content Include="Images\addcartbtn_soldout.png" />
+    <Content Include="Images\bg.jpg" />
+    <Content Include="Images\bg_banner_time.png" />
+    <Content Include="Images\bg_foot.png" />
+    <Content Include="Images\bg_foot_newsletter.png" />
+    <Content Include="Images\bg_menu.gif" />
+    <Content Include="Images\bg_promotion.png" />
+    <Content Include="Images\bg_select.png" />
+    <Content Include="Images\bg_shipping_step.png" />
+    <Content Include="Images\bg_shipping_time.png" />
+    <Content Include="Images\bg_system_error.png" />
+    <Content Include="Images\blank_pic.jpg" />
+    <Content Include="Images\bottom.png" />
+    <Content Include="Images\bottom1.png" />
+    <Content Include="Images\bottom2.png" />
+    <Content Include="Images\box-shadow.png" />
+    <Content Include="Images\button.png" />
+    <Content Include="Images\button_center.png" />
+    <Content Include="Images\button_left.png" />
+    <Content Include="Images\button_right.png" />
+    <Content Include="Images\club.png" />
+    <Content Include="Images\club01.jpg" />
+    <Content Include="Images\club02.jpg" />
+    <Content Include="Images\club03.jpg" />
+    <Content Include="Images\club04.jpg" />
+    <Content Include="Images\club05.jpg" />
+    <Content Include="Images\club06.jpg" />
+    <Content Include="Images\club07.jpg" />
+    <Content Include="Images\club08.jpg" />
+    <Content Include="Images\club09.jpg" />
+    <Content Include="Images\club_d-about.jpg" />
+    <Content Include="Images\club_d-banner.jpg" />
+    <Content Include="Images\club_d-hot.jpg" />
+    <Content Include="Images\club_d-how.jpg" />
+    <Content Include="Images\club_d-new.jpg" />
+    <Content Include="Images\dailydeal\1.jpg" />
+    <Content Include="Images\dailydeal\2.jpg" />
+    <Content Include="Images\dailydeal\3.jpg" />
+    <Content Include="Images\dailydeal\4.jpg" />
+    <Content Include="Images\dailydeal\headerImg_1.jpg" />
+    <Content Include="Images\dailydeal\hotsellerproduct.jpg" />
+    <Content Include="Images\down.gif" />
+    <Content Include="Images\ef_pic.jpg" />
+    <Content Include="Images\favicon.ico" />
+    <Content Include="Images\floatprice.png" />
+    <Content Include="Images\flot_Label.png" />
+    <Content Include="Images\icon_contact.png" />
+    <Content Include="Images\icon_currency.png" />
+    <Content Include="Images\icon_fixed.png" />
+    <Content Include="Images\icon_foot_share.png" />
+    <Content Include="Images\icon_index_categories.png" />
+    <Content Include="Images\icon_left_arrow.gif" />
+    <Content Include="Images\icon_pay.png" />
+    <Content Include="Images\icon_service.png" />
+    <Content Include="Images\icon_shipping_logo.png" />
+    <Content Include="Images\icon_shopcart.png" />
+    <Content Include="Images\icon_sourcing.png" />
+    <Content Include="Images\icon_step_hd.png" />
+    <Content Include="Images\icon_system.png" />
+    <Content Include="Images\icon_top.png" />
+    <Content Include="Images\img-avatar-01.png" />
+    <Content Include="Images\img-avatar-02.png" />
+    <Content Include="Images\img-avatar-03.png" />
+    <Content Include="Images\img-avatar-04.png" />
+    <Content Include="Images\img_avatar.png" />
+    <Content Include="Images\img_foot_service.png" />
+    <Content Include="Images\img_testimonial.jpg" />
+    <Content Include="Images\invoice_logo.gif" />
+    <Content Include="Images\loading.gif" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\mail\news_logo.png" />
+    <Content Include="Images\news_logo.png" />
+    <Content Include="Images\news_logo1.png" />
+    <Content Include="Images\normalitemfloatprice.png" />
+    <Content Include="Images\normalitem_pricebg.png" />
+    <Content Include="Images\normalitem_product-1.jpg" />
+    <Content Include="Images\normalitem_product.jpg" />
+    <Content Include="Images\normalitem_time_bg.jpg" />
+    <Content Include="Images\photo.jpg" />
+    <Content Include="Images\photo.png" />
+    <Content Include="Images\pop_red_arrow.png" />
+    <Content Include="Images\pro-ad\banner-1000.jpg" />
+    <Content Include="Images\pro-ad\banner-hot-themes.jpg" />
+    <Content Include="Images\pro-ad\banner-max.jpg" />
+    <Content Include="Images\pro-ad\banner-min1.jpg" />
+    <Content Include="Images\pro-ad\banner-min2.jpg" />
+    <Content Include="Images\pro-ad\banner-min3.jpg" />
+    <Content Include="Images\pro-ad\banner-sidebar.jpg" />
+    <Content Include="Images\pro-ad\categories_figure_cont_pic148.jpg" />
+    <Content Include="Images\pro-ad\club_photo.jpg" />
+    <Content Include="Images\pro-ad\pro_img192.jpg" />
+    <Content Include="Images\pro_description_img1.jpg" />
+    <Content Include="Images\pro_description_img2.jpg" />
+    <Content Include="Images\pro_description_img3.jpg" />
+    <Content Include="Images\small-banner.jpg" />
+    <Content Include="Images\snap.jpg" />
+    <Content Include="Images\spcialitem_right_time_bg.jpg" />
+    <Content Include="Images\speicalitem_product.jpg" />
+    <Content Include="Images\speicalitem_right_price.jpg" />
+    <Content Include="Images\success.gif" />
+    <Content Include="Images\ten_banner.jpg" />
+    <Content Include="Images\ten_footer.jpg" />
+    <Content Include="Images\ten_left.png" />
+    <Content Include="Images\ten_pic01.jpg" />
+    <Content Include="Images\ten_pic02.jpg" />
+    <Content Include="Images\ten_pic03.jpg" />
+    <Content Include="Images\ten_pic04.jpg" />
+    <Content Include="Images\ten_reasons01.jpg" />
+    <Content Include="Images\ten_reasons01_en.jpg" />
+    <Content Include="Images\ten_reasons02.jpg" />
+    <Content Include="Images\ten_reasons03.jpg" />
+    <Content Include="Images\ten_reasons04.jpg" />
+    <Content Include="Images\ten_reviewsb.png" />
+    <Content Include="Images\ten_reviewsbg.jpg" />
+    <Content Include="Images\ten_reviewsbgbottom.jpg" />
+    <Content Include="Images\ten_reviewsbgtop.jpg" />
+    <Content Include="Images\ten_reviewst.png" />
+    <Content Include="Images\ten_right.png" />
+    <Content Include="Images\ten_say01.jpg" />
+    <Content Include="Images\ten_say02.jpg" />
+    <Content Include="Images\ten_title01.jpg" />
+    <Content Include="Images\ten_title02.jpg" />
+    <Content Include="Images\ten_title03.jpg" />
+    <Content Include="Images\textsubmit.png" />
+    <Content Include="Images\textsubmit_backorder.png" />
+    <Content Include="Images\textsubmit_soldout.png" />
+    <Content Include="Images\uploadify-cancel.png" />
+    <Content Include="Js\Account\MyAccount.js" />
+    <Content Include="Js\Base\common.js" />
+    <Content Include="Js\Base\main.js" />
+    <Content Include="Js\Base\message.js" />
+    <Content Include="Js\Base\bootstrap.js" />
+    <Content Include="Js\cutpic.js" />
+    <Content Include="Js\jquery-1.8.3.js" />
+    <Content Include="Js\jquery-1.8.3.min.js" />
+    <Content Include="Js\jquery-ui-1.10.4.custom.min.js" />
+    <Content Include="Js\jquery.form.js" />
+    <Content Include="Js\jquery.form.min.js" />
+    <Content Include="Js\jquery.metadata.2.1.js" />
+    <Content Include="Js\jquery.pstrength.js" />
+    <Content Include="Js\jquery.scrollLoading.min.js" />
+    <Content Include="Js\jquery.sticky-kit.min.js" />
+    <Content Include="Js\jquery.unobtrusive-ajax.js" />
+    <Content Include="Js\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Config\productSolrSettings.config" />
+    <Content Include="Config\Payment.config" />
+    <Content Include="Handler\CutAvatarHandler.ashx" />
+    <Content Include="Handler\UploadAvatarHandler.ashx" />
+    <Content Include="App_Data\temple.xlsx" />
+    <Content Include="App_Data\temple.xls" />
+    <Content Include="Font\ds-digi-webfont.eot" />
+    <Content Include="Font\ds-digi-webfont.ttf" />
+    <Content Include="Font\ds-digi-webfont.woff" />
+    <Content Include="Config\EmailSaveXml.config" />
+    <None Include="Js\jquery.validate-vsdoc.js" />
+    <Content Include="Js\jquery.validate.js" />
+    <Content Include="Js\jquery.validate.min.js" />
+    <Content Include="Js\jquery.validate.unobtrusive.js" />
+    <Content Include="Js\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Js\json2.js" />
+    <Content Include="Js\knockout-2.2.0.js" />
+    <Content Include="Js\modernizr-2.6.2.js" />
+    <Content Include="Js\Order\Order.js" />
+    <Content Include="Js\Order\PackingSlip.js" />
+    <Content Include="Js\Order\Payment.js" />
+    <Content Include="Js\Product\AddToCart.js" />
+    <Content Include="Js\Product\AddToWishlist.js" />
+    <Content Include="Js\Product\Index.js" />
+    <Content Include="Js\Product\ProductContact.js" />
+    <Content Include="Js\Public\loginreg.js" />
+    <Content Include="Js\Public\HeaderTop.js" />
+    <Content Include="Js\Review\Testimonial.js" />
+    <Content Include="Js\ShoppingCart\ShoppingCart.js" />
+    <Content Include="Js\uploadify\jquery.uploadify.js" />
+    <Content Include="Js\uploadify\jquery.uploadify.min.js" />
+    <Content Include="Js\uploadify\uploadify.swf" />
+    <Content Include="Js\WishList\WishList.js" />
+    <Content Include="Js\_references.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Shared\Error\PageNotFound.cshtml" />
+    <Content Include="Views\Shared\Error\SystemError.cshtml" />
+    <Content Include="Views\Shared\Layout\_Layout.cshtml" />
+    <Content Include="Views\Shared\Partial\_Footer.cshtml" />
+    <Content Include="Views\Shared\Partial\_LogOnPartial.cshtml" />
+    <Content Include="Views\Shared\Partial\_Pager.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Product\Detail.cshtml" />
+    <Content Include="Views\Product\Promotion.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Partial\_ToolBar.cshtml" />
+    <Content Include="Views\Shared\Partial\_Header_Second.cshtml" />
+    <Content Include="Views\Shared\Partial\_Header_Second_NavMenu.cshtml" />
+    <Content Include="Views\Shared\Partial\_Header_Top.cshtml" />
+    <Content Include="Views\Shared\Partial\_LeftMenu.cshtml" />
+    <Content Include="Views\SearchError.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\ForgetPwd.cshtml" />
+    <Content Include="Views\Shared\Layout\_LoginBody.cshtml" />
+    <Content Include="Views\Account\FacebookSuccess.cshtml" />
+    <Content Include="Views\Account\Facebook.cshtml" />
+    <Content Include="Views\Account\ForgetSuccess.cshtml" />
+    <Content Include="Views\Account\RegisterSuccess.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPwd.cshtml" />
+    <Content Include="Views\Account\Partial\_Service_Ease.cshtml" />
+    <Content Include="Views\Account\Partial\_Exclusive_Service.cshtml" />
+    <Content Include="Views\Account\Partial\_Service_Discount.cshtml" />
+    <Content Include="Views\Shared\Layout\_TestLayout.cshtml" />
+    <Content Include="Views\Category\Partial\_CategoryDescription.cshtml" />
+    <Content Include="Views\Category\Partial\_CategoryAd.cshtml" />
+    <Content Include="Views\Product\ProductList.cshtml" />
+    <Content Include="Views\Category\Partial\_PopularSearch.cshtml" />
+    <Content Include="Views\Shared\Partial\_GoogleAnalytics.cshtml" />
+    <Content Include="Views\Product\Partial\_Price.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_Info.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_Img.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_Icon.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_Sub_Categories.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_Sub_Categories_Item.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_Hot_Item_Image.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_Hot_Items.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_Page_Top.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_Item_Filter.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_Page_Bottom.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_Img_Grid.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_Popup_Grid.cshtml" />
+    <Content Include="Views\Product\OtherPackage.cshtml" />
+    <Content Include="Views\Product\SimilarItems.cshtml" />
+    <Content Include="Views\Shared\Layout\_Layout_NoLeft.cshtml" />
+    <Content Include="Views\Shared\Partial\_LeftMenu_Category.cshtml" />
+    <Content Include="Views\Shared\Partial\_LeftMenu_RefineBy.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_Similar_Item.cshtml" />
+    <Content Include="Views\Product\Partial\_Price_Big.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_Detail_Description.cshtml" />
+    <Content Include="Views\Product\Partial\__Popup__Login__Part.cshtml" />
+    <Content Include="Views\Product\Partial\__Product__Price.cshtml" />
+    <Content Include="Views\Product\Partial\__Promotion__Icon.cshtml" />
+    <Content Include="Views\Product\Partial\__Recommend__Info.cshtml" />
+    <Content Include="Views\Product\Partial\__Popup__Product__Image.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_Detail_Botton.cshtml" />
+    <Content Include="Views\Product\Partial\__Product__Item__Grid.cshtml" />
+    <Content Include="Views\Product\ProductDetailSimilar.cshtml" />
+    <Content Include="Views\Product\ProductDetailAlsoBuy.cshtml" />
+    <Content Include="Views\Product\ProductDetailBestMatch.cshtml" />
+    <Content Include="Views\Product\ProductDetailRecentViewed.cshtml" />
+    <Content Include="Views\Product\ProductDetailCustomerReview.cshtml" />
+    <Content Include="Views\Product\ProductReviewList.cshtml" />
+    <Content Include="Views\Shared\Partial\_LeftMenu_All.cshtml" />
+    <Content Include="Views\Product\Partial\__Price__Popoup.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_List_One.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_Item_List.cshtml" />
+    <Content Include="_AppStart.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_Item_Grid_View.cshtml" />
+    <Content Include="Views\Product\Partial\_Price_Small.cshtml" />
+    <Content Include="Views\Product\ProductSearch.cshtml" />
+    <Content Include="Views\Product\Partial\__Product__Item__Grid__View.cshtml" />
+    <Content Include="PackingList\Packing list - de.xls" />
+    <Content Include="PackingList\Packing list - en.xls" />
+    <Content Include="PackingList\Packing list - es.xls" />
+    <Content Include="PackingList\Packing list - fr.xls" />
+    <Content Include="PackingList\Packing list - it.xls" />
+    <Content Include="PackingList\Packing list - jp.xlsx" />
+    <Content Include="PackingList\Packing list - ru.xls" />
+    <Content Include="PackingList\Packing list - jp.xls" />
+    <None Include="Properties\PublishProfiles\8seasons_en.pubxml" />
+    <Content Include="Views\Shared\Partial\_LeftMenu_Detail.cshtml" />
+    <Content Include="Views\Account\Partial\_Service_DiscountL.cshtml" />
+    <Content Include="Views\Account\MyAccount.cshtml" />
+    <Content Include="Views\Account\Partial\_Account_Siderbar_Menu.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_Refine_By.cshtml" />
+    <Content Include="Views\Shared\Partial\_Popup.cshtml" />
+    <Content Include="Views\Order\OrderSearch.cshtml" />
+    <Content Include="Views\WishList\MyWishList.cshtml" />
+    <Content Include="Views\Account\AddressBook.cshtml" />
+    <Content Include="Views\Account\Partial\_Address_None.cshtml" />
+    <Content Include="Views\Shared\Layout\_Layout_ShoppingCart.cshtml" />
+    <Content Include="Views\ShoppingCart\ShoppingCart.cshtml" />
+    <Content Include="Views\Order\OrderDetail.cshtml" />
+    <Content Include="Views\Shared\Partial\_Ajax_Pager.cshtml" />
+    <Content Include="Views\Order\OrderList.cshtml" />
+    <Content Include="Views\Order\PackingSlip.cshtml" />
+    <Content Include="Views\WishList\WishListPageList.cshtml" />
+    <Content Include="Views\WishList\WishListHistoryPageList.cshtml" />
+    <Content Include="Views\WishList\WishListRemovedPageList.cshtml" />
+    <Content Include="Views\Order\OrderDetailPayment.cshtml" />
+    <Content Include="Views\Order\ItemReview.cshtml" />
+    <Content Include="Views\Account\AccountSetting.cshtml" />
+    <Content Include="Views\Account\MyPreference.cshtml" />
+    <Content Include="Views\Account\NewsLetter.cshtml" />
+    <Content Include="Views\Account\MyProducts.cshtml" />
+    <Content Include="Views\Account\MyCoupon.cshtml" />
+    <Content Include="Views\Payment\OfflinePaymentInfo\Hsbc.cshtml" />
+    <Content Include="Views\Payment\OfflinePaymentInfo\BankOfChina.cshtml" />
+    <Content Include="Views\Payment\OfflinePaymentInfo\WesternUnion.cshtml" />
+    <Content Include="Views\Payment\OfflinePaymentInfo\MoneyGram.cshtml" />
+    <Content Include="Views\Payment\SubmitToPaypal.cshtml" />
+    <Content Include="Views\Payment\SubmitToOceanPayment.cshtml" />
+    <Content Include="Views\Order\OrderDetailList.cshtml" />
+    <Content Include="Views\Order\OrderSnapshot.cshtml" />
+    <Content Include="Views\Checkout\Payment.cshtml" />
+    <Content Include="Views\ShoppingCart\Partial\_Header.cshtml" />
+    <Content Include="Views\ShoppingCart\Partial\_ShoppingCart_Page_Bottom.cshtml" />
+    <Content Include="Views\ShoppingCart\Partial\ShoppingCartList.cshtml" />
+    <Content Include="Views\ShoppingCart\Partial\ShoppingCartUnAvailableList.cshtml" />
+    <Content Include="Views\PlaceOrder\CheckOut.cshtml" />
+    <Content Include="Views\PlaceOrder\ItemsReview.cshtml" />
+    <Content Include="Views\Order\PackingSlipList.cshtml" />
+    <Content Include="Views\Order\ViewInfo\HSBCInfo.cshtml" />
+    <Content Include="Views\Order\ViewInfo\BankOfChinaInfo.cshtml" />
+    <Content Include="Views\Order\ViewInfo\WesternUnionInfo.cshtml" />
+    <Content Include="Views\Order\ViewInfo\MoneyGramInfo.cshtml" />
+    <Content Include="Views\Order\ViewInfo\Default.cshtml" />
+    <Content Include="Views\PlaceOrder\Partial\ShoppingCartList.cshtml" />
+    <Content Include="Views\ShoppingCart\Partial\ShippingModal.cshtml" />
+    <Content Include="Views\Shared\Partial\_QuickAddToCart.cshtml" />
+    <Content Include="Views\Privilege\MyProducts.cshtml" />
+    <Content Include="Views\Privilege\Partial\_ProductList.cshtml" />
+    <Content Include="Views\Privilege\Club.cshtml" />
+    <Content Include="Views\ShoppingCart\Partial\_ShippingItems.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_Hot_Items_View.cshtml" />
+    <Content Include="Views\PlaceOrder\Partial\Address.cshtml" />
+    <Content Include="Views\Reviews\Write.cshtml" />
+    <Content Include="Views\Reviews\Read.cshtml" />
+    <Content Include="Views\Reviews\Partial\_WriteList.cshtml" />
+    <Content Include="Views\Reviews\Partial\_ReadList.cshtml" />
+    <Content Include="Views\Account\MyCouponActive.cshtml" />
+    <Content Include="Views\Account\MyCouponInactive.cshtml" />
+    <Content Include="Views\Checkout\Succeed.cshtml" />
+    <Content Include="Views\ShoppingCart\Partial\_ShippingItems20150320.cshtml" />
+    <Content Include="Views\Product\ProductDailyDeal.cshtml" />
+    <Content Include="Views\Account\WelcomeInClub.cshtml" />
+    <Content Include="Views\Shared\Partial\_Meta.cshtml" />
+    <Content Include="Views\Account\AddressBookEdit.cshtml" />
+    <Content Include="Views\Privilege\Invoice.cshtml" />
+    <Content Include="Views\Product\BestMatch.cshtml" />
+    <Content Include="Views\Shared\Layout\_Layout_Home.cshtml" />
+    <Content Include="Views\Order\OrderInvoice.cshtml" />
+    <Content Include="Views\Reviews\Testimonial.cshtml" />
+    <Content Include="Views\Reviews\TestimonialList.cshtml" />
+    <Content Include="Views\MailMessage\CustomerRegister.cshtml" />
+    <Content Include="Views\MailMessage\OrderConfirmation.cshtml" />
+    <Content Include="Views\MailMessage\OrderStatusUpdated.cshtml" />
+    <Content Include="Views\MailMessage\OrderShipped.cshtml" />
+    <Content Include="Views\MailMessage\VipLevelUpdated.cshtml" />
+    <Content Include="Views\MailMessage\CustomerBecomeClub.cshtml" />
+    <Content Include="Views\MailMessage\CustomerBirthday.cshtml" />
+    <Content Include="Views\MailMessage\ClubCustomerBirthday.cshtml" />
+    <Content Include="Views\MailMessage\PurchasesAmountUpdated.cshtml" />
+    <Content Include="Views\MailMessage\TestimonialReply.cshtml" />
+    <Content Include="Views\MailMessage\ReviewReply.cshtml" />
+    <Content Include="Views\MailMessage\AvatarVerifyResult.cshtml" />
+    <Content Include="Views\MailMessage\Balance.cshtml" />
+    <Content Include="Views\MailMessage\SuggestionReply.cshtml" />
+    <Content Include="Views\MailMessage\CustomerLoginEmailChanged.cshtml" />
+    <Content Include="Views\MailMessage\PasswordUpdated.cshtml" />
+    <Content Include="Views\Shared\Error\IpCheckError.cshtml" />
+    <Content Include="Views\Product\Souring.cshtml" />
+    <Content Include="Views\Product\SouringField.cshtml" />
+    <Content Include="Views\Product\SouringSuccess.cshtml" />
+    <Content Include="Views\MailMessage\CustomerSourcingInformation.cshtml" />
+    <Content Include="Views\MailMessage\SourcingInformationToSalesTemplete.cshtml" />
+    <Content Include="Views\MailMessage\TestimonialTemplete.cshtml" />
+    <Content Include="Views\MailMessage\ForgetPwdTemplete.cshtml" />
+    <Content Include="Views\MailMessage\ContactUsToCustomerTemplete.cshtml" />
+    <Content Include="Views\MailMessage\ContactUsToSalesTemplete.cshtml" />
+    <Content Include="Views\MailMessage\SuggestionToCustomerTemplete.cshtml" />
+    <Content Include="Views\MailMessage\SuggestionToSalesTemplete.cshtml" />
+    <Content Include="Views\MailMessage\CustomerHeadTemplete.cshtml" />
+    <Content Include="Views\MailMessage\CustomerAskQuestionTemplete.cshtml" />
+    <Content Include="Views\MailMessage\CustomerReviewTemplete.cshtml" />
+    <Content Include="Views\MailMessage\MakePaymentToSalesTemplete.cshtml" />
+    <Content Include="Views\MailMessage\MakePaymentToCustomerTemplete.cshtml" />
+    <Content Include="Views\Help\ShippingCalculator.cshtml" />
+    <Content Include="Views\Help\Partial\_ShippingItems.cshtml" />
+    <Content Include="Views\Product\ProductClub.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_BestMatched_Item.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_Item_Filter_BestMatch.cshtml" />
+    <Content Include="Views\Product\Partial\_Banner.cshtml" />
+    <Content Include="Views\ContactUs\ContactUs.cshtml" />
+    <Content Include="Views\Help\SitemapPage.cshtml" />
+    <Content Include="Views\Help\HelpIndex.cshtml" />
+    <Content Include="Views\Help\Partial\_Layout_Help.cshtml" />
+    <Content Include="Views\Help\HelpCenter.cshtml" />
+    <Content Include="Views\MailMessage\_layout\_Email_Customer_Layout.cshtml" />
+    <Content Include="Views\MailMessage\_layout\_Email_Sales_Layout.cshtml" />
+    <Content Include="Views\Help\Partial\_HelpArticleList.cshtml" />
+    <Content Include="Views\Help\ArticleDetail.cshtml" />
+    <Content Include="Views\Product\Partial\_Product_List_BestMatch.cshtml" />
+    <Content Include="Views\MailMessage\ShoppingCartNotUpdateTemplete.cshtml" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.csproj">
+      <Project>{08276825-378a-4cc2-ae5f-8296472bf96f}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PaymentCommon\PaymentCommon.csproj">
+      <Project>{67974d37-d230-4eaf-9804-e878797ae90f}</Project>
+      <Name>PaymentCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ServiceImpl\ServiceImpl.csproj">
+      <Project>{caa7b534-dfb7-4fac-ac17-82c92dba4b0b}</Project>
+      <Name>ServiceImpl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Service\Service.csproj">
+      <Project>{84d49f07-70f0-4a56-9ce1-491c0691af44}</Project>
+      <Name>Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SiteCommon\SiteCommon.csproj">
+      <Project>{391d47fa-d372-475c-abee-6cea9a634953}</Project>
+      <Name>SiteCommon</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\appSettings.config" />
+    <Content Include="Config\customConfig.config" />
+    <Content Include="Config\depoly.config" />
+    <Content Include="Config\log4net.config" />
+    <Content Include="Config\WebPage.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\Route.config" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

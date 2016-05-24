@@ -1,0 +1,327 @@
+﻿@using Com.Panduo.Service.Marketing
+@using Com.Panduo.Service.Marketing.ShippingMarketing
+@{
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+    var shippingMarketing = (ShippingMarketing)ViewBag.ShippingMarketing;
+    ViewBag.Title = shippingMarketing.Id > 0 ? "运费活动设置 > 编辑" : "运费活动设置 > 新建";
+}
+@section HtmlHead
+{
+    @Html.JsFor("MarketingShipping.js", "~/Js/bootstrap-formhelpers.js,~/Js/Marketing/Marketing.js", fileVersion: "1.4")
+    @Html.CssFor("MarketingShipping.css", "~/Css/bootstrap-formhelpers.min.css", fileVersion: "1.0")
+}
+@if (ViewBag.ErrorMsg != null)
+{
+    <div class="alert alert-error">@ViewBag.ErrorMsg</div>
+}
+@*<p><code>说明：时间为北京时间</code></p>*@
+<form class="form-horizontal" name="ShippingForm" id="ShippingForm" action="@Url.Content("~/Marketing/ShippingSave")" method="post" onsubmit="return false;">
+    <div class="well tab-content">
+        <input type="hidden" name="marketingId" id="marketingId" value="@shippingMarketing.Id"/>
+        <input type="hidden" name="shippingMarketingId" id="shippingMarketingId" value="@shippingMarketing.ShippingMarketingId"/>
+        <input type="hidden" name="freeShippingId" id="freeShippingId" value="@(!shippingMarketing.FreeShipping.IsNullOrEmpty() ? shippingMarketing.FreeShipping.Id : 0)"/>
+        @Html.Partial("Partial/MarketingCondition", shippingMarketing)
+
+        <hr />
+        <div class="control-group">
+            <label class="control-label">类型：</label>
+            <div class="controls">
+                <select name="FD_RewardType" class="span2" id="FD_RewardType">
+                    <option value="@((int)ShippingRewardType.ShippingDiscount)" @(shippingMarketing.RewardType == ShippingRewardType.ShippingDiscount ? "selected" : "")>运费折扣</option>
+                    <option value="@((int)ShippingRewardType.ShippingUpgrade)" @(shippingMarketing.RewardType == ShippingRewardType.ShippingUpgrade ? "selected" : "")>运费方式升级</option>
+                    <option value="@((int)ShippingRewardType.FreeShipping)" @(shippingMarketing.RewardType == ShippingRewardType.FreeShipping ? "selected" : "")>免运费</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">金额对象：</label>
+            <div class="controls">
+                <select name="FD_AmountType" class="span2" id="FD_AmountType">
+                    <option value="@((int)MarketingAmountType.TotalAmount)" @(shippingMarketing.AmountType == MarketingAmountType.TotalAmount ? "selected" : "")>物品总金额</option>
+                    <option value="@((int)MarketingAmountType.NoDiscountTotalAmount)" @(shippingMarketing.AmountType == MarketingAmountType.NoDiscountTotalAmount ? "selected" : "")>正价商品金额</option>
+                </select>
+            </div>
+        </div>
+        <div id="FD_RewardType_@((int)ShippingRewardType.ShippingDiscount)" @(shippingMarketing.RewardType == ShippingRewardType.ShippingDiscount ? "" : "class=hide")>
+            <div class="control-group">
+                <label class="control-label">运输方式：</label>
+                <div class="controls show_section">
+                    <label class="checkbox inline">
+                        <input type="checkbox" value="0" name="FD_ShippingIds" id="FD_ShippingIds" data-toggle="checkall">所有
+                    </label>
+                    @foreach (var item in ViewBag.Shippings)
+                    {
+                        <label class="checkbox inline" style="min-width: 50px">
+                            <input type="checkbox" value="@item.ShippingId" name="FD_ShippingIds" id="FD_ShippingIds_@item.ShippingId" @(shippingMarketing.ShippingIds == null ? "" : shippingMarketing.ShippingIds.Count == 0 ? "checked" : (shippingMarketing.ShippingIds.Contains(item.ShippingId) ? "checked" : "")) data-toggle="checkthis">@item.ShippingName
+                        </label>
+                    }
+                </div>
+                <a href="javascript:void(0)" class="btnshow" title="展开"><i class="icon-chevron-down"></i></a>
+            </div>
+            <hr />
+            <div class="control-group">
+                <label class="control-label">起算金额(USD)&amp;折扣：</label>
+                <div class="controls">
+                    <table class="table table-striped table-bordered" id="TB_Amount_Discount" style="width: 50%; margin-bottom: 0px;">
+                        <thead>
+                            <tr>
+                                <th>起算金额</th>
+                                <th>折扣</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        @if (!shippingMarketing.ShippingDiscounts.IsNullOrEmpty())
+                        {
+                            foreach (var item in shippingMarketing.ShippingDiscounts)
+                            {
+                            <tr>
+                                <td>
+                                    <input type="text" class="input-medium" datatype="f1" name="Amount" value="@item.Amount.ToString("F")" />
+                                </td>
+                                <td class="input-append">
+                                    <input type="text" class="input-medium" datatype="i1" name="Discount" value="@item.Discount.ToString("0")" /><span class="add-on">%</span>
+                                </td>
+                                <td><a href="javascript:void(0);" class="btn del_tr">删除</a></td>
+                            </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>
+                                    <input type="text" class="input-medium" datatype="f1" name="Amount" value="" />
+                                </td>
+                                <td class="input-append">
+                                    <input type="text" class="input-medium" datatype="i" name="Discount" value="" /><span class="add-on">%</span>
+                                </td>
+                                <td><a href="javascript:void(0);" class="btn del_tr">删除</a></td>
+                            </tr>
+                        }
+                    </table>
+                    <a href="javascript:void(0);" class="btn add_tr" data-target="#TB_Amount_Discount" data-length="1">新增</a>
+                </div>
+            </div>
+        </div>
+        <div id="FD_RewardType_@((int)ShippingRewardType.ShippingUpgrade)" @(shippingMarketing.RewardType == ShippingRewardType.ShippingUpgrade ? "" : "class=hide")>
+            <div class="control-group">
+                <label class="control-label">重量：</label>
+                <div class="controls">
+                    <select name="FD_WeightType" id="FD_WeightType" class="inline span2">
+                        <option value="0">Shipping Weight</option>
+                        <option value="-1">Gross Weight</option>
+                        <option value="-2">Volume Weight</option>
+                    </select>
+                    <input type="text" class="input-small" value="@shippingMarketing.WeightLimit.ToString("F")" name="FD_WeightLimit" datatype="f1" id="FD_WeightLimit"><span class="help-inline">G</span>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">起算金额(USD)&amp;运输方式：</label>
+                <div class="controls">
+                    <table class="table table-striped table-bordered" id="TB_Amount_Upshipping" style="width: 80%; margin-bottom: 0px;">
+                        <thead>
+                            <tr>
+                                <th>起算金额</th>
+                                <th>原运输方式</th>
+                                <th>升级后运输方式</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        @if (!shippingMarketing.ShippingUpgrades.IsNullOrEmpty())
+                        {
+                            foreach (var shippingUpgrade in shippingMarketing.ShippingUpgrades)
+                            {
+                            <tr>
+                                <td>
+                                    <input type="text" class="input-small" datatype="f1" name="Amount" value="@shippingUpgrade.Amount.ToString("F")" />
+                                </td>
+                                <td>
+                                    <select name="FD_ShippingId">
+                                        <option value="0">请选择</option>
+                                        @foreach (var item in ViewBag.Shippings)
+                                        {
+                                            <option value="@item.ShippingId" @(shippingUpgrade.ShippingId == item.ShippingId ? "selected" : "")>(@item.ShippingId)@item.ShippingName</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="FD_Upshippingid">
+                                        <option value="0">请选择</option>
+                                        @foreach (var item in ViewBag.Shippings)
+                                        {
+                                            <option value="@item.ShippingId" @(shippingUpgrade.Upshippingid == item.ShippingId ? "selected" : "")>(@item.ShippingId)@item.ShippingName</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td><a href="javascript:void(0);" class="btn del_tr">删除</a></td>
+                            </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>
+                                    <input type="text" class="input-medium" datatype="f1" name="Amount" value="" />
+                                </td>
+                                <td>
+                                    <select name="FD_ShippingId">
+                                        <option value="0">请选择</option>
+                                        @foreach (var item in ViewBag.Shippings)
+                                        {
+                                            <option value="@item.ShippingId">(@item.ShippingId)@item.ShippingName</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="FD_UpshippingId">
+                                        <option value="0">请选择</option>
+                                        @foreach (var item in ViewBag.Shippings)
+                                        {
+                                            <option value="@item.ShippingId">(@item.ShippingId)@item.ShippingName</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td><a href="javascript:void(0);" class="btn del_tr">删除</a></td>
+                            </tr>
+                        }
+                    </table>
+                    <a href="javascript:void(0);" class="btn add_tr" data-target="#TB_Amount_Upshipping" data-length="1">新增</a>
+                </div>
+            </div>
+        </div>
+        <div id="FD_RewardType_@((int)ShippingRewardType.FreeShipping)" @(shippingMarketing.RewardType == ShippingRewardType.FreeShipping ? "" : "class=hide")>
+            <div class="control-group">
+                <label class="control-label" for="FD_Amount">起算金额(USD)：</label>
+                <div class="controls">
+                    <input type="text" datatype="f1" value="@(!shippingMarketing.FreeShipping.IsNullOrEmpty() ? shippingMarketing.FreeShipping.Amount.ToString("F") : "")" name="FD_Amount" id="FD_Amount">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">基准运输方式：</label>
+                <div class="controls">
+                    <select name="FD_Baseshippingid" id="FD_Baseshippingid">
+                        <option value="0">请选择</option>
+                        <option value="-1"@(!shippingMarketing.FreeShipping.IsNullOrEmpty() && shippingMarketing.FreeShipping.Baseshippingid == -1 ? "selected" : "")>默认取快递中最便宜的</option>
+                        <option value="-2" @(!shippingMarketing.FreeShipping.IsNullOrEmpty() && shippingMarketing.FreeShipping.Baseshippingid == -2 ? "selected" : "")>默认取所有运输方式中最便宜的</option>
+                        @foreach (var item in ViewBag.Shippings)
+                        {
+                            <option value="@item.ShippingId" @(!shippingMarketing.FreeShipping.IsNullOrEmpty() && shippingMarketing.FreeShipping.Baseshippingid == item.ShippingId ? "selected" : "")>(@item.ShippingId)@item.ShippingName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="FD_FreeShippingFee">手续费：</label>
+                <div class="controls">
+                    <input type="text" datatype="f1" value="@(!shippingMarketing.FreeShipping.IsNullOrEmpty() ? shippingMarketing.FreeShipping.FreeShippingFee.ToString("F") : "")" name="FD_FreeShippingFee" id="FD_FreeShippingFee"><span class="help-inline">USD / KG</span>
+                </div>
+            </div>
+        </div>
+
+        @Html.Partial("Partial/MarketingInfo", shippingMarketing)
+
+        <div class="form-actions">
+            <a class="btn btn-primary" id="btnShippingSave" href="javascript:void(0)">保存</a>
+            <a class="btn" href="@Url.Content("~/Marketing/Shipping")">取消</a>
+        </div>
+    </div>
+</form>
+
+@section HtmlFooter
+{
+    <script type="text/javascript">
+        $(function () {
+            //coupon保存
+            $("#btnShippingSave").bind("click", fnSaveShippingMarketing);
+
+            $(".del_tr").click(function () {
+                var tr = $(this).parents("tr");
+                var discount = tr.find("[name=Discount]").val();//$.trim(discount)
+                if (discount == "" || confirm("你确认要删除这一行数据吗?"))
+                    tr.remove();
+            });
+        });
+        var fnSaveShippingMarketing = function () {
+            var btn = $(this);
+            btn.unbind("click").text("请稍等，正在提交数据...");
+            var languages = "";
+            var countrys = "";
+            var discountstr = "";
+            var upgradestr = "";
+            var shippingIdsofdiscount = "";
+            //获取选中语种
+            if ($("#FD_LanguageIds").attr("checked")) {
+                languages = "All";
+            } else {
+                $("[name='FD_LanguageIds']").each(function () {
+                    if ($(this).attr("checked")) {
+                        languages = languages + $(this).val() + ",";
+                    }
+                });
+                if (languages != "")
+                    languages = languages.substr(0, languages.length - 1);
+            }
+            //获取国家
+            if ($("#FD_ContinentIds").attr("checked")) {
+                countrys = "All";
+            } else {
+                $("[name='FD_ContinentIds']").each(function () {
+                    if ($(this).attr("checked")) {
+                        countrys = countrys + $(this).val() + ",";
+                    }
+                });
+                if (countrys != "")
+                    countrys = countrys.substr(0, countrys.length - 1);
+            }
+
+            $("#TB_Amount_Discount").find("tbody tr").each(function () {
+                var tdArr = $(this).children();
+                var amount = tdArr.eq(0).find("input").val(); //金额
+                var discount = tdArr.eq(1).find("input").val(); //折扣
+                if (amount.length > 0) {
+                    discountstr += amount + "|" + discount + ";";
+                }
+            });
+
+            $("#TB_Amount_Upshipping").find("tbody tr").each(function () {
+                var tdArr = $(this).children();
+                var amount = tdArr.eq(0).find("input").val(); //金额
+                var shippingId = tdArr.eq(1).find("select").val(); //折扣
+                var upshippingId = tdArr.eq(2).find("select").val(); //折扣
+                if (amount.length > 0) {
+                    upgradestr += amount + "|" + shippingId + "|" + upshippingId + ";";
+                }
+            });
+            //获取运费折扣 能享受的运送方式Id
+            if ($("#FD_ShippingIds").attr("checked")) {
+                shippingIdsofdiscount = "All";
+            } else {
+                $("[name='FD_ShippingIds']").each(function () {
+                    if ($(this).attr("checked")) {
+                        shippingIdsofdiscount = shippingIdsofdiscount + $(this).val() + ",";
+                    }
+                });
+                if (shippingIdsofdiscount != "")
+                    shippingIdsofdiscount = shippingIdsofdiscount.substr(0, shippingIdsofdiscount.length - 1);
+            }
+
+            $("#ShippingForm").ajaxSubmit({
+                data: { languages: languages, countrys: countrys, discounts: discountstr, upgrades: upgradestr, shippingIds: shippingIdsofdiscount },
+                success: function (responseText) {
+                    var msg = "";
+                    if (responseText.result == "success") {
+                        msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作成功!' : responseText.msg;
+                        btn.text("保存成功");
+                        $(".alert").removeClass("alert-error").addClass("alert-success").show().delay(2000).hide(200).find("span").text(msg);
+                        setTimeout(function () {
+                            location.reload();
+                        }, 500);
+                    } else {
+                        btn.text("保存失败").bind("click", fnSaveShippingMarketing);
+                        msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作失败!' : responseText.msg;
+                        $(".alert").removeClass("alert-success").addClass("alert-error").show().delay(2000).hide(200).find("span").text(msg);
+                    }
+                }
+            });
+        };
+    </script>
+}

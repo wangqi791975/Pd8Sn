@@ -1,0 +1,19 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.ServiceConst
+@model Com.Panduo.Service.Product.Category.Category
+    @if (!@Model.IsNullOrEmpty())
+    {
+        var categoryLanguage = ServiceFactory.CategoryService.GetCategoryLanguageById(@Model.CategoryId, ServiceFactory.ConfigureService.SiteLanguageId);
+        if (!categoryLanguage.IsNullOrEmpty())
+        {
+            <li>
+                <a href="@UrlRewriteHelper.GetProductListUrl(Model.CategoryId,categoryLanguage.CategoryEnglishName,1)">
+                    <img class="scrollLoading" src="@Url.Content("~/Images/snap.jpg")" data-url="@ImageHelper.GetCategoryImageUrl(Model.CategoryImage)" alt="@categoryLanguage.CategoryLanguageName" /><p>@categoryLanguage.CategoryLanguageName</p>
+                </a>
+            </li>
+        }
+    }
+
+
+
+

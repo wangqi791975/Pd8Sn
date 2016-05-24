@@ -1,0 +1,53 @@
+﻿@using Com.Panduo.Service.Order.ShippingOption
+@using Resources
+@{
+    IList<ShippingAmount> ShippingAmounts = ViewBag.ShippingAmounts;
+    List<ShippingLanguage> ShippingLanguages = ViewBag.ShippingLanguages; 
+    ShoppingAmountSorterCriteria sort = ViewBag.Sort;
+}
+<table cellpadding="0" cellspacing="0" class="title">
+    <tr>
+        <td class="radio"></td>
+        <td class="method">@Lang.TipShippingMethod</td>
+        <th class="sp_time"><a href="javascript:void(0)">@Lang.TipEstShipTime<ins class="sort_arrow" data-sort-frist="day" data-sort-second="cost"></ins></a></th>
+        <th class="sp_price"><a href="javascript:void(0)">@Lang.TipShippingCost<ins class="sort_arrow_asc" data-sort-frist="cost" data-sort-second="day"></ins></a></th>
+    </tr>
+</table>
+<div class="shipping_item">
+    <table cellpadding="0" cellspacing="0" style="display: block" class="showallmethods">
+        @if (!ShippingAmounts.IsNullOrEmpty())
+        {
+            foreach (var shippingAmounts in ShippingAmounts)
+            {
+                var shippingLanguage = ShippingLanguages.Where(x => x.ShippingId == shippingAmounts.ShippingId).ToList();
+                var shippingName = shippingAmounts.ShippingName;
+                var shippingDescription = string.Empty;
+                if (!shippingLanguage.IsNullOrEmpty() && shippingAmounts.ShippingId != 999)
+                {
+                    shippingName = shippingLanguage[0].Name;
+                    shippingDescription = shippingLanguage[0].ShippingDescription;
+                }
+                string current = string.Empty;
+                string checkedStr = string.Empty;
+                if (shippingAmounts.ShippingId == ViewBag.ShippingId)
+                {
+                    current = "current";
+                    checkedStr = "checked=checked";
+                }
+                <tr class="item @current">
+                    <td class="radio">
+                        <input name="shipping_id" type="radio" id="shipping_id_@shippingAmounts.ShippingId" data-shippingid="@shippingAmounts.ShippingId" data-shippingname="@shippingName" value="" @checkedStr />
+                    </td>
+                    <td class="method">@Html.Raw(shippingName)</td>
+                    <td class="time">@string.Format(Lang.TipNToMDays,shippingAmounts.DayLow,shippingAmounts.DayHigh) <input type="hidden" value="@Html.Raw(shippingAmounts.DayLow + shippingAmounts.DayHigh)" class="day"></td>
+                    <td class="price"><span>@PageHelper.GetCurrentCurrency().Format() @PageHelper.ExchangeMoneyByUsd(shippingAmounts.ShippingCost, PageHelper.GetCurrentCurrency()) <input type="hidden" value="@PageHelper.ExchangeMoneyByUsd(shippingAmounts.ShippingCost, PageHelper.GetCurrentCurrency())" class="cost"></span></td>
+                </tr>
+                <tr style="display: none">
+                    <!-- 解释性文字，display:none隐藏，显示时仅需删除style样式即可  style="display: none;"-->
+                    <td class="radio"></td>
+                    <td colspan="3" class="fgrey">@Lang.TipShippingDescription</td>
+                </tr>
+            }
+        }
+    </table>
+</div>

@@ -1,0 +1,95 @@
+﻿@using Com.Panduo.Common
+@using Com.Panduo.Service.Product
+@using Resources
+@model IList<ProductInfo> 
+@{
+    var isLogin = SessionHelper.CurrentCustomer.IsNullOrEmpty();
+    foreach (var m in Model)
+     {
+         var ifhot = m.IsHot;
+         var ifnew =!ifhot&&(DateTime.Now.Subtract(m.Product.CreateTime).TotalDays <= 30); //NEW标签
+         var ifstocklimit = m.ProductStock.JudgeStocklimit();
+         var productName = ViewBag.ProductSearchAreaType == ProductSearchAreaType.SearchArea ? CommonHelper.ToHightlightText(m.ProductName, ViewBag.Keyword) : m.ProductName;
+         <li>
+             <div class="lf list_pro_img">
+                 <a href="@UrlRewriteHelper.GetProductDetailUrl(m.Product.ProductId, m.ProductEnName)" class="list_pro_img_a">
+                     <img class="scrollLoading" src="@Url.Content("~/Images/snap.jpg")" data-url="@ImageHelper.GetImageUrl(m.Product.MainImage, 130)" />
+                     <div class="promotion_icon"> @* 折扣icon_sale和新品icon_newhot标签直接不能有空白 *@
+                       @{ var discount = PageHelper.GetDiscount(m.ProductPrice);}
+                         @if (discount>0&&discount < 1)
+                         {
+                             <ins class="icon_sale"><span>@PageHelper.GetShowDiscount(discount)</span></ins>
+                         }
+                         @if (ifhot){<ins class="icon_newhot"><span>HOT</span></ins>}
+                         @if (ifnew){<ins class="icon_newhot"><span>NEW</span></ins>}
+                         @if (ifstocklimit){<ins class="icon_limitedstock"><span>@Lang.TipLmtStock</span></ins>}
+                     </div>	
+                 </a>
+
+                 @if (m.HasSimilarItems)
+                 {
+                     <p><a rel="nofollow" class="fblue_mid" target="_blank" href="@UrlRewriteHelper.GetSimiliarItemsUrl(m.Product.ProductId, 1)">@Lang.TipSimilarItems</a></p>
+                 }
+                 <div class="products_list_popup">
+                     <i class="left"></i>
+                     <em class="left"></em>
+                     <img src="@Url.Content("~/Images/loading.gif")" data-original="@ImageHelper.GetImageUrl(m.Product.MainImage, 310)"/>
+                 </div>
+             </div>
+             <div class="lf list_pro_info">
+                 <div class="list_table"><h5><a href="@UrlRewriteHelper.GetProductDetailUrl(m.Product.ProductId, m.ProductEnName)" title="">@Html.Raw(productName) (@m.Product.ProductCode)</a></h5>
+                     @Html.Partial("~/Views/Product/Partial/_Price_Small.cshtml", m)
+                 </div>
+                  <p>
+                 @if (isLogin)
+                     {
+                        
+                         <a rel="nofollow" href="javascript:void(0)" onclick=" $('#logindiv').modal('show'); " title="@Lang.TipLoginViewVIPrice">@Lang.TipLoginViewVIPrice</a>
+                     }
+                  </p>
+                 <p class="fgrey_mid">@Lang.TipGrossWeightUp @(m.Product.Weight)g</p>
+                 @if (m.Product.IsOtherPack)
+                 {
+                     <p><a rel="nofollow" class="fblue_mid" data-target="#otherpack" data-toggle="modal" href="javascript:void(0)" data-remote="/Product/OtherPackage/@m.Product.ProductId">@Lang.TipOtherPackageSizes</a></p>
+                 }
+             </div>
+             <div class="lf list_icon">
+                 @if (m.Product.Status == ProductStatus.OffLine)
+                 {
+                     <div class="list_input"></div>
+                     <a rel="nofollow" class="btn_removed btn_w144">Removed</a>
+                 }
+                 else
+                 {
+                     <div class="list_input"><em>@Lang.TipAdd</em><input class="inputw98 input_text_wrap" type="text" value="1" name="input_qty_@m.Product.ProductId"/>
+                     </div>
+                     if (ifstocklimit && m.ProductStock.StockNumber > 0)
+                      {
+                          <p class="text_center">@string.Format(Lang.TipNStockAvailable,m.ProductStock.StockNumber)</p>
+                      }
+                     if (m.Product.Status == ProductStatus.BackOrder)
+                      {
+                          <a rel="nofollow" class="btn_orange btn_w144" href="javascript:void(0)" data-productid="@m.Product.ProductId"  data-restocktime="@m.ProductStock.GetProductStockDay()"  onclick="fnBackorderAddToCart(this)"><ins class="btn_backorder"></ins><span>@Lang.TipBackorder</span></a>
+                      }
+                      else
+                      {
+                          <a rel="nofollow" class="btn_orange btn_w144 cart_btn_add" href="javascript:void(0)" data-productid="@m.Product.ProductId" data-pagesource="productlist">
+                              <ins class="btn_cart"></ins>
+                              <span>@Lang.TipAddCart</span>
+                          </a>
+                      }
+                     <a rel="nofollow" class="btn_grey btn_w144 wishlist_btn_add" data-productid="@m.Product.ProductId" data-pagesource="productlist" href="javascript:void(0)"><ins class="btn_wishlist"></ins><span>@Lang.TipAddWishlist</span></a>
+               
+                    if(@m.Product.Status==ProductStatus.BackOrder){
+                        @Html.Raw("<p class=\"fgrey_mid\">Restock Time:"+@m.ProductStock.GetProductStockDay()+" days </p>")
+                    }
+                    else if (@m.Product.OtherPackType == ProductOtherPackType.Big)
+                    {
+                        @Html.Raw("<p class=\"fgrey_mid\">Restock Time: <br/>7 - 15 work days </p>")
+                    }
+                 }
+             </div>
+             <div class="clearfix"></div>
+         </li>
+     }
+}

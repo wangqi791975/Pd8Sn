@@ -1,0 +1,7 @@
+﻿@model Com.Panduo.Service.Product.Product
+<div class="img_border">
+    <a href="#">       
+           @Html.Partial("~/Views/Product/Partial/__Promotion__Icon.cshtml",Model)
+        <img src="@ImageHelper.GetImageUrl(Model.MainImage,120)" />
+    </a>
+</div>

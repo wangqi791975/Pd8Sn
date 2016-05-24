@@ -1,0 +1,63 @@
+﻿@using Com.Panduo.Service.SEO
+@using Com.Panduo.Service.SiteConfigure
+@model Dictionary<int, MetaHome>
+@{
+    Layout = null;
+}
+
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        @{
+            var loop = 0;
+        }
+        @foreach (Language lang in ViewBag.Languages)
+        {
+            <li class="@(loop++ == 0 ? "active" : "")"><a data-target="#tab-@lang.LanguageId" href="javascript:void(0)" data-toggle="tab">@lang.ChineseName</a></li>
+        }
+    </ul>
+    <div class="tab-content">
+        @{
+            loop = 0;
+        }
+        @foreach (Language lang in ViewBag.Languages)
+        {
+            var metaProductDetail = Model.TryGetValue(lang.LanguageId);
+            metaProductDetail = metaProductDetail ?? new MetaHome();
+            const MetaHomePageType k = MetaHomePageType.ProductDetail;
+            <div class="ajax_detail tab-pane @(loop++ == 0 ? "active" : "")" id="tab-@lang.LanguageId">
+                <form class="form-horizontal" name="updateForm" action="@Url.Content("~/Meta/SetMetaHome")" method="post" onsubmit="return false;">
+                    <input type="hidden" name="HID_languageId" value="@lang.LanguageId"/>
+                    <input type="hidden" name="HID_metaHomeType" value="@k" />
+                    <div class="control-group">
+                        <label class="control-label">面包屑title：</label>
+                        <div class="controls">
+                            <input type="text" class="span8" name="FD_Breadcrumb_@k" id="FD_Breadcrumb_@k" value="@metaProductDetail.Breadcrumb">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Title：</label>
+                        <div class="controls">
+                            <input type="text" class="span8" name="FD_Title_@k" id="FD_Title_@k" value="@metaProductDetail.Title">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Keywords：</label>
+                        <div class="controls">
+                            <input type="text" class="span8" name="FD_Keywords_@k" id="FD_Keywords_@k" value="@metaProductDetail.Keywords">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Description：</label>
+                        <div class="controls">
+                            <textarea class="span8" name="FD_Description_@k" id="FD_Description_@k">@metaProductDetail.Description</textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <a class="btn btn-primary ajax_update" href="javascript:void(0)">保存修改</a>
+                        <a class="btn" href="@Url.Content("~/Meta/Index")">取消</a>
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+</div>

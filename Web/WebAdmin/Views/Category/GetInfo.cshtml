@@ -1,0 +1,36 @@
+﻿@{
+    Layout = null;
+}
+<form name="updateForm" action="@Url.Content("~/Category/Update/" + @ViewBag.id)" method="post" onsubmit="return false;">
+    <input type="hidden" id="current_url" name="current_url" value="/Category/GetList/@ViewBag.Category.ParentId" />
+    <input type="hidden" name="id" value="@ViewBag.Category.CategoryId" />
+    <input type="hidden" name="parent_id" value="@ViewBag.Category.ParentId" />
+    <table class="table table-striped">
+        <tr>
+            <td width="20%">ID：</td>
+            <td><input type="text" name="category_id" required="required" value="@ViewBag.Category.CategoryId" disabled="disabled" class="input-mini" number="number" /></td>
+        </tr>
+        <tr>
+            <td width="20%">类别名称：</td>
+            <td><input type="text" name="category_name" required="required" value="@ViewBag.Category.CategoryName" maxlength="32" /></td>
+        </tr>
+        <tr>
+            <td width="20%">是否显示：</td>
+            <td>
+                @if (ViewBag.Category.IsDisplay)
+                {
+                    @Html.Raw("<input type='radio' id='is_display1' name='is_display' value='true' checked='checked' /> 显示　　<input type='radio' id='is_display2' name='is_display' value='false' /> 隐藏");
+                }
+                else
+                {
+                    @Html.Raw("<input type='radio' id='is_display1' name='is_display' value='true' /> 显示　　<input type='radio' id='is_display2' name='is_display' value='false' checked='checked' /> 隐藏");
+                }
+                <span class="badge badge-important">隐藏后将导致所在类别下的商品无法展示</span>
+            </td>
+        </tr>
+        <tr>
+            <td width="20%">前台排序：</td>
+            <td><input type="text" name="display_order" required="required" value="@ViewBag.Category.DiplayOrder" class="input-mini" datatype="i1" /></td>
+        </tr>
+    </table>
+</form>

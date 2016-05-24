@@ -1,0 +1,9 @@
+﻿@model Com.Panduo.Service.Product.Category.CategoryLanguage 
+<!-- 描述开始 -->
+@if (!Model.IsNullOrEmpty() && !Model.CategoryEnglishName.IsNullOrEmpty() && !Model.CategoryLanguageDescription.IsNullOrEmpty())
+{
+<div class="description_cont">   
+    <span>@Model.CategoryLanguageName:</span>@Html.Raw(Model.CategoryLanguageDescription)
+</div>
+}
+<!-- 描述结束 -->

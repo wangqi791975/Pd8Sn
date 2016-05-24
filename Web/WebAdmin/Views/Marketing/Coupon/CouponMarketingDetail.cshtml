@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "查看";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@using NPOI.SS.Formula.Functions
+@model Com.Panduo.Service.Marketing.Coupon.CouponMarketing
+<form class="form-horizontal">
+    <div class="well tab-content">
+        <div id="tab_base_info">
+            <div class="control-group">
+                <label class="control-label">场景：</label>
+                <div class="controls">
+                    @Model.MarketingType
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">活动名称：</label>
+                <div class="controls">
+                    @Model.Name
+                </div>
+            </div>
+            @{
+                var exInfo = Model.IsExcludeClub ? "排除Club客户" + (Model.IsExcludeChannels ? ",排除渠道商客" : "") : "" + (Model.IsExcludeChannels ? "排除渠道商客" : "");
+                exInfo = exInfo != "" ? "(" + exInfo + ")" : exInfo;
+            }
+            <div class="control-group">
+                <label class="control-label">客户对象：</label>
+                <div class="controls">
+                    @Model.CustomerType @exInfo
+                    <label>@ViewBag.CustomerObjInfo</label>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">语种：</label>
+                <div class="controls">
+                    @ViewBag.LanguageInfo
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">国家：</label>
+                <div class="controls">
+                    所有
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">CouponCode：</label>
+                <div class="controls">
+                    @Model.CouponCode
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">开始时间：</label>
+                <div class="controls">
+                    @Model.EffectiveBegin
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">结束时间：</label>
+                <div class="controls">
+                    @Model.EffectiveEnd
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">启用状态：</label>
+                <div class="controls">
+                    @(Model.Status ? "启用" : "禁用")
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well form-actions">
+        <span>
+            <a class="btn" href="/Marketing/CouponMarketing/@(ViewBag.Page)">返回</a>
+        </span>
+    </div>
+</form>

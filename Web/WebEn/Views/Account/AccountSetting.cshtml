@@ -1,0 +1,380 @@
+﻿@using System.Globalization
+@using Com.Panduo.Service
+@using Com.Panduo.Service.Customer
+@using Resources
+@{
+    Layout = "~/Views/Shared/Layout/_Layout_NoLeft.cshtml";
+    var commonCountry = ServiceFactory.ConfigureService.GetCommonCountry();
+    var unCommonCountry = ServiceFactory.ConfigureService.GetUnCommonCountry();
+}
+@section HtmlHead
+{
+    @Html.JsFor("MyAccount.js", "~/Js/jquery.pstrength.js,~/Js/Account/MyAccount.js,~/Js/cutpic.js,~/Js/uploadify/jquery.uploadify.js", fileVersion: "1.42")
+    @Html.JsFor("custom.js", "~/Js/jquery-ui-1.10.4.custom.min.js", fileVersion: "1.9")
+    @Html.CssFor("MyAccount.css", new[] { "~/Css/jquery-ui-1.10.4.custom.min.css", "~/Css/avatar.css", "~/Css/uploadify.css" }, fileVersion: "1.31")
+    <script src="~/Js/jquery.validate.min.js"></script>
+}
+@model Customer
+
+@Html.Partial("Partial/_Account_Siderbar_Menu")
+<!-- 左侧结束 -->
+<div id="main" class="account_wrap">
+    <h2 class="font14 account_title">@Lang.TipAccountSettingUp</h2>
+    <div class="accout_tab">
+        <h3 id="profilecont" class="current">@Lang.TiprofileSetting</h3>
+        <h3 id="passwordcont" class="nostock">@Lang.TipChangePwd</h3>
+        <h3 id="emailcont" class="nostock">@Lang.TipChangeAdd</h3>
+    </div>
+    <!-- Profile Setting 开始 -->
+    <form onsubmit="return false;" method="post" action="/Account/ProfileSetting" name="changepro" id="changepro">
+        <input type="hidden" name="customerId" value="@Model.CustomerId"/>
+        <div class="profile_cont" style="display: block">
+            <div class="warning_wrap">
+                <ins class="btn_success_cart"></ins>
+                <p><strong class="fgreen">@Lang.MsgSetAccountSuccess</strong></p>
+            </div>
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <th class="photo">@Lang.TipAvatar</th>
+                    <td>
+                        <img src="@(Model.Avatar.IsEmpty() ? "/Images/photo.png" : Model.Avatar)" /><a href="javascript:void(0)" onclick="$('#avatareditsys').modal('show');" class="btn_grey"><ins class="btn_edit"></ins><span>@Lang.TipEdit</span></a></td>
+                </tr>
+                <tr>
+                    <th><span class="fred">*</span>@Lang.TipGender</th>
+                    <td>
+                        <label>@Html.RadioButtonFor(m => m.Gender, Gender.Male)Male</label>
+                        <label>@Html.RadioButtonFor(m => m.Gender, Gender.Female)Female</label>
+                        <div class="fred"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="fred">*</span>@Lang.TipFullName</th>
+                    <td>
+                        @Html.TextBoxFor(m => m.FullName, new { @class = "input_text_wrap inputw270 ", onfocus="$(this).next().html('')", maxlength = "100" })
+                        <div class="fred"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><span></span>@Lang.TipDateOfBirth</th>
+                    <td>
+                        @Html.TextBoxFor(m => m.Birthday, new { @class = "input_text_wrap inputw270 datepicker" , onfocus="$(this).next().html('')"})
+                        <div class="fred"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="fred">*</span>@Lang.TipPhoneNumber</th>
+                    <td>
+                        @Html.TextBoxFor(m => m.Telphone, new { @class = "input_text_wrap inputw270", onfocus="$(this).next().html('')", maxlength = "50" })
+                        <div class="fred"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><span></span>@Lang.TipCellPhone</th>
+                    <td>
+                        @Html.TextBoxFor(m => m.Cellphone, new { @class = "input_text_wrap inputw270", onfocus="$(this).next().html('')" })
+                        <div class="fred"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><span></span>@Lang.TipSkype</th>
+                    <td>
+                        @Html.TextBoxFor(m => m.Skype, new { @class = "input_text_wrap inputw270", onfocus="$(this).next().html('')", maxlength = "100" })
+                        <div class="fred"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="fred">*</span>@Lang.TipYourCountry</th>
+                    <td>
+                        <div class="select_cont select_w271 select_search" onclick="$(this).next().html('')">
+                            <input type="hidden" id="countryId" name="CountryId" value="@(Model == null ? "" : (Model.Country.HasValue ? Model.Country.Value.ToString(CultureInfo.InvariantCulture) : ""))"/>
+                            <label class="select_cont_span">
+                                @(Model == null ? "" : (Model.Country.HasValue ? ServiceFactory.ConfigureService.GetCountryById(Model.Country.Value).CountryName : ViewBag.CurrentCountryName))</label>
+                            <div class="pop_select_cont">
+                                <input name="" type="text" class="input_text_wrap inputw260" />
+                                <ul>
+                                    <li class="list_line">----------</li>
+                                    @foreach (var country in commonCountry)
+                                    {
+                                        <li class="list_item" data-value="@country.CountryId">@country.CountryName</li>
+                                    }
+                                    @*<li class="list_item active">France</li>
+                                <li class="list_item">Germany</li> 
+                                <li class="list_item">Italy</li>
+                                <li class="list_item">Spain</li>
+                                <li class="list_item">United Kingdom</li>
+                                <li class="list_item">United Satets</li>*@
+                                    <li class="list_line">----------</li>
+                                    @foreach (var country in unCommonCountry)
+                                    {
+                                        <li class="list_item" data-value="@country.CountryId">@country.CountryName</li>
+                                    }
+                                    @*<li class="list_item">Afghanistan</li>*@
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="fred"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="fred">*</span>@Lang.TipDescribeYou</th>
+                    <td>
+                        <label onclick="$(this).next().html('')">
+                            @Html.RadioButtonFor(m => m.CustomerType, CustomerType.Wholesaler)@Lang.TipWholesaler
+                        </label>
+                        <label onclick="$(this).next().html('')">
+                            @Html.RadioButtonFor(m => m.CustomerType, CustomerType.Retailer)@Lang.TipRetailer
+                        </label>
+                        <label onclick="$(this).next().html('')">
+                            @Html.RadioButtonFor(m => m.CustomerType, CustomerType.JewelryDiyFan)@Lang.TipDIYFan
+                        </label>
+                        <div class="fred"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><span></span>@Lang.TipBussinessWebsite</th>
+                    <td>
+                        @Html.TextBoxFor(m => m.PersonWebSite, new { @class = "input_text_wrap inputw270" })
+                        <div class="fred"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><a href="javascript:void(0)" id="changeprobtn" class="btn_orange btn_p30">@Lang.TipSave</a></td>
+                </tr>
+            </table>
+        </div>
+    </form>
+    <!-- Profile Setting 结束 -->
+    <!-- Password 开始 -->
+    <form onsubmit="return false;" method="post" action="/Account/ChangePassword" name="changepwd" id="changepwd">
+        <div class="password_cont">
+            <div class="warning_wrap">
+                <ins class="btn_success_cart"></ins>
+                <p><strong class="fgreen">@Lang.MsgUpdatePwdSuccess</strong></p>
+            </div>
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <th><span class="fred">*</span>@Lang.TipCurrentPassword</th>
+                    <td>
+                        <input type="password" id="curpassword" onfocus="$(this).next().html('')" name="CurPassword" class="input_text_wrap inputw270" maxlength="32" />
+                        <div class="fred"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="fred">*</span>@Lang.TipNewPassword</th>
+                    <td>
+                        <input type="password" id="newpassword" onfocus="$(this).next().html('')" name="NewPassword" class="input_text_wrap inputw270" maxlength="32" />
+                        <div class="fred"></div>
+                        <div class="bar_wrap">
+                            <div class="pwd_bar pwd_bar_weak lf"><span>&nbsp;</span></div>
+                            <p class="lf">Weak</p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="fred">*</span>Confirm Password:</th>
+                    <td>
+                        <input type="password" id="conpassword" onfocus="$(this).next().html('')" name="ConPassword" class="input_text_wrap inputw270" maxlength="32" />
+                        <div class="fred"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><a href="javascript:void(0)" id="changepwdbtn" class="btn_orange btn_p30">@Lang.TipUpdate</a></td>
+                </tr>
+            </table>
+        </div>
+    </form>
+    <!-- Password 结束 -->
+    <!-- email Address 开始 -->
+    <div class="email_cont">
+        <p>@Lang.TipCantChangedEmail <a href="mailto:service@8seasons.com" class="fblue">service@8seasons.com</a>.</p>
+    </div>
+    <!-- email Address 结束 -->
+</div>
+<div class="clearfix"></div>
+
+@section HtmlFooter
+{
+    <style type="text/css">
+        #rRightDown, #rLeftDown, #rLeftUp, #rRightUp, #rRight, #rLeft, #rUp, #rDown
+        {
+            position: absolute;
+            background: #C00;
+            width: 6px;
+            height: 6px;
+            z-index: 5;
+            font-size: 0;
+        }
+
+        #rLeftDown, #rRightUp
+        {
+            cursor: ne-resize;
+        }
+
+        #rRightDown, #rLeftUp
+        {
+            cursor: nw-resize;
+        }
+
+        #rRight, #rLeft
+        {
+            cursor: e-resize;
+        }
+
+        #rUp, #rDown
+        {
+            cursor: n-resize;
+        }
+
+        #rRightDown
+        {
+            bottom: -3px;
+            right: -3px;
+        }
+
+        #rLeftDown
+        {
+            bottom: -3px;
+            left: -3px;
+        }
+
+        #rRightUp
+        {
+            top: -3px;
+            right: -3px;
+        }
+
+        #rLeftUp
+        {
+            top: -3px;
+            left: -3px;
+        }
+
+        #rRight
+        {
+            right: -3px;
+            top: 50%;
+        }
+
+        #rLeft
+        {
+            left: -3px;
+            top: 50%;
+        }
+
+        #rUp
+        {
+            top: -3px;
+            left: 50%;
+        }
+
+        #rDown
+        {
+            bottom: -3px;
+            left: 50%;
+        }
+    </style>
+    @*头像编辑弹窗开始*@
+    <div class="popup_wrap popup_w650 modal fade" id="avatareditcut">
+        <div class="close" data-dismiss="modal">
+            <a href="javascript:void(0)"></a>
+        </div>
+        <h2 class="font14">@Lang.TipEditAvatar</h2>
+        <div class="popup_avatar">
+            <h3>@Lang.TipUploadMedia</h3>
+            <form id="form1" runat="server">
+                <div class="fl avatarbg">
+                    <div class="avatarboxbar">
+                        <div id="bgDiv">
+                            <div id="dragDiv">
+                                <div id="rRightDown"></div>
+                                <div id="rLeftDown"></div>
+                                <div id="rRightUp"></div>
+                                <div id="rLeftUp"></div>
+                                <div id="rRight"></div>
+                                <div id="rLeft"></div>
+                                <div id="rUp"></div>
+                                <div id="rDown"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="avatarthumb">
+                    <p>Cropped picture:</p>
+                    <img id="imgCut" src="/Images/blank_pic.jpg" />
+                    <a href="javascript:void(0)" id="btnSubmitAvatar" class="btn_grey" style="display: none;">@Lang.TipSubmit</a>
+                </div>
+                <div class="clearfix"></div>
+                <div class="uploadimg">
+                    <a href="javascript:void(0)" id="btnCrop" class="btn_orange btn_p30">@Lang.TipCrop</a>
+                    <h4>Re-select the picture:</h4>
+                    <div class="upload">
+                        <div class="uploadswf">
+                            <input type="file" name="uploadify" id="uploadify" />
+                        </div>
+                        <br />
+                        <p id="fileQueue">
+                        </p>
+                    </div>
+                </div>
+                <input id="x" runat="server" type="hidden" value="0" />
+                <input id="y" runat="server" type="hidden" value="0" />
+                <input id="hidImageUrl" type="hidden" value="" />
+                <input id="maxVal" runat="server" type="hidden" value="100" />
+            </form>
+        </div>
+    </div>
+
+    <div class="popup_wrap popup_w650 modal fade" id="avatareditsys">
+        <div class="close" data-dismiss="modal">
+            <a href="javascript:void(0)"></a>
+        </div>
+        <h2 class="font14">@Lang.TipEditAvatar</h2>
+        <div class="popup_avatar avatar_step1">
+            <h3 class="point">@Lang.TipUploadMedia</h3>
+            <form>
+                <div class="attachment_limits">
+                    <input type="file" name="uploadify" id="uploadifyskip" class="uploadify uploadify_w295" />
+                    <p><i class="fred">*</i>50KB max.</p>
+                    <p><i class="fred">*</i>Jpg, gif, bmp only.</p>
+                    <p><i class="fred">*</i>Size Recommended:60<i>*</i>60, 75<i>*</i>75.</p>
+                </div>
+            </form>
+            <h3 class="point">@Lang.TipSystemImage</h3>
+            <form>
+                <div class="avatar_cont">
+                    <ul>
+                        <li>
+                            <img src="/Images/img-avatar-01.png" /></li>
+                        <li>
+                            <img src="/Images/img-avatar-02.png" /></li>
+                        <li>
+                            <img src="/Images/img-avatar-03.png" /></li>
+                        <li>
+                            <img src="/Images/img-avatar-04.png" /></li>
+                        <div class="clearfix"></div>
+                    </ul>
+                </div>
+
+                <div class="avatarthumb">
+                    <img id="avatarImg" src="@(Model.Avatar.IsNullOrEmpty() ? "/Images/photo.png" : Model.Avatar)" />
+                    <a href="javascript:void(0)" id="btnSaveAvatar" class="btn_grey">@Lang.TipSubmit</a>
+                </div>
+                <div class="clearfix"></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="popup_wrap popup_w650 avatar_success" id="avatarsysuccess">
+        <ins></ins>
+        <h4 class="font14 fgreen">@Lang.TipImageApproved</h4>
+    </div>
+
+    <div class="popup_wrap popup_w650 avatar_success" id="avatarcutsuccess">
+        <ins></ins>
+        <h4 class="font14 fgreen">@Lang.TipImageApproved</h4>
+    </div>
+    @*头像编辑弹窗结束*@
+
+}

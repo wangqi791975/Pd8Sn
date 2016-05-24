@@ -1,0 +1,172 @@
+﻿@using Com.Panduo.Service.SiteConfigure
+@{
+    ViewBag.Title = "SearchKeyword";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@section HtmlHead
+{
+    @Html.JsFor("searchkeyword.js", "~/Js/bootstrap-formhelpers.js,~/Js/Marketing/Marketing.js", fileVersion: "1.18")
+    @Html.CssFor("searchkeyword.css", "~/Css/bootstrap-formhelpers.min.css", fileVersion: "1.0")
+}
+<div class="pull-left">
+    <form method="post" action="@Url.Content("~/Marketing/SearchKeywordInBoxList")" id="searchForm" name="searchForm" class="form-search">
+        <table>
+            <tr>
+                <td>*前台对应位置：</td>
+                <td>
+                    <select id="sksel">
+                        <option url="/Marketing/SearchKeywordInBoxList" value="@KeywordType.InBox">搜索框内—活动推送关键词</option>
+                        <option url="/Marketing/SearchKeywordUnderBoxList" value="@KeywordType.UnderBox">搜索框下方 — 搜索关键词</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <button type="submit" class="hide" id="sksub" class="btn"></button>
+    </form>
+</div>
+
+<div class="clearboth"></div>
+
+<div id="sklist" class="ajax-list" data-url="@Url.Content("~/Marketing/SearchKeywordInBoxList")"></div>
+<a class="btn" id="skaddbtn" href="javascript:void(0)" data-toggle="modal" data-target=".sk_inboxadd" data-backdrop="true"><i class="icon-edit"></i>新建</a>
+
+<!--新建弹窗-->
+<div class="modal hide fade ajax_show_add in sk_inboxadd">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>添加关键词</h3>
+    </div>
+    <div class="modal-body ajax_info">
+        <form class="form-horizontal" name="updateForm" action="/Marketing/SearchKeywordInBoxEdit" method="post" onsubmit="return false;">
+            <div class="control-group form-inline">
+                <label class="control-label">关键词：</label>
+                <div class="controls">
+                    <div class="tab-content">
+                        <input name="keywordname" type="text" value="" />
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">语言：</label>
+                <div class="controls">
+                    <div class="tab-content">
+                        <select name="language">
+                            @foreach (var language in (List<Language>)ViewBag.AllLanguage)
+                            {
+                                <option value="@language.LanguageId">@language.ChineseName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn btn-primary ajax_add">保存</a>
+        <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+    </div>
+</div>
+<div class="modal hide fade ajax_show_add in sk_underboxadd">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>添加关键词</h3>
+    </div>
+    <div class="modal-body ajax_info">
+        <form class="form-horizontal" name="updateForm" action="/Marketing/SearchKeywordUnderBoxEdit" method="post" onsubmit="return false;">
+            <div class="control-group">
+                <label class="control-label">关键词：</label>
+                <div class="controls">
+                    <div class="tab-content">
+                        <input name="keywordname" type="text" value="" />
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">链接：</label>
+                <div class="controls">
+                    <div class="tab-content">
+                        <input name="link" type="text" value="" />
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">语言：</label>
+                <div class="controls">
+                    <div class="tab-content">
+                        <select name="language">
+                            @foreach (var language in (List<Language>)ViewBag.AllLanguage)
+                            {
+                                <option value="@language.LanguageId">@language.ChineseName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn btn-primary ajax_add">保存</a>
+        <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+    </div>
+</div>
+<!--编辑弹框-->
+<div class="modal hide fade ajax_detail" data-url="@Url.Content("/Marketing/SearchKeywordInBoxEdit")">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>编辑关键词</h3>
+    </div>
+    <div class="modal-body ajax_info">
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn btn-primary ajax_update">保存</a>
+        <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+    </div>
+</div>
+<div class="modal hide fade ajax_detail_1" data-url="@Url.Content("/Marketing/SearchKeywordUnderBoxEdit")">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>编辑关键词</h3>
+    </div>
+    <div class="modal-body ajax_info">
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn btn-primary ajax_update_1">保存</a>
+        <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+    </div>
+</div>
+
+
+
+<script>
+    $("#sksel").change(function () {
+        var url = $("#sksel :selected").attr("url");
+        $("#searchForm").attr("action", url);
+        $("#sklist").attr("data-url", url);
+        if ($("#skaddbtn").attr("data-target") == ".sk_inboxadd") {
+            $("#skaddbtn").attr("data-target", ".sk_underboxadd");
+        } else {
+            $("#skaddbtn").attr("data-target", ".sk_inboxadd");
+        }
+        $("#sksub").click();
+    });
+
+    function deletesearchkeyword(id) {
+        if (confirm("确定删除?"))
+            $.ajax({
+                type: "POST",
+                url: "/Marketing/DeleteSearchKeyword/" + id,
+                success: function (responseText) {
+                    $(".alert").remove();
+                    var msg;
+                    if (responseText.error != true) {
+                        msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作成功!' : responseText.msg;
+                        $("#sklist").before('<div class="alert alert-success"><a class="close" data-dismiss="alert">×</a>' + msg + '</div>');
+                        $("#sksub").click();
+                    } else {
+                        msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作失败!' : responseText.msg;
+                        $("#sklist").before('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a>' + msg + '</div>');
+                    }
+                }
+            });
+    }
+</script>

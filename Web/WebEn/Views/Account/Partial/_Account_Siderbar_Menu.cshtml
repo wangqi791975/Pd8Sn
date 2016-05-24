@@ -1,0 +1,130 @@
+﻿@using Com.Panduo.Common
+@using Com.Panduo.Service
+@using Com.Panduo.Service.Order
+@using Resources
+@{
+    var currentController = ViewContext.RouteData.Values["controller"].ToString().ToLower();
+    var currentAction = ViewContext.RouteData.Values["action"].ToString().ToLower();
+    string parm = Request.QueryString["status"] ?? string.Empty;
+
+    if (ViewBag.CustomerOrderStatus == null)
+    {
+        ViewBag.CustomerOrderStatus = CacheHelper.GetAllCustomerOrderStatus;
+    }
+    int customerId = SessionHelper.CurrentCustomer.CustomerId;
+    bool isClub = SessionHelper.CurrentCustomer.IsClub || (!ServiceFactory.ClubService.GetClubByCustomerId(customerId).IsNullOrEmpty() && ServiceFactory.ClubService.GetClubBlackList(SessionHelper.CurrentCustomer.Email).IsNullOrEmpty());
+    var dic = ServiceFactory.OrderService.GetEachOrderStatusCountByCustomerId(customerId);
+    var wishlistNum = ServiceFactory.WishListService.GetWishListCountByCustomerId(customerId);
+    int j = 0;
+}
+<div id="sidebar">
+    <div class="account_sidebar">
+        <ul>
+            <li>
+                <h5>@Lang.TipMyOrders</h5>
+            </li>
+            <li><a rel="nofollow" id="order_status_-1" href="@UrlRewriteHelper.GetMyAccountOrderSearchUrl(-1)" @if (currentController == "Order".ToLower() && "OrderSearch".ToLower() == currentAction && parm.ParseTo(-1) == -1)
+                                                                  {
+                                                     @Html.Raw("class='current'")
+                                                                  }>@Lang.TipAllOrders</a></li>
+            @foreach (var o in ViewBag.CustomerOrderStatus)
+            {
+                <li><a rel="nofollow" id="order_status_@(o.Value)" @if (currentController == "Order".ToLower() && "OrderSearch".ToLower() == currentAction && parm.ParseTo(-1) == o.Value)
+                                                    {
+                                                     @Html.Raw("class='current'")
+                                                    }
+                         href="@UrlRewriteHelper.GetMyAccountOrderSearchUrl(o.Value)">@o.Name @if (o.Value == OrderStatusType.Pending.ParseTo<int>() || o.Value == OrderStatusType.Processing.ParseTo<int>())
+                                                                             {
+                                                                                 if (dic.TryGetValue(o.Value, out j))
+                                                                                 {
+                             <span class="forange">(@j)</span>
+                                                                                 }
+                                                                             }</a></li>
+            }
+            <li>
+                <h5><a rel="nofollow" href="@UrlRewriteHelper.GetPackingSlip()">@Lang.TipPackingSlip</a></h5>
+            </li>
+            <li>
+                <h5><a rel="nofollow" href="@UrlRewriteHelper.GetMyWishList()" @if (currentController == "Wishlist".ToLower() && "MyWishlist".ToLower() == currentAction)
+                                                   {
+                                                     @Html.Raw("class='current'")
+                                                   }>@Lang.TipWishlist (@wishlistNum)</a></h5>
+            </li>
+            <li>
+                <h5><a rel="nofollow" href="javascript:void(0)">@Lang.TipAccountService</a></h5>
+            </li>
+            <li><a rel="nofollow" href="@UrlRewriteHelper.GetAddressBookUrl()" @if (currentController == "account" && "addressbook" == currentAction)
+                                                                {
+                                                     @Html.Raw("class='current'")
+                                                                }>@Lang.TipAddressBookUp</a></li>
+            <li><a rel="nofollow" href="@UrlRewriteHelper.GetAccountSettingUrl()" @if (currentController == "Account".ToLower() && currentAction == "AccountSetting".ToLower())
+                                                                   {
+				                                                       @Html.Raw("class='current'");
+                                                                   }>@Lang.TipAccountSettingUp</a></li>
+            <li><a rel="nofollow" href="@UrlRewriteHelper.GetMyPreferenceUrl()" @if (currentController == "Account".ToLower() && currentAction == "MyPreference".ToLower())
+                                                                 {
+                                                                     @Html.Raw("class='current'");
+                                                                 }>@Lang.TipMyPreference</a></li>
+            <li><a rel="nofollow" href="@UrlRewriteHelper.GetNewsletterUrl()" @if (currentController == "Account".ToLower() && currentAction == "NewsLetter".ToLower())
+                                                               {
+                                                                   @Html.Raw("class='current'");
+                                                               }>@Lang.TipNewsletterSubscription</a></li>
+            <li>
+                <h5><a rel="nofollow" href="javascript:void(0)">@Lang.TipMyPrivilege</a></h5>
+            </li>
+            @if (isClub){
+                <li><a rel="nofollow" href="@UrlRewriteHelper.GetMyClubUrl()" @if (currentController == "privilege" && "club" == currentAction)
+                                                                              { @Html.Raw("class='current'") }>@Lang.Tip8SeasonsClub</a></li>
+            }
+            <li><a rel="nofollow" href="@UrlRewriteHelper.GetMyProductsUrl()" @if (currentController == "privilege" && "myproducts" == currentAction)
+                                                               { @Html.Raw("class='current'")  }>@Lang.TipMyProducts</a></li>
+            <li>
+                <h5><a rel="nofollow" href="#">@Lang.TipCreditBalance</a></h5>
+            </li>
+            <li class="menu_coupon">
+                <h5><a rel="nofollow" href="@UrlRewriteHelper.GetMyCouponUrl()" @if (currentController == "Account".ToLower() && currentAction == "MyCoupon".ToLower())
+                                                                 {
+                                                                     @Html.Raw("class='current'");
+                                                                 }>@Lang.TipMyCoupon</a></h5>
+                @{
+                    var lastCoupon = ServiceFactory.CouponService.GetNewestExpiryCustomerCoupon(SessionHelper.CurrentCustomer.CustomerId);
+                }
+                @if (!lastCoupon.IsNullOrEmpty())
+                {
+                    <div class="remind_wap" style="display: none;">
+                        <div class="close"><a href="javascript:void(0)" onclick="ClodeCouponTip()"></a></div>
+                        <div class="popup_tip_cont">
+                            <p>
+                                @Html.Raw(string.Format(Lang.TipYourExpirePossible, lastCoupon.CouponCode, lastCoupon.LimitEndTime.ToString("MM dd, yy HH:mm:ss"), @UrlRewriteHelper.GetMyCouponUrl()))
+                            </p>
+                            <div class="action_cont"><a class="btn_orange btn_p30" href="javascript:void(0)" onclick="ClodeCouponTip()">@Lang.TipOkIKnow</a></div>
+                        </div>
+                        <div class="red_arrow_cont">
+                            <img src="/Images/pop_red_arrow.png" />
+                        </div>
+                    </div>
+                }
+            </li>
+        </ul>
+    </div>
+</div>
+<script>
+    $(function () {
+        LoadCouponTip();
+    });
+
+    function ClodeCouponTip() {
+        if (GetCookie("couponerf") == "") {
+            SetCookie("couponerf", "yes", 7);
+        }
+        $('.remind_wap').hide();
+    }
+
+    function LoadCouponTip() {
+        if (GetCookie("couponerf") != "") {
+            $('.remind_wap').hide();
+        } else {
+            $('.remind_wap').show();
+        }
+    }
+</script>

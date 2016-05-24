@@ -1,0 +1,141 @@
+﻿@using Com.Panduo.Service.Product.Property
+@using Resources
+@{
+    IList<Property> allProperties = CacheHelper.Properties;
+    IList<PropertyValueGroup> allPropertyValueGroups = CacheHelper.PropertyValueGroups;
+    IList<PropertyValue> allPropertyValues = CacheHelper.PropertyValues;
+    string fullUrl = ViewBag.FullUrl ?? UrlFuncitonHelper.GetFullUrl();
+    fullUrl = fullUrl.GetFristPageIndexUrl();
+    List<int> propertyValueList = ViewBag.PropertyValueList ?? UrlFuncitonHelper.GetPropertyValueList(fullUrl);//属性值ID
+    List<int> propertyValueGroupList = ViewBag.PropertyValueGroupList ?? UrlFuncitonHelper.GetPropertyValueGroupList(fullUrl);//属性值组ID
+    string currentyUrlExcludeProperty = ViewBag.CurrentyUrlExcludeProperty ?? UrlFuncitonHelper.RemovePropertyValueAndGroup(fullUrl);
+    string categoryCurrent = string.Empty;
+    string refineCurrenty = string.Empty;
+    if (propertyValueGroupList.Count > 0 || propertyValueList.Count > 0)
+    {
+        refineCurrenty = "current";
+    }
+    else
+    {
+        categoryCurrent = "current";
+    }
+    //展开属性项
+    List<int> openPropertyList = new List<int>();
+}
+
+@if (propertyValueList.Count > 0 || propertyValueGroupList.Count > 0)
+{
+    <div class="clear"><a href="@currentyUrlExcludeProperty">@Lang.TipClearAll</a></div>
+}
+else
+{
+    <br />
+}
+@for (int i = 0; i < ViewBag.ProductProperties.Count; i++)
+{
+    string noborder = string.Empty;
+    int childCount = 0;
+    string childDisplay = string.Empty;
+    string childMore = string.Empty;
+    if (i == ViewBag.ProductProperties.Count - 1)
+    {
+        noborder = "class=noborder";
+    }
+    IList<Property> properties = allProperties.Where(x => x.PropertyId == ViewBag.ProductProperties[i].Property.PropertyId).ToList();
+    <dl @noborder>
+        @if (!properties.IsNullOrEmpty())
+        {
+            <dt>
+                <strong>@properties[0].PropertyName</strong>
+            </dt>
+        }
+        <dd>
+            <ul>
+                @foreach (var propertyValueGroupQty in ViewBag.ProductProperties[i].PropertyValueGroupQtys as IList<SearchProductPropertyGroup>)
+                {
+                    List<int> propertyValueGroupListColne = new List<int>(propertyValueGroupList.ToArray());
+                    bool isAdd = true;
+                    string refinebyCurrent = string.Empty;
+                    string checkedInput = string.Empty;
+                    if (propertyValueGroupListColne.Contains(propertyValueGroupQty.PropertyValueGroup.PropertyValueId))
+                    {
+                        openPropertyList.Add(ViewBag.ProductProperties[i].Property.PropertyId);
+                        isAdd = false;
+                        refinebyCurrent = "class=refineby_current";
+                        checkedInput = "checked='checked'";
+                    }
+                    string propertyValueGroupUrl = UrlFuncitonHelper.GetPropertyValueGroupUrl(UrlFuncitonHelper.RemovePropertyValueGroup(fullUrl), propertyValueGroupQty.PropertyValueGroup.PropertyValueId, propertyValueGroupListColne, isAdd);
+
+                    IList<PropertyValueGroup> propertyValueGroups = allPropertyValueGroups.Where(x => x.GroupId == propertyValueGroupQty.PropertyValueGroup.GroupId).ToList();
+                    if (!openPropertyList.Contains(ViewBag.ProductProperties[i].Property.PropertyId))
+                    {
+                        if (childCount > 5)
+                        {
+                            childDisplay = "style=display:none;";
+                        }
+                        if (childCount > 6)
+                        {
+                            childMore = "<p class='categories_refineby_submore rt'><a rel='nofollow' href='javascript:void(0)'>" + Lang.TipMoreNoSym + "<ins></ins></a></p>";
+                        }
+                    }
+                        
+                            
+                    <li @childDisplay>
+                        @if (!propertyValueGroups.IsNullOrEmpty())
+                        {
+                            <label @refinebyCurrent>
+                                <input class="chk_href" type="checkbox" @checkedInput>
+                                <a rel="nofollow" href="@propertyValueGroupUrl"><em>@propertyValueGroups[0].PropertyValueGroupName<span>(@propertyValueGroupQty.Qty)</span></em></a>
+                            </label>
+                        }
+                    </li>
+                        childCount++;
+                }
+
+                @foreach (var propertyValueQty in ViewBag.ProductProperties[i].PropertyValueQtys as IList<KeyValuePair<Com.Panduo.Service.Product.Property.PropertyValue, int>>)
+                {
+                    List<int> propertyValueListClone = new List<int>(propertyValueList.ToArray());
+                    bool isAdd = true;
+                    string refinebyCurrent = string.Empty;
+                    string checkedInput = string.Empty;
+                    if (propertyValueListClone.Contains(propertyValueQty.Key.PropertyValueId))
+                    {
+                        openPropertyList.Add(ViewBag.ProductProperties[i].Property.PropertyId);
+                        isAdd = false;
+                        refinebyCurrent = "class=refineby_current";
+                        checkedInput = "checked='checked'";
+                    }
+                    string propertyValueUrl = UrlFuncitonHelper.GetPropertyValueUrl(UrlFuncitonHelper.RemovePropertyValue(fullUrl), propertyValueQty.Key.PropertyValueId, propertyValueListClone, isAdd);
+
+                    IList<PropertyValue> propertyValues = allPropertyValues.Where(x => x.PropertyValueId == propertyValueQty.Key.PropertyValueId).ToList();
+                    if (!openPropertyList.Contains(ViewBag.ProductProperties[i].Property.PropertyId))
+                    {
+                        if (childCount > 5)
+                        {
+                            childDisplay = "style=display:none;";
+                        }
+                        if (childCount > 6)
+                        {
+                            childMore = "<p class='categories_refineby_submore rt'><a rel='nofollow' href='javascript:void(0)'>" + Lang.TipMoreNoSym + "<ins></ins></a></p>";
+                        }
+                    }
+                    <li @childDisplay>
+                        @if (!propertyValues.IsNullOrEmpty())
+                        {
+                            <label @refinebyCurrent>
+                                <input class="chk_href" type="checkbox" @checkedInput>
+                                <a rel="nofollow" href="@propertyValueUrl"><em>@propertyValues[0].PropertyValueName<span>(@propertyValueQty.Value)</span></em></a>
+                            </label>
+                        }
+                    </li>
+                        childCount++;
+                }
+            </ul>
+            @if (childCount > 5)
+            {
+                @Html.Raw(childMore);
+@*最少展开状态*@
+            }
+        </dd>
+    </dl>
+}

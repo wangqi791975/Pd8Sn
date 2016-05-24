@@ -1,0 +1,59 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Product.Property
+@using Com.Panduo.Service.ServiceConst
+@using Com.Panduo.Web.Models.Product
+@using Resources
+@{
+    string categoryCurrent = string.Empty;
+    string refineCurrenty = string.Empty;
+    if ((Model != null && Model.IsLeaf && ViewBag.ProductProperties != null && ViewBag.ProductProperties.Count > 0) || (ViewBag.CategoryTree != null && ViewBag.CategoryTree.TreeType == CategoryTreeVo.CategoryTreeType.ProductSearch))//propertyValueGroupList.Count > 0 || propertyValueList.Count > 0
+    {
+        refineCurrenty = "current";
+    }
+    else
+    {
+        categoryCurrent = "current";
+    }
+    var currentCategoryId = Model != null && Model.Category != null ? Model.Category.CategoryId : 0;
+}
+
+<div id="sidebar">
+    <div class="sidebar_wrap">
+        @if (!@Model.IsRoot && ViewBag.ProductProperties != null && ViewBag.ProductProperties.Count > 0)
+        {
+            <div class="sidebar_tab nav-tabs">
+                <h2 class="categories tab-hover @categoryCurrent" data-target=".categories_cont">@Lang.TipAllCategories</h2>
+                <h2 class="refineby tab-hover @refineCurrenty" data-target=".categories_refineby">@Lang.TipRefineBy</h2>
+            </div>
+        }
+        else
+        {
+            <div class="sidebar_title font14"><ins></ins>@Lang.TipAllCategories</div>
+        }
+
+        <!-- categories start -->
+        @Html.Partial("~/Views/Shared/Partial/_LeftMenu_Detail.cshtml", @categoryCurrent)
+        <!-- categories over -->
+
+        @if (ViewBag.ProductProperties != null && ViewBag.ProductProperties.Count > 0)
+        {
+            <div class="categories_refineby tab-pane @refineCurrenty">
+                <!-- refine by start -->
+                @Html.Partial("~/Views/Shared/Partial/_LeftMenu_RefineBy.cshtml")
+                <!-- refine by over -->
+            </div>
+        }
+
+    </div>
+    @if (ServiceFactory.ConfigureService.SiteLanguageCode == PageHelper.LANGUAGE_CODE_EN)
+    {
+        <script type="text/javascript" data-pp-pubid="586408490d" data-pp-placementtype="150x100">
+            (function (d, t) {
+                "use strict";
+                var s = d.getElementsByTagName(t)[0], n = d.createElement(t);
+                n.src = "//paypal.adtag.where.com/merchant.js";
+                s.parentNode.insertBefore(n, s);
+            }(document, "script"));
+        </script>
+    }
+</div>

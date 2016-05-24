@@ -1,0 +1,30 @@
+﻿@{
+    Layout = null;
+}
+@model Com.Panduo.Service.Order.SpecialOrder
+    <table class="table">
+        <tr>
+            <td width="20%">客户邮箱：</td>
+            <td>@Model.CustomerMail</td>
+        </tr>
+        <tr>
+            <td width="20%">增加金额：</td>
+            <td>@Model.CurrencyCode @Model.Increase</td>
+        </tr>
+        <tr>
+            <td width="20%">创建人：</td>
+            <td>
+                @Model.CreateAccount
+            </td>
+        </tr>
+         <tr>
+            <td width="20%">创建时间：</td>
+            <td>
+                @Model.CreateTime
+            </td>
+        </tr>
+        <tr>
+            <td width="20%">备注：</td>
+            <td>@Model.Remark</td>
+        </tr>
+    </table>

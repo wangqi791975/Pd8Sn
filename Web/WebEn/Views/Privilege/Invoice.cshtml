@@ -1,0 +1,96 @@
+﻿@using Resources
+@{
+    ViewBag.Title = "Invoice";
+    Layout = null;
+}<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>8Seasons Club - Commercial Invoice</title>
+    <link href="/css/global.css" rel="stylesheet" type="text/css" />
+    <link href="/css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="/css/form.css" rel="stylesheet" type="text/css" />
+    <link href="/css/public.css" rel="stylesheet" type="text/css" />
+    <link href="/css/main.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="wrap">
+        <div class="invoice_cont">
+            <h3>@Lang.TipCommercialInvoice</h3>
+            <table cellpadding="0" cellspacing="0" class="club_info">
+                <tr><th colspan="2">@Lang.TipCluberInfo</th></tr>
+                <tr>
+                    <td>@Lang.TipCustomerID</td>
+                    <td>@ViewBag.ClubCustomer.CustomerId</td>
+                </tr>
+                <tr>
+                    <td>@Lang.TipCustomerEmail</td>
+                    <td>@SessionHelper.CurrentCustomer.Email</td>
+                </tr>
+                <tr>
+                    <td>@Lang.TipMembershipFee</td>
+                    <td>@PageHelper.CURRENCY_CODE_USD @PageHelper.GetRoundValue(ViewBag.ClubCustomer.Fee, 0)/year</td>
+                </tr>
+                @if (@ViewBag.PaymentInfo != null)
+                {
+                    <tr>
+                        <td>@Lang.TipPaypalID</td>
+                        <td>@ViewBag.PaymentInfo.TxnId</td>
+                    </tr>
+                }
+                <tr>
+                    <td>@Lang.TipValidPeriod</td>
+                    <td>@PageHelper.ToCurrentShortDate(ViewBag.ClubCustomer.DateActived) - @PageHelper.ToCurrentShortDate(ViewBag.ClubCustomer.EndDate)</td>
+                </tr>
+            </table>
+
+            <div class="key_terms">
+                <ul>
+                    <li>
+                        <ins></ins>
+                        <strong>@Lang.TipKeyTerms </strong>
+                        <ol>
+                            @Html.Raw(Lang.TipKeyTermsHtml)
+                        </ol>
+                    </li>
+                    <li>
+                        <ins></ins>
+                        <strong>@Lang.TipKeyTerms </strong>
+                        <ol class="no_list">
+                            <li><a href="#" class="fblue">http://www.8seasonsorg.com/page.html?id=268</a></li>
+                        </ol>
+                    </li>
+                </ul>
+            </div>
+
+            <table cellpadding="0" cellspacing="0" class="card">
+                <tr>
+                    <th>@Lang.TipNameFirm</th>
+                    <th>@Lang.TipAddressFirm</th>
+                </tr>
+                <tr>
+                    <td>@Lang.TipCommerceCoLtd</td>
+                    <td>
+                        <p>
+                            @Html.Raw(Lang.TipAddressFirmHtml)
+                        </p>
+                    </td>
+                </tr>
+            </table>
+            <table cellpadding="0" cellspacing="0" class="telphone">
+                <tr>
+                    <th>@Lang.TipSignatureSea </th>
+                    <th>@Lang.TipTelephoneNoPun</th>
+                    <th>@Lang.TipFax</th>
+                </tr>
+                <tr>
+                    <td width="50%">@Lang.TipCommerceCoLtd </td>
+                    <td width="25%">86-579-85335690 </td>
+                    <td width="25%">86-579-85623850 </td>
+                </tr>
+            </table>
+            <p class="sign_text">@Lang.TipForCustomsDest</p>
+        </div>
+    </div>
+</body>
+</html>

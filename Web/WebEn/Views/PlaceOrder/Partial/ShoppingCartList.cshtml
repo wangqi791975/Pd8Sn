@@ -1,0 +1,45 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Order.ShoppingCart
+@using Resources
+@{
+    Layout = null;
+    PageData<VShoppingCartItem> normalPager = Model;
+}
+<table cellpadding="0" cellspacing="0">
+    @if (!normalPager.Data.IsNullOrEmpty())
+    {
+        foreach (var item in normalPager.Data)
+        {
+            <tr>
+                <td class="item_img"><img src="@ImageHelper.GetImageUrl(item.MainImage, 80)" /></td>
+                <td class="item_num">@item.ProductCode</td>
+                <td class="item_weight"><p>@Lang.TipGrossWeightUp @item.Weight </p></td>
+                <td class="item_name"><h5>@item.ProductName</h5></td>
+                <td class="item_time">
+                    @{
+                        if (item.BackorderDays != null)
+                        {
+                            @Html.Raw("In " + item.BackorderDays + " days");
+                                
+                        }
+                    }
+                </td>
+                <td class="item_stock">@item.StockQty</td>
+                <td class="item_qty">@item.Quantity</td>
+                <td class="item_unit_price">
+                    <p>
+                        @PageHelper.GetCurrentCurrency().Format() @PageHelper.ExchangeMoneyByUsd(item.Price, PageHelper.GetCurrentCurrency())
+                    </p>
+                </td>
+                <td class="item_subtotal"><p class="fred">@PageHelper.GetCurrentCurrency().Format() @PageHelper.ExchangeMoneyByUsd(item.ProductSubTotal, PageHelper.GetCurrentCurrency())</p></td>
+            </tr>
+        }
+    }
+
+
+</table>
+@* 底部翻页开始 *@
+<div class="ajax-pagination" data-target="#tab_normal_product" data-mode="replace">
+    @Html.Partial("~/Views/Shared/Partial/_Ajax_Pager.cshtml", normalPager.Pager)
+</div>
+@* 底部翻页结束 *@

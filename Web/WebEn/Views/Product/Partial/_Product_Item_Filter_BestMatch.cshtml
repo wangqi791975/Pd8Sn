@@ -1,0 +1,125 @@
+﻿@using Resources
+@*筛选容器开始*@
+<div class="filter_cont">
+    @* sort，对应的网站的排序筛选sort by。目前已知的有四种排序：1:best match，2:商品价格从低到高，3:商品价格从高到低，4:添加时间从新到旧。*@
+    <div class="filter_sort">
+        <div class="lf">
+            @switch (Request[UrlParameterKey.Sort].ParseTo(1))
+            {
+                case 1:
+                <a rel="nofollow" class="current" href="@UrlFuncitonHelper.RemoveParam(UrlParameterKey.Sort)">@Lang.TipBestMatch</a>
+                <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, "4")" title="old to new">@Lang.TipNewest<ins class="icon_down"></ins></a>
+                <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, "2")" title="Price low to high">@Lang.TipPrice<ins class="price"></ins></a>
+                    break;
+                case 2:
+                <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, "1")">@Lang.TipBestMatch</a>
+                <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, "4")" title="old to new">@Lang.TipNewest<ins class="icon_down"></ins></a>
+                <a rel="nofollow" class="current" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, "3")" title="Price high to low">@Lang.TipPrice<ins class="price_asc"></ins></a>
+                    break;
+                case 3:
+                <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, "1")">@Lang.TipBestMatch</a>
+                <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, "4")">@Lang.TipNewest<ins class="icon_down"></ins></a>
+                <a rel="nofollow" class="current" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, "2")" title="Price low to high">@Lang.TipPrice<ins class="price_dec"></ins></a>
+                    break;
+                case 4:
+                <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, "1")">@Lang.TipBestMatch</a>
+                <a rel="nofollow" class="current" href="@UrlFuncitonHelper.RemoveParam(UrlParameterKey.Sort)">@Lang.TipNewest<ins class="icon_down"></ins></a>
+                <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, "2")" title="Price low to high">@Lang.TipPrice<ins class="price"></ins></a>
+                    break;
+                default:
+                <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, "1")">@Lang.TipBestMatch</a>
+                <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, "4")" title="old to new">@Lang.TipNewest<ins class="icon_down"></ins></a>
+                <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.Sort, "2")" title="Price low to high">@Lang.TipPrice<ins class="price"></ins></a>
+                    break;
+            }
+        </div>
+        <div class="rt">
+            @Lang.TipView
+            @if (Request[UrlParameterKey.ViewMode].IsNullOrEmpty())
+            {
+                if (!PageHelper.GetCustomerShowType())
+                {
+                    <a rel="nofollow" class="current" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.ViewMode, "0")" title="list"><ins class="icon_list"></ins></a>
+                    <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.ViewMode, "1")" title="gallery"><ins class="icon_gallery"></ins></a>
+                }
+                else
+                {
+                   <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.ViewMode, "0")" title="list"><ins class="icon_list"></ins></a>
+                   <a rel="nofollow" class="current" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.ViewMode, "1")" title="gallery"><ins class="icon_gallery"></ins></a>
+                }
+            }
+
+               else if (Request[UrlParameterKey.ViewMode].Equals("0"))
+               {
+                   <a rel="nofollow" class="current" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.ViewMode, "0")" title="list"><ins class="icon_list"></ins></a>
+                   <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.ViewMode, "1")" title="gallery"><ins class="icon_gallery"></ins></a>
+               }
+               else if (Request[UrlParameterKey.ViewMode].Equals("1"))
+               { 
+                   <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.ViewMode, "0")" title="list"><ins class="icon_list"></ins></a>
+                   <a rel="nofollow" class="current" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.ViewMode, "1")" title="gallery"><ins class="icon_gallery"></ins></a>
+               }
+
+
+            @{
+                var pagesize = Request[UrlParameterKey.PageSize].ParseTo(0);
+                if (!(pagesize == 30 || pagesize == 60|| pagesize == 90))
+                {
+                    pagesize = PageHelper.GetCustomerPageSize();
+                    if (pagesize == 30)
+                    {
+                        <a rel="nofollow" class="current" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.PageSize, "30")">30</a>
+                        <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.PageSize, "60")">60</a>
+                        <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.PageSize, "90")">90</a>
+                    }
+                    else if (pagesize == 90)
+                    {
+                        <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.PageSize, "30")">30</a>
+                        <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.PageSize, "60")">60</a>
+                        <a rel="nofollow" class="current" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.PageSize, "90")">90</a>
+                    }
+                    else
+                    {
+                        <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.PageSize, "30")">30</a>
+                        <a rel="nofollow" class="current" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.PageSize, "60")">60</a>
+                        <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.PageSize, "90")">90</a>
+                    }
+                }
+
+                else
+                {
+                      if (Request[UrlParameterKey.PageSize].ParseTo(0) == 30)
+                        {
+                            <a rel="nofollow" class="current" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.PageSize, "30")">30</a>
+                            <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.PageSize, "60")">60</a>
+                            <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.PageSize, "90")">90</a>
+                        }
+                        else if (Request[UrlParameterKey.PageSize].ParseTo(0) == 90)
+                        {
+                            <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.PageSize, "30")">30</a>
+                            <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.PageSize, "60")">60</a>
+                            <a rel="nofollow" class="current" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.PageSize, "90")">90</a>
+                        }
+                        else
+                        { 
+                            <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.PageSize, "30")">30</a>
+                            <a rel="nofollow" class="current" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.PageSize, "60")">60</a>
+                            <a rel="nofollow" href="@UrlFuncitonHelper.SetParam(UrlParameterKey.PageSize, "90")">90</a>
+                        }
+                }
+            }
+        </div>
+    </div>
+     @*  
+    <!-- 排序状态改变时，在需要改变的元素所在的a标签增加class样式current，另价格排序有升序price_asc和降序price_dec -->
+     <div class="filter_sort">
+        <div class="lf"><a href="#">Best Match</a><a href="#" class="current">Newest<ins class="icon_down"></ins></a><a class="current" href="#">Price<ins class="price_dec"></ins></a></div>
+        <div class="rt">View :<a href="#" title="list"><ins class="icon_list"></ins></a><a class="current" href="#" title="gallery"><ins class="icon_gallery"></ins></a><a class="current" href="#">20</a><a href="#">40</a><a href="#">80</a></div>
+    </div>
+
+    <div class="filter_sort">
+        <div class="lf"><a href="#">Best Match</a><a href="#">Newest<ins class="icon_down"></ins></a><a class="current" href="#">Price<ins class="price_asc"></ins></a></div>
+        <div class="rt">View :<a href="#" title="list"><ins class="icon_list"></ins></a><a class="current" href="#" title="gallery"><ins class="icon_gallery"></ins></a><a class="current" href="#">20</a><a href="#">40</a><a href="#">80</a></div>
+    </div>*@
+</div>
+@*筛选容器结束*@

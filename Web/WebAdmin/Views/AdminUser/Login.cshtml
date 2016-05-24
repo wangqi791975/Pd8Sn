@@ -1,0 +1,64 @@
+﻿@{
+    Layout = null;
+}
+<html>
+<head>
+    <title>Login</title>
+    @Html.JsFor("base.js", "~/Js/jquery-1.8.3.min.js,~/Js/bootstrap-2.3.2.min.js,~/Js/jquery.form.min.js", fileVersion: "1.11")
+    @Html.JsFor("panduo.js", "~/Js/Base/message.js,~/Js/Base/common.js,~/Js/Base/main.js", fileVersion: "1.11")
+    @Html.CssFor("panduo.css", new[] { "~/Css/bootstrap.min.css", "~/Css/bootstrap-responsive.min.css", "~/Css/main.css" }, fileVersion: "1.11")
+</head>
+<body>
+    <div id="container">
+        <div id="content">
+            <div class="container">
+
+                <div class="navbar navbar-fixed-top">
+                    <div class="navbar-inner">
+                    </div>
+                </div>
+                <br />
+                <br />
+                <header class="jumbotron subhead" id="overview">
+                    <ul class="breadcrumb">
+                        <li class="active">用户登陆</li>
+                    </ul>
+                </header>
+                <form id="loginform" action="/AdminUser/Login" method="post" accept-charset="utf-8">
+                    <div class="input text required">
+                        <label for="UserUsername" style="cursor: pointer;">Email</label><input name="email" maxlength="255" type="text" required="required">
+                    </div>
+                    <div class="input password required">
+                        <label for="UserPassword" style="cursor: pointer;">Password</label><input name="password" type="password" required="required">
+                    </div>
+                    <div class="submit">
+                        <input id="btnlogin" class="btn btn-primary" type="button" value="Submit"><a href="">忘记密码？</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    $(function () {
+        $("#btnlogin").click(function () {
+            $(".alert").remove();
+            $("#loginform").ajaxSubmit({
+                success: function (responseText) {
+                    var msg;
+                    if (responseText.error != true) {
+                        msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作成功!' : responseText.msg;
+                        $("#loginform").before('<div class="alert alert-success"><a class="close" data-dismiss="alert">&times;</a>' + msg + '</div>');
+                        location.href = responseText.url;
+                    } else {
+                        msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作失败!' : responseText.msg;
+                        $("#loginform").before('<div class="alert alert-error"><a class="close" data-dismiss="alert">&times;</a>' + msg + '</div>');
+                    }
+                }
+            });
+
+        });
+    });
+
+</script>

@@ -1,0 +1,43 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Product.Category
+@using Com.Panduo.Service.ServiceConst
+@using Resources
+@model int
+<!-- 搜索热词开始 -->
+
+
+@{
+    var isleaf = ServiceFactory.CategoryService.IsLeafCategory(@Model);
+    IList<CategoryKeyword> list = new List<CategoryKeyword>();
+    if (isleaf)
+    {
+         list= ServiceFactory.CategoryService.GetCategoryKeywords(@Model, ServiceFactory.ConfigureService.SiteLanguageId);
+    }
+
+    else
+    {
+        var subCategorieList = ServiceFactory.CategoryService.GetAllSubCategories(@Model);
+
+        foreach (var sub in subCategorieList)
+        {
+
+            var sl=ServiceFactory.CategoryService.GetCategoryKeywords(sub.CategoryId, ServiceFactory.ConfigureService.SiteLanguageId);
+            foreach (var s in sl)
+            {
+                 list.Add(s);
+            }
+        }
+    } 
+}
+@if (!list.IsNullOrEmpty()) { 
+    <div class="pop_search">
+        <h2 class="font14">@Lang.TipPopularSearch</h2>
+        <p>
+            @foreach (var categoryKeyword in list)
+            {
+                <a href="@(categoryKeyword.Url.IsNullOrEmpty()?"javascript:void(0)":categoryKeyword.Url)">@categoryKeyword.Keyword</a>
+            }
+        </p>
+    </div>
+}
+<!-- 搜索热词结束 -->

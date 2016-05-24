@@ -1,0 +1,74 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Review
+@{
+    ViewBag.Title = "综合评论列表";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+
+
+<div class="pull-right">
+    <!-- search bar -->
+    <div class="pull-right">
+        <form method="post" action="@Url.Content("~/Review/TestimonialsList")" id="searchForm" name="searchForm" class="form-search">
+            搜索：<input type="text" onkeyup="$(this).val($(this).val().replace(/\//g,''));" placeholder="搜索" name="keyword">
+            <button type="submit" class="btn">搜索</button><br>
+            <em style="float: right; color: #d14">(搜索的范围限于客户姓名或者Email)</em>
+            <table>
+                <tr>
+                    <td>语言筛选：</td>
+                    <td>
+                        <select id="selang" name="lang">
+                            <option value="0">All</option>
+                            @foreach (var lang in ServiceFactory.ConfigureService.GetAllValidLanguage())
+                            {
+                                <option value="@lang.LanguageId">@lang.ChineseName</option>
+                            }
+                            <option value="999">/</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>排序:</td>
+                    <td>
+                        <select id="sorter" name="sorter">
+                            <option value="@CustomerReviewSorterCriteria.DateCreated" isasc="false">提交日期从近到远</option>
+                            <option value="@CustomerReviewSorterCriteria.DateCreated" isasc="true">提交日期从远到近</option>
+                            <option value="@CustomerReviewSorterCriteria.Name" isasc="true">客户姓名a-z</option>
+                            <option value="@CustomerReviewSorterCriteria.Name" isasc="false">客户姓名z-a</option>
+                        </select>
+                        <input id="isasc" name="isasc" type="hidden" value="false" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<div class="clearboth"></div>
+
+<div id="main" class="ajax-list" data-url="@Url.Content("~/Review/TestimonialsList")">
+</div>
+
+<!-- detail -->
+<div class="modal hide fade ajax_detail" data-url="@Url.Content("~/Review/TestimonialsEdit")">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3>综合评论回复</h3>
+    </div>
+    <div class="modal-body ajax_info">
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn btn-primary ajax_update">保存</a>
+        <a href="javascript:void(0)" class="btn" data-dismiss="modal">关闭</a>
+    </div>
+</div>
+<script>
+    $("#selang").change(function () {
+        $(".btn[type='submit']").click();
+    });
+
+    $("#sorter").change(function () {
+        $("#isasc").val($("#sorter :selected").attr("isasc"));
+        $(".btn[type='submit']").click();
+    });
+   
+</script>

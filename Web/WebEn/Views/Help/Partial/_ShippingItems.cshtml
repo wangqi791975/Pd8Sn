@@ -1,0 +1,33 @@
+﻿@using Com.Panduo.Service.Order.ShippingOption
+@using Resources
+@{
+    IList<ShippingAmount> ShippingAmounts = ViewBag.ShippingAmounts;
+    List<ShippingLanguage> ShippingLanguages = ViewBag.ShippingLanguages;
+}
+
+<tr>
+    <th scope="col">@Lang.TipShippingMethod</th>
+    <th width="165" scope="col"><a href="javascript:void(0)">@Lang.TipEstShippingTime<ins class="sort_arrow" data-sort-frist="day" data-sort-second="cost"></ins></a></th>
+    <th scope="col">@Lang.TipPackageNum</th>
+    <th width="150" scope="col">@Lang.TipService</th>
+    <th width="135" scope="col"><a href="javascript:void(0)">@Lang.TipShippingCost<ins class="sort_arrow_asc" data-sort-frist="cost" data-sort-second="day"></ins></a></th>
+</tr>
+@if (!ShippingAmounts.IsNullOrEmpty())
+{
+    foreach (var shippingAmounts in ShippingAmounts)
+    {
+        var shippingLanguage = ShippingLanguages.Where(x => x.ShippingId == shippingAmounts.ShippingId).ToList();
+        var shippingName = shippingAmounts.ShippingName;
+        if (!shippingLanguage.IsNullOrEmpty() && shippingAmounts.ShippingId != 999)
+        {
+            shippingName = shippingLanguage[0].Name;
+        }
+    <tr>
+        <td class="frist">@Html.Raw(shippingName)</td>
+        <td class="frist">@shippingAmounts.DayLow - @shippingAmounts.DayHigh @Lang.TipDays</td>
+        <td class="frist" align="center">@shippingAmounts.ShippingBoxNumber</td>
+        <td class="frist">@Html.Raw(shippingAmounts.Service)</td>
+        <td class="frist">@PageHelper.GetCurrentCurrency().Format() @PageHelper.ExchangeMoneyByUsd(shippingAmounts.ShippingCost, PageHelper.GetCurrentCurrency())</td>
+    </tr>
+    }
+}

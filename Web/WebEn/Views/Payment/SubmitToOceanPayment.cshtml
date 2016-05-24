@@ -1,0 +1,46 @@
+﻿@using Resources
+@model Com.Panduo.Web.Models.Payment.OceanPaymentSubmitParm
+@{
+    var scheme = UrlFuncitonHelper.GetPaymentReturnHost();//获取主机头,注意https
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@string.Format(Lang.TipPayForOrderFmt,Model.OceanPaymentConfig.OrderNumber)</title>
+</head>
+<body>
+    <form id="oceanPaymentForm" name="oceanPaymentForm" action="@Model.ServiceUrl" method="POST">
+        <input type="hidden" name="account" value="@Model.OceanPaymentConfig.Account">
+        <input type="hidden" name="terminal" value="@Model.OceanPaymentConfig.Terminal">
+        <input type="hidden" name="signValue" value="@Model.OceanPaymentConfig.SignValue">
+        <input type="hidden" name="backUrl" value="@scheme/Payment/OceanPaymentNotifyForPayOrder">
+        <input type="hidden" name="methods" value="@Model.OceanPaymentConfig.Methods">
+        <input type="hidden" name="pages" value="0">
+
+        <input type="hidden" name="order_number" value="@Model.OceanPaymentConfig.OrderNumber">
+        <input type="hidden" name="order_currency" value="@Model.OceanPaymentConfig.OrderCurrency">
+        <input type="hidden" name="order_amount" value="@Model.OceanPaymentConfig.OrderAmount">
+        <input type="hidden" name="order_notes" value="Pay For Order - @Model.OceanPaymentConfig.OrderNumber">
+
+        <input type="hidden" name="billing_firstName" value="@Model.OceanPaymentConfig.BillingAddress.FirstName.ToHtml()">
+        <input type="hidden" name="billing_lastName" value="@Model.OceanPaymentConfig.BillingAddress.LastName.ToHtml()">
+        <input type="hidden" name="billing_email" value="@Model.OceanPaymentConfig.BillingAddress.Email">
+        <input type="hidden" name="billing_phone" value="@Model.OceanPaymentConfig.BillingAddress.Phone.ToHtml()">
+        <input type="hidden" name="billing_country" value="@Model.OceanPaymentConfig.BillingAddress.CountryCode"> 
+        
+        <input type="hidden" name="billing_state" value="@Model.OceanPaymentConfig.BillingAddress.State.ToHtml()">
+        <input type="hidden" name="billing_city" value="@Model.OceanPaymentConfig.BillingAddress.City.ToHtml()">
+        <input type="hidden" name="billing_address" value="@Model.OceanPaymentConfig.BillingAddress.Address.ToHtml()">
+        <input type="hidden" name="billing_zip" value="@Model.OceanPaymentConfig.BillingAddress.Zip.ToHtml()">
+    </form>
+
+    <b>@Html.Raw(string.Format(Lang.TipSecCheckoutFmt,Model.OceanPaymentConfig.Methods))</b>
+    <script type="text/javascript">
+        function submitToOceanPayment() {
+            document.forms["oceanPaymentForm"].submit();
+        }
+
+        submitToOceanPayment();
+    </script>
+</body>
+</html>

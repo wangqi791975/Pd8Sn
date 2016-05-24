@@ -1,0 +1,37 @@
+﻿@using Com.Panduo.Service
+@{      var fullUrl = ViewBag.FullUrl ?? UrlFuncitonHelper.GetFullUrl();
+        IList<int> propertyValueList = ViewBag.PropertyValueList ?? UrlFuncitonHelper.GetPropertyValueList(fullUrl);
+        IList<int> propertyValueGroupList = ViewBag.PropertyValueGroupList ?? UrlFuncitonHelper.GetPropertyValueGroupList(fullUrl);
+        if (!propertyValueList.IsNullOrEmpty() || !propertyValueGroupList.IsNullOrEmpty())
+        {
+    <div class="refineby_selected">
+        @if (!propertyValueList.IsNullOrEmpty())
+        {
+            var nopropertyValueUrl = UrlFuncitonHelper.RemovePropertyValue(fullUrl);
+            foreach (var item in propertyValueList)
+            {
+                var pv = ServiceFactory.PropertyService.GetPropertyValueLanguage(item, ServiceFactory.ConfigureService.SiteLanguageId);
+            <a rel="nofollow" href="@UrlFuncitonHelper.GetPropertyValueUrl(nopropertyValueUrl, item, propertyValueList, false)">@if (!pv.IsNullOrEmpty())
+                                                                                                                 {
+                @pv.PropertyValueName
+                                                                                                                 }<ins></ins></a>
+            }
+
+        }
+
+        @if (!propertyValueGroupList.IsNullOrEmpty())
+        {
+            var nopropertyValueGroupUrl = UrlFuncitonHelper.RemovePropertyValueGroup(fullUrl);
+
+            foreach (var item1 in propertyValueGroupList)
+            {
+                var pvg = ServiceFactory.PropertyService.GetPropertyValueLanguage(item1, ServiceFactory.ConfigureService.SiteLanguageId);
+            <a rel="nofollow" href="@UrlFuncitonHelper.GetPropertyValueGroupUrl(nopropertyValueGroupUrl, item1, propertyValueGroupList, false)">@if (!pvg.IsNullOrEmpty())
+                                                                                                                                 {
+                @pvg.PropertyValueName
+                                                                                                                                 }<ins></ins></a>
+            }
+        }
+    </div>
+        }
+}

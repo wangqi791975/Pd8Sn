@@ -1,0 +1,80 @@
+﻿@using Com.Panduo.Service.SiteConfigure
+@model Com.Panduo.Service.Marketing.Gift.GiftMarketing
+<div class="control-group">
+    <label class="control-label"><i class="fred">*</i>场景：</label>
+    <div class="controls">
+        @Html.DropDownListFor(m => m.RewardType, ViewBag.GiftMarketingRewardType as SelectList, new { @class = "input-xlarge" })
+    </div>
+</div>
+<hr />
+<div class="@(Model.Id == 0 ? "hide" : "")" id="giftregieterinfo">
+    <div class="control-group">
+        <label class="control-label"><i class="fred">*</i>活动名称：</label>
+        <div class="controls">
+            @Html.TextBoxFor(m => m.Name, new { @class = "input-xlarge" })
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label"><i class="fred">*</i>语种：</label>
+        <div class="controls">
+            <label class="checkbox inline">
+                <input type="checkbox" data-toggle="checkall" id="FD_LanguageIds" @(Model.LanguageIds.IsNullOrEmpty() ? "" : Model.LanguageIds.Count == 0 || Model.LanguageIds.Count == ViewBag.AllLanguage.Count ? "checked" : "") />所有
+            </label>
+            @foreach (var language in (List<Language>)ViewBag.AllLanguage)
+            {
+                <label class="checkbox inline">
+                    <input type="checkbox" data-toggle="checkthis" name="language" @(Model.LanguageIds.IsNullOrEmpty() ? "" : Model.LanguageIds.Count == 0 ? "checked" : (Model.LanguageIds.Contains(language.LanguageId) ? "checked" : "")) id="FD_LanguageIds_@(language.LanguageId)" value="@language.LanguageId" @(Model.IsNullOrEmpty() ? "" : (("," + Model.LanguageIds + ",").Contains("," + language.LanguageId + ",") ? "checked" : ""))/>@language.LanguageName
+                </label>
+            }
+            <div>
+                <em id="languageerror" class="error" style="color: #d14"></em>
+            </div>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label"><i class="fred">*</i><i class="fred">*</i>送礼等级：</label>
+        <div class="controls">
+            <select name="level">
+                <option value="-1">请选择</option>
+                <option @(Model.GiftLevel == "A" ? "selected" : "") value="A">1级</option>
+                <option @(Model.GiftLevel == "B" ? "selected" : "") value="B">2级</option>
+                <option @(Model.GiftLevel == "C" ? "selected" : "") value="C">3级</option>
+                <option @(Model.GiftLevel == "D" ? "selected" : "") value="D">4级</option>
+                <option @(Model.GiftLevel == "E" ? "selected" : "") value="E">5级</option>
+            </select>
+        </div>
+    </div>
+    @{
+        var effectiveBeginDate = Model.IsNullOrEmpty() ? "" : Model.EffectiveBegin.ToString().Split(' ').First();
+        var effectiveBeginTime = Model.IsNullOrEmpty() ? "" : Model.EffectiveBegin.ToString().Split(' ').LastOrDefault();
+        var effectiveEndDate = Model.IsNullOrEmpty() ? "" : Model.EffectiveEnd.ToString().Split(' ').First();
+        var effectiveEndTime = Model.IsNullOrEmpty() ? "" : Model.EffectiveEnd.ToString().Split(' ').LastOrDefault();
+    }
+    <label class="control-label"><i class="fred">*</i>开始时间：</label>
+    <div class="controls">
+        <div class="bfh-datepicker" data-format="y-m-d" data-date="@(effectiveBeginDate ?? string.Empty)" data-icon="icon-calendar" data-name="limitBeginDate" data-placeholder="开始时间"></div>
+        <div class="bfh-timepicker" data-icon="icon-time" data-name="limitBeginTime" data-time="@(effectiveBeginTime.IsNullOrEmpty() ? "16:00" : effectiveBeginTime)"></div>
+        <code>（北京时间）</code>
+        <em id="beginerror" class="inline error" style="color: #d14"></em>
+    </div>
+    <label class="control-label">结束时间：</label>
+    <div class="controls">
+        <div class="bfh-datepicker" data-format="y-m-d" data-date="@(effectiveEndDate ?? string.Empty)" data-icon="icon-calendar" data-name="limitEndDate" data-placeholder="结束时间"></div>
+        <div class="bfh-timepicker" data-icon="icon-time" data-name="limitEndTime" data-time="@(effectiveBeginTime.IsNullOrEmpty() ? "15:59" : effectiveBeginTime)"></div>
+        <code>（北京时间）</code>
+        <em id="enderror" class="inline error" style="color: #d14"></em>
+        <label>（*不填写表示无结束日期）</label>
+    </div>
+    <div class="control-group">
+        <label class="control-label">启用/禁用：</label>
+        <div class="controls">
+            <label class="radio inline">
+                <input type="radio" name="status" @(Model.IsNullOrEmpty() ? "checked" : Model.Status ? "checked" : "") value="1"/>启用
+            </label>
+            <label class="radio inline">
+                <input type="radio" name="status" @(Model.IsNullOrEmpty() ? "" : !Model.Status ? "checked" : "") value="0" />禁用
+            </label>
+        </div>
+    </div>
+</div>

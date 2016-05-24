@@ -1,0 +1,84 @@
+﻿@using Com.Panduo.Service.Help
+@using Resources
+@{
+    ViewBag.Title = "Help Center";
+    Layout = "~/Views/Help/Partial/_Layout_Help.cshtml";
+    IList<VHelpCategory> rootHelpCategories = ViewBag.RootHelpCategories;
+    IList<VHelpCategory> subHelpCategories = ViewBag.SubHelpCategories;
+    IList<VHelpArticle> helpArticles = ViewBag.RootHelpArticles;
+}
+
+<div class="help_list_wrap">
+    @for (var i = 0; i < rootHelpCategories.Count; i += 2)
+    {
+        var categoryleft = rootHelpCategories[i];
+        var categoryright = 1 + i < rootHelpCategories.Count ? rootHelpCategories[1 + i] : null;
+        <table width="@(categoryright != null ? "100%" : "50%")" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th class="title"><a href="@UrlRewriteHelper.GetHelpCenterListUrl(categoryleft.HelpCategoryId, categoryleft.EnCategoryName, 1)">@categoryleft.CategoryName</a></th>
+                <th rowspan="2" class="snap">&nbsp;</th>
+                @if (categoryright != null)
+                {
+                    <th class="title"><a href="@UrlRewriteHelper.GetHelpCenterListUrl(categoryright.HelpCategoryId, categoryright.EnCategoryName, 1)">@categoryright.CategoryName</a></th>
+                    <th rowspan="2" class="snap">&nbsp;</th>
+                }
+            </tr>
+            <tr>
+                <td class="cont">
+                    @if (categoryleft != null)
+                    {
+                        var maxCont = 5;
+                        foreach (var subCategory in subHelpCategories.Where(x => x.ParentId == categoryleft.HelpCategoryId))
+                        {
+                        <span>-</span>
+                        <p><a href="@UrlRewriteHelper.GetHelpCenterListUrl(subCategory.HelpCategoryId, subCategory.EnCategoryName, 1)">@subCategory.CategoryName</a></p>
+                        
+                            if (--maxCont <= 0) { break; }
+                        }
+                        if (maxCont > 0)
+                        {
+                            foreach (var article in helpArticles.Where(x => x.HelpCategoryId == categoryleft.HelpCategoryId))
+                            {
+                        <span>-</span>
+                        <p><a target="_blank" href="@UrlRewriteHelper.GetHelpArticleDetailUrl(article.ArticleId, article.EnArticleName)">@article.ArticleName</a></p>
+                                if (--maxCont <= 0)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        <span>-</span><p><a href="@UrlRewriteHelper.GetHelpCenterListUrl(categoryleft.HelpCategoryId, categoryleft.EnCategoryName, 1, true)" class="fblue_mid">@Lang.TipViewMore</a></p>
+                    }
+                    <div class="clearfix"></div>
+                </td>
+                @if (categoryright != null)
+                {
+                    var maxCont = 5;
+                    <td class="cont">
+                        @foreach (var subCategory in subHelpCategories.Where(x => x.ParentId == categoryright.HelpCategoryId))
+                        {
+                            <span>-</span>
+                            <p><a href="@UrlRewriteHelper.GetHelpCenterListUrl(subCategory.HelpCategoryId, subCategory.EnCategoryName, 1)">@subCategory.CategoryName</a></p>
+                        
+                            if (--maxCont <= 0) { break; }
+                        }
+                        @if (maxCont > 0)
+                        {
+                            foreach (var article in helpArticles.Where(x => x.HelpCategoryId == categoryright.HelpCategoryId))
+                            {
+                            <span>-</span>
+                            <p><a target="_blank" href="@UrlRewriteHelper.GetHelpArticleDetailUrl(article.ArticleId, article.EnArticleName)">@article.ArticleName</a></p>
+                                if (--maxCont <= 0)
+                                {
+                                    break;
+                                }
+                            }
+                            <span>-</span><p><a href="@UrlRewriteHelper.GetHelpCenterListUrl(categoryright.HelpCategoryId, categoryright.EnCategoryName, 1, true)" class="fblue_mid">@Lang.TipViewMore</a></p>
+                        }
+                        <div class="clearfix"></div>
+                    </td>
+                }
+            </tr>
+        </table>
+    }
+</div>

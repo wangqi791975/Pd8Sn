@@ -1,0 +1,52 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Web.Models.Customer
+@using Resources
+@model PageData<MyProductsProductInfoVo>
+@{
+    ViewBag.Title = "My Products";
+    Layout = "~/Views/Shared/Layout/_Layout_NoLeft.cshtml";
+}
+@section HtmlHead{
+    @Html.JsFor("wishlist.js", "~/Js/jquery.scrollLoading.min.js ,~/Js/WishList/WishList.js", fileVersion: "2.2")
+}
+
+<div class="nav"><a href="#">Home</a> &gt; <a href="#">My Privilege</a> &gt; <strong>My Products</strong></div>
+
+@Html.Partial("~/Views/Account/Partial/_Account_Siderbar_Menu.cshtml")
+<div id="main" class="account_wrap">
+    <h2 class="font14 account_title">
+        @Lang.TipMyProducts
+    </h2>
+    <div class="products_search_cont">
+        <form onsubmit="return false;" method="post" action="@UrlRewriteHelper.GetMyClubUrl()" name="searchfrom" id="searchfrom" data-target="#products_list">
+            <!-- 输入关键字查询时，input保留输入的关键字，若搜索有结果即显示翻页及搜索结果列表 -->
+            <input class="inputw248 input_text_wrap lf" type="text" name="keyword" /> <label class="btn_border"><input type="submit" class="btn_orange btn_p30_input lf" value="@Lang.TipSearch" /></label>
+        </form>
+    </div>
+    <!-- 无商品提示，该行显示时，上面商品搜索div消失 -->
+    <div class="warning_wrap" style="display:none;">@Lang.TipAnyQuesConatctUs</div>
+
+    <!-- 搜索无结果提示，该行显示时，下面商品搜索列表div消失 -->
+    <div class="warning_wrap error">@Lang.TipResetYourInfo</div>
+
+    <!-- 搜索结果列表开始 -->
+    <div class="products_list" id="products_list">
+        @Html.Partial("Partial/_ProductList", Model)
+    </div>
+    <!-- 搜索结果列表结束 -->
+
+</div>
+<div class="clearfix"></div>
+<script language="javascript">
+    $(function() {
+        $('body').on("click", ".btn_p30_input", function () {
+            var jqForm = $(this).parents('form').filter(':first');
+            var $target = $(jqForm.data("target"));
+            jqForm.ajaxSubmit({
+                success: function (responseText) {
+                    $target.html(responseText);
+                }
+            });
+        });
+    });
+</script>

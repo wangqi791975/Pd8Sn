@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+*{ padding:0; margin:0;}
+body{ background:#fff; font-family:Verdana, Geneva, sans-serif; font-size:62.5%; line-height:18px; color:#333; position:relative;}
+h1,h2,h3,h4,h5{ font-size:1em; font-weight:normal; line-height:18px;}
+/*h1,h2{font-family:"Times New Roman", Times, serif;}*/
+ins{ text-decoration:none;}
+em,i{ font-style:normal;}
+a{ color:#333; text-decoration:none;}
+a:hover{ color:#ff8835; text-decoration:underline;}
+ul,ol{ list-style-type:none;}
+img{ border:0; vertical-align:bottom; display:inline-block; text-align:center;}
+.clearfix{ clear:both; height:0; font-size:0; line-height:1px;}
+.loading{ display:block; width:32px; height:32px; margin:0 auto;}

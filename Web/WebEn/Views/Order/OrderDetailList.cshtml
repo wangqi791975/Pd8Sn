@@ -1,0 +1,59 @@
+﻿@using Com.Panduo.Service.Order
+@using Com.Panduo.Service.Product
+@using Com.Panduo.Web.Models.Order
+@using Resources
+@model OrderDetailVo   	
+@{
+    Layout = null;
+}
+<table cellpadding="0" cellspacing="0">
+    @foreach (var item in Model.OrderDetailList.Data) {
+        <tr>
+            <td class="item_img"><a target="_blank" href="@UrlRewriteHelper.GetOrderSnapshot(item.OrderDetail.Id.ToString())"><img src="@ImageHelper.GetImageUrl(item.ProductInfo.Product.MainImage, 80)" /></a></td>
+            <td class="item_name">
+                <h5><a href="@UrlRewriteHelper.GetOrderSnapshot(item.OrderDetail.Id.ToString())">@item.ProductInfo.ProductName (@item.ProductInfo.Product.ProductCode)</a></h5>
+                <p class="fgrey">
+                    @Lang.TipProductNo @item.OrderDetail.ProductNo<br />
+                    @Lang.TipGrossWeightUp @PageHelper.MoneyFormat(item.OrderDetail.Weight)<br />
+                    @Lang.TipVolumeWeightUp @PageHelper.MoneyFormat(item.OrderDetail.VolumeWeight)
+                </p>
+            </td>
+            <td class="item_price"><p>@Model.Order.Currency @PageHelper.MoneyFormat(item.OrderDetail.Price*Model.Order.ExchangeRate,Model.Order.Currency)</p></td>
+            <td class="item_qty">@item.OrderDetail.Quantity @Lang.TipPack
+                @if(@item.ProductInfo.Product.Status==ProductStatus.BackOrder){
+                    <span class="backorder"> @Lang.TipBackorder<br>
+                        @Html.Raw("Restock Time:"+@item.ProductInfo.ProductStock.GetProductStockDay()+" days")
+                        </span>
+                }
+             </td>
+            <td class="item_qty">@item.OrderDetail.DeliveryQty @Lang.TipPack</td>
+            <td class="item_subtotal"><p class="fred">@Model.Order.Currency @(item.OrderDetail.Quantity*PageHelper.MoneyFormat(item.OrderDetail.Price*Model.Order.ExchangeRate,Model.Order.Currency))</p></td>
+            <td class="item_action">
+                <a href="javascript:void(0)" class="fblue_mid" onclick="GetDownloadImageUrl(this);" data-DetailId="@item.OrderDetail.Id" data-name="@item.ProductInfo.Product.MainImage" >@Lang.TipDownloadPic</a><br />
+                <a href="javascript:void(0)" class="fblue_mid cart_btn_add" data-productid="@item.OrderDetail.ProductId" data-pagesource="orderitemaddtocart">@Lang.TipAddCart</a><br/>
+              @if (Model.Order.OrderStatus == OrderStatusType.Shipped)
+              {
+                  if (item.OrderDetail.IsReviewed)
+                   {
+                       <a href="@UrlRewriteHelper.GetReadReviews(item.OrderDetail.OrderId, item.OrderDetail.Id)" class="fblue_mid">@Lang.TipReadReviews</a>
+                   }
+                   else
+                   {
+                       <a href="@UrlRewriteHelper.GetWriteReviews(item.OrderDetail.OrderId, item.OrderDetail.Id)" class="fblue_mid">@Lang.TipWriteReviews</a>
+                   }
+              }
+            </td>
+        </tr>
+    }
+</table>
+@*底部翻页开始*@
+<div class="ajax-pagination" data-target="#OrderDetailItemList" data-mode="replace">
+    @Html.Partial("~/Views/Shared/Partial/_Ajax_Pager.cshtml", @Model.OrderDetailList.Pager)
+</div>
+<div class="clearfix"></div>
+@*底部翻页结束*@
+<script type="text/javascript">
+    $(function() {
+        $("body,html").animate({ scrollTop: 0 }, 500);
+    });
+</script>

@@ -1,0 +1,58 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Service.Order.ShoppingCart
+@using Resources
+@{
+	Layout = null;
+	PageData<VShoppingCartItem> unAvailablePager = Model;
+}
+<div class="cart_order_tip">@Lang.TipOnlyTwoStocks</div>
+<div class="cart_order_title">
+	<table cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="pro_img">@Lang.TipImage</td>
+			<td class="pro_name">@Lang.TipDescription</td>
+			<td class="pro_price">@Lang.TipPrice</td>
+			<td class="pro_qty">@Lang.TipQtyNoPun</td>
+			<td class="pro_subtotal">@Lang.TipSubtoal</td>
+		</tr>
+	</table>
+</div>
+@foreach (var item in unAvailablePager.Data)
+{
+	<div class="cart_content">
+		<table cellpadding="0" cellspacing="0">
+			<tr>
+				<td class="pro_img">
+					<img class="scrollLoading" src="@Url.Content("~/Images/loading.gif")" data-url="@ImageHelper.GetImageUrl(item.MainImage, 80)" />
+				</td>
+				<td class="pro_name">
+					<h5>@item.ProductName</h5>
+					<p class="fgrey">
+						@Lang.TipProductNo @item.ProductCode
+						<br />
+						@Lang.TipGrossWeightUp @item.Weight g<br />
+					</p>
+				</td>
+				<td class="pro_price">
+					<p>@item.OriginalPrice.ToExchangeCurrencyMoneyString(PageHelper.GetCurrentCurrency())</p>
+				</td>
+				<td class="pro_qty">@item.Quantity
+				</td>
+				<td class="pro_subtotal">
+					<p>@item.ProductSubTotal.ToExchangeCurrencyMoneyString(PageHelper.GetCurrentCurrency()) </p>
+				</td>
+			</tr>
+		</table>
+	</div>
+}
+@* 底部翻页开始 *@
+<div class="ajax-pagination" data-target="#tab_abnormal_product" data-mode="replace">
+	@Html.Partial("~/Views/Shared/Partial/_Ajax_Pager.cshtml", unAvailablePager.Pager)
+</div>
+<div class="clearfix"></div>
+@* 底部翻页结束 *@
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('.scrollLoading').scrollLoading();//图片自动加载
+	});
+</script>

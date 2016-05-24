@@ -1,0 +1,14 @@
+﻿@using Resources
+@{
+    ViewBag.Title = "System error";
+     
+}
+<div id="ErrorPages_conter">
+    <div class="ErrorPages_conter_left">
+        <img src="@Url.Content("Images/Error/Error500.jpg")" />
+        <p>
+            @Html.Raw(Lang.TipSystemError)
+        </p>
+    </div>
+</div>
+<div style="clear: both"></div>

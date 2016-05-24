@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "SEO信息设置";
+}
+@section HtmlHead
+{
+    <script type="text/javascript">
+        $(function() {
+            if ($("select[name=type]").val() > 0) {
+                $("select[name=type]").next().click();
+            }
+        });
+    </script>
+}
+<form id="searchForm" class="form-search" method="post" action="/Meta/Index" name="searchForm">
+    选择页面：
+    <input type="hidden" name="areaId" value="@ViewBag.HidAreaId" />
+    <select name="type" onchange="$(this).next().click();">
+        <option value="">请选择一项...</option>
+        <option value="1" @(ViewBag.HidType == 1 ? "selected=\"selected\"" : "")>设置首页Meta信息</option>
+        <option value="2" @(ViewBag.HidType == 2 ? "selected=\"selected\"" : "")>设置各区商品列表Meta信息</option>
+        <option value="3" @(ViewBag.HidType == 3 ? "selected=\"selected\"" : "")>设置商品详情页Meta信息</option>
+        <option value="4" @(ViewBag.HidType == 4 ? "selected=\"selected\"" : "")>设置专区首页SEO信息</option>
+    </select>
+    <button class="btn hide" type="submit">搜索</button>
+</form>
+
+<div class="ajax-list"></div>

@@ -1,0 +1,14 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Web.Models.Product
+@using Resources
+@model Com.Panduo.Service.Product.Product
+
+ <div class="lf list_pro_info">
+     <div class="list_table"><h5><a href="@UrlRewriteHelper.GetProductDetailUrl(Model.ProductId, ServiceFactory.ProductService.GetProductNameByEn(Model.ProductId))" title="">@(ServiceFactory.ProductService.GetProductName(Model.ProductId,ServiceFactory.ConfigureService.SiteLanguageId)) (@Model.ProductCode)</a></h5>
+         @Html.Partial("~/Views/Product/Partial/_Price.cshtml",new PriceVo(){ProductId =Model.ProductId,UnitId = Model.UnitId})
+     </div>
+     @if(SessionHelper.CurrentCustomer.IsNullOrEmpty()){
+         <p><a href="javascript:void(0)" onclick="$('#logindiv').modal('show');" title="@Lang.TipLoginViewVIPrice">@Lang.TipLoginViewVIPrice</a></p>
+     }
+    <p class="fgrey_mid">@Lang.TipShippingWeight @(Model.Weight)g</p>
+</div>

@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "管理员设置";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+@Html.JsFor("adminuser.js", "~/Js/Customer/AdminUser.js", fileVersion: "1.1")
+@using Com.Panduo.Service.AdminUser
+@model Com.Panduo.Service.PageData<AdminUser>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th style="width: 15%">用户ID</th>
+            <th style="width: 15%">用户姓名</th>
+            <th style="width: 20%">用户邮箱</th>
+            <th style="width: 15%">用户是否可见客户邮箱</th>
+            <th style="width: 15%">启用/禁用</th>
+            <th style="width: 20%">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var adminUser in Model.Data)
+        {
+            <tr>
+                <td>
+                    @adminUser.AdminId
+                </td>
+                <td>
+                    @adminUser.Name
+                </td>
+                <td>
+                    @adminUser.AccountEmail
+                </td>
+                <td>
+                    @(adminUser.IsViewEmail ? "是" : "否")
+                </td>
+                <td>
+                    @if (adminUser.AdminUserStatus == AdminUserStatus.Active)
+                    {
+                        <button id="@adminUser.AdminId" onclick="changeadminstatus(@adminUser.AdminId)" class='btn btn-mini btn-success'>启用</button>
+                    }
+                    else if (adminUser.AdminUserStatus == AdminUserStatus.Lock)
+                    {
+                        <button id="@adminUser.AdminId" onclick=" changeadminstatus(@adminUser.AdminId) " class='btn btn-mini btn-danger'>禁用</button>
+                    }
+                </td>
+                <td>
+                    <a href="/AdminUser/AdminUserAuth/@adminUser.AdminId?page=@Model.Pager.CurrentPage">设置用户权限</a>
+                    <a class="btn btn-mini btn-info"  href="/AdminUser/AdminUserEdit/@adminUser.AdminId?page=@Model.Pager.CurrentPage" data-id="@adminUser.AdminId">编辑</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.Partial("~/Views/Shared/Partial/_Page_Bottom.cshtml", @Model.Pager)
+<a class="btn" href="/AdminUser/AdminUserEdit"><i class="icon-edit"></i>新建</a>

@@ -1,0 +1,123 @@
+﻿@using Com.Panduo.Service.Product.Property
+@using Com.Panduo.Service.SiteConfigure
+@{
+    Layout = null;
+    string languageIds = ((IList<Language>)ViewBag.languages).Select(x => x.LanguageId).Join(",");
+}
+<form onsubmit="return false;" method="post" action="/Property/Update/@ViewBag.Property.PropertyId" name="updateForm">
+    <input type="hidden" value="/Property/GetList" name="current_url" id="current_url">
+    <input type="hidden" value="@ViewBag.Id" id="id" name="id" />
+    <input type="hidden" name="language_ids" value="@languageIds" />
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td width="20%">属性名称：</td>
+                <td><input type="text" value="@ViewBag.Property.PropertyName" required="required" name="property_name"></td>
+            </tr>
+            @for (int i = 0; i < ViewBag.Languages.Count; i++)
+            {
+                var propertyName = string.Empty;
+                if (ViewBag.PropertyLanguages != null)
+                {
+                    IList<PropertyLanguage> propertyLanguages = ((IList<PropertyLanguage>)ViewBag.PropertyLanguages).Where(x => x.LanguageId == ViewBag.Languages[i].LanguageId).ToList();
+                    if (!propertyLanguages.IsNullOrEmpty())
+                    {
+                        propertyName = propertyLanguages[0].PropertyName;
+                    }
+                }
+                <tr>
+                    <td>@ViewBag.Languages[i].ChineseName：</td>
+                    <td><input type="text" value="@propertyName" name="property_name_@ViewBag.Languages[i].LanguageId" required="required" maxlength="32"></td>
+                </tr>
+            }
+            <tr>
+                <td>前台排序：</td>
+                <td><input class="input-mini" type="text" value="@ViewBag.Property.DisplayOrder" required="required" id="display_order" name="display_order" datatype="i1" maxlength="5"> &nbsp;<span class="badge badge-important" style="display: none;"></span></td>
+            </tr>
+            <tr style="cursor:not-allowed">
+                <td>基础属性：</td>
+                <td>
+                    @if (@ViewBag.Property.IsBasicProperty)
+                    {
+                        @Html.Raw("<input type='radio' name='is_basic_property' value='true' checked='checked' disabled='disabled' /> 是　　<input type='radio' name='is_basic_property' value='false' disabled='disabled' /> 否");
+                    }
+                    else
+                    {
+                        @Html.Raw("<input type='radio' name='is_basic_property' value='true' disabled='disabled' /> 是　　<input type='radio' name='is_basic_property' value='false' checked='checked' disabled='disabled' /> 否");
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>属性状态：</td>
+                <td>
+                    @if (@ViewBag.Property.IsValid)
+                    {
+                        @Html.Raw("<input type='radio' name='is_valid' value='true' checked='checked' /> 启用　　<input type='radio' name='is_valid' value='false' /> 禁用");
+                    }
+                    else
+                    {
+                        @Html.Raw("<input type='radio' name='is_valid' value='true' /> 启用　　<input type='radio' name='is_valid' value='false' checked='checked' /> 禁用");
+                    }
+                    <span class="badge badge-important">控制全站</span>
+                </td>
+            </tr>
+            <tr>
+                <td>是否显示：</td>
+                <td>
+                    @if (@ViewBag.Property.IsDisplay)
+                    {
+                        @Html.Raw("<input type='radio' name='is_display' value='true' checked='checked' /> 显示　　<input type='radio' name='is_display' value='false' /> 隐藏");
+                    }
+                    else
+                    {
+                        @Html.Raw("<input type='radio' name='is_display' value='true' /> 显示　　<input type='radio' name='is_display' value='false' checked='checked' /> 隐藏");
+                    }
+                    <span class="badge badge-important">控制非末级类别</span>
+                </td>
+            </tr>
+            <tr>
+                <td>属性值排序：</td>
+                <td>
+                    <select class="input-medium" name="sort_type">
+                        @if (Convert.ToInt32(ViewBag.Property.SortType) == 0)
+                        {
+                            <option value="0" selected="selected">未定义</option>
+                        }
+                        else
+                        {
+                            <option value="0">未定义</option>
+                        }
+
+                        @if (Convert.ToInt32(ViewBag.Property.SortType) == 10)
+                        {
+                            <option value="10" selected="selected">名称从A到Z排序</option>
+                        }
+                        else
+                        {
+                            <option value="10">名称从A到Z排序</option>
+                        }
+
+                        @if (Convert.ToInt32(ViewBag.Property.SortType) == 20)
+                        {
+                            <option value="20" selected="selected">排序值升序</option>
+                        }
+                        else
+                        {
+                            <option value="20">排序值升序</option>
+                        }
+
+                        @if (Convert.ToInt32(ViewBag.Property.SortType) == 30)
+                        {
+                            <option value="30" selected="selected">商品数量从多到少</option>
+                        }
+                        else
+                        {
+                            <option value="30">商品数量从多到少</option>
+                        }
+
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>

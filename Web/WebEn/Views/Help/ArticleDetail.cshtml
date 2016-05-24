@@ -1,0 +1,36 @@
+﻿@using Com.Panduo.Service.Help
+@using Resources
+@{
+    ViewBag.Title = "ArticleDetail";
+    Layout = "~/Views/Help/Partial/_Layout_Help.cshtml";
+    HelpArticleDescription article = ViewBag.CurrentHelpArticle;
+    VHelpArticle preArticle = ViewBag.PreHelpArticle;
+    VHelpArticle nextArticle = ViewBag.NextHelpArticle;
+}
+
+<div class="help_article">
+    <h3>@article.ArticleName</h3>
+    <p>@article.ArticleContent</p>
+    <div class="action">
+        <a href="javascript:void(0)" onclick="fn_CloseWin()" class="fblue">@Lang.TipBackArrow </a>
+        <div class="more">
+            @if (preArticle != null)
+            {
+                <p class="pre"><strong>@Lang.TipPre</strong><a href="@UrlRewriteHelper.GetHelpArticleDetailUrl(preArticle.ArticleId, preArticle.EnArticleName)">@preArticle.ArticleName</a></p>
+            }
+            @if (nextArticle != null)
+            {
+                <p class="next"><strong>@Lang.TipNextPun</strong><a href="@UrlRewriteHelper.GetHelpArticleDetailUrl(nextArticle.ArticleId, nextArticle.EnArticleName)">@nextArticle.ArticleName</a></p>
+            }
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<script type="text/javascript">
+    function fn_CloseWin() {
+        //window.history.go(-1)
+        var opened = window.open('about:blank', '_self');
+        opened.opener = null;
+        opened.close();
+    }
+</script>

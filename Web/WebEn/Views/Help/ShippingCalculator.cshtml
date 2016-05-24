@@ -1,0 +1,269 @@
+﻿@using Resources
+@{
+    ViewBag.Title = "Shipping Fee";
+    Layout = "~/Views/Shared/Layout/_Layout_NoLeft.cshtml";
+}
+
+<div class="calculator_wrap">
+    <h2 class="font16"><ins></ins>@Lang.TipShippingCalculator</h2>
+    <form>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="calulator_cont">
+            <tr>
+                <th scope="row" width="11%"><i class="fred">*</i>@Lang.TipTotalWeight</th>
+                <td>
+                    <input type="text" class="input_text_wrap inputw260" id="txtTotalWeight" />(g)<div class="fred" style="display: none">@Lang.ErrorGrossIsReq</div>
+                </td>
+                <td rowspan="4" valign="top">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <th rowspan="4" scope="row">@Lang.TipUnitConversion</th>
+                            <td>1 kg = 1000 gram</td>
+                        </tr>
+                        <tr>
+                            <td>1 gram = 0.00220 pound</td>
+                        </tr>
+                        <tr>
+                            <td>1 gram = 0.0353 ounce</td>
+                        </tr>
+                        <tr>
+                            <td><a href="http://www.lenntech.com/unit-conversion-calculator/mass-weight.htm" class="fblue" target="_blank">@Lang.TipClickUnitCon</a></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">@Lang.TipCountry</th>
+                <td>
+                    <div class="select_cont select_w260 select_search">
+                        <input type="hidden" id="txtCountryId" value="@ViewBag.Country.CountryId"/>
+                        <label class="select_cont_span">@ViewBag.Country.CountryName</label>
+                        <div class="pop_select_cont">
+                            <input type="text" class="input_text_wrap inputw248" />
+                            <ul>
+                                <li class="list_line">----------</li>
+                                @foreach (var country in ViewBag.CommonCountry)
+                                {
+                                    <li class="list_item @(ViewBag.Country.CountryId == country.CountryId ? "active" : "")" data-value="@country.CountryId">@country.CountryName</li>
+                                }
+                                <li class="list_line">----------</li>
+                                @foreach (var country in ViewBag.UnCommonCountry)
+                                {
+                                    <li class="list_item @(ViewBag.Country.CountryId == country.CountryId ? "active" : "")" data-value="@country.CountryId">@country.CountryName</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">@Lang.TipCity</th>
+                <td>
+                    <input type="text" class="input_text_wrap inputw260" id="txtCity" value="@ViewBag.ShippingAddress.City" /></td>
+            </tr>
+            <tr>
+                <th scope="row">@Lang.TipPostZipCode</th>
+                <td>
+                    <input type="text" class="input_text_wrap inputw260" id="txtPosatlCode" value="@ViewBag.ShippingAddress.ZipCode" />
+            </tr>
+            <tr>
+                <th scope="row">&nbsp;</th>
+                <td colspan="2"><a href="javascript:void(0)" onclick="fnCalculateShippingCost()" class="btn_orange btn_p30">Calculate</a><input type="reset" class="btn_grey btn_p30" value="Reset" /></td>
+            </tr>
+        </table>
+    </form>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="shipping_cont showallmethods">
+        <tr>
+            <th scope="col">@Lang.TipShippingMethod</th>
+            <th scope="col">@Lang.TipEstShippingTime</th>
+        </tr>
+        <tr>
+            <td class="frist">@Lang.TipEMSExpress</td>
+            <td class="frist">8-12 @Lang.TipWorkdays
+            </td>
+        </tr>
+        <tr>
+            <td>@Lang.TipAirMailLarge</td>
+            <td>20-30 @Lang.TipDays</td>
+        </tr>
+        <tr>
+            <td>@Html.Raw(Lang.TipDHLDir)</td>
+            <td>3-4 @Lang.TipDays </td>
+        </tr>
+        <tr>
+            <td>@Html.Raw(Lang.TipDHLAgent)</td>
+            <td>4-8 @Lang.TipDays</td>
+        </tr>
+        <tr>
+            <td>@Lang.TipEurMailDuty</td>
+            <td>15-30 @Lang.TipDays </td>
+        </tr>
+        <tr>
+            <td>@Lang.TipCNEGlobalDuty</td>
+            <td>8-15 @Lang.TipDays </td>
+        </tr>
+        <tr>
+            <td>@Lang.TipAusLineDuty</td>
+            <td>8-12 @Lang.TipDays </td>
+        </tr>
+        <tr>
+            <td>@Lang.TipTranCarDuty</td>
+            <td>30-40 @Lang.TipWorkdays </td>
+        </tr>
+        <tr>
+            <td>@Lang.TipSFHCarDuty</td>
+            <td>25-35 @Lang.TipWorkdays </td>
+        </tr>
+        <tr>
+            <td>@Html.Raw(Lang.TipFedExIE)</td>
+            <td>3-6 @Lang.TipDays </td>
+        </tr>
+        <tr>
+            <td>@Html.Raw(Lang.TipFedExIP)</td>
+            <td>2-4 @Lang.TipDays </td>
+        </tr>
+        <tr>
+            <td>@Lang.TipUPSExpSaver</td>
+            <td>3-4 @Lang.TipWorkdays </td>
+        </tr>
+        <tr>
+            <td>@Lang.TipUPSExpedited</td>
+            <td>5-7 @Lang.TipWorkdays </td>
+        </tr>
+        <tr>
+            <td>@Lang.TipAirMailSmall</td>
+            <td>20-30 @Lang.TipWorkdays </td>
+        </tr>
+        <tr>
+            <td>@Lang.TipTranAirDuty</td>
+            <td>12-18 @Lang.TipWorkdays</td>
+        </tr>
+        <tr>
+            <td>@Lang.TipSFHAirDuty</td>
+            <td>15-18 @Lang.TipWorkdays</td>
+        </tr>
+        <tr>
+            <td>@Lang.TipTranRusCarDuty</td>
+            <td>25-35 @Lang.TipWorkdays</td>
+        </tr>
+        <tr>
+            <td>@Lang.TipBeAirDuty</td>
+            <td>9-12 @Lang.TipWorkdays</td>
+        </tr>
+        <tr>
+            <td>@Lang.TipUSPSDUty</td>
+            <td>7-15 @Lang.TipDays</td>
+        </tr>
+        <tr>
+            <td>@Lang.RipEcoExpDelDuty</td>
+            <td>7-12 @Lang.TipDays</td>
+        </tr>
+        <tr>
+            <td>@Lang.TipExpressPost</td>
+            <td>6-8 @Lang.TipWorkdays</td>
+        </tr>
+        <tr>
+            <td>@Lang.TipByAdrTran</td>
+            <td>18-28 @Lang.TipWorkdays</td>
+        </tr>
+        <tr>
+            <td>@Lang.TipAusUBIDuty</td>
+            <td>10-15 @Lang.TipDays</td>
+        </tr>
+        <tr>
+            <td>@Lang.TipCNEEurExpDuty </td>
+            <td>5-12 @Lang.TipDays</td>
+        </tr>
+    </table>
+</div>
+<div class="clearfix"></div>
+<script type="text/javascript">
+
+
+    function fnCalculateShippingCost() {
+        var totalWeight = $("#txtTotalWeight").val();
+        if (totalWeight <= 0) { $("#txtTotalWeight").next("div").show(); $("#txtTotalWeight").focus(); return; } else $("#txtTotalWeight").next("div").hide();
+        var countryId = $("#txtCountryId").val();
+        var city = $("#txtCity").val();
+        var posatlCode = $("#txtPosatlCode").val();
+        $(".shipping_cont").html('<img src="@Url.Content("~/Images/loading.gif")" />');
+        $.post('/Help/GetShippingItems', { 'countryId': countryId, "posatlCode": posatlCode, "totalWeight": totalWeight, "city": city }, function (data) {
+            $(".shipping_cont").html(data);
+        });
+    }
+
+    /***shipping methods sort start***/
+    var aCont;
+    $(".sp_price a").live("click", function () {
+        var ins = $(this).find("ins");
+        var className = $(ins).attr("class");
+        if (className == "sort_arrow" || className == "sort_arrow_dec") {
+            clickFun($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+            fSort(compare_down);
+            setTrIndex($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+
+            $(ins).attr("class", "sort_arrow_asc");
+        } else {
+            clickFun($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+            fSort(compare_up);
+            setTrIndex($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+            $(ins).attr("class", "sort_arrow_dec");
+        }
+
+        $(".sp_time ins").attr("class", "sort_arrow");
+    });
+
+    $(".sp_time a").live("click", function () {
+        var ins = $(this).find("ins");
+        var className = $(ins).attr("class");
+        if (className == "sort_arrow" || className == "sort_arrow_dec") {
+            clickFun($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+            fSort(compare_down);
+            setTrIndex($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+
+            $(ins).attr("class", "sort_arrow_asc");
+        } else {
+            clickFun($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+            fSort(compare_up);
+            setTrIndex($(ins).attr("data-sort-frist"), $(ins).attr("data-sort-second"));
+            $(ins).attr("class", "sort_arrow_dec");
+        }
+
+        $(".sp_price ins").attr("class", "sort_arrow");
+    });
+
+    var clickFun = function (first, second) {
+        aCont = [];
+        fSetDivCont(first, second);
+    };
+    var fSetDivCont = function (first, second) {
+        //$('.showallmethods tr:not(:first)').each(function () {
+        $('.showallmethods tr').each(function () {
+            var trCont = parseFloat($(this).find('.' + first).val() * 10000) + parseFloat($(this).find('.' + second).val());
+            aCont.push(trCont);
+        });
+    }
+    var compare_down = function (a, b) {
+        return a - b;
+    };
+
+    var compare_up = function (a, b) {
+        return b - a;
+    };
+
+    var fSort = function (compare) {
+        aCont.sort(compare);
+    };
+    var setTrIndex = function (sortby, sortby1) {
+        for (i = 0; i < aCont.length; i++) {
+            var trCont = aCont[i];
+            //$('.showallmethods tr:not(:first)').each(function () {
+            $('.showallmethods tr').each(function () {
+                var thisText = parseFloat($(this).find('.' + sortby).val() * 10000) + parseFloat($(this).find('.' + sortby1).val());
+                if (thisText == trCont) {
+                    $('.showallmethods').append($(this));
+                }
+            });
+        }
+    };
+    /***shipping methods sort end***/
+</script>

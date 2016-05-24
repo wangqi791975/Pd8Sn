@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "上货";
+}
+
+<p>
+    <h3>上货 &nbsp;&nbsp;<span style="font-size: 11px; font-weight: normal; color: red">(注：上货之前请先通过FTP把图片原图提交到对应的图片目录中。)</span></h3>
+</p>
+<div class="alert alert-error hide"><a class="close" data-dismiss="alert">&times;</a><span>请选择上传的文件.</span></div>
+<form class="form-horizontal" id="uploadimportfile_Form" name="uploadimportfile_Form" action="@Url.Content("~/Product/SaveUploadProduct")" method="post" onsubmit="return false;">
+    <div class="well tab-content">
+        <div class="control-group" style="min-height: 100px;">
+            <label class="control-label" style="text-align: left;">1、上传产品数据表格：</label>
+            <div class="controls">
+                <span class="help-inline">
+                    <input type="file" id="file_products" name="file_products" accept=".xls,.xlsx" /></span>
+            </div>
+            <div class="controls" style="min-height: 25px;">
+                <span class="help-inline">注：上传的文件中，数据格式必须与模版一致。
+                <a href="~/ImportModelFiles/Product/upload-products.xls">下载模板</a></span>
+            </div>
+            <div class="controls hide" id="div_file_products" style="color: black; font-size: 14px;">
+                <table>
+                    <tr>
+                        <td><span id="lblfile_products"></span></td>
+                        <td><a href="javascript:void(0)">删除</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="control-group" style="min-height: 80px;">
+            <label class="control-label" style="text-align: left;">2、上传产品描述：</label>
+            <div class="controls">
+                <span class="help-inline">
+                    <input type="file" id="file_products_desc" name="file_products_desc" accept=".zip" /></span>
+            </div>
+            <div class="controls" style="min-height: 25px;">
+                <span class="help-inline">注：产品描述文件为zip格式，即压缩文件。另外，每个子文件夹名称格式如:20151024-EN,20151024-DE.</span>
+            </div>
+            <div class="controls hide" id="div_file_products_desc" style="color: black; font-size: 14px;">
+                <table>
+                    <tr>
+                        <td><span id="lblfile_products_desc"></span></td>
+                        <td><a href="javascript:void(0)">删除</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="form-actions">
+            <a class="btn btn-primary" id="btnuploadfile" href="javascript:void(0)">提交</a>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    $(function () {
+        //导入
+        $("#btnuploadfile").click(function () {
+            if ($("#file_products").val().trim() == "") {
+                $("#uploadimportfile_Form").prev().show().delay(5000).hide(200).find("span").text("请选择上传的文件.");
+            } else {
+                var msg = "";
+                $("#uploadimportfile_Form").ajaxSubmit({
+                    success: function (responseText) {
+                        switch (responseText.result) {
+                            case "success":
+                                msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作成功!' : responseText.msg;
+                                $("#file_products").val('');
+                                break;
+                            case "error":
+                            case "failing":
+                                msg = responseText.msg == '' || typeof (responseText.msg) == 'undefined' ? '操作失败!' : responseText.msg;
+                                break;
+                        }
+                        $("#uploadimportfile_Form").prev().show().delay(5000).hide(200).find("span").text(msg);
+                    }
+                });
+            }
+        });
+
+        $("#div_file_products a").click(function () {
+            $("#file_products").val("");
+            $("#div_file_products").hide();
+        });
+        $("#div_file_products_desc a").click(function () {
+            $("#file_products_desc").val("");
+            $("#div_file_products_desc").hide();
+        });
+
+        $("#file_products").change(function () {
+            //o.value就是你选择的文件的完整路径,然后你可以自己过滤
+            //alert($(this).val());
+            if ($(this).val().indexOf('.xls') > -1) {
+                $("#lblfile_products").text($("#file_products").val());
+                $("#div_file_products").show();
+            } else {
+                $(this).val("");
+                $("#lblfile_products").text("");
+                $("#div_file_products").hide();
+                $("#uploadimportfile_Form").prev().show().delay(5000).hide(200).find("span").text("请选择正确的文件，限制后缀.xls");
+            }
+        });
+        $("#file_products_desc").change(function () {
+            //o.value就是你选择的文件的完整路径,然后你可以自己过滤
+            if ($(this).val().indexOf('.zip') > -1) {
+                $("#lblfile_products_desc").text($("#file_products_desc").val());
+                $("#div_file_products_desc").show();
+            } else {
+                $(this).val("");
+                $("#div_file_products_desc").hide();
+                $("#lblfile_products_desc").text("");
+                $("#uploadimportfile_Form").prev().show().delay(5000).hide(200).find("span").text("请选择正确的文件，限制后缀.zip");
+            }
+        });
+    });
+</script>

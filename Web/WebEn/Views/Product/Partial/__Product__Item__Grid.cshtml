@@ -1,0 +1,27 @@
+﻿@using Com.Panduo.Service
+@using Com.Panduo.Web.Models.Product
+@using Resources
+@model Com.Panduo.Service.Product.Product
+@{
+    var title = ServiceFactory.ProductService.GetProductName(Model.ProductId, ServiceFactory.ConfigureService.SiteLanguageId);
+    
+}
+<li>
+    @Html.Partial("~/Views/Product/Partial/_Product_Hot_Item_Image.cshtml",@Model)
+    <div class="recommend_popup">
+        <div class="pro_popup_detail" style="display: none;">
+            <!-- 飘窗右定位 pro_popup_detail -->
+            <h5>@(title) (@Model.ProductCode)</h5>
+            @Html.Partial("~/Views/Product/Partial/_Price.cshtml",new PriceVo(){ProductId =Model.ProductId,UnitId=Model.UnitId})
+            <p><span class="pro_popup_weight">@Lang.TipGrossWeightUp @(Model.Weight)g</span>@if(SessionHelper.CurrentCustomer.IsNullOrEmpty()){<span class="pro_popup_logintip">@Lang.TipLoginViewVIPrice</span>}</p>
+        </div>
+    </div>
+     @Html.Partial("~/Views/Product/Partial/__Recommend__Info.cshtml",@Model.ProductId)
+    <div>
+        <label>
+            <input class="lf inputw29 input_text_wrap" type="text" value="1" /></label>
+        <a class="lf btn_orange btn_w38" href="#"><ins class="btn_cart"></ins></a>
+        <a class="rt btn_grey btn_w30" href="#"><ins class="btn_wishlist"></ins></a>
+        <div class="clearfix"></div>
+    </div>
+</li>

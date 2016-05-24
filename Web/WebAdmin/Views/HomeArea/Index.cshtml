@@ -1,0 +1,59 @@
+﻿@using Com.Panduo.Service.SiteConfigure
+@using Com.Panduo.Common
+@model Com.Panduo.Web.Models.Home.HomeAreaVo
+@{
+    ViewBag.Title = "首页横导航设置";
+    Layout = "~/Views/Shared/Layout/_Layout.cshtml";
+}
+<div class="ajax_detail">
+    <div class="ajax_info">
+        <h4>前台头部横导航内容设置</h4>
+        <form class="form-horizontal" id="homeareaForm" name="homeareaForm" action="@Url.Content("~/HomeArea/SetHomeArea")" method="post" target="_self" onsubmit=" return false; ">
+            <div class="tabbable">
+                <ul class="nav nav-tabs">
+                    @{
+                        var loop = 0;
+                    }
+                    @foreach (Language lang in ViewBag.Languages)
+                    {
+                        <li class="@(loop++ == 0 ? "active" : "")"><a data-target="#tab-@lang.LanguageId" href="javascript:void(0)" data-toggle="tab">@lang.ChineseName</a></li>
+                    }
+                </ul>
+                <div class="tab-content">
+                    @{
+                        loop = 0;
+                    }
+                    @foreach (Language lang in ViewBag.Languages)
+                    {
+                        <div class="tab-pane @(loop++ == 0 ? "active" : "")" id="tab-@lang.LanguageId">
+
+                            <input type="hidden" name="HID_languageId" value="@lang.LanguageId"/>
+                            @{
+                                var content = Model.HomeAreaSetting.Where(x => x.LanguageId == lang.LanguageId).Select(x => x.Content).FirstOrDefault();
+                                var classActive = " class=tab-pane";
+                                if (loop == 0)
+                                {
+                                    classActive = " class='tab-pane active'";
+                                }
+                                if (!content.IsNullOrEmpty())
+                                {
+                                    @Html.Raw("<div" + classActive + " id=tab_homearea_language_content_" + lang.LanguageId + "><textarea name=homearea_language_content_" + lang.LanguageId + " rows='8' name='subject' id='subject' style='width:800px;'>" + content + "</textarea></div>")
+                                }
+                                else
+                                {
+                                    @Html.Raw("<div" + classActive + " id=tab_homearea_language_content_" + lang.LanguageId + "><textarea name=homearea_language_content_" + lang.LanguageId + " rows='8' name='subject' id='subject' style='width:800px;'></textarea></div>")
+                                }
+                            }
+
+
+                        </div>
+                    }
+                    <div class="form-actions">
+                        <a class="btn btn-primary ajax_update" href="javascript:void(0)" id="yss">保存</a>
+                        <a class="btn" href="@Url.Content("~/HomeArea/Index")">取消</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

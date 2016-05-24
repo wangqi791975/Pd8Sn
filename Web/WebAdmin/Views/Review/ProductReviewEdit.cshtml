@@ -1,0 +1,56 @@
+﻿@using Com.Panduo.Service.Review
+@{
+    Layout = null;
+    var productReview = (ReviewProductCustomerView)ViewBag.ProductReview;
+}
+
+<form name="updateForm" action="@Url.Content("~/Review/ProductReviewEdit")" method="post" onsubmit="return false;">
+    <input type="hidden" name="id" value="@productReview.Id" />
+    <table class="table table-striped">
+        <tr>
+            <td width="20%">产品评论Id：</td>
+            <td>
+                @productReview.Id</td>
+        </tr>
+        <tr>
+            <td width="20%">产品名称：</td>
+            <td>
+                @productReview.ProductName</td>
+        </tr>
+        <tr>
+            <td width="20%">客户Email：</td>
+            <td>
+                @productReview.Email</td>
+        </tr>
+        <tr>
+            <td width="20%">客户姓名：</td>
+            <td>
+                @productReview.Name</td>
+        </tr>
+        <tr>
+            <td width="20%">评分：</td>
+            <td>
+                @productReview.Rating</td>
+        </tr>
+        <tr>
+            <td width="20%">提交日期：</td>
+            <td>
+                @productReview.DateCreated</td>
+        </tr>
+        <tr>
+            <td width="20%">语言：</td>
+            <td>
+                @productReview.LanguageChName</td>
+        </tr>
+        <tr>
+            <td width="20%">客户评论：</td>
+            <td>
+                @productReview.Content</td>
+        </tr>
+        <tr>
+            <td width="20%">答复内容：</td>
+            <td>
+                <textarea name="replycontent">@productReview.RepContent</textarea></td>
+        </tr>
+    </table>
+</form>

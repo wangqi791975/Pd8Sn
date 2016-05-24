@@ -1,0 +1,126 @@
+﻿@using Com.Panduo.Service.Order
+@using Com.Panduo.Service
+@using Resources
+@model PageData<Order>    
+@{
+    Layout = null;
+}
+@if (Model.Data.Count > 0)
+{
+    <div class="account_order_text">
+        @string.Format(Lang.TipDisplayToOrder,Model.Pager.StartRowNumber,Model.Pager.EndRowNumber,Model.Pager.TotalRowCount)
+        <div class="action_cont">
+            <a rel="nofollow" href="@UrlRewriteHelper.GetPackingSlip()" class="fblue_mid">@Lang.TipDownPackSlip</a>
+            <a rel="nofollow" href="@UrlRewriteHelper.GetPackingTemplate()" class="fblue_mid">@Lang.TipDownPackList</a>
+        </div>
+    </div>
+    <div class="all_order_cont">
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th class="td_w157">@Lang.TipOrderDateNoPun</th>
+                <th class="td_w157">@Lang.TipOrderNo</th>
+                <th class="td_w157">@Lang.TipGrandTotalNoPun</th>
+                <th class="td_w157">@Lang.TipStatus</th>
+                <th class="td_w157">@Lang.TipActions</th>
+            </tr>
+        </table>
+    </div>
+    <div class="all_order_list_cont">
+        <table cellpadding="0" cellspacing="0">
+            @foreach (var orderitem in Model.Data)
+            {
+                <tr>
+                    <td class="td_w157">@PageHelper.ToCurrentShortDate(orderitem.OrderTime)</td>
+                    <td class="td_w157"><a href="@UrlRewriteHelper.GetOrderDetail(orderitem.OrderNo)" class="fblue_mid">@orderitem.OrderNo</a></td>
+                    <td class="td_w157">@orderitem.Currency @(orderitem.OrderCost.IsNullOrEmpty()?0.0M:PageHelper.MoneyFormat(orderitem.OrderCost.TotalOrderAmt*orderitem.ExchangeRate,orderitem.Currency))</td>
+                    <td class="td_w157">@orderitem.OrderStatus</td>
+                    <td class="td_w157_left">
+                        @if (orderitem.PaidStatus == PaidStatusType.NotPay)
+                        {
+                            <a href="@UrlRewriteHelper.GetOrderDetailPayment(orderitem.OrderNo)" class="fblue_mid">@Lang.TipMakePayment</a>
+                            <br />
+                            <a href="@UrlRewriteHelper.GetOrderDetail(orderitem.OrderNo)" class="fblue_mid">@Lang.TipViewDetails</a>
+                            <br />
+                            <a href="@UrlRewriteHelper.GetQuickReorder(orderitem.OrderNo)" class="fblue_mid">@Lang.TipQuickReorder</a>
+                        }
+                        else if ( orderitem.OrderStatus == OrderStatusType.Pending)
+                        { @* orderitem.PaidStatus == PaidStatusType.Submit &&*@
+                            <a href="@UrlRewriteHelper.GetOrderDetail(orderitem.OrderNo)" class="fblue_mid">@Lang.TipViewDetails</a>
+                            <br />
+                            <a href="@UrlRewriteHelper.GetQuickReorder(orderitem.OrderNo)" class="fblue_mid">@Lang.TipQuickReorder</a>
+                        }
+                        else if ( orderitem.OrderStatus == OrderStatusType.Processing)
+                        {@*orderitem.PaidStatus == PaidStatusType.Paid &&*@
+                            <a href="@UrlRewriteHelper.GetOrderDetail(orderitem.OrderNo)" class="fblue_mid">@Lang.TipViewDetails</a>
+                            <br />
+                            <a href="@UrlRewriteHelper.GetQuickReorder(orderitem.OrderNo)" class="fblue_mid">@Lang.TipQuickReorder</a>
+                            <br />
+                            <a href="@UrlRewriteHelper.GetViewInvoiceUrl(orderitem.OrderNo)" class="fblue_mid">@Lang.TipViewInvoice</a>
+                        }
+                        else if (orderitem.OrderStatus == OrderStatusType.Shipped)
+                        {@*orderitem.PaidStatus == PaidStatusType.Paid &&*@ 
+                            <a href="@UrlRewriteHelper.GetOrderDetail(orderitem.OrderNo)" class="fblue_mid">@Lang.TipViewDetails</a>
+                            <br />
+                            <a href="@UrlRewriteHelper.GetQuickReorder(orderitem.OrderNo)" class="fblue_mid">@Lang.TipQuickReorder</a>
+                            <br />
+                            <a href="@UrlRewriteHelper.GetViewInvoiceUrl(orderitem.OrderNo)" class="fblue_mid">@Lang.TipViewInvoice</a>
+                            <br />
+                            if (orderitem.IsReviewAll)
+                            {
+                                <a href="@UrlRewriteHelper.GetReadReviews(orderitem.OrderId)" class="fblue_mid">@Lang.TipReadReviews</a>
+                            }
+                            else
+                            {
+                                <a href="@UrlRewriteHelper.GetWriteReviews(orderitem.OrderId)" class="fblue_mid">Write Reviews</a>
+                            }
+                        }
+                        else if (orderitem.OrderStatus == OrderStatusType.Canceled)
+                        {
+                            <a href="@UrlRewriteHelper.GetOrderDetail(orderitem.OrderNo)" class="fblue_mid">@Lang.TipViewDetails</a>
+                            <br />
+                            <a href="@UrlRewriteHelper.GetQuickReorder(orderitem.OrderNo)" class="fblue_mid">@Lang.TipQuickReorder</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+        @*底部翻页开始*@
+        <div class="ajax-pagination" data-target="#divorderlist" data-mode="replace" data-extra="orderparm">
+            @Html.Partial("~/Views/Shared/Partial/_Ajax_Pager.cshtml", @Model.Pager)
+        </div>
+        <div class="clearfix"></div>
+        @*底部翻页结束*@
+    </div>
+}
+else{
+    <div class="account_order_text">
+        &nbsp;
+        <div class="action_cont">
+            <a href="/Order/PackingSlip" class="fblue_mid">@Lang.TipDownPackSlip</a>
+            <a href="/Order/PackingListTemplate" class="fblue_mid">@Lang.TipDownPackList</a>
+        </div>
+    </div>
+        <div class="all_order_cont">
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <th class="td_w157">@Lang.TipOrderDateNoPun</th>
+                    <th class="td_w157">@Lang.TipOrderNo</th>
+                    <th class="td_w157">@Lang.TipGrandTotalNoPun</th>
+                    <th class="td_w157">@Lang.TipStatus</th>
+                    <th class="td_w157">@Lang.TipActions</th>
+                </tr>
+            </table>
+        <div class="all_order_list_cont">
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <td  colspan="5">@Lang.TipNoOrderInfo</td> 
+                </tr>
+            </table>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(function() {
+        $("body,html").animate({ scrollTop: 0 }, 500);
+    });
+</script>
